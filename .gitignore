@@ -1,0 +1,10 @@
+.DS_Store
+.coverage
+utils/docs.aws.amazon.com/
+*.pyc
+*.egg-info
+.eggs
+venv/
+.coverage
+htmlcov/
+dist/

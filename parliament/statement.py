@@ -50,7 +50,7 @@ def get_privilege_info(service, action):
                     privilege_info["service_resources"] = service_info["resources"]
                     privilege_info["service_conditions"] = service_info["conditions"]
                     return privilege_info
-    raise Exception("Unknown action {}.{}".format(service, action))
+    raise Exception("Unknown action {}:{}".format(service, action))
 
 
 def get_arn_format(resource_type, service_resources):
@@ -651,7 +651,7 @@ class Statement:
 
                     if match is None:
                         self.add_finding(
-                            "Unknown condition {} for action {}.{}".format(
+                            "Unknown condition {} for action {}:{}".format(
                                 key, action_struct["service"], action_struct["action"]
                             ),
                             severity.INVALID,
@@ -951,7 +951,7 @@ class Statement:
 
                     if not match_found:
                         self.add_finding(
-                            "No resources match for {}.{} which requires a resource format of {} for the resource {}".format(
+                            "No resources match for {}:{} which requires a resource format of {} for the resource {}".format(
                                 action_struct["service"],
                                 action_struct["action"],
                                 arn_format,

@@ -17,27 +17,10 @@ pip install parliament
 
 # Usage
 ```
-from parliament.policy import analyze_policy_string
-
-str = """{
-    "Version": "2012-10-17",
-    "Statement": {
-        "Effect": "Allow",
-        "Action": "s3:BAD",
-        "Resource": "*"
-    }
-}
-"""
-
-policy = analyze_policy_string(str)
-if len(policy.findings) > 0:
-    for finding in policy.findings:
-        print("{} - {} - {}".format(finding.severity_name(), finding.issue, finding.location))
+$ parliament --string '{"Version":"2012-10-17","Statement": {"Effect": "Allow","Action":["s3:GetObject"],"Resource": ["arn:aws:s3:::bucket1"]}}'
+INVALID - No resources match for s3:GetObject which requires a resource format of arn:*:s3:::*/* for the resource object* - {'filepath': None}
 ```
 
-This prints:
-```
-INVALID - Unknown action s3:BAD - {'string': {'Effect': 'Allow', 'Action': 's3:BAD', 'Resource': '*'}}
-```
+This example is showing that a resource specifying an S3 bucket (not an object path) was given in a policy with s3:GetObject, which requires an object path. 
 
-See `./utils/lint.py` for further examples.
+See `./bin/parliament.py` for further examples.

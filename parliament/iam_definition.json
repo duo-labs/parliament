@@ -4842,6 +4842,18 @@
             "resource_type": "execute-api-general*"
           }
         ]
+      },
+      {
+        "access_level": "Write",
+        "description": "ManageConnections controls access to the @connections API",
+        "privilege": "ManageConnections",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "execute-api-general*"
+          }
+        ]
       }
     ],
     "resources": [
@@ -23368,6 +23380,86 @@
   },
   {
     "conditions": [],
+    "prefix": "aws-marketplace",
+    "privileges": [
+      {
+        "access_level": "Write",
+        "description": "Cancel an existing change set",
+        "privilege": "CancelChangeSet",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Returns the details of an existing change set",
+        "privilege": "DescribeChangeSet",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Returns the details of an existing entity",
+        "privilege": "DescribeEntity",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "List existing change sets",
+        "privilege": "ListChangeSets",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "List existing entities",
+        "privilege": "ListEntities",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Request a new change set",
+        "privilege": "StartChangeSet",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      }
+    ],
+    "resources": [],
+    "service_name": "AWS Marketplace Catalog"
+  },
+  {
+    "conditions": [],
     "prefix": "sso",
     "privileges": [
       {
@@ -37093,7 +37185,7 @@
       {
         "access_level": "Write",
         "description": "Disassociate a connector that has been associated.",
-        "privilege": "DisassociateConnectors",
+        "privilege": "DisassociateConnector",
         "resource_types": [
           {
             "condition_keys": [],
@@ -49974,7 +50066,7 @@
       {
         "condition": "sagemaker:AcceleratorTypes",
         "description": "The list of all accelerator types associated with the resource in the request.",
-        "type": "String"
+        "type": "ArrayOfString"
       },
       {
         "condition": "sagemaker:DirectInternetAccess",
@@ -50004,32 +50096,32 @@
       {
         "condition": "sagemaker:InstanceTypes",
         "description": "The list of all instance types associated with the resource in the request.",
-        "type": "String"
+        "type": "ArrayOfString"
       },
       {
         "condition": "sagemaker:InterContainerTrafficEncryption",
         "description": "The inter container traffic encryption associated with the resource in the request.",
-        "type": "String"
+        "type": "Bool"
       },
       {
         "condition": "sagemaker:MaxRuntimeInSeconds",
         "description": "The max runtime in seconds associated with the resource in the request.",
-        "type": "String"
+        "type": "Numeric"
       },
       {
         "condition": "sagemaker:ModelArn",
         "description": "The model arn associated with the resource in the request.",
-        "type": "String"
+        "type": "ARN"
       },
       {
         "condition": "sagemaker:NetworkIsolation",
         "description": "The network isolation associated with the resource in the request.",
-        "type": "String"
+        "type": "Bool"
       },
       {
         "condition": "sagemaker:OutputKmsKey",
         "description": "The output kms key associated with the resource in the request.",
-        "type": "String"
+        "type": "ARN"
       },
       {
         "condition": "sagemaker:ResourceTag/",
@@ -50049,17 +50141,17 @@
       {
         "condition": "sagemaker:VolumeKmsKey",
         "description": "The volume kms key associated with the resource in the request.",
-        "type": "String"
+        "type": "ARN"
       },
       {
         "condition": "sagemaker:VpcSecurityGroupIds",
         "description": "The list of all vpc security group ids associated with the resource in the request.",
-        "type": "String"
+        "type": "ArrayOfString"
       },
       {
         "condition": "sagemaker:VpcSubnets",
         "description": "The list of all vpc subnets associated with the resource in the request.",
-        "type": "String"
+        "type": "ArrayOfString"
       }
     ],
     "prefix": "sagemaker",
@@ -53243,6 +53335,122 @@
     "service_name": "AWS Cost and Usage Report"
   },
   {
+    "conditions": [],
+    "prefix": "dbqms",
+    "privileges": [
+      {
+        "access_level": "Write",
+        "description": "Creates a new favorite query",
+        "privilege": "CreateFavoriteQuery",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Add a query to the history",
+        "privilege": "CreateQueryHistory",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Delete saved queries",
+        "privilege": "DeleteFavoriteQueries",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Delete a historical query",
+        "privilege": "DeleteQueryHistory",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "List saved queries and associated metadata",
+        "privilege": "DescribeFavoriteQueries",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "List history of queries that were run",
+        "privilege": "DescribeQueryHistory",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Retrieve favorite or history query string by id",
+        "privilege": "GetQueryString",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Update saved query and description",
+        "privilege": "UpdateFavoriteQuery",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Update the query history",
+        "privilege": "UpdateQueryHistory",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      }
+    ],
+    "resources": [],
+    "service_name": "Database Query Metadata Service"
+  },
+  {
     "conditions": [
       {
         "condition": "aws:RequestTag/${TagKey}",
@@ -56037,6 +56245,32 @@
     ],
     "resources": [],
     "service_name": "Amazon CloudFront"
+  },
+  {
+    "conditions": [],
+    "prefix": "workmailmessageflow",
+    "privileges": [
+      {
+        "access_level": "Read",
+        "description": "Grants permission to read the content of email messages with the specified message ID",
+        "privilege": "GetRawMessageContent",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "RawMessage*"
+          }
+        ]
+      }
+    ],
+    "resources": [
+      {
+        "arn": "arn:${Partition}:workmailmessageflow:${Region}:${Account}:message/${OrganizationId}/${Context}/${MessageId}",
+        "condition_keys": [],
+        "resource": "RawMessage"
+      }
+    ],
+    "service_name": "Amazon WorkMail Message Flow"
   },
   {
     "conditions": [],

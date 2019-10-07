@@ -402,7 +402,7 @@ def translate_documentation_types(str):
         return "Date"
     elif str in ["Long", "Numeric"]:
         return "Number"
-    elif str in ["String", "string"]:
+    elif str in ["String", "string", "ArrayOfString"]:
         return "String"
     elif str in ["Ip"]:
         return "Ip"

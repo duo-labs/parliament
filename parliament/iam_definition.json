@@ -10115,6 +10115,18 @@
     "prefix": "elasticfilesystem",
     "privileges": [
       {
+        "access_level": "Write",
+        "description": "Starts a backup job for an existing file system.",
+        "privilege": "Backup",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "file-system*"
+          }
+        ]
+      },
+      {
         "access_level": "Tagging",
         "description": "Creates a new, empty file system.",
         "privilege": "CreateFileSystem",
@@ -10280,6 +10292,18 @@
         "access_level": "Write",
         "description": "Enables lifecycle management by creating a new LifecycleConfiguration object.",
         "privilege": "PutLifecycleConfiguration",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "file-system*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Starts a restore job for an existing file system.",
+        "privilege": "Restore",
         "resource_types": [
           {
             "condition_keys": [],
@@ -12587,6 +12611,379 @@
     "service_name": "AWS Direct Connect"
   },
   {
+    "conditions": [],
+    "prefix": "forecast",
+    "privileges": [
+      {
+        "access_level": "Write",
+        "description": "Creates a dataset",
+        "privilege": "CreateDataset",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "dataset*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Creates a dataset group",
+        "privilege": "CreateDatasetGroup",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "datasetGroup*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Creates a dataset import job",
+        "privilege": "CreateDatasetImportJob",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "datasetImportJob*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Creates a forecast",
+        "privilege": "CreateForecast",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "predictor*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Creates a forecast export job",
+        "privilege": "CreateForecastExportJob",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "forecast*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Creates a predictor",
+        "privilege": "CreatePredictor",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "datasetGroup*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Deletes a dataset",
+        "privilege": "DeleteDataset",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "dataset*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Deletes a dataset group",
+        "privilege": "DeleteDatasetGroup",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "datasetGroup*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Deletes a dataset import job",
+        "privilege": "DeleteDatasetImportJob",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "datasetImportJob*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Deletes a forecast",
+        "privilege": "DeleteForecast",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "forecast*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Deletes a forecast export job",
+        "privilege": "DeleteForecastExportJob",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "forecastExport*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Deletes a predictor",
+        "privilege": "DeletePredictor",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "predictor*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Describes a dataset",
+        "privilege": "DescribeDataset",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "dataset*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Describes a dataset group",
+        "privilege": "DescribeDatasetGroup",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "datasetGroup*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Describes a dataset import job",
+        "privilege": "DescribeDatasetImportJob",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "datasetImportJob*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Describes a forecast",
+        "privilege": "DescribeForecast",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "forecast*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Describes a forecast export job",
+        "privilege": "DescribeForecastExportJob",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "forecastExport*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Describes a predictor",
+        "privilege": "DescribePredictor",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "predictor*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Gets Accuracy Metrics for a predictor",
+        "privilege": "GetAccuracyMetrics",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "predictor*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Lists dataset groups",
+        "privilege": "ListDatasetGroups",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Lists dataset import jobs",
+        "privilege": "ListDatasetImportJobs",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Lists datasets",
+        "privilege": "ListDatasets",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Lists forecast export jobs",
+        "privilege": "ListForecastExportJobs",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Lists forecasts",
+        "privilege": "ListForecasts",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Lists predictors",
+        "privilege": "ListPredictors",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Retrieves a forecast for a single item",
+        "privilege": "QueryForecast",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "forecast*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Updates a dataset group",
+        "privilege": "UpdateDatasetGroup",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "dataset*"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "datasetGroup*"
+          }
+        ]
+      }
+    ],
+    "resources": [
+      {
+        "arn": "arn:${Partition}:forecast:${Region}:${Account}:dataset/${ResourceId}",
+        "condition_keys": [],
+        "resource": "dataset"
+      },
+      {
+        "arn": "arn:${Partition}:forecast:${Region}:${Account}:dataset-group/${ResourceId}",
+        "condition_keys": [],
+        "resource": "datasetGroup"
+      },
+      {
+        "arn": "arn:${Partition}:forecast:${Region}:${Account}:dataset-import-job/${ResourceId}",
+        "condition_keys": [],
+        "resource": "datasetImportJob"
+      },
+      {
+        "arn": "arn:${Partition}:forecast:::algorithm/${ResourceId}",
+        "condition_keys": [],
+        "resource": "algorithm"
+      },
+      {
+        "arn": "arn:${Partition}:forecast:${Region}:${Account}:predictor/${ResourceId}",
+        "condition_keys": [],
+        "resource": "predictor"
+      },
+      {
+        "arn": "arn:${Partition}:forecast:${Region}:${Account}:forecast/${ResourceId}",
+        "condition_keys": [],
+        "resource": "forecast"
+      },
+      {
+        "arn": "arn:${Partition}:forecast:${Region}:${Account}:forecast-export-job/${ResourceId}",
+        "condition_keys": [],
+        "resource": "forecastExport"
+      }
+    ],
+    "service_name": "Amazon Forecast"
+  },
+  {
     "conditions": [
       {
         "condition": "aws:RequestTag/${TagKey}",
@@ -13247,12 +13644,28 @@
     "service_name": "Amazon Pinpoint Email Service"
   },
   {
-    "conditions": [],
+    "conditions": [
+      {
+        "condition": "aws:RequestTag/${TagKey}",
+        "description": "Filters actions based on the presence of tag key-value pairs in the request",
+        "type": "String"
+      },
+      {
+        "condition": "aws:ResourceTag/${TagKey}",
+        "description": "Filters actions based on tag key-value pairs attached to the resource",
+        "type": "String"
+      },
+      {
+        "condition": "aws:TagKeys",
+        "description": "Filters actions based on the presence of tag keys in the request",
+        "type": "String"
+      }
+    ],
     "prefix": "lightsail",
     "privileges": [
       {
         "access_level": "Write",
-        "description": "Allocates a static IP address.",
+        "description": "Creates a static IP address that can be attached to an instance.",
         "privilege": "AllocateStaticIp",
         "resource_types": [
           {
@@ -13264,7 +13677,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Attachs disk to an instance",
+        "description": "Attaches a disk to an instance.",
         "privilege": "AttachDisk",
         "resource_types": [
           {
@@ -13281,7 +13694,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Attach instances to load balancer",
+        "description": "Attaches one or more instances to a load balancer.",
         "privilege": "AttachInstancesToLoadBalancer",
         "resource_types": [
           {
@@ -13298,7 +13711,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Attach tls certificate to load balancer",
+        "description": "Attaches a TLS certificate to a load balancer.",
         "privilege": "AttachLoadBalancerTlsCertificate",
         "resource_types": [
           {
@@ -13310,7 +13723,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Attaches a static IP address to a specific Amazon Lightsail instance.",
+        "description": "Attaches a static IP address to an instance.",
         "privilege": "AttachStaticIp",
         "resource_types": [
           {
@@ -13327,7 +13740,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Closes the public ports on a specific Amazon Lightsail instance.",
+        "description": "Closes a public port of an instance.",
         "privilege": "CloseInstancePublicPorts",
         "resource_types": [
           {
@@ -13339,7 +13752,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Copy snapshot from a reigon to another region within Lightsail",
+        "description": "Copies a snapshot from one AWS Region to another in Amazon Lightsail.",
         "privilege": "CopySnapshot",
         "resource_types": [
           {
@@ -13351,7 +13764,7 @@
       },
       {
         "access_level": "List",
-        "description": "Creates a new Amazon EC2 instance from an exported Amazon Lightsail snapshot",
+        "description": "Creates a new Amazon EC2 instance from an exported Amazon Lightsail snapshot.",
         "privilege": "CreateCloudFormationStack",
         "resource_types": [
           {
@@ -13363,55 +13776,87 @@
       },
       {
         "access_level": "Write",
-        "description": "Create disk",
+        "description": "Creates a disk.",
         "privilege": "CreateDisk",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "Disk*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
       {
         "access_level": "Write",
-        "description": "Create disk from snapshot",
+        "description": "Creates a disk from snapshot.",
         "privilege": "CreateDiskFromSnapshot",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "Disk*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
       {
         "access_level": "Write",
-        "description": "Create disk snapshot",
+        "description": "Creates a disk snapshot.",
         "privilege": "CreateDiskSnapshot",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "Disk*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
       {
         "access_level": "Write",
-        "description": "Creates a domain resource for the specified domain.",
+        "description": "Creates a domain resource for the specified domain name.",
         "privilege": "CreateDomain",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "Domain*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
       {
         "access_level": "Write",
-        "description": "Creates one of the following entry records associated with the domain: A record, CNAME record, TXT record, or MX record.",
+        "description": "Creates one or more DNS record entries for a domain resource: Address (A), canonical name (CNAME), mail exchanger (MX), name server (NS), start of authority (SOA), service locator (SRV), or text (TXT).",
         "privilege": "CreateDomainEntry",
         "resource_types": [
           {
@@ -13423,7 +13868,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Creates a snapshot of a specific instance. You can use a snapshot to create a new instance that is based on that snapshot.",
+        "description": "Creates an instance snapshot.",
         "privilege": "CreateInstanceSnapshot",
         "resource_types": [
           {
@@ -13435,24 +13880,40 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "InstanceSnapshot*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
       {
         "access_level": "Write",
-        "description": "Creates one or more Amazon Lightsail instances.",
+        "description": "Creates one or more instances.",
         "privilege": "CreateInstances",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "KeyPair*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
       {
         "access_level": "Write",
-        "description": "Uses a specific snapshot as a blueprint for creating one or more new instances that are based on that identical configuration.",
+        "description": "Creates one or more instances based on an instance snapshot.",
         "privilege": "CreateInstancesFromSnapshot",
         "resource_types": [
           {
@@ -13464,36 +13925,60 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "InstanceSnapshot*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
       {
         "access_level": "Write",
-        "description": "Creates sn SSH key pair.",
+        "description": "Creates a key pair used to authenticate and connect to an instance.",
         "privilege": "CreateKeyPair",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "KeyPair*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
       {
         "access_level": "Write",
-        "description": "Create load balance",
+        "description": "Creates a load balancer.",
         "privilege": "CreateLoadBalancer",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "LoadBalancer*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
       {
         "access_level": "Write",
-        "description": "Create loadBalancer tls certificate",
+        "description": "Creates a load balancer TLS certificate.",
         "privilege": "CreateLoadBalancerTlsCertificate",
         "resource_types": [
           {
@@ -13512,36 +13997,60 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "RelationalDatabase*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
       {
         "access_level": "Write",
-        "description": "Creates a new relational database from snapshot.",
+        "description": "Creates a new relational database from a snapshot.",
         "privilege": "CreateRelationalDatabaseFromSnapshot",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "RelationalDatabase*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
       {
         "access_level": "Write",
-        "description": "Create a relational database snapshot.",
+        "description": "Creates a relational database snapshot.",
         "privilege": "CreateRelationalDatabaseSnapshot",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "RelationalDatabaseSnapshot*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
       {
         "access_level": "Write",
-        "description": "Delete disk",
+        "description": "Deletes a disk.",
         "privilege": "DeleteDisk",
         "resource_types": [
           {
@@ -13553,7 +14062,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Delete disk snapshot",
+        "description": "Deletes a disk snapshot.",
         "privilege": "DeleteDiskSnapshot",
         "resource_types": [
           {
@@ -13565,7 +14074,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes the specified domain recordset and all of its domain records.",
+        "description": "Deletes a domain resource and all of its DNS records.",
         "privilege": "DeleteDomain",
         "resource_types": [
           {
@@ -13577,7 +14086,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes a specific domain entry.",
+        "description": "Deletes a DNS record entry for a domain resource.",
         "privilege": "DeleteDomainEntry",
         "resource_types": [
           {
@@ -13589,7 +14098,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes a specific Amazon Lightsail instance.",
+        "description": "Deletes an instance.",
         "privilege": "DeleteInstance",
         "resource_types": [
           {
@@ -13601,7 +14110,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes a specific snapshot of an instance.",
+        "description": "Deletes an instance snapshot.",
         "privilege": "DeleteInstanceSnapshot",
         "resource_types": [
           {
@@ -13613,7 +14122,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes a specific SSH key pair.",
+        "description": "Deletes a key pair used to authenticate and connect to an instance.",
         "privilege": "DeleteKeyPair",
         "resource_types": [
           {
@@ -13637,7 +14146,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Delete load balancer",
+        "description": "Deletes a load balancer.",
         "privilege": "DeleteLoadBalancer",
         "resource_types": [
           {
@@ -13649,7 +14158,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Delete load balancer tls certificate",
+        "description": "Deletes a load balancer TLS certificate.",
         "privilege": "DeleteLoadBalancerTlsCertificate",
         "resource_types": [
           {
@@ -13661,7 +14170,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Delete an existing relational database.",
+        "description": "Deletes a relational database.",
         "privilege": "DeleteRelationalDatabase",
         "resource_types": [
           {
@@ -13673,7 +14182,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Delete a relational database snapshot.",
+        "description": "Deletes relational database snapshot.",
         "privilege": "DeleteRelationalDatabaseSnapshot",
         "resource_types": [
           {
@@ -13685,7 +14194,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Detach disk from the instance",
+        "description": "Detaches a disk from an instance.",
         "privilege": "DetachDisk",
         "resource_types": [
           {
@@ -13697,7 +14206,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Detach instances from load balancer",
+        "description": "Detaches one or more instances from a load balancer.",
         "privilege": "DetachInstancesFromLoadBalancer",
         "resource_types": [
           {
@@ -13714,7 +14223,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Detaches a static IP from the Amazon Lightsail instance to which it is attached.",
+        "description": "Detaches a static IP from an instance to which it is attached.",
         "privilege": "DetachStaticIp",
         "resource_types": [
           {
@@ -13731,7 +14240,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Downloads the default SSH key pair from the user's account.",
+        "description": "Downloads the default key pair used to authenticate and connect to instances in a specific AWS Region.",
         "privilege": "DownloadDefaultKeyPair",
         "resource_types": [
           {
@@ -13743,7 +14252,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Export snapshots from Lightsail to AWS in the same account",
+        "description": "Exports an Amazon Lightsail snapshot to Amazon EC2.",
         "privilege": "ExportSnapshot",
         "resource_types": [
           {
@@ -13767,7 +14276,7 @@
       },
       {
         "access_level": "List",
-        "description": "Returns the list of available instance images, or blueprints. You can use a blueprint to create a new instance already running a specific operating system, as well as a preinstalled app or development stack. The software each instance is running depends on the blueprint image you choose.",
+        "description": "Returns a list of instance images, or blueprints. You can use a blueprint to create a new instance already running a specific operating system, as well as a pre-installed application or development stack. The software that runs on your instance depends on the blueprint you define when creating the instance.",
         "privilege": "GetBlueprints",
         "resource_types": [
           {
@@ -13779,7 +14288,7 @@
       },
       {
         "access_level": "List",
-        "description": "Returns the list of bundles that are available for purchase. A bundle describes the specifications for your instance.",
+        "description": "Returns a list of instance bundles. You can use a bundle to create a new instance with a set of performance specifications, such as CPU count, disk size, RAM size, and network transfer allowance. The cost of your instance depends on the bundle you define when creating the instance.",
         "privilege": "GetBundles",
         "resource_types": [
           {
@@ -13791,7 +14300,7 @@
       },
       {
         "access_level": "List",
-        "description": "Return informatinon about all cloud formation stack records",
+        "description": "Returns information about all CloudFormation stacks used to create Amazon EC2 resources from exported Amazon Lightsail snapshots.",
         "privilege": "GetCloudFormationStackRecords",
         "resource_types": [
           {
@@ -13803,7 +14312,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Return information about the disk",
+        "description": "Returns information about a disk.",
         "privilege": "GetDisk",
         "resource_types": [
           {
@@ -13815,7 +14324,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Return information about disk snapshot",
+        "description": "Returns information about a disk snapshot.",
         "privilege": "GetDiskSnapshot",
         "resource_types": [
           {
@@ -13827,7 +14336,7 @@
       },
       {
         "access_level": "List",
-        "description": "Return information about all disk snapshots",
+        "description": "Returns information about all disk snapshots.",
         "privilege": "GetDiskSnapshots",
         "resource_types": [
           {
@@ -13839,7 +14348,7 @@
       },
       {
         "access_level": "List",
-        "description": "Return information about all disks",
+        "description": "Returns information about all disks.",
         "privilege": "GetDisks",
         "resource_types": [
           {
@@ -13851,7 +14360,7 @@
       },
       {
         "access_level": "List",
-        "description": "Returns information about a specific domain recordset.",
+        "description": "Returns DNS records for a domain resource.",
         "privilege": "GetDomain",
         "resource_types": [
           {
@@ -13863,7 +14372,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns a list of all domains in the user's account.",
+        "description": "Returns DNS records for all domain resources.",
         "privilege": "GetDomains",
         "resource_types": [
           {
@@ -13875,7 +14384,7 @@
       },
       {
         "access_level": "List",
-        "description": "Return informatinon about all export snapshot records",
+        "description": "Returns information about all records to export Amazon Lightsail snapshots to Amazon EC2.",
         "privilege": "GetExportSnapshotRecords",
         "resource_types": [
           {
@@ -13887,7 +14396,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns information about a specific Amazon Lightsail instance.",
+        "description": "Returns information about an instance.",
         "privilege": "GetInstance",
         "resource_types": [
           {
@@ -13899,7 +14408,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Returns temporary SSH keys you can use to connect to a specific instance.",
+        "description": "Returns temporary keys you can use to authenticate and connect to an instance.",
         "privilege": "GetInstanceAccessDetails",
         "resource_types": [
           {
@@ -13911,7 +14420,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns the data points for the specified Amazon Lightsail instance metric, given an instance name.",
+        "description": "Returns the data points for the specified metric of an instance.",
         "privilege": "GetInstanceMetricData",
         "resource_types": [
           {
@@ -13923,7 +14432,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns the port states for a specific instance.",
+        "description": "Returns the port states of an instance.",
         "privilege": "GetInstancePortStates",
         "resource_types": [
           {
@@ -13935,7 +14444,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns information about a specific instance snapshot.",
+        "description": "Returns information about an instance snapshot.",
         "privilege": "GetInstanceSnapshot",
         "resource_types": [
           {
@@ -13947,7 +14456,7 @@
       },
       {
         "access_level": "List",
-        "description": "Returns all instance snapshots for the user's account.",
+        "description": "Returns information about all instance snapshots.",
         "privilege": "GetInstanceSnapshots",
         "resource_types": [
           {
@@ -13959,7 +14468,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns the state of a specific instance.",
+        "description": "Returns the state of an instance.",
         "privilege": "GetInstanceState",
         "resource_types": [
           {
@@ -13971,7 +14480,7 @@
       },
       {
         "access_level": "List",
-        "description": "Returns information about all Amazon Lightsail instances.",
+        "description": "Returns information about all instances.",
         "privilege": "GetInstances",
         "resource_types": [
           {
@@ -13983,7 +14492,7 @@
       },
       {
         "access_level": "List",
-        "description": "Returns information about a specific key pair.",
+        "description": "Returns information about a key pair.",
         "privilege": "GetKeyPair",
         "resource_types": [
           {
@@ -13995,7 +14504,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns information about all key pairs in the user's account.",
+        "description": "Returns information about all key pairs.",
         "privilege": "GetKeyPairs",
         "resource_types": [
           {
@@ -14007,7 +14516,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Return informatinon about load balance",
+        "description": "Returns information about a load balancer.",
         "privilege": "GetLoadBalancer",
         "resource_types": [
           {
@@ -14019,7 +14528,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Return metric information about load balancer",
+        "description": "Returns the data points for the specified metric of a load balancer.",
         "privilege": "GetLoadBalancerMetricData",
         "resource_types": [
           {
@@ -14031,7 +14540,7 @@
       },
       {
         "access_level": "List",
-        "description": "Return information about the certificate of load balancer",
+        "description": "Returns information about a load balancer TLS certificate.",
         "privilege": "GetLoadBalancerTlsCertificates",
         "resource_types": [
           {
@@ -14043,7 +14552,7 @@
       },
       {
         "access_level": "List",
-        "description": "Return informatinon about load balances",
+        "description": "Returns information about load balancers.",
         "privilege": "GetLoadBalancers",
         "resource_types": [
           {
@@ -14055,7 +14564,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns information about a specific operation. Operations include events such as when you create an instance, allocate a static IP, attach a static IP, and so on.",
+        "description": "Returns information about an operation. Operations include events such as when you create an instance, allocate a static IP, attach a static IP, and so on.",
         "privilege": "GetOperation",
         "resource_types": [
           {
@@ -14067,7 +14576,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns information about all operations.",
+        "description": "Returns information about all operations. Operations include events such as when you create an instance, allocate a static IP, attach a static IP, and so on.",
         "privilege": "GetOperations",
         "resource_types": [
           {
@@ -14079,7 +14588,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Gets operations for a specific resource.",
+        "description": "Returns operations for a resource.",
         "privilege": "GetOperationsForResource",
         "resource_types": [
           {
@@ -14111,7 +14620,7 @@
       },
       {
         "access_level": "List",
-        "description": "Returns a list of all valid regions for Amazon Lightsail.",
+        "description": "Returns a list of all valid AWS Regions for Amazon Lightsail.",
         "privilege": "GetRegions",
         "resource_types": [
           {
@@ -14123,7 +14632,7 @@
       },
       {
         "access_level": "List",
-        "description": "Return informatinon about a relational database",
+        "description": "Returns information about a relational database.",
         "privilege": "GetRelationalDatabase",
         "resource_types": [
           {
@@ -14135,7 +14644,7 @@
       },
       {
         "access_level": "List",
-        "description": "Return informatinon about all relational database blueprints",
+        "description": "Returns a list of relational database images, or blueprints. You can use a blueprint to create a new database running a specific database engine. The database engine that runs on your database depends on the blueprint you define when creating the relational database.",
         "privilege": "GetRelationalDatabaseBlueprints",
         "resource_types": [
           {
@@ -14147,7 +14656,7 @@
       },
       {
         "access_level": "List",
-        "description": "Return informatinon about all relational bundles",
+        "description": "Returns a list of relational database bundles. You can use a bundle to create a new database with a set of performance specifications, such as CPU count, disk size, RAM size, network transfer allowance, and standard of high availability. The cost of your database depends on the bundle you define when creating the relational database.",
         "privilege": "GetRelationalDatabaseBundles",
         "resource_types": [
           {
@@ -14159,7 +14668,7 @@
       },
       {
         "access_level": "List",
-        "description": "Return informatinon about the relational database events",
+        "description": "Returns events for a relational database.",
         "privilege": "GetRelationalDatabaseEvents",
         "resource_types": [
           {
@@ -14171,7 +14680,7 @@
       },
       {
         "access_level": "List",
-        "description": "Return informatinon about the relational database log events",
+        "description": "Returns events for the specified log stream of a relational database.",
         "privilege": "GetRelationalDatabaseLogEvents",
         "resource_types": [
           {
@@ -14183,7 +14692,7 @@
       },
       {
         "access_level": "List",
-        "description": "Return informatinon about the relational database log streams",
+        "description": "Returns the log streams available for a relational database.",
         "privilege": "GetRelationalDatabaseLogStreams",
         "resource_types": [
           {
@@ -14195,7 +14704,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Return informatinon about the master user password",
+        "description": "Returns the master user password of a relational database.",
         "privilege": "GetRelationalDatabaseMasterUserPassword",
         "resource_types": [
           {
@@ -14207,7 +14716,7 @@
       },
       {
         "access_level": "List",
-        "description": "Return informatinon about the relational database metric data",
+        "description": "Returns the data points for the specified metric of a relational database.",
         "privilege": "GetRelationalDatabaseMetricData",
         "resource_types": [
           {
@@ -14219,7 +14728,7 @@
       },
       {
         "access_level": "List",
-        "description": "Return informatinon about all relational database parameters",
+        "description": "Returns the parameters of a relational database.",
         "privilege": "GetRelationalDatabaseParameters",
         "resource_types": [
           {
@@ -14231,7 +14740,7 @@
       },
       {
         "access_level": "List",
-        "description": "Return informatinon about a relational database snapshot",
+        "description": "Returns information about a relational database snapshot.",
         "privilege": "GetRelationalDatabaseSnapshot",
         "resource_types": [
           {
@@ -14243,7 +14752,7 @@
       },
       {
         "access_level": "List",
-        "description": "Return informatinon about all relational database snapshot",
+        "description": "Returns information about all relational database snapshots.",
         "privilege": "GetRelationalDatabaseSnapshots",
         "resource_types": [
           {
@@ -14255,7 +14764,7 @@
       },
       {
         "access_level": "List",
-        "description": "Return informatinon about all relational databases",
+        "description": "Return information about all relational databases.",
         "privilege": "GetRelationalDatabases",
         "resource_types": [
           {
@@ -14267,7 +14776,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns information about a specific static IP.",
+        "description": "Returns information about a static IP.",
         "privilege": "GetStaticIp",
         "resource_types": [
           {
@@ -14279,7 +14788,7 @@
       },
       {
         "access_level": "List",
-        "description": "Returns information about all static IPs in the user's account.",
+        "description": "Returns information about all static IPs.",
         "privilege": "GetStaticIps",
         "resource_types": [
           {
@@ -14291,7 +14800,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Imports a public SSH key from a specific key pair.",
+        "description": "Imports a public key from a key pair.",
         "privilege": "ImportKeyPair",
         "resource_types": [
           {
@@ -14303,7 +14812,7 @@
       },
       {
         "access_level": "List",
-        "description": "Returns a Boolean value indicating whether your Lightsail VPC is peered.",
+        "description": "Returns a boolean value indicating whether the Amazon Lightsail virtual private cloud (VPC) is peered.",
         "privilege": "IsVpcPeered",
         "resource_types": [
           {
@@ -14315,7 +14824,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Adds public ports to an Amazon Lightsail instance.",
+        "description": "Adds, or opens a public port of an instance.",
         "privilege": "OpenInstancePublicPorts",
         "resource_types": [
           {
@@ -14327,7 +14836,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Tries to peer the Lightsail VPC with the user's default VPC.",
+        "description": "Tries to peer the Amazon Lightsail virtual private cloud (VPC) with the default VPC.",
         "privilege": "PeerVpc",
         "resource_types": [
           {
@@ -14339,7 +14848,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Sets the specified open ports for an instance",
+        "description": "Sets the specified open ports for an instance, and closes all ports for every protocol not included in the request.",
         "privilege": "PutInstancePublicPorts",
         "resource_types": [
           {
@@ -14351,7 +14860,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Restarts a specific instance. When your Amazon Lightsail instance is finished rebooting, Lightsail assigns a new public IP address. To use the same IP address after restarting, create a static IP address and attach it to the instance.",
+        "description": "Reboots an instance that is in a running state.",
         "privilege": "RebootInstance",
         "resource_types": [
           {
@@ -14363,7 +14872,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Reboot a relational database.",
+        "description": "Reboots a relational database that is in a running state.",
         "privilege": "RebootRelationalDatabase",
         "resource_types": [
           {
@@ -14375,7 +14884,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes a specific static IP from your account.",
+        "description": "Deletes a static IP.",
         "privilege": "ReleaseStaticIp",
         "resource_types": [
           {
@@ -14387,7 +14896,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Starts a specific Amazon Lightsail instance from a stopped state. To restart an instance, use the reboot instance operation.",
+        "description": "Starts an instance that is in a stopped state.",
         "privilege": "StartInstance",
         "resource_types": [
           {
@@ -14399,7 +14908,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Start a relational database.",
+        "description": "Starts a relational database that is in a stopped state.",
         "privilege": "StartRelationalDatabase",
         "resource_types": [
           {
@@ -14411,7 +14920,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Stops a specific Amazon Lightsail instance that is currently running.",
+        "description": "Stops an instance that is in a running state.",
         "privilege": "StopInstance",
         "resource_types": [
           {
@@ -14423,7 +14932,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Stop a relational database.",
+        "description": "Stops a relational database that is in a running state.",
         "privilege": "StopRelationalDatabase",
         "resource_types": [
           {
@@ -14435,13 +14944,18 @@
       },
       {
         "access_level": "Write",
-        "description": "Tag a resource.",
+        "description": "Tags a resource.",
         "privilege": "TagResource",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "Disk"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "DiskSnapshot"
           },
           {
             "condition_keys": [],
@@ -14456,18 +14970,46 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
+            "resource_type": "InstanceSnapshot"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "KeyPair"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
             "resource_type": "LoadBalancer"
           },
           {
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "RelationalDatabase"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "RelationalDatabaseSnapshot"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "StaticIp"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
       {
         "access_level": "Write",
-        "description": "Attempts to unpeer the Lightsail VPC from the user's default VPC.",
+        "description": "Attempts to unpeer the Amazon Lightsail virtual private cloud (VPC) from the default VPC.",
         "privilege": "UnpeerVpc",
         "resource_types": [
           {
@@ -14479,13 +15021,18 @@
       },
       {
         "access_level": "Write",
-        "description": "Untag a resource.",
+        "description": "Untags a resource.",
         "privilege": "UntagResource",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "Disk"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "DiskSnapshot"
           },
           {
             "condition_keys": [],
@@ -14500,18 +15047,46 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
+            "resource_type": "InstanceSnapshot"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "KeyPair"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
             "resource_type": "LoadBalancer"
           },
           {
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "RelationalDatabase"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "RelationalDatabaseSnapshot"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "StaticIp"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
       {
         "access_level": "Write",
-        "description": "Updates a domain RecordSet after it is created.",
+        "description": "Updates a domain recordset after it is created.",
         "privilege": "UpdateDomainEntry",
         "resource_types": [
           {
@@ -14523,7 +15098,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Detach instances from load balancer",
+        "description": "Updates a load balancer attribute, such as the health check path and session stickiness.",
         "privilege": "UpdateLoadBalancerAttribute",
         "resource_types": [
           {
@@ -14535,7 +15110,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Update an existing relational database.",
+        "description": "Updates a relational database.",
         "privilege": "UpdateRelationalDatabase",
         "resource_types": [
           {
@@ -14547,7 +15122,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Update the parameters of the relational database.",
+        "description": "Updates the parameters of a relational database.",
         "privilege": "UpdateRelationalDatabaseParameters",
         "resource_types": [
           {
@@ -14561,43 +15136,69 @@
     "resources": [
       {
         "arn": "arn:${Partition}:lightsail:${Region}:${Account}:Domain/${Id}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "Domain"
       },
       {
         "arn": "arn:${Partition}:lightsail:${Region}:${Account}:Instance/${Id}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "Instance"
       },
       {
         "arn": "arn:${Partition}:lightsail:${Region}:${Account}:InstanceSnapshot/${Id}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "InstanceSnapshot"
       },
       {
         "arn": "arn:${Partition}:lightsail:${Region}:${Account}:KeyPair/${Id}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "KeyPair"
       },
       {
         "arn": "arn:${Partition}:lightsail:${Region}:${Account}:StaticIp/${Id}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "StaticIp"
       },
       {
         "arn": "arn:${Partition}:lightsail:${Region}:${Account}:Disk/${Id}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "Disk"
       },
       {
         "arn": "arn:${Partition}:lightsail:${Region}:${Account}:DiskSnapshot/${Id}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "DiskSnapshot"
       },
       {
         "arn": "arn:${Partition}:lightsail:${Region}:${Account}:LoadBalancer/${Id}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "LoadBalancer"
+      },
+      {
+        "arn": "arn:${Partition}:lightsail:${Region}:${Account}:PeeredVpc/${Id}",
+        "condition_keys": [],
+        "resource": "PeeredVpc"
+      },
+      {
+        "arn": "arn:${Partition}:lightsail:${Region}:${Account}:LoadBalancerTlsCertificate/${Id}",
+        "condition_keys": [],
+        "resource": "LoadBalancerTlsCertificate"
       },
       {
         "arn": "arn:${Partition}:lightsail:${Region}:${Account}:ExportSnapshotRecord/${Id}",
@@ -14611,12 +15212,16 @@
       },
       {
         "arn": "arn:${Partition}:lightsail:${Region}:${Account}:RelationalDatabase/${Id}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "RelationalDatabase"
       },
       {
         "arn": "arn:${Partition}:lightsail:${Region}:${Account}:RelationalDatabaseSnapshot/${Id}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "RelationalDatabaseSnapshot"
       }
     ],
@@ -17330,7 +17935,7 @@
         "resource": "log-group"
       },
       {
-        "arn": "arn:${Partition}:logs:${Region}:${Account}:log-group:${LogGroupName}:${LogStream}:${LogStreamName}",
+        "arn": "arn:${Partition}:logs:${Region}:${Account}:log-group:${LogGroupName}:log-stream:${LogStreamName}",
         "condition_keys": [],
         "resource": "log-stream"
       }
@@ -17978,6 +18583,18 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "cluster*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Enables the user to get a list of possible node configurations such as node type, number of nodes, and disk usage for the specified action type.",
+        "privilege": "DescribeNodeConfigurationOptions",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -19315,7 +19932,7 @@
     "privileges": [
       {
         "access_level": "Write",
-        "description": "Accepts the invitation to be monitored by a master Security Hub account.",
+        "description": "Grants permission to accept Security Hub invitations to become a member account.",
         "privilege": "AcceptInvitation",
         "resource_types": [
           {
@@ -19327,7 +19944,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Disables the standards specified by the standards subscription ARNs.",
+        "description": "Grants permission to disable standards in Security Hub.",
         "privilege": "BatchDisableStandards",
         "resource_types": [
           {
@@ -19339,7 +19956,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Enables the standards specified by the standards ARNs.",
+        "description": "Grants permission to enable standards in Security Hub.",
         "privilege": "BatchEnableStandards",
         "resource_types": [
           {
@@ -19351,7 +19968,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Imports security findings that are generated by the integrated third-party products into Security Hub.",
+        "description": "Grants permission to import findings into Security Hub from an integrated product.",
         "privilege": "BatchImportFindings",
         "resource_types": [
           {
@@ -19365,7 +19982,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Grants permission to create custom actions using the API. You can use custom actions on findings and insights in Security Hub to send them.",
+        "description": "Grants permission to create custom actions in Security Hub.",
         "privilege": "CreateActionTarget",
         "resource_types": [
           {
@@ -19377,7 +19994,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Creates an insight, which is a collection of related findings defined by an aggregation statement and optional filters.",
+        "description": "Grants permission to create insights in Security Hub. Insights are collections of related findings.",
         "privilege": "CreateInsight",
         "resource_types": [
           {
@@ -19389,7 +20006,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Creates member Security Hub accounts in the current AWS account (which becomes the master Security Hub account) that has Security Hub enabled.",
+        "description": "Grants permission to create member accounts in Security Hub.",
         "privilege": "CreateMembers",
         "resource_types": [
           {
@@ -19401,7 +20018,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Declines invitations that are sent to this AWS account (invitee) by the AWS accounts (inviters) that are specified by the account IDs.",
+        "description": "Grants permission to decline Security Hub invitations to become a member account.",
         "privilege": "DeclineInvitations",
         "resource_types": [
           {
@@ -19413,7 +20030,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Grants permission to delete custom actions using the API.",
+        "description": "Grants permission to delete custom actions in Security Hub.",
         "privilege": "DeleteActionTarget",
         "resource_types": [
           {
@@ -19425,7 +20042,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes an insight that is specified by the insight ARN.",
+        "description": "Grants permission to delete insights from Security Hub.",
         "privilege": "DeleteInsight",
         "resource_types": [
           {
@@ -19437,7 +20054,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes invitations that are sent to this AWS account (invitee) by the AWS accounts (inviters) that are specified by their account IDs.",
+        "description": "Grants permission to delete Security Hub invitations to become a member account.",
         "privilege": "DeleteInvitations",
         "resource_types": [
           {
@@ -19449,7 +20066,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes the Security Hub member accounts that are specified by the account IDs.",
+        "description": "Grants permission to delete Security Hub member accounts.",
         "privilege": "DeleteMembers",
         "resource_types": [
           {
@@ -19473,7 +20090,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Grants permission to retrieve information about the hub resource in your account using the API.",
+        "description": "Grants permission to retrieve information about the hub resource in your account.",
         "privilege": "DescribeHub",
         "resource_types": [
           {
@@ -19485,7 +20102,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns information about the products available that you can subscribe to.",
+        "description": "Grants permission to retrieve information about the available Security Hub product integrations.",
         "privilege": "DescribeProducts",
         "resource_types": [
           {
@@ -19497,7 +20114,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Stops you from being able to import findings generated by the integrated third-party providers into Security Hub.",
+        "description": "Grants permission to disable the findings importing for a Security Hub integrated product.",
         "privilege": "DisableImportFindingsForProduct",
         "resource_types": [
           {
@@ -19509,7 +20126,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Disables the AWS Security Hub Service.",
+        "description": "Grants permission to disable Security Hub.",
         "privilege": "DisableSecurityHub",
         "resource_types": [
           {
@@ -19521,7 +20138,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Disassociates the current Security Hub member account from its master account.",
+        "description": "Grants permission to a Security Hub member account to disassociate from the associated master account.",
         "privilege": "DisassociateFromMasterAccount",
         "resource_types": [
           {
@@ -19533,7 +20150,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Disassociates the Security Hub member accounts that are specified by the account IDs from their master account.",
+        "description": "Grants permission to disassociate Security Hub member accounts from the associated master account.",
         "privilege": "DisassociateMembers",
         "resource_types": [
           {
@@ -19545,7 +20162,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Enables you to import findings generated by the integrated third-party providers into Security Hub.",
+        "description": "Grants permission to enable the findings importing for a Security Hub integrated product.",
         "privilege": "EnableImportFindingsForProduct",
         "resource_types": [
           {
@@ -19557,7 +20174,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Enables the AWS Security Hub service.",
+        "description": "Grants permission to enable Security Hub.",
         "privilege": "EnableSecurityHub",
         "resource_types": [
           {
@@ -19572,7 +20189,7 @@
       },
       {
         "access_level": "List",
-        "description": "Lists and describes enabled standards.",
+        "description": "Grants permission to retrieve a list of the standards that are enabled in Security Hub.",
         "privilege": "GetEnabledStandards",
         "resource_types": [
           {
@@ -19584,7 +20201,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Lists and describes Security Hub-aggregated findings that are specified by filter attributes.",
+        "description": "Grants permission to retrieve a list of findings from Security Hub.",
         "privilege": "GetFindings",
         "resource_types": [
           {
@@ -19596,7 +20213,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Lists the results of the Security Hub insight specified by the insight ARN.",
+        "description": "Grants permission to retrieve insight results from Security Hub.",
         "privilege": "GetInsightResults",
         "resource_types": [
           {
@@ -19608,7 +20225,7 @@
       },
       {
         "access_level": "List",
-        "description": "Lists and describes insights that are specified by insight ARNs.",
+        "description": "Grants permission to retrieve Security Hub insights.",
         "privilege": "GetInsights",
         "resource_types": [
           {
@@ -19620,7 +20237,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns the count of all Security Hub membership invitations that were sent to the current member account, not including the currently accepted invitation.",
+        "description": "Grants permission to retrieve the count of Security Hub membership invitations sent to the account.",
         "privilege": "GetInvitationsCount",
         "resource_types": [
           {
@@ -19632,7 +20249,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Provides the details for the Security Hub master account to the current member account.",
+        "description": "Grants permission to retrieve details about the Security Hub master account.",
         "privilege": "GetMasterAccount",
         "resource_types": [
           {
@@ -19644,7 +20261,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns the details on the Security Hub member accounts that are specified by the account IDs.",
+        "description": "Grants permission to retrieve the details of Security Hub member accounts.",
         "privilege": "GetMembers",
         "resource_types": [
           {
@@ -19656,7 +20273,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Invites other AWS accounts to enable Security Hub and become Security Hub member accounts. When an account accepts the invitation and becomes a member account, the master account can view and manage the Security Hub findings of the member account.",
+        "description": "Grants permission to invite other AWS accounts to become Security Hub member accounts.",
         "privilege": "InviteMembers",
         "resource_types": [
           {
@@ -19668,7 +20285,7 @@
       },
       {
         "access_level": "List",
-        "description": "Lists all Security Hub integrated third-party findings providers.",
+        "description": "Grants permission to retrieve the Security Hub integrated products that are currently enabled.",
         "privilege": "ListEnabledProductsForImport",
         "resource_types": [
           {
@@ -19680,7 +20297,7 @@
       },
       {
         "access_level": "List",
-        "description": "Lists all Security Hub membership invitations that were sent to the current AWS account.",
+        "description": "Grants permission to retrieve the Security Hub invitations sent to the account.",
         "privilege": "ListInvitations",
         "resource_types": [
           {
@@ -19692,7 +20309,7 @@
       },
       {
         "access_level": "List",
-        "description": "Lists details about all member accounts for the current Security Hub master account.",
+        "description": "Grants permission to retrieve details about Security Hub member accounts associated with the master account.",
         "privilege": "ListMembers",
         "resource_types": [
           {
@@ -19716,7 +20333,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Grants permission to add tags to a resource using the API.",
+        "description": "Grants permission to add tags to a Security Hub resource.",
         "privilege": "TagResource",
         "resource_types": [
           {
@@ -19728,7 +20345,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Grants permission to remove tags from a resource using the API.",
+        "description": "Grants permission to remove tags from a Security Hub resource.",
         "privilege": "UntagResource",
         "resource_types": [
           {
@@ -19740,7 +20357,19 @@
       },
       {
         "access_level": "Write",
-        "description": "Updates the AWS Security Hub-aggregated findings specified by the filter attributes.",
+        "description": "Grants permission to update custom actions in Security Hub.",
+        "privilege": "UpdateActionTarget",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "action-target*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to update Security Hub findings.",
         "privilege": "UpdateFindings",
         "resource_types": [
           {
@@ -19752,7 +20381,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Updates the AWS Security Hub insight specified by the insight ARN.",
+        "description": "Grants permission to update insights in Security Hub.",
         "privilege": "UpdateInsight",
         "resource_types": [
           {
@@ -20477,6 +21106,372 @@
       }
     ],
     "service_name": "AWS Health APIs and Notifications"
+  },
+  {
+    "conditions": [],
+    "prefix": "deepracer",
+    "privileges": [
+      {
+        "access_level": "Write",
+        "description": "Grants permission to clone existing DeepRacer models",
+        "privilege": "CloneReinforcementLearningModel",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "reinforcement_learning_model*"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "track*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to create resources needed by DeepRacer on behalf of the user",
+        "privilege": "CreateAccountResources",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to submit DeepRacer models to be evaluated for leaderboards",
+        "privilege": "CreateLeaderboardSubmission",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "leaderboard*"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "reinforcement_learning_model*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to create reinforcement learning models for DeepRacer",
+        "privilege": "CreateReinforcementLearningModel",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "track*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to delete resources created by DeepRacer on behalf of the user",
+        "privilege": "DeleteAccountResources",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to delete DeepRacer models",
+        "privilege": "DeleteModel",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "reinforcement_learning_model*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to retrieve the resources created by DeepRacer on behalf of the user",
+        "privilege": "GetAccountResources",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to retrieve the user's alias for submitting DeepRacer models to leaderboards",
+        "privilege": "GetAlias",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to retrieve information about existing DeepRacer models' evaluation jobs",
+        "privilege": "GetEvaluation",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "evaluation_job*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to retrieve information about how the latest submitted DeepRacer model for a user performed on a leaderboard",
+        "privilege": "GetLatestUserSubmission",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "leaderboard*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to retrieve information about leaderboards",
+        "privilege": "GetLeaderboard",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "leaderboard*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to retrieve information about existing DeepRacer models",
+        "privilege": "GetModel",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "reinforcement_learning_model*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to retrieve information about the performance of a user's DeepRacer model that got placed on a leaderboard",
+        "privilege": "GetRankedUserSubmission",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "leaderboard*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to retrieve information about DeepRacer tracks",
+        "privilege": "GetTrack",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "track*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to retrieve information about existing DeepRacer models' training job",
+        "privilege": "GetTrainingJob",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "training_job*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to list DeepRacer models' evaluation jobs",
+        "privilege": "ListEvaluations",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "reinforcement_learning_model*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to list all the submissions of DeepRacer models of a user on a leaderboard",
+        "privilege": "ListLeaderboardSubmissions",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "leaderboard*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to list all the available leaderboards",
+        "privilege": "ListLeaderboards",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to list all existing DeepRacer models",
+        "privilege": "ListModels",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to list all DeepRacer tracks",
+        "privilege": "ListTracks",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to list DeepRacer models' training jobs",
+        "privilege": "ListTrainingJobs",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "reinforcement_learning_model*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to set the user's alias for submitting DeepRacer models to leaderboards",
+        "privilege": "SetAlias",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to evaluate DeepRacer models in a simulated environment",
+        "privilege": "StartEvaluation",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "reinforcement_learning_model*"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "track*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to stop DeepRacer model evaluations",
+        "privilege": "StopEvaluation",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "evaluation_job*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to stop training DeepRacer models",
+        "privilege": "StopTrainingReinforcementLearningModel",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "reinforcement_learning_model*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to test reward functions for correctness",
+        "privilege": "TestRewardFunction",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      }
+    ],
+    "resources": [
+      {
+        "arn": "arn:${Partition}:deepracer:${Region}:${Account}:model/reinforcement_learning/${ResourceId}",
+        "condition_keys": [],
+        "resource": "reinforcement_learning_model"
+      },
+      {
+        "arn": "arn:${Partition}:deepracer:${Region}:${Account}:training_job/${ResourceId}",
+        "condition_keys": [],
+        "resource": "training_job"
+      },
+      {
+        "arn": "arn:${Partition}:deepracer:${Region}:${Account}: evaluation_job/${ResourceId}",
+        "condition_keys": [],
+        "resource": "evaluation_job"
+      },
+      {
+        "arn": "arn:${Partition}:deepracer:${Region}:${Account}:leaderboard_evaluation_job/${ResourceId}",
+        "condition_keys": [],
+        "resource": "leaderboard_evaluation_job"
+      },
+      {
+        "arn": "arn:${Partition}:deepracer:${Region}::track/${ResourceId}",
+        "condition_keys": [],
+        "resource": "track"
+      },
+      {
+        "arn": "arn:${Partition}:deepracer:${Region}::leaderboard/${ResourceId}",
+        "condition_keys": [],
+        "resource": "leaderboard"
+      }
+    ],
+    "service_name": "AWS DeepRacer"
   },
   {
     "conditions": [
@@ -21633,6 +22628,13 @@
       }
     ],
     "service_name": "AWS Elemental MediaStore"
+  },
+  {
+    "conditions": [],
+    "prefix": "support",
+    "privileges": [],
+    "resources": [],
+    "service_name": "AWS Support"
   },
   {
     "conditions": [],
@@ -30585,6 +31587,25 @@
       },
       {
         "access_level": "Write",
+        "description": "Grants permission to start a telemetry session.",
+        "privilege": "StartTelemetrySession",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "container-instance*"
+          },
+          {
+            "condition_keys": [
+              "ecs:cluster"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Stops a running task.",
         "privilege": "StopTask",
         "resource_types": [
@@ -31647,6 +32668,30 @@
         "access_level": "Write",
         "description": "Grants permission to immediately stop the specified streaming session",
         "privilege": "ExpireSession",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to retrieve a list that describes one or more specified image builders, if the image builder names are provided. Otherwise, all image builders in the account are described",
+        "privilege": "GetImageBuilders",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to upload theme assets",
+        "privilege": "GetParametersForThemeAssetUpload",
         "resource_types": [
           {
             "condition_keys": [],
@@ -37268,6 +38313,18 @@
       },
       {
         "access_level": "Read",
+        "description": "Gets messages from AWS Server Migration Service to Server Migration Connector.",
+        "privilege": "GetMessages",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
         "description": "Get all existing jobs to migrate on-premise servers onto AWS.",
         "privilege": "GetReplicationJobs",
         "resource_types": [
@@ -37354,6 +38411,18 @@
         "access_level": "Write",
         "description": "Create or update replication configuration for an existing application.",
         "privilege": "PutAppReplicationConfiguration",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Send message from Server Migration Connector to AWS Server Migration Service.",
+        "privilege": "SendMessage",
         "resource_types": [
           {
             "condition_keys": [],
@@ -37547,6 +38616,18 @@
             ],
             "dependent_actions": [],
             "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Gives WebAcl permissions to WAF",
+        "privilege": "SetWebACL",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "apigateway-general*"
           }
         ]
       },
@@ -39357,7 +40438,7 @@
       {
         "condition": "ec2:EbsOptimized",
         "description": "Whether the instance is enabled for EBS-optimization.",
-        "type": "String"
+        "type": "Bool"
       },
       {
         "condition": "ec2:ElasticGpuType",
@@ -39367,7 +40448,7 @@
       {
         "condition": "ec2:Encrypted",
         "description": "Whether the volume is encrypted.",
-        "type": "String"
+        "type": "Bool"
       },
       {
         "condition": "ec2:ImageType",
@@ -39392,7 +40473,7 @@
       {
         "condition": "ec2:IsLaunchTemplateResource",
         "description": "Launch template resource flag.",
-        "type": "String"
+        "type": "Bool"
       },
       {
         "condition": "ec2:LaunchTemplate",
@@ -39437,7 +40518,7 @@
       {
         "condition": "ec2:Public",
         "description": "Whether the image is public.",
-        "type": "String"
+        "type": "Bool"
       },
       {
         "condition": "ec2:Region",
@@ -40760,6 +41841,36 @@
               "ec2:ResourceTag/${TagKey}"
             ],
             "dependent_actions": [],
+            "resource_type": "traffic-mirror-filter"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys",
+              "ec2:Region",
+              "ec2:ResourceTag/${TagKey}"
+            ],
+            "dependent_actions": [],
+            "resource_type": "traffic-mirror-session"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys",
+              "ec2:Region",
+              "ec2:ResourceTag/${TagKey}"
+            ],
+            "dependent_actions": [],
+            "resource_type": "traffic-mirror-target"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys",
+              "ec2:Region",
+              "ec2:ResourceTag/${TagKey}"
+            ],
+            "dependent_actions": [],
             "resource_type": "transit-gateway"
           },
           {
@@ -40835,6 +41946,108 @@
             ],
             "dependent_actions": [],
             "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Creates a Traffic Mirror filter.",
+        "privilege": "CreateTrafficMirrorFilter",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys",
+              "ec2:Region"
+            ],
+            "dependent_actions": [],
+            "resource_type": "traffic-mirror-filter*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Creates a Traffic Mirror filter rule.",
+        "privilege": "CreateTrafficMirrorFilterRule",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "ec2:Region",
+              "ec2:ResourceTag/${TagKey}"
+            ],
+            "dependent_actions": [],
+            "resource_type": "traffic-mirror-filter*"
+          },
+          {
+            "condition_keys": [
+              "ec2:Region"
+            ],
+            "dependent_actions": [],
+            "resource_type": "traffic-mirror-filter-rule*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Creates a Traffic Mirror session.",
+        "privilege": "CreateTrafficMirrorSession",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "ec2:Region",
+              "ec2:ResourceTag/${TagKey}"
+            ],
+            "dependent_actions": [],
+            "resource_type": "network-interface*"
+          },
+          {
+            "condition_keys": [
+              "ec2:Region",
+              "ec2:ResourceTag/${TagKey}"
+            ],
+            "dependent_actions": [],
+            "resource_type": "traffic-mirror-filter*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys",
+              "ec2:Region"
+            ],
+            "dependent_actions": [],
+            "resource_type": "traffic-mirror-session*"
+          },
+          {
+            "condition_keys": [
+              "ec2:Region",
+              "ec2:ResourceTag/${TagKey}"
+            ],
+            "dependent_actions": [],
+            "resource_type": "traffic-mirror-target*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Creates a Traffic Mirror target.",
+        "privilege": "CreateTrafficMirrorTarget",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys",
+              "ec2:Region"
+            ],
+            "dependent_actions": [],
+            "resource_type": "traffic-mirror-target*"
+          },
+          {
+            "condition_keys": [
+              "ec2:Region",
+              "ec2:ResourceTag/${TagKey}"
+            ],
+            "dependent_actions": [],
+            "resource_type": "network-interface"
           }
         ]
       },
@@ -41647,6 +42860,73 @@
       },
       {
         "access_level": "Write",
+        "description": "Deletes the specified Traffic Mirror filter.",
+        "privilege": "DeleteTrafficMirrorFilter",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "ec2:Region",
+              "ec2:ResourceTag/${TagKey}"
+            ],
+            "dependent_actions": [],
+            "resource_type": "traffic-mirror-filter*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Deletes the specified Traffic Mirror rule.",
+        "privilege": "DeleteTrafficMirrorFilterRule",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "ec2:Region",
+              "ec2:ResourceTag/${TagKey}"
+            ],
+            "dependent_actions": [],
+            "resource_type": "traffic-mirror-filter*"
+          },
+          {
+            "condition_keys": [
+              "ec2:Region"
+            ],
+            "dependent_actions": [],
+            "resource_type": "traffic-mirror-filter-rule*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Deletes the specified Traffic Mirror session.",
+        "privilege": "DeleteTrafficMirrorSession",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "ec2:Region",
+              "ec2:ResourceTag/${TagKey}"
+            ],
+            "dependent_actions": [],
+            "resource_type": "traffic-mirror-session*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Deletes the specified Traffic Mirror target.",
+        "privilege": "DeleteTrafficMirrorTarget",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "ec2:Region",
+              "ec2:ResourceTag/${TagKey}"
+            ],
+            "dependent_actions": [],
+            "resource_type": "traffic-mirror-target*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Deletes the specified transit gateway.",
         "privilege": "DeleteTransitGateway",
         "resource_types": [
@@ -41776,7 +43056,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Description for DeleteVpcPeeringConnection",
+        "description": "Deletes a VPC peering connection.",
         "privilege": "DeleteVpcPeeringConnection",
         "resource_types": [
           {
@@ -42731,6 +44011,42 @@
         "access_level": "Read",
         "description": "Describes one or more of the tags for your EC2 resources.",
         "privilege": "DescribeTags",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Describes one or more Traffic Mirror filters.",
+        "privilege": "DescribeTrafficMirrorFilters",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Describes one or more Traffic Mirror sessions.",
+        "privilege": "DescribeTrafficMirrorSessions",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Describes one or more Traffic Mirror targets.",
+        "privilege": "DescribeTrafficMirrorTargets",
         "resource_types": [
           {
             "condition_keys": [],
@@ -43889,6 +45205,74 @@
       },
       {
         "access_level": "Write",
+        "description": "Allows or restricts mirroring network services.",
+        "privilege": "ModifyTrafficMirrorFilterNetworkServices",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "ec2:Region",
+              "ec2:ResourceTag/${TagKey}"
+            ],
+            "dependent_actions": [],
+            "resource_type": "traffic-mirror-filter*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Modifies the specified Traffic Mirror rule.",
+        "privilege": "ModifyTrafficMirrorFilterRule",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "ec2:Region",
+              "ec2:ResourceTag/${TagKey}"
+            ],
+            "dependent_actions": [],
+            "resource_type": "traffic-mirror-filter*"
+          },
+          {
+            "condition_keys": [
+              "ec2:Region"
+            ],
+            "dependent_actions": [],
+            "resource_type": "traffic-mirror-filter-rule*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Modifies a Traffic Mirror session.",
+        "privilege": "ModifyTrafficMirrorSession",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "ec2:Region",
+              "ec2:ResourceTag/${TagKey}"
+            ],
+            "dependent_actions": [],
+            "resource_type": "traffic-mirror-session*"
+          },
+          {
+            "condition_keys": [
+              "ec2:Region",
+              "ec2:ResourceTag/${TagKey}"
+            ],
+            "dependent_actions": [],
+            "resource_type": "traffic-mirror-filter"
+          },
+          {
+            "condition_keys": [
+              "ec2:Region",
+              "ec2:ResourceTag/${TagKey}"
+            ],
+            "dependent_actions": [],
+            "resource_type": "traffic-mirror-target"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Modifies the specified VPC attachment.",
         "privilege": "ModifyTransitGatewayVpcAttachment",
         "resource_types": [
@@ -45030,6 +46414,43 @@
         "resource": "subnet"
       },
       {
+        "arn": "arn:${Partition}:ec2:${Region}:${Account}:traffic-mirror-session/${TrafficMirrorSessionId}",
+        "condition_keys": [
+          "aws:RequestTag/${TagKey}",
+          "aws:TagKeys",
+          "ec2:Region",
+          "ec2:ResourceTag/${TagKey}"
+        ],
+        "resource": "traffic-mirror-session"
+      },
+      {
+        "arn": "arn:${Partition}:ec2:${Region}:${Account}:traffic-mirror-target/${TrafficMirrorTargetId}",
+        "condition_keys": [
+          "aws:RequestTag/${TagKey}",
+          "aws:TagKeys",
+          "ec2:Region",
+          "ec2:ResourceTag/${TagKey}"
+        ],
+        "resource": "traffic-mirror-target"
+      },
+      {
+        "arn": "arn:${Partition}:ec2:${Region}:${Account}:traffic-mirror-filter/${TrafficMirrorFilterId}",
+        "condition_keys": [
+          "aws:RequestTag/${TagKey}",
+          "aws:TagKeys",
+          "ec2:Region",
+          "ec2:ResourceTag/${TagKey}"
+        ],
+        "resource": "traffic-mirror-filter"
+      },
+      {
+        "arn": "arn:${Partition}:ec2:${Region}:${Account}:traffic-mirror-filter-rule/${TrafficMirrorFilterRuleId}",
+        "condition_keys": [
+          "ec2:Region"
+        ],
+        "resource": "traffic-mirror-filter-rule"
+      },
+      {
         "arn": "arn:${Partition}:ec2:${Region}:${Account}:transit-gateway-attachment/${TransitGatewayAttachmentId}",
         "condition_keys": [
           "aws:RequestTag/${TagKey}",
@@ -45393,7 +46814,23 @@
     "service_name": "AWS Marketplace Metering Service"
   },
   {
-    "conditions": [],
+    "conditions": [
+      {
+        "condition": "aws:RequestTag/${TagKey}",
+        "description": "Filters actions based on the presence of tag key-value pairs in the request",
+        "type": "String"
+      },
+      {
+        "condition": "aws:ResourceTag/${TagKey}",
+        "description": "Filters actions based on tag key-value pairs attached to the resource",
+        "type": "String"
+      },
+      {
+        "condition": "aws:TagKeys",
+        "description": "Filters actions based on the presence of tag keys in the request",
+        "type": "String"
+      }
+    ],
     "prefix": "codebuild",
     "privileges": [
       {
@@ -45441,6 +46878,14 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "project*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -45657,6 +47102,14 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "project*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -45681,7 +47134,9 @@
       },
       {
         "arn": "arn:${Partition}:codebuild:${Region}:${Account}:project/${ProjectName}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "project"
       }
     ],
@@ -45768,6 +47223,21 @@
         "access_level": "Write",
         "description": "Creates an endpoint for an Amazon S3 bucket.",
         "privilege": "CreateLocationS3",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Creates an endpoint for an SMB file system.",
+        "privilege": "CreateLocationSmb",
         "resource_types": [
           {
             "condition_keys": [
@@ -45870,6 +47340,18 @@
         "access_level": "Read",
         "description": "Returns metadata, such as bucket name, about an Amazon S3 bucket sync location.",
         "privilege": "DescribeLocationS3",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "location*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Returns metadata, such as the path information, about an SMB sync location.",
+        "privilege": "DescribeLocationSmb",
         "resource_types": [
           {
             "condition_keys": [],
@@ -49360,6 +50842,13 @@
       }
     ],
     "service_name": "AWS Global Accelerator"
+  },
+  {
+    "conditions": [],
+    "prefix": "iq-permission",
+    "privileges": [],
+    "resources": [],
+    "service_name": "AWS IQ Permissions"
   },
   {
     "conditions": [
@@ -53274,6 +54763,26 @@
   },
   {
     "conditions": [],
+    "prefix": "backup-storage",
+    "privileges": [
+      {
+        "access_level": "Write",
+        "description": "Associates a KMS key to a backup vault",
+        "privilege": "Mount",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      }
+    ],
+    "resources": [],
+    "service_name": "AWS Backup storage"
+  },
+  {
+    "conditions": [],
     "prefix": "cur",
     "privileges": [
       {
@@ -53999,6 +55508,50 @@
       }
     ],
     "service_name": "AWS IoT Analytics"
+  },
+  {
+    "conditions": [],
+    "prefix": "aws-marketplace",
+    "privileges": [
+      {
+        "access_level": "Read",
+        "description": "Describes Image Builds identified by a build Id",
+        "privilege": "DescribeBuilds",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Lists Image Builds.",
+        "privilege": "ListBuilds",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Starts an Image Build",
+        "privilege": "StartBuild",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      }
+    ],
+    "resources": [],
+    "service_name": "AWS Marketplace Image Building Service"
   },
   {
     "conditions": [],
@@ -58200,6 +59753,26 @@
     "service_name": "Amazon Comprehend"
   },
   {
+    "conditions": [],
+    "prefix": "aws-marketplace",
+    "privileges": [
+      {
+        "access_level": "Read",
+        "description": "Retrieves entitlement values for a given product. The results can be filtered based on customer identifier or product dimensions",
+        "privilege": "GetEntitlements",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      }
+    ],
+    "resources": [],
+    "service_name": "AWS Marketplace Entitlement Service"
+  },
+  {
     "conditions": [
       {
         "condition": "aws:RequestTag/${TagKey}",
@@ -58265,7 +59838,7 @@
       },
       {
         "access_level": "Read",
-        "description": "This action lists tags for an AESOP resource.",
+        "description": "This action lists tags for an Elemental Appliances and Software resource.",
         "privilege": "ListTagsForResource",
         "resource_types": [
           {
@@ -58277,7 +59850,7 @@
       },
       {
         "access_level": "Tagging",
-        "description": "This action tags an AESOP resource.",
+        "description": "This action tags an Elemental Appliances and Software resource.",
         "privilege": "TagResource",
         "resource_types": [
           {
@@ -58297,7 +59870,7 @@
       },
       {
         "access_level": "Tagging",
-        "description": "This action removes a tag from an AESOP resource.",
+        "description": "This action removes a tag from an Elemental Appliances and Software resource.",
         "privilege": "UntagResource",
         "resource_types": [
           {
@@ -58337,34 +59910,6 @@
       }
     ],
     "service_name": "AWS Elemental Appliances and Software"
-  },
-  {
-    "conditions": [
-      {
-        "condition": "ec2:osuser",
-        "description": "Specifies the OS user that can push the SSH public key to the instance.",
-        "type": "String"
-      }
-    ],
-    "prefix": "ec2-instance-connect",
-    "privileges": [
-      {
-        "access_level": "Write",
-        "description": "Pushes the SSH public key to the instance where it remains for 60 seconds.",
-        "privilege": "SendSSHPublicKey",
-        "resource_types": [
-          {
-            "condition_keys": [
-              "ec2:osuser"
-            ],
-            "dependent_actions": [],
-            "resource_type": ""
-          }
-        ]
-      }
-    ],
-    "resources": [],
-    "service_name": "Amazon EC2 Instance Connect Service"
   },
   {
     "conditions": [],
@@ -59853,6 +61398,18 @@
       },
       {
         "access_level": "Read",
+        "description": "Validate a mobile hub project.",
+        "privilege": "ValidateProject",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
         "description": "Verify AWS Mobile Hub is enabled in the account",
         "privilege": "VerifyServiceRole",
         "resource_types": [
@@ -59872,6 +61429,52 @@
       }
     ],
     "service_name": "AWS Mobile Hub"
+  },
+  {
+    "conditions": [],
+    "prefix": "iq",
+    "privileges": [],
+    "resources": [],
+    "service_name": "AWS IQ"
+  },
+  {
+    "conditions": [
+      {
+        "condition": "ec2:osuser",
+        "description": "Filters access by specifying the default user name for the AMI that you used to launch your instance",
+        "type": "String"
+      }
+    ],
+    "prefix": "ec2-instance-connect",
+    "privileges": [
+      {
+        "access_level": "Write",
+        "description": "Grants permission to push the SSH public key to the instance metadata where it remains for 60 seconds.",
+        "privilege": "SendSSHPublicKey",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "instance*"
+          },
+          {
+            "condition_keys": [
+              "ec2:osuser"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      }
+    ],
+    "resources": [
+      {
+        "arn": "arn:${Partition}:ec2:${Region}:${Account}:instance/${InstanceId}",
+        "condition_keys": [],
+        "resource": "instance"
+      }
+    ],
+    "service_name": "Amazon EC2 Instance Connect"
   },
   {
     "conditions": [],
@@ -66248,7 +67851,23 @@
     "service_name": "Amazon Managed Streaming for Kafka"
   },
   {
-    "conditions": [],
+    "conditions": [
+      {
+        "condition": "aws:RequestTag/${TagKey}",
+        "description": "Filters access by a key that is present in the request the user makes to the EKS service.",
+        "type": "String"
+      },
+      {
+        "condition": "aws:ResourceTag/${TagKey}",
+        "description": "Filters access by a tag key and value pair.",
+        "type": "String"
+      },
+      {
+        "condition": "aws:TagKeys",
+        "description": "Filters access by the list of all the tag key names present in the request the user makes to the EKS service.",
+        "type": "String"
+      }
+    ],
     "prefix": "eks",
     "privileges": [
       {
@@ -66257,7 +67876,10 @@
         "privilege": "CreateCluster",
         "resource_types": [
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
             "dependent_actions": [],
             "resource_type": ""
           }
@@ -66313,6 +67935,18 @@
       },
       {
         "access_level": "List",
+        "description": "List tags for the specified resource.",
+        "privilege": "ListTagsForResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "cluster"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
         "description": "Lists the updates for a given Amazon EKS cluster (in the specified or default region).",
         "privilege": "ListUpdates",
         "resource_types": [
@@ -66320,6 +67954,45 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "cluster*"
+          }
+        ]
+      },
+      {
+        "access_level": "Tagging",
+        "description": "Tags the specified resource.",
+        "privilege": "TagResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "cluster"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Tagging",
+        "description": "Untags the specified resource.",
+        "privilege": "UntagResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "cluster"
+          },
+          {
+            "condition_keys": [
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -66351,7 +68024,9 @@
     "resources": [
       {
         "arn": "arn:${Partition}:eks:${Region}:${Account}:cluster/${ClusterName}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "cluster"
       }
     ],
@@ -79548,6 +81223,11 @@
         "type": "String"
       },
       {
+        "condition": "cloudformation:ImportResourceTypes",
+        "description": "The template resource types, such as <code>AWS::EC2::Instance</code>. Use to control which resource types IAM users can work with when they want to import a resource in a stack",
+        "type": "String"
+      },
+      {
         "condition": "cloudformation:ResourceTypes",
         "description": "The template resource types, such as <code>AWS::EC2::Instance</code>. Use to control which resource types IAM users can work with when they create or update a stack",
         "type": "String"
@@ -80136,6 +81816,40 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "stackset*"
+          }
+        ]
+      },
+      {
+        "access_level": "Tagging",
+        "description": "Tagging cloudformation resources.",
+        "privilege": "TagResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "stack"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "stackset"
+          }
+        ]
+      },
+      {
+        "access_level": "Tagging",
+        "description": "Untagging cloudformation resources.",
+        "privilege": "UntagResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "stack"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "stackset"
           }
         ]
       },
@@ -81885,6 +83599,18 @@
     "privileges": [
       {
         "access_level": "Write",
+        "description": "The AcceptQualificationRequest operation grants a Worker's request for a Qualification",
+        "privilege": "AcceptQualificationRequest",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "The ApproveAssignment operation approves the results of a completed assignment",
         "privilege": "ApproveAssignment",
         "resource_types": [
@@ -81897,8 +83623,8 @@
       },
       {
         "access_level": "Write",
-        "description": "The ApproveRejectedAssignment operation approves an assignment that was previously rejected",
-        "privilege": "ApproveRejectedAssignment",
+        "description": "The AssociateQualificationWithWorker operation gives a Worker a Qualification",
+        "privilege": "AssociateQualificationWithWorker",
         "resource_types": [
           {
             "condition_keys": [],
@@ -81909,8 +83635,8 @@
       },
       {
         "access_level": "Write",
-        "description": "The AssignQualification operation gives a Worker a Qualification",
-        "privilege": "AssignQualification",
+        "description": "The CreateAdditionalAssignmentsForHIT operation increases the maximum number of assignments of an existing HIT",
+        "privilege": "CreateAdditionalAssignmentsForHIT",
         "resource_types": [
           {
             "condition_keys": [],
@@ -81921,32 +83647,32 @@
       },
       {
         "access_level": "Write",
-        "description": "The BlockWorker operation allows you to prevent a Worker from working on your HITs",
-        "privilege": "BlockWorker",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": ""
-          }
-        ]
-      },
-      {
-        "access_level": "Write",
-        "description": "The BlockWorker operation allows you to prevent a Worker from working on your HITs",
-        "privilege": "ChangeHITTypeOfHIT",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": ""
-          }
-        ]
-      },
-      {
-        "access_level": "Write",
-        "description": "The CreateHIT operation creates a new Human Intelligence Task (HIT)",
+        "description": "The CreateHIT operation creates a new HIT (Human Intelligence Task)",
         "privilege": "CreateHIT",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "The CreateHITType operation creates a new HIT type",
+        "privilege": "CreateHITType",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "The CreateHITWithHITType operation creates a new Human Intelligence Task (HIT) using an existing HITTypeID generated by the CreateHITType operation",
+        "privilege": "CreateHITWithHITType",
         "resource_types": [
           {
             "condition_keys": [],
@@ -81969,8 +83695,8 @@
       },
       {
         "access_level": "Write",
-        "description": "The DisableHIT operation removes a HIT from the Amazon Mechanical Turk marketplace, approves any submitted assignments pending approval or rejection, and disposes of the HIT and all assignment data",
-        "privilege": "DisableHIT",
+        "description": "The CreateWorkerBlock operation allows you to prevent a Worker from working on your HITs",
+        "privilege": "CreateWorkerBlock",
         "resource_types": [
           {
             "condition_keys": [],
@@ -81981,8 +83707,8 @@
       },
       {
         "access_level": "Write",
-        "description": "The DisposeHIT operation disposes of a HIT that is no longer needed",
-        "privilege": "DisposeHIT",
+        "description": "The DeleteHIT operation disposes of a HIT that is no longer needed",
+        "privilege": "DeleteHIT",
         "resource_types": [
           {
             "condition_keys": [],
@@ -81993,8 +83719,8 @@
       },
       {
         "access_level": "Write",
-        "description": "The DisposeQualificationType operation disposes a Qualification type and disposes any HIT types that are associated with the Qualification type",
-        "privilege": "DisposeQualificationType",
+        "description": "The DeleteQualificationType disposes a Qualification type and disposes any HIT types that are associated with the Qualification type",
+        "privilege": "DeleteQualificationType",
         "resource_types": [
           {
             "condition_keys": [],
@@ -82005,8 +83731,8 @@
       },
       {
         "access_level": "Write",
-        "description": "The ExtendHIT operation increases the maximum number of assignments, or extends the expiration date, of an existing HIT",
-        "privilege": "ExtendHIT",
+        "description": "The DeleteWorkerBlock operation allows you to reinstate a blocked Worker to work on your HITs",
+        "privilege": "DeleteWorkerBlock",
         "resource_types": [
           {
             "condition_keys": [],
@@ -82017,8 +83743,8 @@
       },
       {
         "access_level": "Write",
-        "description": "The ForceExpireHIT operation causes a HIT to expire immediately, as if the LifetimeInSeconds parameter of the HIT had elapsed",
-        "privilege": "ForceExpireHIT",
+        "description": "The DisassociateQualificationFromWorker revokes a previously granted Qualification from a user",
+        "privilege": "DisassociateQualificationFromWorker",
         "resource_types": [
           {
             "condition_keys": [],
@@ -82041,44 +83767,8 @@
       },
       {
         "access_level": "Read",
-        "description": "The GetAssignment operation retrieves an assignment with an AssignmentStatus value of Submitted, Approved, or Rejected, using the assignment's ID",
+        "description": "The GetAssignment retrieves an assignment with an AssignmentStatus value of Submitted, Approved, or Rejected, using the assignment's ID",
         "privilege": "GetAssignment",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": ""
-          }
-        ]
-      },
-      {
-        "access_level": "Read",
-        "description": "The GetAssignmentsForHIT operation retrieves completed assignments for a HIT",
-        "privilege": "GetAssignmentsForHIT",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": ""
-          }
-        ]
-      },
-      {
-        "access_level": "Read",
-        "description": "The GetBlockedWorkers operation retrieves a list of Workers who are blocked from working on your HITs",
-        "privilege": "GetBlockedWorkers",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": ""
-          }
-        ]
-      },
-      {
-        "access_level": "Read",
-        "description": "The GetBonusPayments operation retrieves the amounts of bonuses you have paid to Workers for a given HIT or assignment",
-        "privilege": "GetBonusPayments",
         "resource_types": [
           {
             "condition_keys": [],
@@ -82113,30 +83803,6 @@
       },
       {
         "access_level": "Read",
-        "description": "The GetHITsForQualificationType operation returns the HITs that use the given Qualification type for a Qualification requirement",
-        "privilege": "GetHITsForQualificationType",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": ""
-          }
-        ]
-      },
-      {
-        "access_level": "Read",
-        "description": "The GetQualificationRequests operation retrieves requests for Qualifications of a particular Qualification type",
-        "privilege": "GetQualificationRequests",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": ""
-          }
-        ]
-      },
-      {
-        "access_level": "Read",
         "description": "The GetQualificationScore operation returns the value of a Worker's Qualification for a given Qualification type",
         "privilege": "GetQualificationScore",
         "resource_types": [
@@ -82160,9 +83826,9 @@
         ]
       },
       {
-        "access_level": "Read",
-        "description": "The GetQualificationsForQualificationType operation returns all of the Qualifications granted to Workers for a given Qualification type",
-        "privilege": "GetQualificationsForQualificationType",
+        "access_level": "List",
+        "description": "The ListAssignmentsForHIT operation retrieves completed assignments for a HIT",
+        "privilege": "ListAssignmentsForHIT",
         "resource_types": [
           {
             "condition_keys": [],
@@ -82172,9 +83838,9 @@
         ]
       },
       {
-        "access_level": "Read",
-        "description": "The GetRequesterStatistic operation retrieves statistics about you (the Requester calling the operation)",
-        "privilege": "GetRequesterStatistic",
+        "access_level": "List",
+        "description": "The ListBonusPayments operation retrieves the amounts of bonuses you have paid to Workers for a given HIT or assignment",
+        "privilege": "ListBonusPayments",
         "resource_types": [
           {
             "condition_keys": [],
@@ -82184,9 +83850,9 @@
         ]
       },
       {
-        "access_level": "Read",
-        "description": "The GetRequesterWorkerStatistic operation retrieves statistics about a specific Worker who has completed Human Intelligence Tasks (HITs) for you",
-        "privilege": "GetRequesterWorkerStatistic",
+        "access_level": "List",
+        "description": "The ListHITs operation returns all of a Requester's HITs",
+        "privilege": "ListHITs",
         "resource_types": [
           {
             "condition_keys": [],
@@ -82196,9 +83862,9 @@
         ]
       },
       {
-        "access_level": "Read",
-        "description": "The GetReviewResultsForHIT operation retrieves the computed results and the actions taken in the course of executing your Review Policies during a CreateHIT operation",
-        "privilege": "GetReviewResultsForHIT",
+        "access_level": "List",
+        "description": "The ListHITsForQualificationType operation returns the HITs that use the given QualififcationType for a QualificationRequirement",
+        "privilege": "ListHITsForQualificationType",
         "resource_types": [
           {
             "condition_keys": [],
@@ -82208,9 +83874,9 @@
         ]
       },
       {
-        "access_level": "Read",
-        "description": "The GetReviewableHITs operation retrieves the HITs with Status equal to Reviewable or Status equal to Reviewing that belong to the Requester calling the operation",
-        "privilege": "GetReviewableHITs",
+        "access_level": "List",
+        "description": "The ListQualificationRequests operation retrieves requests for Qualifications of a particular Qualification type",
+        "privilege": "ListQualificationRequests",
         "resource_types": [
           {
             "condition_keys": [],
@@ -82220,9 +83886,9 @@
         ]
       },
       {
-        "access_level": "Write",
-        "description": "The GrantBonus operation issues a payment of money from your account to a Worker",
-        "privilege": "GrantBonus",
+        "access_level": "List",
+        "description": "The ListQualificationTypes operation searches for Qualification types using the specified search query, and returns a list of Qualification types",
+        "privilege": "ListQualificationTypes",
         "resource_types": [
           {
             "condition_keys": [],
@@ -82232,9 +83898,45 @@
         ]
       },
       {
-        "access_level": "Write",
-        "description": "The GrantQualification operation grants a Worker's request for a Qualification",
-        "privilege": "GrantQualification",
+        "access_level": "List",
+        "description": "The ListReviewPolicyResultsForHIT operation retrieves the computed results and the actions taken in the course of executing your Review Policies during a CreateHIT operation",
+        "privilege": "ListReviewPolicyResultsForHIT",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "The ListReviewableHITs operation returns all of a Requester's HITs that have not been approved or rejected",
+        "privilege": "ListReviewableHITs",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "The ListWorkersBlocks operation retrieves a list of Workers who are blocked from working on your HITs",
+        "privilege": "ListWorkerBlocks",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "The ListWorkersWithQualificationType operation returns all of the Workers with a given Qualification type",
+        "privilege": "ListWorkersWithQualificationType",
         "resource_types": [
           {
             "condition_keys": [],
@@ -82247,18 +83949,6 @@
         "access_level": "Write",
         "description": "The NotifyWorkers operation sends an email to one or more Workers that you specify with the Worker ID",
         "privilege": "NotifyWorkers",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": ""
-          }
-        ]
-      },
-      {
-        "access_level": "Write",
-        "description": "The RegisterHITType operation creates a new HIT type",
-        "privilege": "RegisterHITType",
         "resource_types": [
           {
             "condition_keys": [],
@@ -82293,32 +83983,8 @@
       },
       {
         "access_level": "Write",
-        "description": "The RevokeQualification operation revokes a previously granted Qualification from a user",
-        "privilege": "RevokeQualification",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": ""
-          }
-        ]
-      },
-      {
-        "access_level": "Read",
-        "description": "The SearchHITs operation returns all of a Requester's HITs, on behalf of the Requester",
-        "privilege": "SearchHITs",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": ""
-          }
-        ]
-      },
-      {
-        "access_level": "Read",
-        "description": "The SearchQualificationTypes operation searches for Qualification types using the specified search query, and returns a list of Qualification types",
-        "privilege": "SearchQualificationTypes",
+        "description": "The SendBonus operation issues a payment of money from your account to a Worker",
+        "privilege": "SendBonus",
         "resource_types": [
           {
             "condition_keys": [],
@@ -82341,8 +84007,8 @@
       },
       {
         "access_level": "Write",
-        "description": "The SetHITAsReviewing operation updates the status of a HIT",
-        "privilege": "SetHITAsReviewing",
+        "description": "The UpdateExpirationForHIT operation allows you extend the expiration time of a HIT beyond is current expiration or expire a HIT immediately",
+        "privilege": "UpdateExpirationForHIT",
         "resource_types": [
           {
             "condition_keys": [],
@@ -82353,8 +84019,8 @@
       },
       {
         "access_level": "Write",
-        "description": "The SetHITTypeNotification operation creates, updates, disables or re-enables notifications for a HIT type",
-        "privilege": "SetHITTypeNotification",
+        "description": "The UpdateHITReviewStatus operation toggles the status of a HIT",
+        "privilege": "UpdateHITReviewStatus",
         "resource_types": [
           {
             "condition_keys": [],
@@ -82365,8 +84031,8 @@
       },
       {
         "access_level": "Write",
-        "description": "The UnblockWorker operation allows you to reinstate a blocked Worker to work on your HITs",
-        "privilege": "UnblockWorker",
+        "description": "The UpdateHITTypeOfHIT operation allows you to change the HITType properties of a HIT",
+        "privilege": "UpdateHITTypeOfHIT",
         "resource_types": [
           {
             "condition_keys": [],
@@ -82377,8 +84043,8 @@
       },
       {
         "access_level": "Write",
-        "description": "The UpdateQualificationScore operation changes the value of a Qualification previously granted to a Worker",
-        "privilege": "UpdateQualificationScore",
+        "description": "The UpdateNotificationSettings operation creates, updates, disables or re-enables notifications for a HIT type",
+        "privilege": "UpdateNotificationSettings",
         "resource_types": [
           {
             "condition_keys": [],
@@ -86597,6 +88263,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Updates the image tag mutability settings for an existing repository.",
+        "privilege": "PutImageTagMutability",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "repository*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Creates or updates a lifecycle policy.",
         "privilege": "PutLifecyclePolicy",
         "resource_types": [
@@ -86608,7 +88286,7 @@
         ]
       },
       {
-        "access_level": "Write",
+        "access_level": "Permissions management",
         "description": "Applies a repository policy on a specified repository to control access permissions.",
         "privilege": "SetRepositoryPolicy",
         "resource_types": [
@@ -86632,7 +88310,7 @@
         ]
       },
       {
-        "access_level": "Write",
+        "access_level": "Tagging",
         "description": "Adds specified tags to a resource with the specified ARN. Existing tags on a resource are not changed if they are not specified in the request parameters.",
         "privilege": "TagResource",
         "resource_types": [
@@ -86652,7 +88330,7 @@
         ]
       },
       {
-        "access_level": "Write",
+        "access_level": "Tagging",
         "description": "Deletes specified tags from a resource.",
         "privilege": "UntagResource",
         "resource_types": [
@@ -89056,6 +90734,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Create an inbound email flow rule which will apply to all email sent to an organization",
+        "privilege": "CreateInboundMailFlowRule",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Creates a mail domain.",
         "privilege": "CreateMailDomain",
         "resource_types": [
@@ -89092,8 +90782,32 @@
       },
       {
         "access_level": "Write",
+        "description": "Create an outbound email flow rule which will apply to all email sent from an organization",
+        "privilege": "CreateOutboundMailFlowRule",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Creates a new WorkMail resource.",
         "privilege": "CreateResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Register an SMTP device against a WorkMail organization",
+        "privilege": "CreateSmtpGateway",
         "resource_types": [
           {
             "condition_keys": [],
@@ -89130,6 +90844,18 @@
         "access_level": "Write",
         "description": "Deletes a group from WorkMail.",
         "privilege": "DeleteGroup",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Remove an inbound email flow rule to no longer apply to emails sent to an organization",
+        "privilege": "DeleteInboundMailFlowRule",
         "resource_types": [
           {
             "condition_keys": [],
@@ -89188,8 +90914,32 @@
       },
       {
         "access_level": "Write",
+        "description": "Remove an outbound email flow rule to no longer apply to emails sent from an organization",
+        "privilege": "DeleteOutboundMailFlowRule",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Deletes the specified resource.",
         "privilege": "DeleteResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Remove an SMTP device from an organization",
+        "privilege": "DeleteSmtpGateway",
         "resource_types": [
           {
             "condition_keys": [],
@@ -89238,6 +90988,18 @@
         "access_level": "List",
         "description": "Returns the data available for the group.",
         "privilege": "DescribeGroup",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Returns the details of an inbound mail flow rule configured for an organization",
+        "privilege": "DescribeInboundMailFlowRule",
         "resource_types": [
           {
             "condition_keys": [],
@@ -89319,9 +91081,33 @@
         ]
       },
       {
+        "access_level": "Read",
+        "description": "Returns the details of an outbound mail flow rule configured for an organization",
+        "privilege": "DescribeOutboundMailFlowRule",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
         "access_level": "List",
         "description": "Returns the data available for the resource.",
         "privilege": "DescribeResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Returns the details of an SMTP device registered against an organization",
+        "privilege": "DescribeSmtpGateway",
         "resource_types": [
           {
             "condition_keys": [],
@@ -89418,6 +91204,18 @@
         "access_level": "Write",
         "description": "Enable a user's mailbox after it has been created to allow it to receive mail",
         "privilege": "EnableMailUsers",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Returns journaling and fallback email addresses configured for email journaling",
+        "privilege": "GetJournalingRules",
         "resource_types": [
           {
             "condition_keys": [],
@@ -89548,6 +91346,18 @@
       },
       {
         "access_level": "List",
+        "description": "Returns a list of inbound mail flow rules configured for an organization",
+        "privilege": "ListInboundMailFlowRules",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
         "description": "Lists the mailbox permissions associated with a user, group, or resource mailbox.",
         "privilege": "ListMailboxPermissions",
         "resource_types": [
@@ -89584,6 +91394,18 @@
       },
       {
         "access_level": "List",
+        "description": "Returns a list of outbound mail flow rules configured for an organization",
+        "privilege": "ListOutboundMailFlowRules",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
         "description": "Lists the delegates associated with a resource.",
         "privilege": "ListResourceDelegates",
         "resource_types": [
@@ -89598,6 +91420,18 @@
         "access_level": "List",
         "description": "Returns summaries of the organization's resources.",
         "privilege": "ListResources",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Returns a list of SMTP devices registered against the organization",
+        "privilege": "ListSmtpGateways",
         "resource_types": [
           {
             "condition_keys": [],
@@ -89716,6 +91550,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Set journaling and fallback email addresses for email journaling",
+        "privilege": "SetJournalingRules",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Set the details of the mail group which has just been created",
         "privilege": "SetMailGroupDetails",
         "resource_types": [
@@ -89752,8 +91598,56 @@
       },
       {
         "access_level": "Write",
+        "description": "Test what inbound rules will apply to an email with a given sender and recipient",
+        "privilege": "TestInboundMailFlowRules",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Test what outbound rules will apply to an email with a given sender and recipient",
+        "privilege": "TestOutboundMailFlowRules",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Update the details of an inbound email flow rule which will apply to all email sent to an organization",
+        "privilege": "UpdateInboundMailFlowRule",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Updates the maximum size (in MB) of the user's mailbox.",
         "privilege": "UpdateMailboxQuota",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Update the details of an outbound email flow rule which will apply to all email sent from an organization",
+        "privilege": "UpdateOutboundMailFlowRule",
         "resource_types": [
           {
             "condition_keys": [],
@@ -89778,6 +91672,18 @@
         "access_level": "Write",
         "description": "Updates data for the resource. To retrieve the latest information, it must be preceded by a DescribeResource call.",
         "privilege": "UpdateResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Update the details of an existing SMTP device registered against an organization",
+        "privilege": "UpdateSmtpGateway",
         "resource_types": [
           {
             "condition_keys": [],

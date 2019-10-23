@@ -8,6 +8,18 @@ import json
 
 from parliament.policy import analyze_policy_string
 
+
+def print_finding(finding, minimal=False):
+    if minimal:
+        print("{} - {}".format(finding.severity_name(), finding.issue))
+    else:
+        print(
+            "{} - {} - {}".format(
+                finding.severity_name(), finding.issue, finding.location
+            )
+        )
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -24,6 +36,10 @@ def main():
         "--string",
         help='Provide a string such as \'{"Version": "2012-10-17","Statement": {"Effect": "Allow","Action": ["s3:GetObject", "s3:PutBucketPolicy"],"Resource": ["arn:aws:s3:::bucket1", "arn:aws:s3:::bucket2/*"]}}\'',
         type=str,
+    )
+    parser.add_argument("--file", help="Provide a policy in a file", type=str)
+    parser.add_argument(
+        "--minimal", help="Minimal output", default=False, action="store_true"
     )
     args = parser.parse_args()
 
@@ -44,7 +60,7 @@ def main():
                 policy = analyze_policy_string(policy_string, filepath)
                 if len(policy.findings) > 0:
                     for finding in policy.findings:
-                        print(finding)
+                        print_finding(finding, args.minimal)
     elif args.auth_details_file:
         with open(args.auth_details_file) as f:
             contents = f.read()
@@ -61,7 +77,7 @@ def main():
                         json.dumps(version["Document"]), policy["Arn"]
                     )
                     for finding in policy.findings:
-                        print(finding)
+                        print_finding(finding, args.minimal)
 
             # Review the inline policies on Users, Roles, and Groups
             for user in auth_details_json["UserDetailList"]:
@@ -70,30 +86,31 @@ def main():
                         json.dumps(version["Document"]), user["Arn"]
                     )
                     for finding in policy.findings:
-                        print(finding)
+                        print_finding(finding, args.minimal)
             for role in auth_details_json["RoleDetailList"]:
                 for policy in role.get("RolePolicyList", []):
                     policy = analyze_policy_string(
                         json.dumps(version["Document"]), role["Arn"]
                     )
                     for finding in policy.findings:
-                        print(finding)
+                        print_finding(finding, args.minimal)
             for group in auth_details_json["GroupDetailList"]:
                 for policy in group.get("GroupPolicyList", []):
                     policy = analyze_policy_string(
                         json.dumps(version["Document"]), group["Arn"]
                     )
                     for finding in policy.findings:
-                        print(finding)
+                        print_finding(finding, args.minimal)
     elif args.string:
         policy = analyze_policy_string(args.string)
-        if len(policy.findings) > 0:
+        for finding in policy.findings:
+            print_finding(finding, args.minimal)
+    elif args.file:
+        with open(args.file) as f:
+            contents = f.read()
+            policy = analyze_policy_string(contents)
             for finding in policy.findings:
-                print(
-                    "{} - {} - {}".format(
-                        finding.severity_name(), finding.issue, finding.location
-                    )
-                )
+                print_finding(finding, args.minimal)
     else:
         parser.print_help()
         exit(-1)

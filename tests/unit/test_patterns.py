@@ -103,8 +103,10 @@ class TestPatterns(unittest.TestCase):
         }]}"""
         )
         print(policy.findings)
+
+        # There is one finding for "No resources match for s3.ListAllMyBuckets which requires a resource format of *"
         assert_true(
-            len(policy.findings) == 0,
+            len(policy.findings) == 1,
             "Buckets do not match so no escalation possible",
         )
 

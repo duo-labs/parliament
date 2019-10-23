@@ -8669,6 +8669,11 @@
         "type": "String"
       },
       {
+        "condition": "aws:ResourceTag/${TagKey}",
+        "description": "A key that is present on the resource the user makes.",
+        "type": "String"
+      },
+      {
         "condition": "aws:TagKeys",
         "description": "The list of all the tag key names associated with the resource in the request.",
         "type": "String"
@@ -8904,8 +8909,7 @@
           },
           {
             "condition_keys": [
-              "aws:TagKeys",
-              "aws:RequestTag/${TagKey}"
+              "aws:TagKeys"
             ],
             "dependent_actions": [],
             "resource_type": ""
@@ -8945,12 +8949,16 @@
     "resources": [
       {
         "arn": "arn:${Partition}:transfer:${region}:${account}:user/${serverId}/${username}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "user"
       },
       {
         "arn": "arn:${Partition}:transfer:${region}:${account}:server/${serverId}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "server"
       }
     ],
@@ -11231,7 +11239,19 @@
     "privileges": [
       {
         "access_level": "Write",
-        "description": "Creates an alias for a fleet",
+        "description": "Registers player acceptance or rejection of a proposed FlexMatch match.",
+        "privilege": "AcceptMatch",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Defines a new alias for a fleet.",
         "privilege": "CreateAlias",
         "resource_types": [
           {
@@ -11243,7 +11263,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Initializes a new build record and generates information required to upload a game build to Amazon GameLift",
+        "description": "Creates a new game build using files stored in an Amazon S3 bucket.",
         "privilege": "CreateBuild",
         "resource_types": [
           {
@@ -11255,7 +11275,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Creates a new fleet of computing resources to run your game servers",
+        "description": "Creates a new fleet of computing resources to run your game servers.",
         "privilege": "CreateFleet",
         "resource_types": [
           {
@@ -11267,7 +11287,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Creates a game session for players to join",
+        "description": "Starts a new game session on a specified fleet.",
         "privilege": "CreateGameSession",
         "resource_types": [
           {
@@ -11279,7 +11299,43 @@
       },
       {
         "access_level": "Write",
-        "description": "Adds a player to a game session",
+        "description": "Sets up a new queue for processing new game session placement requests.",
+        "privilege": "CreateGameSessionQueue",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Creates a new FlexMatch matchmaker.",
+        "privilege": "CreateMatchmakingConfiguration",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Creates a new matchmaking rule set for FlexMatch.",
+        "privilege": "CreateMatchmakingRuleSet",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Reserves an available game session slot for a player.",
         "privilege": "CreatePlayerSession",
         "resource_types": [
           {
@@ -11291,7 +11347,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Adds a group of players to a game session",
+        "description": "Reserves available game session slots for multiple players.",
         "privilege": "CreatePlayerSessions",
         "resource_types": [
           {
@@ -11303,7 +11359,43 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes an alias",
+        "description": "Creates a new Realtime Servers script.",
+        "privilege": "CreateScript",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Allows GameLift to create or delete a peering connection between a GameLift fleet VPC and a VPC on another AWS account.",
+        "privilege": "CreateVpcPeeringAuthorization",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Establishes a peering connection between your GameLift fleet VPC and a VPC on another account.",
+        "privilege": "CreateVpcPeeringConnection",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Deletes an alias.",
         "privilege": "DeleteAlias",
         "resource_types": [
           {
@@ -11315,7 +11407,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes a build",
+        "description": "Deletes a game build.",
         "privilege": "DeleteBuild",
         "resource_types": [
           {
@@ -11327,7 +11419,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes an empty fleet",
+        "description": "Deletes an empty fleet.",
         "privilege": "DeleteFleet",
         "resource_types": [
           {
@@ -11339,7 +11431,43 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes a set of scaling rules",
+        "description": "Deletes an existing game session queue.",
+        "privilege": "DeleteGameSessionQueue",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Deletes an existing FlexMatch matchmaker.",
+        "privilege": "DeleteMatchmakingConfiguration",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Deletes an existing FlexMatch matchmaking rule set.",
+        "privilege": "DeleteMatchmakingRuleSet",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Deletes a set of auto-scaling rules.",
         "privilege": "DeleteScalingPolicy",
         "resource_types": [
           {
@@ -11350,8 +11478,44 @@
         ]
       },
       {
+        "access_level": "Write",
+        "description": "Deletes a Realtime Servers script.",
+        "privilege": "DeleteScript",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Cancels a VPC peering authorization.",
+        "privilege": "DeleteVpcPeeringAuthorization",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Removes a peering connection between VPCs.",
+        "privilege": "DeleteVpcPeeringConnection",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
         "access_level": "Read",
-        "description": "Retrieves properties for an alias",
+        "description": "Retrieves properties for an alias.",
         "privilege": "DescribeAlias",
         "resource_types": [
           {
@@ -11363,7 +11527,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Retrieves properties for a build",
+        "description": "Retrieves properties for a game build.",
         "privilege": "DescribeBuild",
         "resource_types": [
           {
@@ -11375,7 +11539,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Retrieves maximum allowed usage and current usage for all EC2 instance types or a specified type",
+        "description": "Retrieves the maximum allowed and current usage for EC2 instance types.",
         "privilege": "DescribeEC2InstanceLimits",
         "resource_types": [
           {
@@ -11387,7 +11551,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Retrieves general fleet properties for a fleet",
+        "description": "Retrieves general properties, including status, for fleets.",
         "privilege": "DescribeFleetAttributes",
         "resource_types": [
           {
@@ -11399,7 +11563,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Retrieves the current capacity status for a fleet",
+        "description": "Retrieves the current capacity setting for fleets.",
         "privilege": "DescribeFleetCapacity",
         "resource_types": [
           {
@@ -11411,7 +11575,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Retrieves entries from a fleet's event log",
+        "description": "Retrieves entries from a fleet's event log.",
         "privilege": "DescribeFleetEvents",
         "resource_types": [
           {
@@ -11423,7 +11587,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Retrieves the inbound connection permissions set for a fleet",
+        "description": "Retrieves the inbound connection permissions for a fleet.",
         "privilege": "DescribeFleetPortSettings",
         "resource_types": [
           {
@@ -11435,7 +11599,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Retrieves utilization statistics for a fleet",
+        "description": "Retrieves utilization statistics for fleets.",
         "privilege": "DescribeFleetUtilization",
         "resource_types": [
           {
@@ -11447,7 +11611,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Retrieves game session properties plus game session protection policy",
+        "description": "Retrieves properties for game sessions in a fleet, including the protection policy.",
         "privilege": "DescribeGameSessionDetails",
         "resource_types": [
           {
@@ -11459,7 +11623,31 @@
       },
       {
         "access_level": "Read",
-        "description": "Retrieves game session properties for a fleet",
+        "description": "Retrieves details of a game session placement request.",
+        "privilege": "DescribeGameSessionPlacement",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Retrieves properties for game session queues.",
+        "privilege": "DescribeGameSessionQueues",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Retrieves properties for game sessions in a fleet.",
         "privilege": "DescribeGameSessions",
         "resource_types": [
           {
@@ -11471,7 +11659,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Retrieves information about a fleet's instances, including instance IDs.",
+        "description": "Retrieves information about instances in a fleet.",
         "privilege": "DescribeInstances",
         "resource_types": [
           {
@@ -11483,7 +11671,43 @@
       },
       {
         "access_level": "Read",
-        "description": "Retrieves player session properties for a game session",
+        "description": "Retrieves details of matchmaking tickets.",
+        "privilege": "DescribeMatchmaking",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Retrieves properties for FlexMatch matchmakers.",
+        "privilege": "DescribeMatchmakingConfigurations",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Retrieves properties for FlexMatch matchmaking rule sets.",
+        "privilege": "DescribeMatchmakingRuleSets",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Retrieves properties for player sessions in a game session.",
         "privilege": "DescribePlayerSessions",
         "resource_types": [
           {
@@ -11495,7 +11719,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Retrieves the runtime configuration for a fleet",
+        "description": "Retrieves the current runtime configuration for a fleet.",
         "privilege": "DescribeRuntimeConfiguration",
         "resource_types": [
           {
@@ -11507,7 +11731,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Retrieves all scaling policies applied to a fleet",
+        "description": "Retrieves all scaling policies that are applied to a fleet.",
         "privilege": "DescribeScalingPolicies",
         "resource_types": [
           {
@@ -11519,7 +11743,43 @@
       },
       {
         "access_level": "Read",
-        "description": "Retrieves the location of stored logs for a game session",
+        "description": "Retrieves properties for a Realtime Servers script.",
+        "privilege": "DescribeScript",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Retrieves valid VPC peering authorizations.",
+        "privilege": "DescribeVpcPeeringAuthorizations",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Retrieves details on active or pending VPC peering connections.",
+        "privilege": "DescribeVpcPeeringConnections",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Retrieves the location of stored logs for a game session.",
         "privilege": "GetGameSessionLogUrl",
         "resource_types": [
           {
@@ -11531,7 +11791,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Requests remote access to a fleet instance.",
+        "description": "Requests remote access to a specified fleet instance.",
         "privilege": "GetInstanceAccess",
         "resource_types": [
           {
@@ -11543,7 +11803,7 @@
       },
       {
         "access_level": "List",
-        "description": "Retrieves the fleet aliases used with this AWS account",
+        "description": "Retrieves all aliases that are defined in the current region.",
         "privilege": "ListAliases",
         "resource_types": [
           {
@@ -11555,7 +11815,7 @@
       },
       {
         "access_level": "List",
-        "description": "Retrieves the builds for this AWS account",
+        "description": "Retrieves all game build in the current region.",
         "privilege": "ListBuilds",
         "resource_types": [
           {
@@ -11567,7 +11827,7 @@
       },
       {
         "access_level": "List",
-        "description": "Retrieves the fleet for this AWS account",
+        "description": "Retrieves a list of fleet IDs for all fleets in the current region.",
         "privilege": "ListFleets",
         "resource_types": [
           {
@@ -11578,8 +11838,20 @@
         ]
       },
       {
+        "access_level": "List",
+        "description": "Retrieves properties for all Realtime Servers scripts in the current region.",
+        "privilege": "ListScripts",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
         "access_level": "Write",
-        "description": "Creates or updates a fleet scaling policy",
+        "description": "Creates or updates a fleet auto-scaling policy.",
         "privilege": "PutScalingPolicy",
         "resource_types": [
           {
@@ -11591,7 +11863,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Retrieves a fresh set of upload credentials and the Amazon S3 storage location for a specific build",
+        "description": "Retrieves fresh upload credentials to use when uploading a new game build.",
         "privilege": "RequestUploadCredentials",
         "resource_types": [
           {
@@ -11603,7 +11875,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Retrieves the fleet ID associated with an alias",
+        "description": "Retrieves the fleet ID associated with an alias.",
         "privilege": "ResolveAlias",
         "resource_types": [
           {
@@ -11615,7 +11887,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Retrieves game sessions that match the search criteria and sorts them as specified",
+        "description": "Retrieves game sessions that match a set of search criteria.",
         "privilege": "SearchGameSessions",
         "resource_types": [
           {
@@ -11627,7 +11899,91 @@
       },
       {
         "access_level": "Write",
-        "description": "Updates properties for an alias",
+        "description": "Resumes auto-scaling activity on a fleet after it was suspended with StopFleetActions().",
+        "privilege": "StartFleetActions",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Sends a game session placement request to a game session queue.",
+        "privilege": "StartGameSessionPlacement",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Requests FlexMatch matchmaking to fill available player slots in an existing game session.",
+        "privilege": "StartMatchBackfill",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Requests FlexMatch matchmaking for one or a group of players and game session placement for a resulting match.",
+        "privilege": "StartMatchmaking",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Suspends auto-scaling activity on a fleet.",
+        "privilege": "StopFleetActions",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Cancels a game session placement request that is in progress.",
+        "privilege": "StopGameSessionPlacement",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Cancels a matchmaking or match backfill request that is in progress.",
+        "privilege": "StopMatchmaking",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Updates the properties of an existing alias.",
         "privilege": "UpdateAlias",
         "resource_types": [
           {
@@ -11639,7 +11995,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Updates a build's name and version",
+        "description": "Updates an existing build's metadata.",
         "privilege": "UpdateBuild",
         "resource_types": [
           {
@@ -11651,7 +12007,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Sets a fleet's general properties",
+        "description": "Updates the general properties of an existing fleet.",
         "privilege": "UpdateFleetAttributes",
         "resource_types": [
           {
@@ -11663,7 +12019,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Sets a fleet's capacity settings",
+        "description": "Adjusts a fleet's capacity settings.",
         "privilege": "UpdateFleetCapacity",
         "resource_types": [
           {
@@ -11675,7 +12031,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Sets a fleet's port settings",
+        "description": "Adjusts a fleet's port settings.",
         "privilege": "UpdateFleetPortSettings",
         "resource_types": [
           {
@@ -11687,7 +12043,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Sets game session properties",
+        "description": "Updates the properties of an existing game session.",
         "privilege": "UpdateGameSession",
         "resource_types": [
           {
@@ -11699,8 +12055,56 @@
       },
       {
         "access_level": "Write",
-        "description": "Sets a fleet's runtime configuration, which specifies how to launch server processes on the fleet",
+        "description": "Updates properties of an existing game session queue.",
+        "privilege": "UpdateGameSessionQueue",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Updates properties of an existing FlexMatch matchmaking configuration.",
+        "privilege": "UpdateMatchmakingConfiguration",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Updates how server processes are configured on instances in an existing fleet.",
         "privilege": "UpdateRuntimeConfiguration",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Updates the metadata and content of an existing Realtime Servers script.",
+        "privilege": "UpdateScript",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Validates the syntax of a FlexMatch matchmaking rule set.",
+        "privilege": "ValidateMatchmakingRuleSet",
         "resource_types": [
           {
             "condition_keys": [],
@@ -20674,6 +21078,11 @@
         "condition": "aws:TagKeys",
         "description": "Filters actions based on the presence of mandatory tags in the request",
         "type": "String"
+      },
+      {
+        "condition": "cloudwatch:namespace",
+        "description": "Filters actions based on the presence of optional namespace values",
+        "type": "String"
       }
     ],
     "prefix": "cloudwatch",
@@ -20920,7 +21329,9 @@
         "privilege": "PutMetricData",
         "resource_types": [
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "cloudwatch:namespace"
+            ],
             "dependent_actions": [],
             "resource_type": ""
           }
@@ -29145,6 +29556,18 @@
         ]
       },
       {
+        "access_level": "Read",
+        "description": "Get the Migration Hub Home Region",
+        "privilege": "GetHomeRegion",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
         "access_level": "Write",
         "description": "Import a MigrationTask",
         "privilege": "ImportMigrationTask",
@@ -29526,7 +29949,7 @@
       {
         "access_level": "Write",
         "description": "Grants permission to purchase ES reserved instances",
-        "privilege": "PurchaseReservedElasticsearchInstance",
+        "privilege": "PurchaseReservedElasticsearchInstanceOffering",
         "resource_types": [
           {
             "condition_keys": [],
@@ -38528,7 +38951,7 @@
     "prefix": "apigateway",
     "privileges": [
       {
-        "access_level": "Tagging",
+        "access_level": "Write",
         "description": "Used to delete resources",
         "privilege": "DELETE",
         "resource_types": [
@@ -38560,7 +38983,7 @@
         ]
       },
       {
-        "access_level": "Tagging",
+        "access_level": "Write",
         "description": "Used to update resources",
         "privilege": "PATCH",
         "resource_types": [
@@ -38580,7 +39003,7 @@
         ]
       },
       {
-        "access_level": "Tagging",
+        "access_level": "Write",
         "description": "Used to create child resources",
         "privilege": "POST",
         "resource_types": [
@@ -38600,7 +39023,7 @@
         ]
       },
       {
-        "access_level": "Tagging",
+        "access_level": "Write",
         "description": "Used to update resources (and, although not recommended, can be used to create child resources)",
         "privilege": "PUT",
         "resource_types": [
@@ -47586,7 +48009,7 @@
     "privileges": [
       {
         "access_level": "Write",
-        "description": "Description for AuthenticatePackager",
+        "description": "Allows the Amazon WAM packaging instance to access your application package catalog.",
         "privilege": "AuthenticatePackager",
         "resource_types": [
           {
@@ -53111,6 +53534,30 @@
         ]
       },
       {
+        "access_level": "Read",
+        "description": "Search for groups within the associated directory",
+        "privilege": "SearchGroups",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Search for users within the associated directory",
+        "privilege": "SearchUsers",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
         "access_level": "Write",
         "description": "Updates information about group in the directory that AWS SSO provides by default",
         "privilege": "UpdateGroup",
@@ -57468,204 +57915,380 @@
     "service_name": "AWS Cost Explorer Service"
   },
   {
-    "conditions": [],
+    "conditions": [
+      {
+        "condition": "aws:RequestTag/${TagKey}",
+        "description": "Filters actions based on the presence of tag key-value pairs in the request",
+        "type": "String"
+      },
+      {
+        "condition": "aws:ResourceTag/${TagKey}",
+        "description": "Filters actions based on tag key-value pairs attached to the resource",
+        "type": "String"
+      },
+      {
+        "condition": "aws:TagKeys",
+        "description": "Filters actions based on the presence of tag keys in the request",
+        "type": "String"
+      }
+    ],
     "prefix": "cloudfront",
     "privileges": [
       {
         "access_level": "Write",
-        "description": "This action creates a new CloudFront origin access identity (POST /2016-11-25/origin-access-identity/cloudfront).",
+        "description": "This action creates a new CloudFront origin access identity (POST /2019-03-26/origin-access-identity/cloudfront).",
         "privilege": "CreateCloudFrontOriginAccessIdentity",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "origin-access-identity*"
           }
         ]
       },
       {
         "access_level": "Write",
-        "description": "This action creates a new web distribution (POST /2016-11-25/distribution).",
+        "description": "This action creates a new web distribution (POST /2019-03-26/distribution).",
         "privilege": "CreateDistribution",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "distribution*"
           }
         ]
       },
       {
         "access_level": "Tagging",
-        "description": "This action creates a new web distribution with tags (POST /2016-11-25/distribution?WithTags).",
+        "description": "This action creates a new web distribution with tags (POST /2019-03-26/distribution?WithTags).",
         "privilege": "CreateDistributionWithTags",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
+            "resource_type": "distribution*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
             "resource_type": ""
           }
         ]
       },
       {
         "access_level": "Write",
-        "description": "This action creates a new invalidation batch request (POST /2016-11-25/distribution/<DISTRIBUTION_ID>/invalidation).",
+        "description": "This action creates a new field-level encryption configuration. (POST /2019-03-26/field-level-encryption).",
+        "privilege": "CreateFieldLevelEncryptionConfig",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "This action creates a field-level encryption profile. (POST /2019-03-26/field-level-encryption-profile).",
+        "privilege": "CreateFieldLevelEncryptionProfile",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "This action creates a new invalidation batch request (POST /2019-03-26/distribution/<DISTRIBUTION_ID>/invalidation).",
         "privilege": "CreateInvalidation",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
+            "resource_type": "distribution*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "This action adds a new public key to CloudFront. (POST /2019-03-26/public-key).",
+        "privilege": "CreatePublicKey",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
             "resource_type": ""
           }
         ]
       },
       {
         "access_level": "Write",
-        "description": "This action creates a new RTMP distribution (POST /2016-11-25/streaming-distribution).",
+        "description": "This action creates a new RTMP distribution (POST /2019-03-26/streaming-distribution).",
         "privilege": "CreateStreamingDistribution",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "streaming-distribution*"
           }
         ]
       },
       {
         "access_level": "Tagging",
-        "description": "This action creates a new RTMP distribution with tags (POST /2016-11-25/streaming-distribution?WithTags).",
+        "description": "This action creates a new RTMP distribution with tags (POST /2019-03-26/streaming-distribution?WithTags).",
         "privilege": "CreateStreamingDistributionWithTags",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
+            "resource_type": "streaming-distribution*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
             "resource_type": ""
           }
         ]
       },
       {
         "access_level": "Write",
-        "description": "This action deletes a CloudFront origin access identity (DELETE /2016-11-25/origin-access-identity/cloudfront/<OAI_ID>).",
+        "description": "This action deletes a CloudFront origin access identity (DELETE /2019-03-26/origin-access-identity/cloudfront/<OAI_ID>).",
         "privilege": "DeleteCloudFrontOriginAccessIdentity",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "origin-access-identity*"
           }
         ]
       },
       {
         "access_level": "Write",
-        "description": "This action deletes a web distribution (DELETE /2016-11-25/distribution/<DISTRIBUTION_ID>).",
+        "description": "This action deletes a web distribution (DELETE /2019-03-26/distribution/<DISTRIBUTION_ID>).",
         "privilege": "DeleteDistribution",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
+            "resource_type": "distribution*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "This action deletes a field-level encryption configuration. (DELETE /2019-03-26/field-level-encryption/Id/<Id>).",
+        "privilege": "DeleteFieldLevelEncryptionConfig",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
             "resource_type": ""
           }
         ]
       },
       {
         "access_level": "Write",
-        "description": "This action deletes an RTMP distribution (DELETE /2016-11-25/streaming-distribution/<DISTRIBUTION_ID>).",
+        "description": "This action deletes a field-level encryption profile. (DELETE /2019-03-26/field-level-encryption-profile/<Id>).",
+        "privilege": "DeleteFieldLevelEncryptionProfile",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "This action deletes a public key from CloudFront. (DELETE /2019-03-26/public-key/<Id>).",
+        "privilege": "DeletePublicKey",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "This action deletes an RTMP distribution (DELETE /2019-03-26/streaming-distribution/<DISTRIBUTION_ID>).",
         "privilege": "DeleteStreamingDistribution",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "streaming-distribution*"
           }
         ]
       },
       {
         "access_level": "Read",
-        "description": "Get the information about a CloudFront origin access identity (GET /2016-11-25/origin-access-identity/cloudfront/<OAI_ID>).",
+        "description": "Get the information about a CloudFront origin access identity (GET /2019-03-26/origin-access-identity/cloudfront/<OAI_ID>).",
         "privilege": "GetCloudFrontOriginAccessIdentity",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "origin-access-identity*"
           }
         ]
       },
       {
         "access_level": "Read",
-        "description": "Get the configuration information about a Cloudfront origin access identity (GET /2016-11-25/origin-access-identity/cloudfront/<OAI_ID>/config).",
+        "description": "Get the configuration information about a Cloudfront origin access identity (GET /2019-03-26/origin-access-identity/cloudfront/<OAI_ID>/config).",
         "privilege": "GetCloudFrontOriginAccessIdentityConfig",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "origin-access-identity*"
           }
         ]
       },
       {
         "access_level": "Read",
-        "description": "Get the information about a web distribution (GET /2016-11-25/distribution/<DISTRIBUTION_ID>).",
+        "description": "Get the information about a web distribution (GET /2019-03-26/distribution/<DISTRIBUTION_ID>).",
         "privilege": "GetDistribution",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "distribution*"
           }
         ]
       },
       {
         "access_level": "Read",
-        "description": "Get the configuration information about a distribution (GET /2016-11-25/distribution/<DISTRIBUTION_ID>/config).",
+        "description": "Get the configuration information about a distribution (GET /2019-03-26/distribution/<DISTRIBUTION_ID>/config).",
         "privilege": "GetDistributionConfig",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
+            "resource_type": "distribution*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Get the field-level encryption configuration information. (GET /2019-03-26/field-level-encryption/<Id>).",
+        "privilege": "GetFieldLevelEncryption",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
             "resource_type": ""
           }
         ]
       },
       {
         "access_level": "Read",
-        "description": "Get the information about an invalidation (GET /2016-11-25/distribution/<DISTRIBUTION_ID>/invalidation/<INVALIDATION_ID>).",
+        "description": "Get the field-level encryption configuration information (GET /2019-03-26/field-level-encryption/<Id>/config).",
+        "privilege": "GetFieldLevelEncryptionConfig",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Get the field-level encryption configuration information (GET /2019-03-26/field-level-encryption/<Id>/config).",
+        "privilege": "GetFieldLevelEncryptionProfile",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Get the field-level encryption profile configuration information (GET /2019-03-26/field-level-encryption-profile/<Id>/config).",
+        "privilege": "GetFieldLevelEncryptionProfileConfig",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Get the information about an invalidation (GET /2019-03-26/distribution/<DISTRIBUTION_ID>/invalidation/<INVALIDATION_ID>).",
         "privilege": "GetInvalidation",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
+            "resource_type": "distribution*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Get the public key information (GET /2019-03-26/public-key/<Id>).",
+        "privilege": "GetPublicKey",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
             "resource_type": ""
           }
         ]
       },
       {
         "access_level": "Read",
-        "description": "Get the information about an RTMP distribution (GET /2016-11-25/streaming-distribution/<DISTRIBUTION_ID>).",
+        "description": "Get the public key configuration information (GET /2019-03-26/public-key/<Id>/config).",
+        "privilege": "GetPublicKeyConfig",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Get the information about an RTMP distribution (GET /2019-03-26/streaming-distribution/<DISTRIBUTION_ID>).",
         "privilege": "GetStreamingDistribution",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "streaming-distribution*"
           }
         ]
       },
       {
         "access_level": "Read",
-        "description": "Get the configuration information about a streaming distribution (GET /2016-11-25/streaming-distribution/<DISTRIBUTION_ID>/config).",
+        "description": "Get the configuration information about a streaming distribution (GET /2019-03-26/streaming-distribution/<DISTRIBUTION_ID>/config).",
         "privilege": "GetStreamingDistributionConfig",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "streaming-distribution*"
           }
         ]
       },
       {
         "access_level": "List",
-        "description": "List your CloudFront origin access identities (GET /2016-11-25/origin-access-identity/cloudfront?Marker=<MARKER>&MaxItems=<MAX_ITEMS>).",
+        "description": "List your CloudFront origin access identities (GET /2019-03-26/origin-access-identity/cloudfront?Marker=<MARKER>&MaxItems=<MAX_ITEMS>).",
         "privilege": "ListCloudFrontOriginAccessIdentities",
         "resource_types": [
           {
@@ -57677,7 +58300,7 @@
       },
       {
         "access_level": "List",
-        "description": "List the distributions associated with your AWS account (GET /2016-11-25/distribution?Marker=<MARKER>&MaxItems=<MAX_ITEMS>).",
+        "description": "List the distributions associated with your AWS account (GET /2019-03-26/distribution?Marker=<MARKER>&MaxItems=<MAX_ITEMS>).",
         "privilege": "ListDistributions",
         "resource_types": [
           {
@@ -57689,7 +58312,7 @@
       },
       {
         "access_level": "List",
-        "description": "List the distributions associated with your AWS account with given AWS WAF web ACL (GET /2016-11-25/distributionsByWebACLId/<WEB_ACL_ID>?Marker=<MARKER>&MaxItems=<MAX_ITEMS>).",
+        "description": "List the distributions associated with your AWS account with given AWS WAF web ACL (GET /2019-03-26/distributionsByWebACLId/<WEB_ACL_ID>?Marker=<MARKER>&MaxItems=<MAX_ITEMS>).",
         "privilege": "ListDistributionsByWebACLId",
         "resource_types": [
           {
@@ -57701,8 +58324,8 @@
       },
       {
         "access_level": "List",
-        "description": "List your invalidation batches (GET /2016-11-25/distribution/<DISTRIBUTION_ID>/invalidation?Marker=<MARKER>&MaxItems=<MAX_ITEMS>).",
-        "privilege": "ListInvalidations",
+        "description": "List all field-level encryption configurations that have been created in CloudFront for this account (GET /2019-03-26/field-level-encryption?Marker=<MARKER>&MaxItems=<MAX_ITEMS>).",
+        "privilege": "ListFieldLevelEncryptionConfigs",
         "resource_types": [
           {
             "condition_keys": [],
@@ -57713,7 +58336,43 @@
       },
       {
         "access_level": "List",
-        "description": "List your RTMP distributions (GET /2016-11-25/streaming-distribution?Marker=<MARKER>&MaxItems=<MAX_ITEMS>).",
+        "description": "List all field-level encryption profiles that have been created in CloudFront for this account. (GET /2019-03-26/field-level-encryption-profile?Marker=<MARKER>&MaxItems=<MAX_ITEMS>).",
+        "privilege": "ListFieldLevelEncryptionProfiles",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "List your invalidation batches (GET /2019-03-26/distribution/<DISTRIBUTION_ID>/invalidation?Marker=<MARKER>&MaxItems=<MAX_ITEMS>).",
+        "privilege": "ListInvalidations",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "distribution*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "List all public keys that have been added to CloudFront for this account. (GET /2019-03-26/public-key?Marker=<MARKER>&MaxItems=<MAX_ITEMS>).",
+        "privilege": "ListPublicKeys",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "List your RTMP distributions (GET /2019-03-26/streaming-distribution?Marker=<MARKER>&MaxItems=<MAX_ITEMS>).",
         "privilege": "ListStreamingDistributions",
         "resource_types": [
           {
@@ -57725,68 +58384,98 @@
       },
       {
         "access_level": "Read",
-        "description": "List tags for a CloudFront resource (GET /2016-11-25/tagging?Resource=<RESOURCE>).",
+        "description": "List tags for a CloudFront resource (GET /2019-03-26/tagging?Resource=<RESOURCE>).",
         "privilege": "ListTagsForResource",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "distribution"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "streaming-distribution"
           }
         ]
       },
       {
         "access_level": "Tagging",
-        "description": "Add tags to a CloudFront resource (POST /2016-11-25/tagging?Operation=Tag?Resource=<RESOURCE>).",
+        "description": "Add tags to a CloudFront resource (POST /2019-03-26/tagging?Operation=Tag?Resource=<RESOURCE>).",
         "privilege": "TagResource",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
+            "resource_type": "distribution"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "streaming-distribution"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
             "resource_type": ""
           }
         ]
       },
       {
         "access_level": "Tagging",
-        "description": "Remove tags from a CloudFront resource (POST /2016-11-25/tagging?Operation=Untag?Resource=<RESOURCE>).",
+        "description": "Remove tags from a CloudFront resource (POST /2019-03-26/tagging?Operation=Untag?Resource=<RESOURCE>).",
         "privilege": "UntagResource",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
+            "resource_type": "distribution"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "streaming-distribution"
+          },
+          {
+            "condition_keys": [
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
             "resource_type": ""
           }
         ]
       },
       {
         "access_level": "Write",
-        "description": "This action sets the configuration for a CloudFront origin access identity (PUT /2016-11-25/origin-access-identity/cloudfront/<OAI_ID>/config).",
+        "description": "This action sets the configuration for a CloudFront origin access identity (PUT /2019-03-26/origin-access-identity/cloudfront/<OAI_ID>/config).",
         "privilege": "UpdateCloudFrontOriginAccessIdentity",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "origin-access-identity*"
           }
         ]
       },
       {
         "access_level": "Write",
-        "description": "This action updates the configuration for a web distribution (PUT /2016-11-25/distribution/<DISTRIBUTION_ID>/config).",
+        "description": "This action updates the configuration for a web distribution (PUT /2019-03-26/distribution/<DISTRIBUTION_ID>/config).",
         "privilege": "UpdateDistribution",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "distribution*"
           }
         ]
       },
       {
         "access_level": "Write",
-        "description": "This action updates the configuration for an RTMP distribution (PUT /2016-11-25/streaming-distribution/<DISTRIBUTION_ID>/config).",
-        "privilege": "UpdateStreamingDistribution",
+        "description": "This action updates a field-level encryption configuration. (PUT /2019-03-26/field-level-encryption/<Id>/config).",
+        "privilege": "UpdateFieldLevelEncryptionConfig",
         "resource_types": [
           {
             "condition_keys": [],
@@ -57794,9 +58483,65 @@
             "resource_type": ""
           }
         ]
+      },
+      {
+        "access_level": "Write",
+        "description": "This action updates a field-level encryption profile. (PUT /2019-03-26/field-level-encryption-profile/<Id>/config).",
+        "privilege": "UpdateFieldLevelEncryptionProfile",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "This action updates public key information. (PUT /2019-03-26/public-key/<Id>/config).",
+        "privilege": "UpdatePublicKey",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "This action updates the configuration for an RTMP distribution (PUT /2019-03-26/streaming-distribution/<DISTRIBUTION_ID>/config).",
+        "privilege": "UpdateStreamingDistribution",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "streaming-distribution*"
+          }
+        ]
       }
     ],
-    "resources": [],
+    "resources": [
+      {
+        "arn": "arn:${Partition}:cloudfront::${Account}:distribution/${DistributionId}",
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
+        "resource": "distribution"
+      },
+      {
+        "arn": "arn:${Partition}:cloudfront::${Account}:streaming-distribution/${DistributionId}",
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
+        "resource": "streaming-distribution"
+      },
+      {
+        "arn": "arn:${Partition}:cloudfront::${Account}:origin-access-identity/${Id}",
+        "condition_keys": [],
+        "resource": "origin-access-identity"
+      }
+    ],
     "service_name": "Amazon CloudFront"
   },
   {
@@ -71656,7 +72401,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "userpool*"
+            "resource_type": ""
           }
         ]
       },
@@ -71668,7 +72413,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "userpool*"
+            "resource_type": ""
           }
         ]
       },
@@ -71680,7 +72425,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "userpool*"
+            "resource_type": ""
           }
         ]
       },
@@ -71692,7 +72437,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "userpool*"
+            "resource_type": ""
           }
         ]
       },
@@ -71704,7 +72449,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "userpool*"
+            "resource_type": ""
           }
         ]
       },
@@ -71840,7 +72585,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "userpool*"
+            "resource_type": ""
           }
         ]
       },
@@ -71852,7 +72597,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "userpool*"
+            "resource_type": ""
           }
         ]
       },
@@ -71984,7 +72729,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "userpool*"
+            "resource_type": ""
           }
         ]
       },
@@ -71996,7 +72741,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "userpool*"
+            "resource_type": ""
           }
         ]
       },
@@ -72020,7 +72765,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "userpool*"
+            "resource_type": ""
           }
         ]
       },
@@ -72080,7 +72825,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "userpool*"
+            "resource_type": ""
           }
         ]
       },
@@ -72092,7 +72837,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "userpool*"
+            "resource_type": ""
           }
         ]
       },
@@ -72110,13 +72855,13 @@
       },
       {
         "access_level": "Write",
-        "description": "Signs out users from all devices..",
+        "description": "Signs out users from all devices.",
         "privilege": "GlobalSignOut",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "userpool*"
+            "resource_type": ""
           }
         ]
       },
@@ -72128,7 +72873,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "userpool*"
+            "resource_type": ""
           }
         ]
       },
@@ -72140,7 +72885,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "userpool*"
+            "resource_type": ""
           }
         ]
       },
@@ -72189,13 +72934,6 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "userpool"
-          },
-          {
-            "condition_keys": [
-              "aws:ResourceTag/${TagKey}"
-            ],
-            "dependent_actions": [],
-            "resource_type": ""
           }
         ]
       },
@@ -72267,7 +73005,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "userpool*"
+            "resource_type": ""
           }
         ]
       },
@@ -72279,7 +73017,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "userpool*"
+            "resource_type": ""
           }
         ]
       },
@@ -72315,7 +73053,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "userpool*"
+            "resource_type": ""
           }
         ]
       },
@@ -72339,7 +73077,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "userpool*"
+            "resource_type": ""
           }
         ]
       },
@@ -72351,7 +73089,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "userpool*"
+            "resource_type": ""
           }
         ]
       },
@@ -72392,8 +73130,7 @@
           {
             "condition_keys": [
               "aws:RequestTag/${TagKey}",
-              "aws:TagKeys",
-              "aws:ResourceTag/${TagKey}"
+              "aws:TagKeys"
             ],
             "dependent_actions": [],
             "resource_type": ""
@@ -72412,8 +73149,7 @@
           },
           {
             "condition_keys": [
-              "aws:TagKeys",
-              "aws:ResourceTag/${TagKey}"
+              "aws:TagKeys"
             ],
             "dependent_actions": [],
             "resource_type": ""
@@ -72440,7 +73176,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "userpool*"
+            "resource_type": ""
           }
         ]
       },
@@ -72488,7 +73224,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "userpool*"
+            "resource_type": ""
           }
         ]
       },
@@ -72505,8 +73241,7 @@
           {
             "condition_keys": [
               "aws:RequestTag/${TagKey}",
-              "aws:TagKeys",
-              "aws:ResourceTag/${TagKey}"
+              "aws:TagKeys"
             ],
             "dependent_actions": [],
             "resource_type": ""
@@ -72545,7 +73280,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "userpool*"
+            "resource_type": ""
           }
         ]
       },
@@ -72557,7 +73292,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "userpool*"
+            "resource_type": ""
           }
         ]
       }
@@ -72574,7 +73309,23 @@
     "service_name": "Amazon Cognito User Pools"
   },
   {
-    "conditions": [],
+    "conditions": [
+      {
+        "condition": "aws:RequestTag/${TagKey}",
+        "description": "Filters actions based on the presence of tag key-value pairs in the request",
+        "type": "String"
+      },
+      {
+        "condition": "aws:ResourceTag/${TagKey}",
+        "description": "Filters actions based on tag key-value pairs attached to the resource",
+        "type": "String"
+      },
+      {
+        "condition": "aws:TagKeys",
+        "description": "Filters actions based on the presence of tag keys in the request",
+        "type": "String"
+      }
+    ],
     "prefix": "glue",
     "privileges": [
       {
@@ -72723,6 +73474,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Grants permission to stop a running ML Task Run",
+        "privilege": "CancelMLTaskRun",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Grants permission to create a classifier",
         "privilege": "CreateClassifier",
         "resource_types": [
@@ -72751,7 +73514,10 @@
         "privilege": "CreateCrawler",
         "resource_types": [
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
             "dependent_actions": [],
             "resource_type": ""
           }
@@ -72775,7 +73541,10 @@
         "privilege": "CreateDevEndpoint",
         "resource_types": [
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
             "dependent_actions": [],
             "resource_type": ""
           }
@@ -72785,6 +73554,21 @@
         "access_level": "Write",
         "description": "Grants permission to create a job",
         "privilege": "CreateJob",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to create an ML Transform",
+        "privilege": "CreateMLTransform",
         "resource_types": [
           {
             "condition_keys": [],
@@ -72847,7 +73631,10 @@
         "privilege": "CreateTrigger",
         "resource_types": [
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
             "dependent_actions": [],
             "resource_type": ""
           }
@@ -72871,7 +73658,10 @@
         "privilege": "CreateWorkflow",
         "resource_types": [
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
             "dependent_actions": [],
             "resource_type": ""
           }
@@ -72941,6 +73731,18 @@
         "access_level": "Write",
         "description": "Grants permission to delete a job",
         "privilege": "DeleteJob",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to delete an ML Transform",
+        "privilege": "DeleteMLTransform",
         "resource_types": [
           {
             "condition_keys": [],
@@ -73227,6 +74029,18 @@
       },
       {
         "access_level": "Read",
+        "description": "Grants permission to retrieve a job bookmark",
+        "privilege": "GetJobBookmark",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
         "description": "Grants permission to retrieve a job run",
         "privilege": "GetJobRun",
         "resource_types": [
@@ -73253,6 +74067,54 @@
         "access_level": "Read",
         "description": "Grants permission to retrieve all current jobs",
         "privilege": "GetJobs",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to retrieve an ML Task Run",
+        "privilege": "GetMLTaskRun",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to retrieve all ML Task Runs",
+        "privilege": "GetMLTaskRuns",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to retrieve an ML Transform",
+        "privilege": "GetMLTransform",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to retrieve all ML Transforms",
+        "privilege": "GetMLTransforms",
         "resource_types": [
           {
             "condition_keys": [],
@@ -73401,7 +74263,27 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "crawler"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "devendpoint"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "job"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "trigger"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "workflow"
           }
         ]
       },
@@ -73622,6 +74504,18 @@
         ]
       },
       {
+        "access_level": "Read",
+        "description": "Grants permission to retrieve the tables in the catalog",
+        "privilege": "SearchTables",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
         "access_level": "Write",
         "description": "Grants permission to start a crawler",
         "privilege": "StartCrawler",
@@ -73647,8 +74541,56 @@
       },
       {
         "access_level": "Write",
+        "description": "Grants permission to start an Export Labels ML Task Run",
+        "privilege": "StartExportLabelsTaskRun",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to start an Import Labels ML Task Run",
+        "privilege": "StartImportLabelsTaskRun",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Grants permission to start running a job",
         "privilege": "StartJobRun",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to start an Evaluation ML Task Run",
+        "privilege": "StartMLEvaluationTaskRun",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to start a Labeling Set Generation ML Task Run",
+        "privilege": "StartMLLabelingSetGenerationTaskRun",
         "resource_types": [
           {
             "condition_keys": [],
@@ -73718,24 +74660,79 @@
         ]
       },
       {
-        "access_level": "Read",
+        "access_level": "Tagging",
         "description": "Grants permission to add tags to a resource",
         "privilege": "TagResource",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
+            "resource_type": "crawler"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "devendpoint"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "job"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "trigger"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "workflow"
+          },
+          {
+            "condition_keys": [
+              "aws:TagKeys",
+              "aws:RequestTag/${TagKey}"
+            ],
+            "dependent_actions": [],
             "resource_type": ""
           }
         ]
       },
       {
-        "access_level": "Read",
+        "access_level": "Tagging",
         "description": "Grants permission to remove tags associated with a resource",
         "privilege": "UntagResource",
         "resource_types": [
           {
             "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "crawler"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "devendpoint"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "job"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "trigger"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "workflow"
+          },
+          {
+            "condition_keys": [
+              "aws:TagKeys"
+            ],
             "dependent_actions": [],
             "resource_type": ""
           }
@@ -73779,6 +74776,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Grants permission to update the schedule of a crawler",
+        "privilege": "UpdateCrawlerSchedule",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Grants permission to update a database",
         "privilege": "UpdateDatabase",
         "resource_types": [
@@ -73805,6 +74814,18 @@
         "access_level": "Write",
         "description": "Grants permission to update a job",
         "privilege": "UpdateJob",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to update an ML Transform",
+        "privilege": "UpdateMLTransform",
         "resource_types": [
           {
             "condition_keys": [],
@@ -73872,6 +74893,18 @@
             "resource_type": ""
           }
         ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to use an ML Transform from within a Glue ETL Script",
+        "privilege": "UseMLTransforms",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
       }
     ],
     "resources": [
@@ -73912,27 +74945,37 @@
       },
       {
         "arn": "arn:${Partition}:glue:${Region}:${Account}:devendpoint/${DevEndpointName}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "devendpoint"
       },
       {
         "arn": "arn:${Partition}:glue:${Region}:${Account}:job/${JobName}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "job"
       },
       {
         "arn": "arn:${Partition}:glue:${Region}:${Account}:trigger/${TriggerName}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "trigger"
       },
       {
         "arn": "arn:${Partition}:glue:${Region}:${Account}:crawler/${CrawlerName}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "crawler"
       },
       {
         "arn": "arn:${Partition}:glue:${Region}:${Account}:workflow/${WorkflowName}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "workflow"
       }
     ],
@@ -81223,11 +82266,6 @@
         "type": "String"
       },
       {
-        "condition": "cloudformation:ImportResourceTypes",
-        "description": "The template resource types, such as <code>AWS::EC2::Instance</code>. Use to control which resource types IAM users can work with when they want to import a resource in a stack",
-        "type": "String"
-      },
-      {
         "condition": "cloudformation:ResourceTypes",
         "description": "The template resource types, such as <code>AWS::EC2::Instance</code>. Use to control which resource types IAM users can work with when they create or update a stack",
         "type": "String"
@@ -84507,18 +85545,6 @@
       },
       {
         "access_level": "Read",
-        "description": "Describes a problem dashboard",
-        "privilege": "DescribeProblemDashboard",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": ""
-          }
-        ]
-      },
-      {
-        "access_level": "Read",
         "description": "Describes the observation in a problem",
         "privilege": "DescribeProblemObservations",
         "resource_types": [
@@ -84593,18 +85619,6 @@
         "access_level": "Write",
         "description": "Updates a component configuration",
         "privilege": "UpdateComponentConfiguration",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": ""
-          }
-        ]
-      },
-      {
-        "access_level": "Write",
-        "description": "Updates a problem",
-        "privilege": "UpdateProblem",
         "resource_types": [
           {
             "condition_keys": [],

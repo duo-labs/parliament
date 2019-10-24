@@ -6,7 +6,7 @@ from os.path import isfile, join
 import sys
 import json
 
-from parliament.policy import analyze_policy_string
+from parliament import analyze_policy_string
 
 
 def print_finding(finding, minimal=False):

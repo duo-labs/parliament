@@ -2,8 +2,8 @@ import unittest
 from nose.tools import raises, assert_equal, assert_true, assert_false
 
 # import parliament
-from parliament.policy import analyze_policy_string
-from parliament.statement import is_valid_region, is_valid_account_id, is_arn_match
+from parliament import analyze_policy_string, is_arn_match
+from parliament.statement import is_valid_region, is_valid_account_id
 
 
 class TestResourceFormatting(unittest.TestCase):

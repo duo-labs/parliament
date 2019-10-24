@@ -73,7 +73,7 @@ class Policy:
 
         def __is_allowed(stmts):
             """
-            Given statements that all relevant to the same resource and privilege,
+            Given statements that are all relevant to the same resource and privilege,
             (meaning each statement must have an explicit allow or deny on the privilege) 
             determine if it is allowed, which means no Deny effects.
             """
@@ -195,19 +195,3 @@ class Policy:
         self.check_for_bad_patterns()
 
         return True
-
-
-def analyze_policy_string(policy_str, filepath=None):
-    """Given a string reperesenting a policy, convert it to a Policy object with findings"""
-
-    try:
-        # TODO Need to write my own json parser so I can track line numbers. See https://stackoverflow.com/questions/7225056/python-json-decoding-library-which-can-associate-decoded-items-with-original-li
-        policy_json = json.loads(policy_str)
-    except ValueError as e:
-        policy = Policy(None)
-        policy.add_finding("json parsing error: {}".format(e), severity.MALFORMED)
-        return policy
-
-    policy = Policy(policy_json, filepath)
-    policy.analyze()
-    return policy

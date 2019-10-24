@@ -1,7 +1,7 @@
 import unittest
 from nose.tools import raises, assert_equal, assert_true, assert_false
 
-from parliament.policy import analyze_policy_string
+from parliament import analyze_policy_string
 
 
 class TestPatterns(unittest.TestCase):

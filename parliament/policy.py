@@ -85,7 +85,16 @@ class Policy:
         allowed_resources = []
         all_references = self.get_references(privilege_prefix, privilege_name)
         for resource in all_references:
-            if __is_allowed(all_references[resource]):
+            resource_is_allowed = __is_allowed(all_references[resource])
+
+            # To avoid situations where we have an allow on a specific resource, but a deny
+            # on *, I'm making a special case here
+            # I should do regex intersections across each resource, but this will avoid
+            # common situations for now
+            if resource == "*" and not resource_is_allowed:
+                return []
+
+            if resource_is_allowed:
                 allowed_resources.append(resource)
 
         return allowed_resources

@@ -72,6 +72,26 @@ class TestPatterns(unittest.TestCase):
             "Resource policy privilege escalation across two statement",
         )
 
+    def test_resource_policy_privilege_escalation_with_deny(self):
+        # This test ensures if we have an allow on a specific resource, but a Deny on *,
+        # that it is denied.
+        policy = analyze_policy_string("""{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+        "Effect": "Allow",
+        "Action": "s3:PutBucketPolicy",
+        "Resource": "arn:aws:s3:::examplebucket"
+        },
+        {
+        "Effect": "Deny",
+        "Action": "*",
+        "Resource": "*"
+        }
+        ]}""")
+        print(policy.findings)
+        assert_true(len(policy.findings) == 0, "Resource policy privilege escalation does not exist because all our denied")
+
 
     def test_resource_policy_privilege_escalation_at_bucket_level(self):
         policy = analyze_policy_string(

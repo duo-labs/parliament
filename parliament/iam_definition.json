@@ -138,7 +138,7 @@
       },
       {
         "condition": "aws:ResourceTag/${TagKey}",
-        "description": "Filters actions based on tag-value assoicated with the resource",
+        "description": "Filters actions based on tag-value associated with the resource",
         "type": "String"
       },
       {
@@ -4982,6 +4982,30 @@
       },
       {
         "access_level": "List",
+        "description": "Grants permissions to list contact flow resources in an Amazon Connect instance",
+        "privilege": "ListContactFlows",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "instance*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permissions to list hours of operation resources in an Amazon Connect instance",
+        "privilege": "ListHoursOfOperations",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "instance*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
         "description": "Grants permissions to view the Amazon Connect instances associated with an AWS account.",
         "privilege": "ListInstances",
         "resource_types": [
@@ -4989,6 +5013,30 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permissions to list phone number resources in an Amazon Connect instance",
+        "privilege": "ListPhoneNumbers",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "instance*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permissions to list queue resources in an Amazon Connect instance",
+        "privilege": "ListQueues",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "instance*"
           }
         ]
       },
@@ -5055,6 +5103,21 @@
         "arn": "arn:${Partition}:connect::${Account}:instance/${InstanceId}/queue/${QueueId}",
         "condition_keys": [],
         "resource": "queue"
+      },
+      {
+        "arn": "arn:${Partition}:connect::${Account}:instance/${InstanceId}/contact-flow/${ContactFlowId}",
+        "condition_keys": [],
+        "resource": "contact-flow"
+      },
+      {
+        "arn": "arn:${Partition}:connect::${Account}:instance/${InstanceId}/operating-hours/${HoursOfOperationId}",
+        "condition_keys": [],
+        "resource": "hours-of-operation"
+      },
+      {
+        "arn": "arn:${Partition}:connect::${Account}:instance/${InstanceId}/phone-numbers/${PhoneNumberId}",
+        "condition_keys": [],
+        "resource": "phone-number"
       }
     ],
     "service_name": "Amazon Connect"
@@ -9185,7 +9248,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "healthcheck*"
+            "resource_type": ""
           }
         ]
       },
@@ -9867,6 +9930,32 @@
       }
     ],
     "service_name": "Amazon Route 53"
+  },
+  {
+    "conditions": [],
+    "prefix": "rds-db",
+    "privileges": [
+      {
+        "access_level": "Permissions management",
+        "description": "Allows IAM role or user to connect to RDS database",
+        "privilege": "connect",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "db-user*"
+          }
+        ]
+      }
+    ],
+    "resources": [
+      {
+        "arn": "arn:${Partition}:rds-db:${Region}:${Account}:dbuser:${DbiResourceId}/${DbUserName}",
+        "condition_keys": [],
+        "resource": "db-user"
+      }
+    ],
+    "service_name": "Amazon RDS IAM Authentication"
   },
   {
     "conditions": [],
@@ -17904,11 +17993,6 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "log-group*"
-          },
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
             "resource_type": "log-stream*"
           }
         ]
@@ -18101,11 +18185,6 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "log-group*"
-          },
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
             "resource_type": "log-stream*"
           }
         ]
@@ -18199,11 +18278,6 @@
         "description": "Uploads a batch of log events to the specified log stream",
         "privilege": "PutLogEvents",
         "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": "log-group*"
-          },
           {
             "condition_keys": [],
             "dependent_actions": [],
@@ -19059,6 +19133,18 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "cluster*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Return a list of saved queries to Amazon Redshift console.",
+        "privilege": "DescribeSavedQueries",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -22143,6 +22229,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Authorizes an application for your AWS Directory.",
+        "privilege": "AuthorizeApplication",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "directory*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Cancels an in-progress schema extension to a Microsoft AD directory.",
         "privilege": "CancelSchemaExtension",
         "resource_types": [
@@ -22150,6 +22248,18 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "directory*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Verifies that the alias is available for use.",
+        "privilege": "CheckAlias",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -22560,6 +22670,18 @@
       },
       {
         "access_level": "Read",
+        "description": "Obtains the aws applications authorized for a directory.",
+        "privilege": "ListAuthorizedApplications",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "directory*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
         "description": "Lists the address blocks that you have added to a directory.",
         "privilege": "ListIpRoutes",
         "resource_types": [
@@ -22706,6 +22828,18 @@
         "access_level": "Write",
         "description": "Applies a schema extension to a Microsoft AD directory.",
         "privilege": "StartSchemaExtension",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "directory*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Unauthorizes an application from your AWS Directory.",
+        "privilege": "UnauthorizeApplication",
         "resource_types": [
           {
             "condition_keys": [],
@@ -25201,6 +25335,18 @@
       },
       {
         "access_level": "Read",
+        "description": "Retrieve Mfa Device Management settings for the directory",
+        "privilege": "GetMfaDeviceManagementForDirectory",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
         "description": "Retrieve details of a permission set",
         "privilege": "GetPermissionSet",
         "resource_types": [
@@ -25419,6 +25565,18 @@
             "dependent_actions": [
               "sso:GetProfile"
             ],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Put Mfa Device Management settings for the directory",
+        "privilege": "PutMfaDeviceManagementForDirectory",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
             "resource_type": ""
           }
         ]
@@ -32314,7 +32472,7 @@
     "privileges": [
       {
         "access_level": "Write",
-        "description": "Adds new approved products to the Private Marketplace. This action can be performed by any account in an AWS Organization, provided the user has permissions to do so, and the Organization's Service Control Policies allow it.",
+        "description": "Adds new approved products to the Private Marketplace. Also allows to approve a request for a product to be associated with the Private Marketplace. This action can be performed by any account in an AWS Organization, provided the user has permissions to do so, and the Organization's Service Control Policies allow it.",
         "privilege": "AssociateProductsWithPrivateMarketplace",
         "resource_types": [
           {
@@ -32349,6 +32507,18 @@
         ]
       },
       {
+        "access_level": "Write",
+        "description": "Creates a new request for a product or products to be associated with the Private Marketplace. This action can be performed by any account in an in an AWS Organization, provided the user has permissions to do so, and the Organization's Service Control Policies allow it.",
+        "privilege": "CreatePrivateMarketplaceRequests",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
         "access_level": "List",
         "description": "Describes the status of requested products in the Private Marketplace for administrative purposes. This action can be performed by any account in an AWS Organization, provided the user has permissions to do so, and the Organization's Service Control Policies allow it.",
         "privilege": "DescribePrivateMarketplaceProducts",
@@ -32373,6 +32543,18 @@
         ]
       },
       {
+        "access_level": "List",
+        "description": "Describes requests and associated products in the Private Marketplace. This action can be performed by any account in an AWS Organization, provided the user has permissions to do so, and the Organization's Service Control Policies allow it.",
+        "privilege": "DescribePrivateMarketplaceRequests",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
         "access_level": "Read",
         "description": "Describes the status of the Private Marketplace for administrative purposes. This action can be performed by any account in an AWS Organization, provided the user has permissions to do so, and the Organization's Service Control Policies allow it.",
         "privilege": "DescribePrivateMarketplaceStatus",
@@ -32386,7 +32568,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Removes approved products from the Private Marketplace. This action can be performed by any account in an AWS Organization, provided the user has permissions to do so, and the Organization's Service Control Policies allow it.",
+        "description": "Removes approved products from the Private Marketplace. Also allows to decline a request for a product to be associated with the Private Marketplace. This action can be performed by any account in an AWS Organization, provided the user has permissions to do so, and the Organization's Service Control Policies allow it.",
         "privilege": "DisassociateProductsFromPrivateMarketplace",
         "resource_types": [
           {
@@ -32400,6 +32582,18 @@
         "access_level": "List",
         "description": "Queryable list for the products and status of products in the Private Marketplace for administrative purposes. This action can be performed by any account in an AWS Organization, provided the user has permissions to do so, and the Organization's Service Control Policies allow it.",
         "privilege": "ListPrivateMarketplaceProducts",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Queryable list for requests and associated products in the Private Marketplace. This action can be performed by any account in an AWS Organization, provided the user has permissions to do so, and the Organization's Service Control Policies allow it.",
+        "privilege": "ListPrivateMarketplaceRequests",
         "resource_types": [
           {
             "condition_keys": [],
@@ -32436,6 +32630,18 @@
         "access_level": "Write",
         "description": "Updates the Private Marketplace Profile that customizes the white label experience on the AWS Marketplace website for the individual account, or for the entire AWS Organization if one exists. This action can be performed by any account in an AWS Organization, provided the user has permissions to do so, and the Organization's Service Control Policies allow it.",
         "privilege": "UpdatePrivateMarketplaceProfile",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Updates the Private Marketplace settings. This includes setting for enabling requests from end users and preferences for notifications. This action can be performed by any account in an AWS Organization, provided the user has permissions to do so, and the Organization's Service Control Policies allow it.",
+        "privilege": "UpdatePrivateMarketplaceSettings",
         "resource_types": [
           {
             "condition_keys": [],
@@ -41891,7 +42097,7 @@
         ]
       },
       {
-        "access_level": "Write",
+        "access_level": "Permissions management",
         "description": "Creates a permission for a network interface that grants certain operations to another authorized user.",
         "privilege": "CreateNetworkInterfacePermission",
         "resource_types": [
@@ -42940,7 +43146,7 @@
         ]
       },
       {
-        "access_level": "Write",
+        "access_level": "Permissions management",
         "description": "Deletes a permission associated with a network interface.",
         "privilege": "DeleteNetworkInterfacePermission",
         "resource_types": [
@@ -45584,7 +45790,7 @@
         ]
       },
       {
-        "access_level": "Write",
+        "access_level": "Permissions management",
         "description": "Adds or removes permission settings for the specified snapshot.",
         "privilege": "ModifySnapshotAttribute",
         "resource_types": [
@@ -45790,7 +45996,7 @@
         ]
       },
       {
-        "access_level": "Write",
+        "access_level": "Permissions management",
         "description": "Modifies the permissions for your VPC endpoint service.",
         "privilege": "ModifyVpcEndpointServicePermissions",
         "resource_types": [
@@ -46207,7 +46413,7 @@
         ]
       },
       {
-        "access_level": "Write",
+        "access_level": "Permissions management",
         "description": "Resets permission settings for the specified snapshot.",
         "privilege": "ResetSnapshotAttribute",
         "resource_types": [
@@ -47064,6 +47270,18 @@
       },
       {
         "access_level": "Read",
+        "description": "Grants permission to list settings for the trail",
+        "privilege": "GetTrail",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
         "description": "Grants permission to retrieve a JSON-formatted list of information about the specified trail",
         "privilege": "GetTrailStatus",
         "resource_types": [
@@ -47095,6 +47313,18 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "trail*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to list trails associated with the current region for your account",
+        "privilege": "ListTrails",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -53379,6 +53609,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Completes the creation process of a virtual MFA device",
+        "privilege": "CompleteVirtualMfaDeviceRegistration",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Creates an alias for the directory that AWS SSO provides by default",
         "privilege": "CreateAlias",
         "resource_types": [
@@ -53417,6 +53659,18 @@
         "access_level": "Write",
         "description": "Deletes a group from the directory that AWS SSO provides by default",
         "privilege": "DeleteGroup",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Deletes a MFA device by device name for a given user",
+        "privilege": "DeleteMfaDeviceForUser",
         "resource_types": [
           {
             "condition_keys": [],
@@ -53522,6 +53776,18 @@
         ]
       },
       {
+        "access_level": "List",
+        "description": "Lists all active MFA devices and their MFA device metadata for a user",
+        "privilege": "ListMfaDevicesForUser",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
         "access_level": "Write",
         "description": "Removes member that are part of the group in the directory that AWS SSO provides by default",
         "privilege": "RemoveMemberFromGroup",
@@ -53549,6 +53815,18 @@
         "access_level": "Read",
         "description": "Search for users within the associated directory",
         "privilege": "SearchUsers",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Begins the creation process of virtual mfa device",
+        "privilege": "StartVirtualMfaDeviceRegistration",
         "resource_types": [
           {
             "condition_keys": [],
@@ -58636,8 +58914,20 @@
       },
       {
         "access_level": "Write",
-        "description": "Grants permission to associate multiple phone numbers with an Amazon Chime voice connector",
+        "description": "Grants permission to associate multiple phone numbers with an Amazon Chime Voice Connector",
         "privilege": "AssociatePhoneNumbersWithVoiceConnector",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to associate multiple phone numbers with an Amazon Chime Voice Connector Group",
+        "privilege": "AssociatePhoneNumbersWithVoiceConnectorGroup",
         "resource_types": [
           {
             "condition_keys": [],
@@ -58809,8 +59099,20 @@
       },
       {
         "access_level": "Write",
-        "description": "Grants permission to create a voice connector under the administrator's AWS account",
+        "description": "Grants permission to create a Amazon Chime Voice Connector under the administrator's AWS account",
         "privilege": "CreateVoiceConnector",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to create a Amazon Chime Voice Connector Group under the administrator's AWS account",
+        "privilege": "CreateVoiceConnectorGroup",
         "resource_types": [
           {
             "condition_keys": [],
@@ -58931,7 +59233,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Grants permission to delete the specified voice connector",
+        "description": "Grants permission to delete the specified Amazon Chime Voice Connector",
         "privilege": "DeleteVoiceConnector",
         "resource_types": [
           {
@@ -58943,7 +59245,19 @@
       },
       {
         "access_level": "Write",
-        "description": "Grants permission to delete the origination settings for the specified voice connector",
+        "description": "Grants permission to delete the specified Amazon Chime Voice Connector Group",
+        "privilege": "DeleteVoiceConnectorGroup",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to delete the origination settings for the specified Amazon Chime Voice Connector",
         "privilege": "DeleteVoiceConnectorOrigination",
         "resource_types": [
           {
@@ -58955,7 +59269,19 @@
       },
       {
         "access_level": "Write",
-        "description": "Grants permission to delete the termination settings for the specified voice connector",
+        "description": "Grants permission to delete streaming configuration for the specified Amazon Chime Voice Connector",
+        "privilege": "DeleteVoiceConnectorStreamingConfiguration",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to delete the termination settings for the specified Amazon Chime Voice Connector",
         "privilege": "DeleteVoiceConnectorTermination",
         "resource_types": [
           {
@@ -58967,7 +59293,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Grants permission to delete SIP termination credentials for the specified voice connector",
+        "description": "Grants permission to delete SIP termination credentials for the specified Amazon Chime Voice Connector",
         "privilege": "DeleteVoiceConnectorTerminationCredentials",
         "resource_types": [
           {
@@ -58991,8 +59317,20 @@
       },
       {
         "access_level": "Write",
-        "description": "Grants permission to disassociate multiple phone numbers from the specified voice connector",
+        "description": "Grants permission to disassociate multiple phone numbers from the specified Amazon Chime Voice Connector",
         "privilege": "DisassociatePhoneNumbersFromVoiceConnector",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to disassociate multiple phone numbers from the specified Amazon Chime Voice Connector Group",
+        "privilege": "DisassociatePhoneNumbersFromVoiceConnectorGroup",
         "resource_types": [
           {
             "condition_keys": [],
@@ -59165,6 +59503,18 @@
       },
       {
         "access_level": "Read",
+        "description": "Grants permission to get phone number settings related to Amazon Chime for the AWS account",
+        "privilege": "GetPhoneNumberSettings",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
         "description": "Grants permission to get telephony limits for the AWS account",
         "privilege": "GetTelephonyLimits",
         "resource_types": [
@@ -59225,7 +59575,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Grants permission to get details for the specified voice connector",
+        "description": "Grants permission to get details for the specified Amazon Chime Voice Connector",
         "privilege": "GetVoiceConnector",
         "resource_types": [
           {
@@ -59237,7 +59587,31 @@
       },
       {
         "access_level": "Read",
-        "description": "Grants permission to get details of the origination settings for the specified voice connector",
+        "description": "Grants permission to get details for the specified Amazon Chime Voice Connector Group",
+        "privilege": "GetVoiceConnectorGroup",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to get details of the logging configuration for the specified Amazon Chime Voice Connector",
+        "privilege": "GetVoiceConnectorLoggingConfiguration",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to get details of the origination settings for the specified Amazon Chime Voice Connector",
         "privilege": "GetVoiceConnectorOrigination",
         "resource_types": [
           {
@@ -59249,7 +59623,19 @@
       },
       {
         "access_level": "Read",
-        "description": "Grants permission to get details of the termination settings for the specified voice connector",
+        "description": "Grants permission to get details of the streaming configuration for the specified Amazon Chime Voice Connector",
+        "privilege": "GetVoiceConnectorStreamingConfiguration",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to get details of the termination settings for the specified Amazon Chime Voice Connector",
         "privilege": "GetVoiceConnectorTermination",
         "resource_types": [
           {
@@ -59261,7 +59647,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Grants permission to get details of the termination health for the specified voice connector",
+        "description": "Grants permission to get details of the termination health for the specified Amazon Chime Voice Connector",
         "privilege": "GetVoiceConnectorTerminationHealth",
         "resource_types": [
           {
@@ -59332,7 +59718,7 @@
         ]
       },
       {
-        "access_level": "Read",
+        "access_level": "List",
         "description": "Grants permission to list the bots associated with the administrator's Amazon Chime Enterprise account",
         "privilege": "ListBots",
         "resource_types": [
@@ -59359,7 +59745,7 @@
         ]
       },
       {
-        "access_level": "Read",
+        "access_level": "List",
         "description": "Grants permission to list the calling regions available for the administrator's AWS account",
         "privilege": "ListCallingRegions",
         "resource_types": [
@@ -59443,7 +59829,7 @@
         ]
       },
       {
-        "access_level": "Read",
+        "access_level": "List",
         "description": "Grants permission to list the phone number orders under the administrator's AWS account",
         "privilege": "ListPhoneNumberOrders",
         "resource_types": [
@@ -59455,7 +59841,7 @@
         ]
       },
       {
-        "access_level": "Read",
+        "access_level": "List",
         "description": "Grants permission to list the phone numbers under the administrator's AWS account",
         "privilege": "ListPhoneNumbers",
         "resource_types": [
@@ -59479,8 +59865,20 @@
         ]
       },
       {
-        "access_level": "Read",
-        "description": "Grants permission to list the SIP termination credentials for the specified voice connector",
+        "access_level": "List",
+        "description": "Grants permission to list the Amazon Chime Voice Connector Groups under the administrator's AWS account",
+        "privilege": "ListVoiceConnectorGroups",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to list the SIP termination credentials for the specified Amazon Chime Voice Connector",
         "privilege": "ListVoiceConnectorTerminationCredentials",
         "resource_types": [
           {
@@ -59491,8 +59889,8 @@
         ]
       },
       {
-        "access_level": "Read",
-        "description": "Grants permission to list the voice connectors under the administrator's AWS account",
+        "access_level": "List",
+        "description": "Grants permission to list the Amazon Chime Voice Connectors under the administrator's AWS account",
         "privilege": "ListVoiceConnectors",
         "resource_types": [
           {
@@ -59528,7 +59926,26 @@
       },
       {
         "access_level": "Write",
-        "description": "Grants permission to update the origination settings for the specified voice connector",
+        "description": "Grants permission to add logging configuration for the specified Amazon Chime Voice Connector",
+        "privilege": "PutVoiceConnectorLoggingConfiguration",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [
+              "logs:CreateLogDelivery",
+              "logs:CreateLogGroup",
+              "logs:DeleteLogDelivery",
+              "logs:DescribeLogGroups",
+              "logs:GetLogDelivery",
+              "logs:ListLogDeliveries"
+            ],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to update the origination settings for the specified Amazon Chime Voice Connector",
         "privilege": "PutVoiceConnectorOrigination",
         "resource_types": [
           {
@@ -59540,7 +59957,19 @@
       },
       {
         "access_level": "Write",
-        "description": "Grants permission to update the termination settings for the specified voice connector",
+        "description": "Grants permission to add streaming configuration for the specified Amazon Chime Voice Connector",
+        "privilege": "PutVoiceConnectorStreamingConfiguration",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to update the termination settings for the specified Amazon Chime Voice Connector",
         "privilege": "PutVoiceConnectorTermination",
         "resource_types": [
           {
@@ -59552,7 +59981,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Grants permission to add SIP termination credentials for the specified voice connector",
+        "description": "Grants permission to add SIP termination credentials for the specified Amazon Chime Voice Connector",
         "privilege": "PutVoiceConnectorTerminationCredentials",
         "resource_types": [
           {
@@ -59808,6 +60237,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Grants permission to update phone number settings related to Amazon Chime for the AWS account",
+        "privilege": "UpdatePhoneNumberSettings",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Grants permission to update the supported license tiers available for users in your Amazon Chime account",
         "privilege": "UpdateSupportedLicenses",
         "resource_types": [
@@ -59856,8 +60297,20 @@
       },
       {
         "access_level": "Write",
-        "description": "Grants permission to update voice connector details for the specified voice connector",
+        "description": "Grants permission to update Amazon Chime Voice Connector details for the specified Amazon Chime Voice Connector",
         "privilege": "UpdateVoiceConnector",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to update Amazon Chime Voice Connector Group details for the specified Amazon Chime Voice Connector Group",
+        "privilege": "UpdateVoiceConnectorGroup",
         "resource_types": [
           {
             "condition_keys": [],
@@ -75749,7 +76202,7 @@
       },
       {
         "condition": "aws:ResourceTag/${TagKey}",
-        "description": "Filters actions based on tag-value assoicated with the resource.",
+        "description": "Filters actions based on tag-value associated with the resource.",
         "type": "String"
       },
       {
@@ -75763,6 +76216,11 @@
         "type": "Boolean"
       },
       {
+        "condition": "ssm:SyncType",
+        "description": "Filters access by verifying that a user also has access to the ResourceDataSync SyncType specified in the request",
+        "type": "String"
+      },
+      {
         "condition": "ssm:resourceTag/tag-key",
         "description": "A tag key and value pair.",
         "type": "String"
@@ -75772,7 +76230,7 @@
     "privileges": [
       {
         "access_level": "Tagging",
-        "description": "Adds or overwrites one or more tags for the specified resource.",
+        "description": "Grants permission to add or overwrite one or more tags for the specified resource",
         "privilege": "AddTagsToResource",
         "resource_types": [
           {
@@ -75804,7 +76262,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Attempts to cancel the command specified by the Command ID.",
+        "description": "Grants permission to attempt canceling the command specified by the Command ID",
         "privilege": "CancelCommand",
         "resource_types": [
           {
@@ -75816,7 +76274,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Attempts to cancel the execution specified by the WindowExecution ID.",
+        "description": "Grants permission to stop a Maintenance Window execution that is in progress",
         "privilege": "CancelMaintenanceWindowExecution",
         "resource_types": [
           {
@@ -75828,7 +76286,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Registers your on-premises server or virtual machine with Amazon EC2 so that you can manage these resources using Run Command.",
+        "description": "Grants permission to register your on-premises server or virtual machine with Amazon EC2 so that you can manage these resources using Run Command",
         "privilege": "CreateActivation",
         "resource_types": [
           {
@@ -75840,7 +76298,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Associates the specified SSM document with the specified instance.",
+        "description": "Grants permission to create associations",
         "privilege": "CreateAssociation",
         "resource_types": [
           {
@@ -75852,7 +76310,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Associates the specified SSM document with the specified instances.",
+        "description": "Grants permission to create batches of associations",
         "privilege": "CreateAssociationBatch",
         "resource_types": [
           {
@@ -75863,8 +76321,8 @@
         ]
       },
       {
-        "access_level": "Tagging",
-        "description": "Creates an SSM document.",
+        "access_level": "Write",
+        "description": "Grants permission to create a Systems Manager document",
         "privilege": "CreateDocument",
         "resource_types": [
           {
@@ -75878,12 +76336,15 @@
         ]
       },
       {
-        "access_level": "Tagging",
-        "description": "Create an SSM maintenance window.",
+        "access_level": "Write",
+        "description": "Grants permission to create a new maintenance window",
         "privilege": "CreateMaintenanceWindow",
         "resource_types": [
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
             "dependent_actions": [],
             "resource_type": ""
           }
@@ -75891,7 +76352,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Create a new OpsItem",
+        "description": "Grants permission to create a new OpsItem",
         "privilege": "CreateOpsItem",
         "resource_types": [
           {
@@ -75902,12 +76363,15 @@
         ]
       },
       {
-        "access_level": "Tagging",
-        "description": "Create a SSM patch baseline.",
+        "access_level": "Write",
+        "description": "Grants permission to create a patch baseline",
         "privilege": "CreatePatchBaseline",
         "resource_types": [
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
             "dependent_actions": [],
             "resource_type": ""
           }
@@ -75915,19 +76379,26 @@
       },
       {
         "access_level": "Write",
-        "description": "Creates a resource data sync configuration to a single bucket in Amazon S3.",
+        "description": "Grants permission to create a resource data sync",
         "privilege": "CreateResourceDataSync",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
+            "resource_type": "resourcedatasync*"
+          },
+          {
+            "condition_keys": [
+              "ssm:SyncType"
+            ],
+            "dependent_actions": [],
             "resource_type": ""
           }
         ]
       },
       {
         "access_level": "Write",
-        "description": "Deletes an activation.",
+        "description": "Grants permission to delete an activation",
         "privilege": "DeleteActivation",
         "resource_types": [
           {
@@ -75939,7 +76410,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Disassociates the specified SSM document from the specified instance.",
+        "description": "Grants permission to delete an existing association",
         "privilege": "DeleteAssociation",
         "resource_types": [
           {
@@ -75951,7 +76422,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes the SSM document and all instance associations to the document.",
+        "description": "Grants permission to delete the Systems Manager document",
         "privilege": "DeleteDocument",
         "resource_types": [
           {
@@ -75963,7 +76434,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes a custom inventory type or the data associated with a custom inventory type.",
+        "description": "Grants permission to delete a custom inventory type or the data associated with a custom inventory type",
         "privilege": "DeleteInventory",
         "resource_types": [
           {
@@ -75975,7 +76446,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Delete an SSM maintenance window.",
+        "description": "Grants permission to delete a maintenance window",
         "privilege": "DeleteMaintenanceWindow",
         "resource_types": [
           {
@@ -75987,7 +76458,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Delete a parameter from the system.",
+        "description": "Grants permission to delete a parameter from the system",
         "privilege": "DeleteParameter",
         "resource_types": [
           {
@@ -75999,7 +76470,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Delete a list of parameters.",
+        "description": "Grants permission to delete a list of parameters",
         "privilege": "DeleteParameters",
         "resource_types": [
           {
@@ -76011,7 +76482,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Delete a SSM patch baseline.",
+        "description": "Grants permission to delete a patch baseline",
         "privilege": "DeletePatchBaseline",
         "resource_types": [
           {
@@ -76023,11 +76494,18 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes a Resource Data Sync configuration.",
+        "description": "Grants permission to delete a resource data sync configuration",
         "privilege": "DeleteResourceDataSync",
         "resource_types": [
           {
             "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "resourcedatasync*"
+          },
+          {
+            "condition_keys": [
+              "ssm:SyncType"
+            ],
             "dependent_actions": [],
             "resource_type": ""
           }
@@ -76035,7 +76513,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Enables the user to remove on-premises managed instances from the list of managed instances.",
+        "description": "Grants permission to remove on-premises managed instances from the list of managed instances",
         "privilege": "DeregisterManagedInstance",
         "resource_types": [
           {
@@ -76047,7 +76525,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deregister a SSM patch baseline from a patch group.",
+        "description": "Grants permission to remove a patch baseline from a patch group",
         "privilege": "DeregisterPatchBaselineForPatchGroup",
         "resource_types": [
           {
@@ -76059,7 +76537,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deregister a target from SSM maintenance window.",
+        "description": "Grants permission to remove a target from a maintenance window",
         "privilege": "DeregisterTargetFromMaintenanceWindow",
         "resource_types": [
           {
@@ -76071,7 +76549,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deregister a task from SSM maintenance window.",
+        "description": "Grants permission to remove a task from a maintenance window",
         "privilege": "DeregisterTaskFromMaintenanceWindow",
         "resource_types": [
           {
@@ -76083,7 +76561,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Details about the activation, including: the date and time the activation was created, the expiration date, the IAM role assigned to the instances in the activation, and the number of instances activated by this registration.",
+        "description": "Grants permission to describe details about the activation, including: the date and time the activation was created, the expiration date, the IAM role assigned to the instances in the activation, and the number of instances activated by this registration",
         "privilege": "DescribeActivations",
         "resource_types": [
           {
@@ -76095,7 +76573,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Describes the associations for the specified SSM document or instance.",
+        "description": "Grants permission to describe an existing association",
         "privilege": "DescribeAssociation",
         "resource_types": [
           {
@@ -76107,7 +76585,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Describes the detailed information about a specific execution of a specific association.",
+        "description": "Grants permission to view information about a specific execution of an association",
         "privilege": "DescribeAssociationExecutionTargets",
         "resource_types": [
           {
@@ -76119,7 +76597,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Describes all executions for a specific association id.",
+        "description": "Grants permission to describe all executions for an association",
         "privilege": "DescribeAssociationExecutions",
         "resource_types": [
           {
@@ -76131,7 +76609,31 @@
       },
       {
         "access_level": "Read",
-        "description": "Describes one or more available patches.",
+        "description": "Grants permission to describe all active and terminated Automation executions",
+        "privilege": "DescribeAutomationExecutions",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to describe all active and terminated step executions in an Automation workflow",
+        "privilege": "DescribeAutomationStepExecutions",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to list all patches eligible to be included in a patch baseline",
         "privilege": "DescribeAvailablePatches",
         "resource_types": [
           {
@@ -76143,7 +76645,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Describes the specified SSM document.",
+        "description": "Grants permission to describe the specified Systems Manager document",
         "privilege": "DescribeDocument",
         "resource_types": [
           {
@@ -76155,7 +76657,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Describes the parameters for an SSM document.",
+        "description": "Grants permission to describe the parameters for a Systems Manager document",
         "privilege": "DescribeDocumentParameters",
         "resource_types": [
           {
@@ -76167,7 +76669,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Describes the permissions for an SSM document.",
+        "description": "Grants permission to describe the permissions for a Systems Manager document",
         "privilege": "DescribeDocumentPermission",
         "resource_types": [
           {
@@ -76179,7 +76681,19 @@
       },
       {
         "access_level": "Read",
-        "description": "Describes the the evaluation of patch baseline for patches and corresponding state.",
+        "description": "Grants permission to get all associations for an instance",
+        "privilege": "DescribeEffectiveInstanceAssociations",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to retrieve the current effective patches (the patch and the approval state) for the specified patch baseline",
         "privilege": "DescribeEffectivePatchesForPatchBaseline",
         "resource_types": [
           {
@@ -76191,7 +76705,19 @@
       },
       {
         "access_level": "Read",
-        "description": "Describes one or more your instances.",
+        "description": "Grants permission to get the status of associations for an instance",
+        "privilege": "DescribeInstanceAssociationsStatus",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to describe one or more of your instances",
         "privilege": "DescribeInstanceInformation",
         "resource_types": [
           {
@@ -76203,7 +76729,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Describe one or more of your instance patch states. One per each instance ID.",
+        "description": "Grants permission to describe the high-level patch state of one or more instances",
         "privilege": "DescribeInstancePatchStates",
         "resource_types": [
           {
@@ -76215,7 +76741,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Describe one or more of your instance patch states over all instances in given patch group.",
+        "description": "Grants permission to describe the high-level patch state for the instances in the specified patch group",
         "privilege": "DescribeInstancePatchStatesForPatchGroup",
         "resource_types": [
           {
@@ -76227,7 +76753,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Describe one or more of your instance patch states for a given instance ID.",
+        "description": "Grants permission to describe one or more of your instance patch states for a given instance ID",
         "privilege": "DescribeInstancePatches",
         "resource_types": [
           {
@@ -76239,7 +76765,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Enables user's Amazon EC2 console to render managed instances' nodes",
+        "description": "Grants permission to user's Amazon EC2 console to render managed instances' nodes",
         "privilege": "DescribeInstanceProperties",
         "resource_types": [
           {
@@ -76251,7 +76777,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Describes a specific delete inventory operation.",
+        "description": "Grants permission to describe a specific delete inventory operation",
         "privilege": "DescribeInventoryDeletions",
         "resource_types": [
           {
@@ -76263,7 +76789,7 @@
       },
       {
         "access_level": "List",
-        "description": "Describe one or more of your maintenance window execution task invocations history.",
+        "description": "Grants permission to describe one or more of your maintenance window execution task invocations history",
         "privilege": "DescribeMaintenanceWindowExecutionTaskInvocations",
         "resource_types": [
           {
@@ -76275,7 +76801,7 @@
       },
       {
         "access_level": "List",
-        "description": "Describe one or more of your maintenance window execution tasks history.",
+        "description": "Grants permission to describe one or more of your maintenance window execution tasks history",
         "privilege": "DescribeMaintenanceWindowExecutionTasks",
         "resource_types": [
           {
@@ -76287,7 +76813,7 @@
       },
       {
         "access_level": "List",
-        "description": "Describe one or more of your maintenance window execution history.",
+        "description": "Grants permission to describe one or more of your maintenance window execution history",
         "privilege": "DescribeMaintenanceWindowExecutions",
         "resource_types": [
           {
@@ -76299,7 +76825,7 @@
       },
       {
         "access_level": "List",
-        "description": "Describe the upcoming executions of one or more of your maintenance windows.",
+        "description": "Grants permission to describe the upcoming executions of one or more of your maintenance windows",
         "privilege": "DescribeMaintenanceWindowSchedule",
         "resource_types": [
           {
@@ -76311,7 +76837,7 @@
       },
       {
         "access_level": "List",
-        "description": "Describe one or more of your maintenance windows targets.",
+        "description": "Grants permission to describe one or more of your maintenance windows targets",
         "privilege": "DescribeMaintenanceWindowTargets",
         "resource_types": [
           {
@@ -76323,7 +76849,7 @@
       },
       {
         "access_level": "List",
-        "description": "Describe one or more of your maintenance windows tasks.",
+        "description": "Grants permission to describe one or more of your maintenance windows tasks",
         "privilege": "DescribeMaintenanceWindowTasks",
         "resource_types": [
           {
@@ -76335,7 +76861,7 @@
       },
       {
         "access_level": "List",
-        "description": "Describe one or more of your maintenance windows.",
+        "description": "Grants permission to describe one or more of your maintenance windows",
         "privilege": "DescribeMaintenanceWindows",
         "resource_types": [
           {
@@ -76347,7 +76873,7 @@
       },
       {
         "access_level": "List",
-        "description": "Describe the maintenance windows to which your target belongs.",
+        "description": "Grants permission to describe the maintenance windows to which your target belongs",
         "privilege": "DescribeMaintenanceWindowsForTarget",
         "resource_types": [
           {
@@ -76359,7 +76885,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns a list of OpsItem based on different search criteria",
+        "description": "Grants permission to query a set of OpsItems",
         "privilege": "DescribeOpsItems",
         "resource_types": [
           {
@@ -76371,7 +76897,7 @@
       },
       {
         "access_level": "List",
-        "description": "Describes one or more parameters in Parameter Store.",
+        "description": "Grants permission to describe one or more parameters in Parameter Store",
         "privilege": "DescribeParameters",
         "resource_types": [
           {
@@ -76383,7 +76909,7 @@
       },
       {
         "access_level": "List",
-        "description": "Describes one or more SSM patch baselines.",
+        "description": "Grants permission to describe one or more patch baselines",
         "privilege": "DescribePatchBaselines",
         "resource_types": [
           {
@@ -76395,7 +76921,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Get a high level patch state report of given patch group.",
+        "description": "Grants permission to get a high level patch state report of a given patch group",
         "privilege": "DescribePatchGroupState",
         "resource_types": [
           {
@@ -76407,7 +76933,7 @@
       },
       {
         "access_level": "List",
-        "description": "Describes one or more patch group to SSM patch baseline mappings.",
+        "description": "Grants permission to describe all patch groups that have been registered with patch baselines",
         "privilege": "DescribePatchGroups",
         "resource_types": [
           {
@@ -76419,7 +76945,19 @@
       },
       {
         "access_level": "List",
-        "description": "Describe one or more Session Manager sessions.",
+        "description": "Lists possible values for a specific patch property.",
+        "privilege": "DescribePatchProperties",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to describe one or more Session Manager sessions",
         "privilege": "DescribeSessions",
         "resource_types": [
           {
@@ -76431,7 +76969,7 @@
       },
       {
         "access_level": "Read",
-        "description": "",
+        "description": "Grants permission to get detailed information about a particular Automation execution",
         "privilege": "GetAutomationExecution",
         "resource_types": [
           {
@@ -76443,7 +76981,19 @@
       },
       {
         "access_level": "Read",
-        "description": "Get the connection status for an instance.",
+        "description": "Grants permission to get detailed information about command execution for an invocation or plugin",
+        "privilege": "GetCommandInvocation",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to get the connection status for an instance",
         "privilege": "GetConnectionStatus",
         "resource_types": [
           {
@@ -76455,7 +77005,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Get the default SSM patch baseline.",
+        "description": "Grants permission to get the default patch baseline",
         "privilege": "GetDefaultPatchBaseline",
         "resource_types": [
           {
@@ -76467,7 +77017,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Get the snapshot of patches to be installed for given instances.",
+        "description": "Grants permission to get the snapshot of patches to be installed for given instances",
         "privilege": "GetDeployablePatchSnapshotForInstance",
         "resource_types": [
           {
@@ -76479,7 +77029,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Gets the contents of the specified SSM document.",
+        "description": "Grants permission to get the contents of the specified Systems Manager document",
         "privilege": "GetDocument",
         "resource_types": [
           {
@@ -76491,7 +77041,31 @@
       },
       {
         "access_level": "Read",
-        "description": "Get a SSM maintenance window.",
+        "description": "Grants permission to query inventory information",
+        "privilege": "GetInventory",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to list the inventory type names for the account or attribute names for a specific Inventory item type",
+        "privilege": "GetInventorySchema",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to get a maintenance window",
         "privilege": "GetMaintenanceWindow",
         "resource_types": [
           {
@@ -76503,7 +77077,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Get a SSM maintenance window execution.",
+        "description": "Grants permission to get a maintenance window execution",
         "privilege": "GetMaintenanceWindowExecution",
         "resource_types": [
           {
@@ -76515,7 +77089,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Get a SSM maintenance window execution task.",
+        "description": "Grants permission to get a maintenance window execution task",
         "privilege": "GetMaintenanceWindowExecutionTask",
         "resource_types": [
           {
@@ -76527,7 +77101,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Get a SSM maintenance window execution task invocation.",
+        "description": "Grants permission to get a maintenance window execution task invocation",
         "privilege": "GetMaintenanceWindowExecutionTaskInvocation",
         "resource_types": [
           {
@@ -76539,7 +77113,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Get a SSM maintenance window task.",
+        "description": "Grants permission to get a maintenance window task",
         "privilege": "GetMaintenanceWindowTask",
         "resource_types": [
           {
@@ -76551,7 +77125,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Fetches the installation description for a package.",
+        "description": "Grants permission to get the installation description for a package",
         "privilege": "GetManifest",
         "resource_types": [
           {
@@ -76563,7 +77137,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns details of an OpsItem",
+        "description": "Grants permission to get details of an OpsItem",
         "privilege": "GetOpsItem",
         "resource_types": [
           {
@@ -76575,19 +77149,19 @@
       },
       {
         "access_level": "Read",
-        "description": "View a summary of OpsItems based on specified filters and aggregators. Filter is used to scope down the returned OpsItems. Aggregator is used to return counts of OpsItems.",
+        "description": "Grants permission to get a summary of OpsItems based on specified filters and aggregators",
         "privilege": "GetOpsSummary",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "resourcedatasync*"
           }
         ]
       },
       {
         "access_level": "Read",
-        "description": "Get information about a parameter by using the parameter name.",
+        "description": "Grants permission to get information about a parameter by using the parameter name",
         "privilege": "GetParameter",
         "resource_types": [
           {
@@ -76599,7 +77173,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Query a list of all modifications of a parameter.",
+        "description": "Grants permission to query a list of all modifications of a parameter",
         "privilege": "GetParameterHistory",
         "resource_types": [
           {
@@ -76611,7 +77185,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Get details of a list of parameters.",
+        "description": "Grants permission to get details of a list of parameters",
         "privilege": "GetParameters",
         "resource_types": [
           {
@@ -76623,7 +77197,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Retrieve parameters in a specific hierarchy.",
+        "description": "Grants permission to retrieve parameters in a specific hierarchy",
         "privilege": "GetParametersByPath",
         "resource_types": [
           {
@@ -76635,7 +77209,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Get a SSM patch baseline",
+        "description": "Grants permission to get a patch baseline",
         "privilege": "GetPatchBaseline",
         "resource_types": [
           {
@@ -76647,7 +77221,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Get the SSM patch baseline associated to the given patch group.",
+        "description": "Grants permission to retrieve the patch baseline associated to the given patch group",
         "privilege": "GetPatchBaselineForPatchGroup",
         "resource_types": [
           {
@@ -76658,8 +77232,20 @@
         ]
       },
       {
+        "access_level": "Read",
+        "description": "Grants permission to retrieve a service setting",
+        "privilege": "GetServiceSetting",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "servicesetting*"
+          }
+        ]
+      },
+      {
         "access_level": "Write",
-        "description": "Attaches labels to a specific version of an existing parameter.",
+        "description": "Grants permission to attach labels to a specific version of an existing parameter",
         "privilege": "LabelParameterVersion",
         "resource_types": [
           {
@@ -76671,7 +77257,7 @@
       },
       {
         "access_level": "List",
-        "description": "Lists versions of the specified association.",
+        "description": "Grants permission to list versions of the specified association",
         "privilege": "ListAssociationVersions",
         "resource_types": [
           {
@@ -76683,7 +77269,7 @@
       },
       {
         "access_level": "List",
-        "description": "Lists the associations for the specified SSM document or instance.",
+        "description": "Grants permission to list associations in your account",
         "privilege": "ListAssociations",
         "resource_types": [
           {
@@ -76695,7 +77281,7 @@
       },
       {
         "access_level": "Read",
-        "description": "An invocation is copy of a command sent to a specific instance.",
+        "description": "Grants permission to list the command invocations requested by users of the AWS account",
         "privilege": "ListCommandInvocations",
         "resource_types": [
           {
@@ -76707,7 +77293,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Lists the commands requested by users of the AWS account.",
+        "description": "Grants permission to list the commands requested by users of the AWS account",
         "privilege": "ListCommands",
         "resource_types": [
           {
@@ -76719,7 +77305,7 @@
       },
       {
         "access_level": "List",
-        "description": "Returns a list of compliance statuses for different resource types for a specific resource.",
+        "description": "Grants permission to list compliance statuses for different resource types of a specific resource",
         "privilege": "ListComplianceItems",
         "resource_types": [
           {
@@ -76731,7 +77317,7 @@
       },
       {
         "access_level": "List",
-        "description": "Returns a summary count of compliant and non-compliant resources for a compliance type.",
+        "description": "Grants permission to retrieve a summary count of compliant and non-compliant resources for a compliance type",
         "privilege": "ListComplianceSummaries",
         "resource_types": [
           {
@@ -76743,7 +77329,19 @@
       },
       {
         "access_level": "List",
-        "description": "Describes one or more your SSM documents.",
+        "description": "Grants permission to list all versions for a Systems Manager document",
+        "privilege": "ListDocumentVersions",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to describe one or more of your Systems Manager documents",
         "privilege": "ListDocuments",
         "resource_types": [
           {
@@ -76755,7 +77353,31 @@
       },
       {
         "access_level": "List",
-        "description": "Returns a resource-level summary count.",
+        "description": "Grants permission to SSM Agent to check if new associations are available for an instance",
+        "privilege": "ListInstanceAssociations",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to list your inventory items",
+        "privilege": "ListInventoryEntries",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to list resource-level summary count",
         "privilege": "ListResourceComplianceSummaries",
         "resource_types": [
           {
@@ -76766,8 +77388,20 @@
         ]
       },
       {
+        "access_level": "List",
+        "description": "Grants permission to list your resource data sync configurations",
+        "privilege": "ListResourceDataSync",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "resourcedatasync*"
+          }
+        ]
+      },
+      {
         "access_level": "Read",
-        "description": "Returns a list of the tags assigned to the specified resource.",
+        "description": "Grants permission to list the tags assigned to the specified resource",
         "privilege": "ListTagsForResource",
         "resource_types": [
           {
@@ -76799,7 +77433,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Share a document publicly or privately.",
+        "description": "Grants permission to share a Systems Manager document publicly or privately",
         "privilege": "ModifyDocumentPermission",
         "resource_types": [
           {
@@ -76811,7 +77445,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Registers a compliance type and other compliance details on a designated resource.",
+        "description": "Grants permission to register a compliance type and other compliance details on a designated resource",
         "privilege": "PutComplianceItems",
         "resource_types": [
           {
@@ -76823,7 +77457,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Reports installation result for a package.",
+        "description": "Grants permission to report installation results for a package",
         "privilege": "PutConfigurePackageResult",
         "resource_types": [
           {
@@ -76834,8 +77468,20 @@
         ]
       },
       {
-        "access_level": "Tagging",
-        "description": "Add a parameter to the system.",
+        "access_level": "Write",
+        "description": "Grants permission to bulk update custom inventory items on one or more instances",
+        "privilege": "PutInventory",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to add a parameter to the system",
         "privilege": "PutParameter",
         "resource_types": [
           {
@@ -76855,7 +77501,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Register a SSM patch baseline as the default.",
+        "description": "Grants permission to register a patch baseline as the default",
         "privilege": "RegisterDefaultPatchBaseline",
         "resource_types": [
           {
@@ -76867,7 +77513,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Register a SSM patch baseline to a patch group.",
+        "description": "Grants permission to register a patch baseline to a patch group",
         "privilege": "RegisterPatchBaselineForPatchGroup",
         "resource_types": [
           {
@@ -76879,7 +77525,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Register a SSM window target to a maintenance window.",
+        "description": "Grants permission to register a target with a maintenance window",
         "privilege": "RegisterTargetWithMaintenanceWindow",
         "resource_types": [
           {
@@ -76891,7 +77537,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Register a SSM window task to a maintenance window.",
+        "description": "Grants permission to register a new task to a maintenance window",
         "privilege": "RegisterTaskWithMaintenanceWindow",
         "resource_types": [
           {
@@ -76903,7 +77549,7 @@
       },
       {
         "access_level": "Tagging",
-        "description": "Removes all tags from the specified resource.",
+        "description": "Grants permission to remove all tags from the specified resource",
         "privilege": "RemoveTagsFromResource",
         "resource_types": [
           {
@@ -76935,7 +77581,19 @@
       },
       {
         "access_level": "Write",
-        "description": "Resume a disconnected SSM session manager connection.",
+        "description": "Grants permission to reset a service setting to the default value",
+        "privilege": "ResetServiceSetting",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "servicesetting*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to resume a disconnected session manager connection",
         "privilege": "ResumeSession",
         "resource_types": [
           {
@@ -76947,7 +77605,7 @@
       },
       {
         "access_level": "Write",
-        "description": "",
+        "description": "Grants permission to send a signal to an Automation execution to change the current behavior or status of the execution",
         "privilege": "SendAutomationSignal",
         "resource_types": [
           {
@@ -76959,21 +77617,49 @@
       },
       {
         "access_level": "Write",
-        "description": "Executes commands on one or more remote instances.",
+        "description": "Grants permission to execute commands on one or more managed instances",
         "privilege": "SendCommand",
         "resource_types": [
           {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "document*"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "instance"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "managed-instance"
+          },
+          {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ssm:resourceTag/tag-key"
             ],
             "dependent_actions": [],
-            "resource_type": "document"
+            "resource_type": ""
           }
         ]
       },
       {
         "access_level": "Write",
-        "description": "Initiates execution of an Automation document.",
+        "description": "Grants permission to run an association immediately and only once",
+        "privilege": "StartAssociationsOnce",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to initiates execution of an Automation document",
         "privilege": "StartAutomationExecution",
         "resource_types": [
           {
@@ -76985,7 +77671,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Start a connection to an instance using SSM Session Manager.",
+        "description": "Grants permission to start a connection to an instance using SSM Session Manager",
         "privilege": "StartSession",
         "resource_types": [
           {
@@ -77009,7 +77695,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Stop an Automation that is currently executing.",
+        "description": "Grants permission to stop an Automation that is currently executing",
         "privilege": "StopAutomationExecution",
         "resource_types": [
           {
@@ -77021,7 +77707,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Terminate an ongoing SSM Session Manager connection.",
+        "description": "Grants permission to terminate an ongoing SSM Session Manager connection",
         "privilege": "TerminateSession",
         "resource_types": [
           {
@@ -77033,7 +77719,19 @@
       },
       {
         "access_level": "Write",
-        "description": "Updates the status of the SSM document associated with the specified instance.",
+        "description": "Grants permission to update existing associations",
+        "privilege": "UpdateAssociation",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to SSM Agent to update status of a legacy association on an instance",
         "privilege": "UpdateAssociationStatus",
         "resource_types": [
           {
@@ -77045,7 +77743,43 @@
       },
       {
         "access_level": "Write",
-        "description": "Enables user's SSM Agents to call the Systems Manager service in the cloud to provide heartbeat information.",
+        "description": "Grants permission to update one or more values for a Systems Manager document",
+        "privilege": "UpdateDocument",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to set the default version of a Systems Manager document",
+        "privilege": "UpdateDocumentDefaultVersion",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to SSM Agent to update status of an association on an instance",
+        "privilege": "UpdateInstanceAssociationStatus",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to user's SSM Agents to call the Systems Manager service in the cloud to provide heartbeat information",
         "privilege": "UpdateInstanceInformation",
         "resource_types": [
           {
@@ -77057,7 +77791,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Update a SSM maintenance window.",
+        "description": "Grants permission to update an existing maintenance window",
         "privilege": "UpdateMaintenanceWindow",
         "resource_types": [
           {
@@ -77069,7 +77803,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Update a SSM maintenance window target.",
+        "description": "Grants permission to update a maintenance window target",
         "privilege": "UpdateMaintenanceWindowTarget",
         "resource_types": [
           {
@@ -77081,7 +77815,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Update a SSM maintenance window task.",
+        "description": "Grants permission to update a maintenance window task",
         "privilege": "UpdateMaintenanceWindowTask",
         "resource_types": [
           {
@@ -77093,7 +77827,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Assigns or changes an Amazon Identity and Access Management (IAM) role to the managed instance.",
+        "description": "Grants permission to assign or change an Amazon Identity and Access Management (IAM) role to the managed instance",
         "privilege": "UpdateManagedInstanceRole",
         "resource_types": [
           {
@@ -77105,7 +77839,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Edit or change an OpsItem",
+        "description": "Grants permission to edit or change an OpsItem",
         "privilege": "UpdateOpsItem",
         "resource_types": [
           {
@@ -77117,13 +77851,44 @@
       },
       {
         "access_level": "Write",
-        "description": "Update a SSM patch baseline.",
+        "description": "Grants permission to update an existing patch baseline",
         "privilege": "UpdatePatchBaseline",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "patchbaseline*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to update a resource data sync",
+        "privilege": "UpdateResourceDataSync",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "resourcedatasync*"
+          },
+          {
+            "condition_keys": [
+              "ssm:SyncType"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to update a service setting",
+        "privilege": "UpdateServiceSetting",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "servicesetting*"
           }
         ]
       }
@@ -77144,6 +77909,11 @@
           "ssm:resourceTag/tag-key"
         ],
         "resource": "maintenancewindow"
+      },
+      {
+        "arn": "arn:${Partition}:ssm:${Region}:${Account}:resource-data-sync/${SyncName}",
+        "condition_keys": [],
+        "resource": "resourcedatasync"
       },
       {
         "arn": "arn:${Partition}:ssm:${Region}:${Account}:managed-instance/${ManagedInstanceName}",
@@ -77181,6 +77951,11 @@
         "arn": "arn:${Partition}:ssm:${Region}:${Account}:session/${ResourceId}",
         "condition_keys": [],
         "resource": "session"
+      },
+      {
+        "arn": "arn:${Partition}:ssm:${Region}:${Account}:servicesetting/${ResourceId}",
+        "condition_keys": [],
+        "resource": "servicesetting"
       },
       {
         "arn": "arn:${Partition}:ssm:${Region}:${Account}:opsitem/${ResourceId}",
@@ -77299,6 +78074,18 @@
         "access_level": "Write",
         "description": "Makes a private skill available for enrolled users to enable on their devices.",
         "privilege": "AssociateSkillWithUsers",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Completes the operation of registering an Alexa device.",
+        "privilege": "CompleteRegistration",
         "resource_types": [
           {
             "condition_keys": [],
@@ -77679,6 +78466,18 @@
       },
       {
         "access_level": "Read",
+        "description": "Gets the network profile details by the network profile ARN.",
+        "privilege": "GetNetworkProfile",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "networkprofile*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
         "description": "Gets profile when provided with Profile ARN.",
         "privilege": "GetProfile",
         "resource_types": [
@@ -77845,6 +78644,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Publishes Alexa device setup events.",
+        "privilege": "PutDeviceSetupEvents",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Put a room specific parameter for a skill.",
         "privilege": "PutRoomSkillParameter",
         "resource_types": [
@@ -77871,6 +78682,18 @@
         "access_level": "Write",
         "description": "Registers an Alexa-enabled device built by an Original Equipment Manufacturer (OEM) using Alexa Voice Service (AVS).",
         "privilege": "RegisterAVSDevice",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Registers an Alexa device.",
+        "privilege": "RegisterDevice",
         "resource_types": [
           {
             "condition_keys": [],
@@ -77943,6 +78766,18 @@
         "access_level": "List",
         "description": "Search for devices.",
         "privilege": "SearchDevices",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Searches network profiles and lists the ones that meet a set of filter and sort criteria.",
+        "privilege": "SearchNetworkProfiles",
         "resource_types": [
           {
             "condition_keys": [],
@@ -78227,6 +79062,11 @@
         "arn": "arn:${Partition}:a4b:${Region}:${Account}:schedule/${Resource_id}",
         "condition_keys": [],
         "resource": "schedule"
+      },
+      {
+        "arn": "arn:${Partition}:a4b:${Region}:${Account}:network-profile/${Resource_id}",
+        "condition_keys": [],
+        "resource": "networkprofile"
       }
     ],
     "service_name": "Alexa for Business"
@@ -78841,6 +79681,27 @@
       },
       {
         "access_level": "Write",
+        "description": "Create a Journey for an app.",
+        "privilege": "CreateJourney",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "apps*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys",
+              "aws:ResourceTag/${TagKey}"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Create a segment that is based on endpoint data reported to Pinpoint by your app. To allow a user to create a segment by importing endpoint data from outside of Pinpoint, allow the mobiletargeting:CreateImportJob action.",
         "privilege": "CreateSegment",
         "resource_types": [
@@ -78958,13 +79819,6 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "campaigns*"
-          },
-          {
-            "condition_keys": [
-              "aws:ResourceTag/${TagKey}"
-            ],
-            "dependent_actions": [],
-            "resource_type": ""
           }
         ]
       },
@@ -79018,6 +79872,23 @@
       },
       {
         "access_level": "Write",
+        "description": "Delete a specific journey.",
+        "privilege": "DeleteJourney",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "apps*"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "journeys*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Delete a specific segment.",
         "privilege": "DeleteSegment",
         "resource_types": [
@@ -79030,13 +79901,6 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "segments*"
-          },
-          {
-            "condition_keys": [
-              "aws:ResourceTag/${TagKey}"
-            ],
-            "dependent_actions": [],
-            "resource_type": ""
           }
         ]
       },
@@ -79145,13 +80009,6 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "apps*"
-          },
-          {
-            "condition_keys": [
-              "aws:ResourceTag/${TagKey}"
-            ],
-            "dependent_actions": [],
-            "resource_type": ""
           }
         ]
       },
@@ -79176,13 +80033,6 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "apps*"
-          },
-          {
-            "condition_keys": [
-              "aws:ResourceTag/${TagKey}"
-            ],
-            "dependent_actions": [],
-            "resource_type": ""
           }
         ]
       },
@@ -79212,13 +80062,6 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "campaigns*"
-          },
-          {
-            "condition_keys": [
-              "aws:ResourceTag/${TagKey}"
-            ],
-            "dependent_actions": [],
-            "resource_type": ""
           }
         ]
       },
@@ -79253,13 +80096,6 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "campaigns*"
-          },
-          {
-            "condition_keys": [
-              "aws:ResourceTag/${TagKey}"
-            ],
-            "dependent_actions": [],
-            "resource_type": ""
           }
         ]
       },
@@ -79277,13 +80113,6 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "campaigns*"
-          },
-          {
-            "condition_keys": [
-              "aws:ResourceTag/${TagKey}"
-            ],
-            "dependent_actions": [],
-            "resource_type": ""
           }
         ]
       },
@@ -79296,13 +80125,6 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "apps*"
-          },
-          {
-            "condition_keys": [
-              "aws:ResourceTag/${TagKey}"
-            ],
-            "dependent_actions": [],
-            "resource_type": ""
           }
         ]
       },
@@ -79416,6 +80238,23 @@
       },
       {
         "access_level": "Read",
+        "description": "Retrieve information about a specific journey.",
+        "privilege": "GetJourney",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "apps*"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "journeys*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
         "description": "Retrieve information about a specific segment.",
         "privilege": "GetSegment",
         "resource_types": [
@@ -79428,13 +80267,6 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "segments*"
-          },
-          {
-            "condition_keys": [
-              "aws:ResourceTag/${TagKey}"
-            ],
-            "dependent_actions": [],
-            "resource_type": ""
           }
         ]
       },
@@ -79486,13 +80318,6 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "segments*"
-          },
-          {
-            "condition_keys": [
-              "aws:ResourceTag/${TagKey}"
-            ],
-            "dependent_actions": [],
-            "resource_type": ""
           }
         ]
       },
@@ -79510,13 +80335,6 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "segments*"
-          },
-          {
-            "condition_keys": [
-              "aws:ResourceTag/${TagKey}"
-            ],
-            "dependent_actions": [],
-            "resource_type": ""
           }
         ]
       },
@@ -79529,13 +80347,6 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "apps*"
-          },
-          {
-            "condition_keys": [
-              "aws:ResourceTag/${TagKey}"
-            ],
-            "dependent_actions": [],
-            "resource_type": ""
           }
         ]
       },
@@ -79577,6 +80388,18 @@
       },
       {
         "access_level": "List",
+        "description": "Retrieve information about all journeys for an app.",
+        "privilege": "ListJourneys",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "apps*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
         "description": "List tags for a resource.",
         "privilege": "ListTagsForResource",
         "resource_types": [
@@ -79594,13 +80417,6 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "segments"
-          },
-          {
-            "condition_keys": [
-              "aws:ResourceTag/${TagKey}"
-            ],
-            "dependent_actions": [],
-            "resource_type": ""
           }
         ]
       },
@@ -79699,8 +80515,7 @@
           {
             "condition_keys": [
               "aws:RequestTag/${TagKey}",
-              "aws:TagKeys",
-              "aws:ResourceTag/${TagKey}"
+              "aws:TagKeys"
             ],
             "dependent_actions": [],
             "resource_type": ""
@@ -79730,8 +80545,7 @@
           {
             "condition_keys": [
               "aws:RequestTag/${TagKey}",
-              "aws:TagKeys",
-              "aws:ResourceTag/${TagKey}"
+              "aws:TagKeys"
             ],
             "dependent_actions": [],
             "resource_type": ""
@@ -79840,8 +80654,7 @@
           {
             "condition_keys": [
               "aws:RequestTag/${TagKey}",
-              "aws:TagKeys",
-              "aws:ResourceTag/${TagKey}"
+              "aws:TagKeys"
             ],
             "dependent_actions": [],
             "resource_type": ""
@@ -79898,6 +80711,56 @@
       },
       {
         "access_level": "Write",
+        "description": "Update a specific journey.",
+        "privilege": "UpdateJourney",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "apps*"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "journeys*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Update a specific journey state.",
+        "privilege": "UpdateJourneyState",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "apps*"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "journeys*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Update a specific segment.",
         "privilege": "UpdateSegment",
         "resource_types": [
@@ -79914,8 +80777,7 @@
           {
             "condition_keys": [
               "aws:RequestTag/${TagKey}",
-              "aws:TagKeys",
-              "aws:ResourceTag/${TagKey}"
+              "aws:TagKeys"
             ],
             "dependent_actions": [],
             "resource_type": ""
@@ -79961,6 +80823,13 @@
           "aws:ResourceTag/${TagKey}"
         ],
         "resource": "campaigns"
+      },
+      {
+        "arn": "arn:${Partition}:mobiletargeting:${Region}:${Account}:apps/${AppId}/journeys/${JourneyId}",
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
+        "resource": "journeys"
       },
       {
         "arn": "arn:${Partition}:mobiletargeting:${Region}:${Account}:apps/${AppId}/segments/${SegmentId}",
@@ -89046,7 +89915,7 @@
     "privileges": [
       {
         "access_level": "Read",
-        "description": "Check the availability of multiple image layers in a specified registry and repository.",
+        "description": "Grants permission to check the availability of multiple image layers in a specified registry and repository",
         "privilege": "BatchCheckLayerAvailability",
         "resource_types": [
           {
@@ -89058,7 +89927,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes a list of specified images within a specified repository.",
+        "description": "Grants permission to delete a list of specified images within a specified repository",
         "privilege": "BatchDeleteImage",
         "resource_types": [
           {
@@ -89070,7 +89939,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Gets detailed information for specified images within a specified repository.",
+        "description": "Grants permission to get detailed information for specified images within a specified repository",
         "privilege": "BatchGetImage",
         "resource_types": [
           {
@@ -89082,7 +89951,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Inform Amazon ECR that the image layer upload for a specified registry, repository name, and upload ID, has completed.",
+        "description": "Grants permission to inform Amazon ECR that the image layer upload for a specified registry, repository name, and upload ID, has completed",
         "privilege": "CompleteLayerUpload",
         "resource_types": [
           {
@@ -89094,9 +89963,14 @@
       },
       {
         "access_level": "Write",
-        "description": "Creates an image repository.",
+        "description": "Grants permission to create an image repository",
         "privilege": "CreateRepository",
         "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "repository*"
+          },
           {
             "condition_keys": [
               "aws:RequestTag/${TagKey}",
@@ -89109,7 +89983,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes the specified lifecycle policy.",
+        "description": "Grants permission to delete the specified lifecycle policy",
         "privilege": "DeleteLifecyclePolicy",
         "resource_types": [
           {
@@ -89121,7 +89995,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes an existing image repository.",
+        "description": "Grants permission to delete an existing image repository",
         "privilege": "DeleteRepository",
         "resource_types": [
           {
@@ -89133,7 +90007,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes the repository policy from a specified repository.",
+        "description": "Grants permission to delete the repository policy from a specified repository",
         "privilege": "DeleteRepositoryPolicy",
         "resource_types": [
           {
@@ -89145,7 +90019,19 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns metadata about the images in a repository, including image size, image tags, and creation date.",
+        "description": "Grants permission to describe the image scan findings for the specified image",
+        "privilege": "DescribeImageScanFindings",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "repository*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to get metadata about the images in a repository, including image size, image tags, and creation date",
         "privilege": "DescribeImages",
         "resource_types": [
           {
@@ -89157,7 +90043,7 @@
       },
       {
         "access_level": "List",
-        "description": "Describes image repositories in a registry",
+        "description": "Grants permission to describe image repositories in a registry",
         "privilege": "DescribeRepositories",
         "resource_types": [
           {
@@ -89169,7 +90055,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Retrieves a token that is valid for a specified registry for 12 hours.",
+        "description": "Grants permission to retrieve a token that is valid for a specified registry for 12 hours",
         "privilege": "GetAuthorizationToken",
         "resource_types": [
           {
@@ -89181,7 +90067,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Retrieves the pre-signed Amazon S3 download URL corresponding to an image layer.",
+        "description": "Grants permission to retrieve the download URL corresponding to an image layer",
         "privilege": "GetDownloadUrlForLayer",
         "resource_types": [
           {
@@ -89193,7 +90079,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Retrieves the specified lifecycle policy.",
+        "description": "Grants permission to retrieve the specified lifecycle policy",
         "privilege": "GetLifecyclePolicy",
         "resource_types": [
           {
@@ -89205,7 +90091,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Retrieves the results of the specified lifecycle policy preview request.",
+        "description": "Grants permission to retrieve the results of the specified lifecycle policy preview request",
         "privilege": "GetLifecyclePolicyPreview",
         "resource_types": [
           {
@@ -89217,7 +90103,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Retrieves the repository policy for a specified repository.",
+        "description": "Grants permission to retrieve the repository policy for a specified repository",
         "privilege": "GetRepositoryPolicy",
         "resource_types": [
           {
@@ -89229,7 +90115,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Notify Amazon ECR that you intend to upload an image layer.",
+        "description": "Grants permission to notify Amazon ECR that you intend to upload an image layer",
         "privilege": "InitiateLayerUpload",
         "resource_types": [
           {
@@ -89241,7 +90127,7 @@
       },
       {
         "access_level": "List",
-        "description": "Lists all the image IDs for a given repository.",
+        "description": "Grants permission to list all the image IDs for a given repository",
         "privilege": "ListImages",
         "resource_types": [
           {
@@ -89253,7 +90139,7 @@
       },
       {
         "access_level": "Read",
-        "description": "List the tags for an Amazon ECR resource.",
+        "description": "Grants permission to list the tags for an Amazon ECR resource",
         "privilege": "ListTagsForResource",
         "resource_types": [
           {
@@ -89265,7 +90151,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Creates or updates the image manifest associated with an image.",
+        "description": "Grants permission to create or update the image manifest associated with an image",
         "privilege": "PutImage",
         "resource_types": [
           {
@@ -89277,7 +90163,19 @@
       },
       {
         "access_level": "Write",
-        "description": "Updates the image tag mutability settings for an existing repository.",
+        "description": "Grants permission to update the image scanning configuration for a repository",
+        "privilege": "PutImageScanningConfiguration",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "repository*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to update the image tag mutability settings for a repository",
         "privilege": "PutImageTagMutability",
         "resource_types": [
           {
@@ -89289,7 +90187,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Creates or updates a lifecycle policy.",
+        "description": "Grants permission to create or update a lifecycle policy",
         "privilege": "PutLifecyclePolicy",
         "resource_types": [
           {
@@ -89301,7 +90199,7 @@
       },
       {
         "access_level": "Permissions management",
-        "description": "Applies a repository policy on a specified repository to control access permissions.",
+        "description": "Grants permission to apply a repository policy on a specified repository to control access permissions",
         "privilege": "SetRepositoryPolicy",
         "resource_types": [
           {
@@ -89313,7 +90211,19 @@
       },
       {
         "access_level": "Write",
-        "description": "Starts a preview of the specified lifecycle policy. This allows you to see the results before creating the lifecycle policy.",
+        "description": "Grants permission to start an image scan",
+        "privilege": "StartImageScan",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "repository*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to start a preview of the specified lifecycle policy",
         "privilege": "StartLifecyclePolicyPreview",
         "resource_types": [
           {
@@ -89325,7 +90235,7 @@
       },
       {
         "access_level": "Tagging",
-        "description": "Adds specified tags to a resource with the specified ARN. Existing tags on a resource are not changed if they are not specified in the request parameters.",
+        "description": "Grants permission to tag an Amazon ECR resource",
         "privilege": "TagResource",
         "resource_types": [
           {
@@ -89345,7 +90255,7 @@
       },
       {
         "access_level": "Tagging",
-        "description": "Deletes specified tags from a resource.",
+        "description": "Grants permission to untag an Amazon ECR resource",
         "privilege": "UntagResource",
         "resource_types": [
           {
@@ -89357,7 +90267,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Uploads an image layer part to Amazon ECR.",
+        "description": "Grants permission to upload an image layer part to Amazon ECR",
         "privilege": "UploadLayerPart",
         "resource_types": [
           {

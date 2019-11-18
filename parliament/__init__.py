@@ -1,7 +1,7 @@
 """
 This library is a linter for AWS IAM policies.
 """
-__version__ = "0.2.1"
+__version__ = "0.2.2"
 
 import os
 import json

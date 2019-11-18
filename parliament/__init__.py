@@ -1,16 +1,16 @@
 """
 This library is a linter for AWS IAM policies.
 """
-__version__ = "0.2.2"
+__version__ = "0.2.3"
 
 import os
 import json
 import re
 import fnmatch
+import pkg_resources
 
 # On initialization, load the IAM data
-iam_definition_path = os.path.join(
-    os.path.dirname(os.path.realpath(__file__)), "iam_definition.json"
+iam_definition_path = pkg_resources.resource_filename(__name__, "iam_definition.json"
 )
 iam_definition = json.load(open(iam_definition_path, "r"))
 

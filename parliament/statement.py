@@ -776,7 +776,7 @@ class Statement:
                             match_found = True
                     if not match_found:
                         self.add_finding(
-                            "No resources match for {}.{} which requires a resource format of *".format(
+                            "No resources match for {}:{} which requires a resource format of *".format(
                                 action_struct["service"],
                                 action_struct["action"]
                             ),

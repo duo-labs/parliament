@@ -632,6 +632,15 @@ class Statement:
         else:
             self.effect_allow = False
 
+        # Check Sid
+        if "Sid" in self.stmt and not re.fullmatch("[0-9A-Za-z]*", self.stmt["Sid"]):
+            self.add_finding(
+                "Statement Sid does match regex [0-9A-Za-z]*",
+                severity.MALFORMED,
+                location={"string": self.stmt},
+            )
+            return False
+
         # Check Action
         if "Action" in self.stmt and "NotAction" in self.stmt:
             self.add_finding(

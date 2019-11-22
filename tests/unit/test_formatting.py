@@ -41,6 +41,18 @@ class TestFormatting(unittest.TestCase):
         )
         assert_false(len(policy.findings) == 0, "Policy has no Statement")
 
+    def test_analyze_policy_string_invalid_sid(self):
+        policy = analyze_policy_string(
+            """{
+    "Version": "2012-10-17",
+    "Statement": {
+        "Sid": "Statement With Spaces And Special Chars!?",
+        "Effect": "Allow",
+        "Action": "s3:listallmybuckets",
+        "Resource": "*"}}"""
+        )
+        assert_false(len(policy.findings) == 0, "Policy statement has invalid Sid")
+
     def test_analyze_policy_string_correct_simple(self):
         policy = analyze_policy_string(
             """{

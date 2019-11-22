@@ -15,7 +15,7 @@ Setup
 pip install beautifulsoup4
 
 # Download files
-wget -r -np -k -A .html -nc https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html
+wget -r -np -k --accept 'list_*.html' --reject 'feedbackno.html','feedbackyes.html' -nc https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html
 """
 
 

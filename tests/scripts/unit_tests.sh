@@ -3,7 +3,7 @@ if [ -f .coverage ]; then
   rm .coverage
 fi
 
-nosetests tests/unit \
+python3 -m "nose" tests/unit \
 --with-coverage \
 --cover-package=parliament \
 --cover-html \

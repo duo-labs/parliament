@@ -10,8 +10,7 @@ import fnmatch
 import pkg_resources
 
 # On initialization, load the IAM data
-iam_definition_path = pkg_resources.resource_filename(__name__, "iam_definition.json"
-)
+iam_definition_path = pkg_resources.resource_filename(__name__, "iam_definition.json")
 iam_definition = json.load(open(iam_definition_path, "r"))
 
 
@@ -241,11 +240,12 @@ def get_privilege_matches_for_resource_type(resource_type_matches):
                         {
                             "privilege_prefix": match["service"]["prefix"],
                             "privilege_name": privilege["privilege"],
-                            "resource_type": resource_type
+                            "resource_type": resource_type,
                         }
                     )
 
     return privilege_matches
+
 
 # Import moved here to deal with cyclic dependency
 from .policy import Policy

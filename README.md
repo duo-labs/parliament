@@ -24,3 +24,20 @@ INVALID - No resources match for s3:GetObject which requires a resource format o
 This example is showing that a resource specifying an S3 bucket (not an object path) was given in a policy with s3:GetObject, which requires an object path. 
 
 See `./bin/parliament.py` for further examples.
+
+# Development
+Setup a testing environment
+```
+python3 -m venv ./venv && source venv/bin/activate
+pip install boto3 jmespath pyyaml nose coverage
+```
+
+Run unit tests with:
+```
+./tests/scripts/unit_tests.sh
+```
+
+Run locally as:
+```
+bin/parliament
+```

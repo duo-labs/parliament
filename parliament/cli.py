@@ -43,6 +43,9 @@ def main():
     )
     args = parser.parse_args()
 
+    # Change the exit status if there are errors
+    exit_status = 0
+
     if args.aws_managed_policies:
         filenames = [
             f
@@ -58,9 +61,10 @@ def main():
                     policy_file_json["PolicyVersion"]["Document"]
                 )
                 policy = analyze_policy_string(policy_string, filepath)
-                if len(policy.findings) > 0:
-                    for finding in policy.findings:
-                        print_finding(finding, args.minimal)
+                for finding in policy.findings:
+                    exit_status = 1
+                    print_finding(finding, args.minimal)
+
     elif args.auth_details_file:
         with open(args.auth_details_file) as f:
             contents = f.read()
@@ -77,6 +81,7 @@ def main():
                         json.dumps(version["Document"]), policy["Arn"]
                     )
                     for finding in policy.findings:
+                        exit_status = 1
                         print_finding(finding, args.minimal)
 
             # Review the inline policies on Users, Roles, and Groups
@@ -86,6 +91,7 @@ def main():
                         json.dumps(version["Document"]), user["Arn"]
                     )
                     for finding in policy.findings:
+                        exit_status = 1
                         print_finding(finding, args.minimal)
             for role in auth_details_json["RoleDetailList"]:
                 for policy in role.get("RolePolicyList", []):
@@ -93,6 +99,7 @@ def main():
                         json.dumps(version["Document"]), role["Arn"]
                     )
                     for finding in policy.findings:
+                        exit_status = 1
                         print_finding(finding, args.minimal)
             for group in auth_details_json["GroupDetailList"]:
                 for policy in group.get("GroupPolicyList", []):
@@ -100,20 +107,24 @@ def main():
                         json.dumps(version["Document"]), group["Arn"]
                     )
                     for finding in policy.findings:
+                        exit_status = 1
                         print_finding(finding, args.minimal)
     elif args.string:
         policy = analyze_policy_string(args.string)
         for finding in policy.findings:
+            exit_status = 1
             print_finding(finding, args.minimal)
     elif args.file:
         with open(args.file) as f:
             contents = f.read()
             policy = analyze_policy_string(contents)
             for finding in policy.findings:
+                exit_status = 1
                 print_finding(finding, args.minimal)
     else:
         parser.print_help()
-        exit(-1)
+        exit_status = -1
+    exit(exit_status)
 
 
 if __name__ == "__main__":

@@ -778,7 +778,9 @@ class Statement:
 
                 # If the privilege requires a resource of "*", ensure it has it.
                 if len(privilege_info["resource_types"]) == 0 or (
-                    len(privilege_info["resource_types"]) == 1 and privilege_info["resource_types"][0]["resource_type"]==""):
+                    len(privilege_info["resource_types"]) == 1
+                    and privilege_info["resource_types"][0]["resource_type"] == ""
+                ):
                     match_found = False
                     for resource in resources:
                         if resource == "*":
@@ -786,8 +788,7 @@ class Statement:
                     if not match_found:
                         self.add_finding(
                             "No resources match for {}:{} which requires a resource format of *".format(
-                                action_struct["service"],
-                                action_struct["action"]
+                                action_struct["service"], action_struct["action"]
                             ),
                             severity.INVALID,
                             location={},

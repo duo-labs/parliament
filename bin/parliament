@@ -1,0 +1,10 @@
+#!/usr/bin/env python3
+
+import sys
+import os
+from pathlib import Path
+path = Path(os.path.abspath(__file__))
+sys.path.append(str(path.parent.parent))
+
+from parliament.cli import main
+main()

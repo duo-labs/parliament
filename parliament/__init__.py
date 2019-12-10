@@ -1,10 +1,11 @@
 """
 This library is a linter for AWS IAM policies.
 """
-__version__ = "0.2.7"
+__version__ = "0.3.0"
 
 import os
 import json
+import yaml
 import re
 import fnmatch
 import pkg_resources
@@ -12,6 +13,20 @@ import pkg_resources
 # On initialization, load the IAM data
 iam_definition_path = pkg_resources.resource_filename(__name__, "iam_definition.json")
 iam_definition = json.load(open(iam_definition_path, "r"))
+
+# And the config data
+config_path = pkg_resources.resource_filename(__name__, "config.yaml")
+config = yaml.safe_load(open(config_path, "r"))
+
+
+def enhance_finding(finding):
+    if finding.issue not in config:
+        raise Exception("Uknown finding issue: {}".format(finding.issue))
+    config_settings = config[finding.issue]
+    finding.severity = config_settings["severity"]
+    finding.title = config_settings["title"]
+    finding.description = config_settings.get("description", "")
+    return finding
 
 
 def analyze_policy_string(policy_str, filepath=None):
@@ -22,7 +37,7 @@ def analyze_policy_string(policy_str, filepath=None):
         policy_json = json.loads(policy_str)
     except ValueError as e:
         policy = Policy(None)
-        policy.add_finding("json parsing error: {}".format(e), severity.MALFORMED)
+        policy.add_finding("MALFORMED_JSON", detail="json parsing error: {}".format(e))
         return policy
 
     policy = Policy(policy_json, filepath)
@@ -249,4 +264,3 @@ def get_privilege_matches_for_resource_type(resource_type_matches):
 
 # Import moved here to deal with cyclic dependency
 from .policy import Policy
-from .finding import severity

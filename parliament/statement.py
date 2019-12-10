@@ -4,7 +4,7 @@ import fnmatch
 import re
 
 from . import iam_definition, is_arn_match, expand_action
-from .finding import Finding, severity
+from .finding import Finding
 from .misc import make_list, ACCESS_DECISION
 
 
@@ -353,16 +353,15 @@ class Statement:
 
         return affected_resources
 
-    def add_finding(self, finding, severity, location={}):
+    def add_finding(self, finding, detail=None, location={}):
         """
         Add finding to the class.
 
         finding: String specifiying the problem
-        severity: misc.severity identifier
         location: Dictionary with information about where this problem is. Often set to:
             {"location": "string"}
         """
-        self.findings.append(Finding(finding, severity, location))
+        self.findings.append(Finding(finding, detail, location))
 
     def _check_principal(self, principal_element):
         """
@@ -385,11 +384,7 @@ class Statement:
                         elif arn_regex.match(aws_principal):
                             pass
                         else:
-                            self.add_finding(
-                                "Unknown AWS principal: {}".format(aws_principal),
-                                severity.INVALID,
-                                location={"location": aws_principal},
-                            )
+                            self.add_finding("UNKNOWN_PRINCIPAL", detail=aws_principal)
                 elif key == "Federated":
                     for federation in make_list(principal[key]):
                         saml_regex = re.compile(
@@ -406,20 +401,14 @@ class Statement:
                             pass
                         else:
                             self.add_finding(
-                                "Unknown federation source: {}".format(federation),
-                                severity.INVALID,
-                                location={"location": federation},
+                                "UNKNOWN_FEDERATION_SOURCE", detail=federation
                             )
                 elif key == "Service":
                     # This should be something like apigateway.amazonaws.com
                     # I don't know what all the restrictions could be though.
                     pass
                 else:
-                    self.add_finding(
-                        "Unknown principal: {}".format(key),
-                        severity.INVALID,
-                        location={"location": principal_element},
-                    )
+                    self.add_finding("UNKNOWN_PRINCIPAL", detail=principal_element)
         return True
 
     def _check_condition(self, operator, condition_block, expanded_actions):
@@ -444,8 +433,8 @@ class Statement:
 
         if operator_type_requirement is None:
             self.add_finding(
-                "Unknown operator in condition: {}".format(operator),
-                severity.INVALID,
+                "UNKNOWN_OPERATOR",
+                detail=operator,
                 location={"location": condition_block},
             )
 
@@ -453,11 +442,7 @@ class Statement:
             value = list(condition_block.values())[0]
             if value != "true" and value != "false":
                 self.add_finding(
-                    "Null operation requires being matched against true or false but given {}".format(
-                        condition_block
-                    ),
-                    severity.INVALID,
-                    location={"location": condition_block},
+                    "MISMATCHED_TYPE_OPERATION_TO_NULL", detail=condition_block
                 )
                 return False
 
@@ -471,10 +456,10 @@ class Statement:
                     condition_type, make_list(condition_block[key])
                 ):
                     self.add_finding(
-                        "Type mismatch: {} requires a value of type {} but given {}".format(
+                        "MISMATCHED_TYPE",
+                        detail="Type mismatch: {} requires a value of type {} but given {}".format(
                             key, condition_type, condition_block[key]
                         ),
-                        severity.INVALID,
                         location={"location": condition_block},
                     )
             else:
@@ -493,10 +478,10 @@ class Statement:
 
                     if match is None:
                         self.add_finding(
-                            "Unknown condition {} for action {}:{}".format(
+                            "UNKNOWN_CONDITION_FOR_ACTION",
+                            detail="Unknown condition {} for action {}:{}".format(
                                 key, action_struct["service"], action_struct["action"]
                             ),
-                            severity.INVALID,
                             location={"location": condition_block},
                         )
                         continue
@@ -517,10 +502,10 @@ class Statement:
                         condition_type, make_list(condition_block[key])
                     ):
                         self.add_finding(
-                            "Type mismatch: {} requires a value of type {} but given {}".format(
+                            "MISMATCHED_TYPE",
+                            detail="Type mismatch: {} requires a value of type {} but given {}".format(
                                 key, condition_type, condition_block[key]
                             ),
-                            severity.INVALID,
                             location={"location": condition_block},
                         )
 
@@ -532,12 +517,12 @@ class Statement:
                         condition_type
                     ):
                         self.add_finding(
-                            "Type mismatch: {} requires a value of type {} but given {}".format(
+                            "MISMATCHED_TYPE",
+                            detail="Type mismatch: {} requires a value of type {} but given {}".format(
                                 operator,
                                 operator_type_requirement,
                                 translate_documentation_types(condition_type),
                             ),
-                            severity.INVALID,
                             location={"location": condition_block},
                         )
 
@@ -547,8 +532,8 @@ class Statement:
                     condition_block[key]
                 ):
                     self.add_finding(
-                        'Bad patttern: The condition {"Bool": {"aws:MultiFactorAuthPresent":"false"}} is bad because aws:MultiFactorAuthPresent may not exist so it does not enforce MFA. You likely want to use a Deny with BoolIfExists.',
-                        severity.MEDIUM,
+                        "BAD_PATTERN_FOR_MFA",
+                        detail='The condition {"Bool": {"aws:MultiFactorAuthPresent":"false"}} is bad because aws:MultiFactorAuthPresent may not exist so it does not enforce MFA. You likely want to use a Deny with BoolIfExists.',
                         location={"location": condition_block},
                     )
             elif operator.lower() == "null":
@@ -556,8 +541,8 @@ class Statement:
                     condition_block[key]
                 ):
                     self.add_finding(
-                        'Bad patttern: The condition {"Null": {"aws:MultiFactorAuthPresent":"false"}} is bad because aws:MultiFactorAuthPresent it does not enforce MFA, and only checks if the value exists. You likely want to use an Allow with {"Bool": {"aws:MultiFactorAuthPresent":"true"}}.',
-                        severity.MEDIUM,
+                        "BAD_PATTERN_FOR_MFA",
+                        detail='The condition {"Null": {"aws:MultiFactorAuthPresent":"false"}} is bad because aws:MultiFactorAuthPresent it does not enforce MFA, and only checks if the value exists. You likely want to use an Allow with {"Bool": {"aws:MultiFactorAuthPresent":"true"}}.',
                         location={"location": condition_block},
                     )
 
@@ -587,8 +572,8 @@ class Statement:
                 "Condition",
             ]:
                 self.add_finding(
-                    "Statement contains an unknown element",
-                    severity.MALFORMED,
+                    "MALFORMED",
+                    detail="Statement contains an unknown element",
                     location={"string": element},
                 )
                 return False
@@ -598,8 +583,8 @@ class Statement:
         # if we tried to check those.
         if "Principal" in self.stmt and "NotPrincipal" in self.stmt:
             self.add_finding(
-                "Statement contains both Principal and NotPrincipal",
-                severity.MALFORMED,
+                "MALFORMED",
+                detail="Statement contains both Principal and NotPrincipal",
                 location={"string": self.stmt},
             )
             return False
@@ -612,8 +597,8 @@ class Statement:
         # Check Effect
         if "Effect" not in self.stmt:
             self.add_finding(
-                "Statement does not contain an Effect element",
-                severity.MALFORMED,
+                "MALFORMED",
+                detail="Statement does not contain an Effect element",
                 location={"string": self.stmt},
             )
             return False
@@ -621,8 +606,8 @@ class Statement:
 
         if effect not in ["Allow", "Deny"]:
             self.add_finding(
-                "Unknown Effect used. Effect must be either Allow or Deny",
-                severity.MALFORMED,
+                "MALFORMED",
+                detail="Unknown Effect used. Effect must be either Allow or Deny",
                 location={"string": self.stmt},
             )
             return False
@@ -634,18 +619,14 @@ class Statement:
 
         # Check Sid
         if "Sid" in self.stmt and not re.fullmatch("[0-9A-Za-z]*", self.stmt["Sid"]):
-            self.add_finding(
-                "Statement Sid does match regex [0-9A-Za-z]*",
-                severity.MALFORMED,
-                location={"string": self.stmt},
-            )
+            self.add_finding("INVALID_SID", detail=self.stmt)
             return False
 
         # Check Action
         if "Action" in self.stmt and "NotAction" in self.stmt:
             self.add_finding(
-                "Statement contains both Action and NotAction",
-                severity.MALFORMED,
+                "MALFORMED",
+                detail="Statement contains both Action and NotAction",
                 location={"string": self.stmt},
             )
             return False
@@ -656,8 +637,8 @@ class Statement:
             actions = make_list(self.stmt["NotAction"])
         else:
             self.add_finding(
-                "Statement contains neither Action nor NotAction",
-                severity.MALFORMED,
+                "MALFORMED",
+                detail="Statement contains neither Action nor NotAction",
                 location={"string": self.stmt},
             )
             return False
@@ -665,8 +646,8 @@ class Statement:
         # Check Resource exists and save the list of resources for later
         if "Resource" in self.stmt and "NotResource" in self.stmt:
             self.add_finding(
-                "Statement contains both Resource and NotResource",
-                severity.MALFORMED,
+                "MALFORMED",
+                detail="Statement contains both Resource and NotResource",
                 location={"string": self.stmt},
             )
             return False
@@ -677,8 +658,8 @@ class Statement:
             resources = make_list(self.stmt["NotResource"])
         else:
             self.add_finding(
-                "Statement contains neither Resource nor NotResource",
-                severity.MALFORMED,
+                "MALFORMED",
+                detail="Statement contains neither Resource nor NotResource",
                 location={"string": self.stmt},
             )
             return False
@@ -688,8 +669,8 @@ class Statement:
             conditions = make_list(self.stmt["Condition"])
             if len(conditions) > 1:
                 self.add_finding(
-                    "Condition formatted incorrectly",
-                    severity.MALFORMED,
+                    "MALFORMED",
+                    detail="Condition formatted incorrectly",
                     location={"string": self.stmt},
                 )
                 return False
@@ -706,7 +687,7 @@ class Statement:
                 # Given an action such as "s3:List*", return all the possible values it could have
                 expanded_actions.extend(expand_action(action))
             except Exception as e:
-                self.add_finding(e, severity.INVALID, location={"string": self.stmt})
+                self.add_finding("EXCEPTION", detail=e, location={"string": self.stmt})
                 return False
 
         # Check the resources are correct formatted correctly
@@ -718,24 +699,24 @@ class Statement:
             if len(parts) < 6:
                 has_malformed_resource = True
                 self.add_finding(
-                    "Malformed resource, should have 6 parts, arn:partition:service:region:account:id",
-                    severity.MALFORMED,
+                    "INVALID_ARN",
+                    detail="Does not have 6 parts",
                     location={"string": resource},
                 )
                 continue
             elif parts[0] != "arn":
                 has_malformed_resource = True
                 self.add_finding(
-                    'Malformed resource, should start with "arn:"',
-                    severity.MALFORMED,
+                    "INVALID_ARN",
+                    detail="Does not start with arn:",
                     location={"string": resource},
                 )
                 continue
             elif parts[1] not in ["aws", "aws-cn", "aws-us-gov", "aws-iso", "*", ""]:
                 has_malformed_resource = True
                 self.add_finding(
-                    "Malformed resource, unexpected resource partition",
-                    severity.MALFORMED,
+                    "INVALID_ARN",
+                    detail="Unexpected partition",
                     location={"string": resource},
                 )
                 continue
@@ -745,15 +726,15 @@ class Statement:
             elif not is_valid_region(parts[3]):
                 has_malformed_resource = True
                 self.add_finding(
-                    "Malformed resource, region expected to be of form like us-east-1",
-                    severity.MALFORMED,
+                    "INVALID_ARN",
+                    detail="Region expected to be of form like us-east-1",
                     location={"string": resource},
                 )
             elif not is_valid_account_id(parts[4]):
                 has_malformed_resource = True
                 self.add_finding(
-                    "Malformed resource, account expected to be of form like 123456789012",
-                    severity.MALFORMED,
+                    "INVALID_ARN",
+                    detail="Account expected to be of form like 123456789012",
                     location={"string": resource},
                 )
             # TODO I should check for the use of valid variables in the resource, such as ${aws:username}
@@ -787,11 +768,10 @@ class Statement:
                             match_found = True
                     if not match_found:
                         self.add_finding(
-                            "No resources match for {}:{} which requires a resource format of *".format(
+                            "RESOURCE_MISMATCH",
+                            detail="No resources match for {}:{} which requires a resource format of *".format(
                                 action_struct["service"], action_struct["action"]
                             ),
-                            severity.INVALID,
-                            location={},
                         )
 
                 # Iterate through the resources defined in the action definition
@@ -820,14 +800,13 @@ class Statement:
 
                     if not match_found:
                         self.add_finding(
-                            "No resources match for {}:{} which requires a resource format of {} for the resource {}".format(
+                            "RESOURCE_MISMATCH",
+                            detail="No resources match for {}:{} which requires a resource format of {} for the resource {}".format(
                                 action_struct["service"],
                                 action_struct["action"],
                                 arn_format,
                                 resource_type,
                             ),
-                            severity.INVALID,
-                            location={},
                         )
 
         # If conditions exist, it will be an element, which was previously made into a list

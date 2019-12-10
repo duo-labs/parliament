@@ -22,7 +22,7 @@ def print_finding(
 
     if minimal_output:
         print("{}".format(finding.issue))
-    elif json:
+    elif json_output:
         print(
             json.dumps(
                 {

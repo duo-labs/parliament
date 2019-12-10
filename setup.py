@@ -48,7 +48,7 @@ setup(
     ],
     setup_requires=['nose'],
     packages=find_packages(exclude=['tests*']),
-    package_data={'parliament': ['iam_definition.json']},
+    package_data={'parliament': ['iam_definition.json', "config.yaml"]},
     zip_safe=True,
     license='BSD 3',
     keywords='aws parliament iam lint audit',

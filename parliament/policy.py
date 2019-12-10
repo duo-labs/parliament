@@ -1,7 +1,7 @@
 import json
 
 from .statement import Statement
-from .finding import severity, Finding
+from .finding import Finding
 from .misc import make_list, ACCESS_DECISION
 
 
@@ -18,10 +18,10 @@ class Policy:
         self.policy_json = policy_json
         self.filepath = filepath
 
-    def add_finding(self, finding, severity, location={}):
+    def add_finding(self, finding, detail="", location={}):
         if "filepath" not in location:
             location["filepath"] = self.filepath
-        self._findings.append(Finding(finding, severity, location))
+        self._findings.append(Finding(finding, detail, location))
 
     @property
     def findings(self):
@@ -113,11 +113,10 @@ class Policy:
                     or resource + "/*" in refs[object_privilege]
                 ):
                     self.add_finding(
-                        "Possible resource policy privilege escalation on {} due to s3:{} not being allowed, but does allow s3:{}".format(
+                        "RESOURCE_POLICY_PRIVILEGE_ESCALATION",
+                        detail="Possible resource policy privilege escalation on {} due to s3:{} not being allowed, but does allow s3:{}".format(
                             resource, object_privilege, bucket_privilege
                         ),
-                        severity.LOW,
-                        location={},
                     )
 
         # Get the resource references we'll be using
@@ -156,8 +155,8 @@ class Policy:
         for element in self.policy_json:
             if element not in ["Version", "Statement", "Id"]:
                 self.add_finding(
-                    "Policy contains an unknown element",
-                    severity.MALFORMED,
+                    "MALFORMED",
+                    detail="Policy contains an unknown element",
                     location={"string": element},
                 )
                 return False
@@ -165,30 +164,22 @@ class Policy:
         # Check Version
         if "Version" not in self.policy_json:
             self.add_finding(
-                "Policy does not contain a Version element", severity.MALFORMED
+                "MALFORMED", detail="Policy does not contain a Version element"
             )
             return False
         self.version = self.policy_json["Version"]
 
         if self.version not in ["2012-10-17", "2008-10-17"]:
-            self.add_finding(
-                "Unknown Version used. Version must be either 2012-10-17 or 2008-10-17",
-                severity.INVALID,
-                location={"string": self.version},
-            )
+            self.add_finding("INVALID_VERSION", location={"string": self.version})
         elif self.version != "2012-10-17":
             # TODO I should have a check so that if an older version is being used,
             # and a variable is detected, it should be marked as higher severity.
-            self.add_finding(
-                "Older version used. Variables will not be allowed.",
-                severity.LOW,
-                location={"string": self.version},
-            )
+            self.add_finding("OLD_VERSION", location={"string": self.version})
 
         # Check Statements
         if "Statement" not in self.policy_json:
             self.add_finding(
-                "Policy does not contain a Statement element", severity.MALFORMED
+                "MALFORMED", detail="Policy does not contain a Statement element"
             )
             return False
         stmts_json = make_list(self.policy_json["Statement"])

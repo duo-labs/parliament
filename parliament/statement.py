@@ -690,10 +690,13 @@ class Statement:
                 # Given an action such as "s3:List*", return all the possible values it could have
                 expanded_actions.extend(expand_action(action))
             except UnknownActionException as e:
-                self.add_finding("UNKNOWN_ACTION", detail=e, location={"string": self.stmt})
+                self.add_finding("UNKNOWN_ACTION", detail=str(e), location={"string": self.stmt})
+                return False
+            except UnknownPrefixException as e:
+                self.add_finding("UNKNOWN_PREFIX", detail=str(e), location={"string": self.stmt})
                 return False
             except Exception as e:
-                self.add_finding("EXCEPTION", detail=e, location={"string": self.stmt})
+                self.add_finding("EXCEPTION", detail=str(e), location={"string": self.stmt})
                 return False
 
         # Check the resources are correct formatted correctly

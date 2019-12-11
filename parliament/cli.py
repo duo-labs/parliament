@@ -9,17 +9,19 @@ import json
 from parliament import analyze_policy_string, enhance_finding
 
 
-def print_finding(
-    finding, minimal_output=False, json_output=False, minimum_severity="LOW"
-):
+def is_finding_filtered(finding, minimum_severity="LOW"):
+    # Return True if the finding should not be displayed
     minimum_severity = minimum_severity.upper()
     finding = enhance_finding(finding)
     severity_choices = ["MUTE", "INFO", "LOW", "MEDIUM", "HIGH", "CRITICAL"]
     if severity_choices.index(finding.severity) < severity_choices.index(
         minimum_severity
     ):
-        return
+        return True
+    return False
 
+
+def print_finding(finding, minimal_output=False, json_output=False):
     if minimal_output:
         print("{}".format(finding.issue))
     elif json_output:
@@ -147,11 +149,18 @@ def main():
         parser.print_help()
         exit(-1)
 
-    if len(findings) == 0:
+    filtered_findings = []
+    for finding in findings:
+        if not is_finding_filtered(finding, args.minimum_severity):
+            filtered_findings.append(finding)
+
+    if len(filtered_findings) == 0:
+        # Return with exit code 0 if no findings
         return
 
-    for finding in policy.findings:
-        print_finding(finding, args.minimal, args.json, args.minimum_severity)
+    for finding in filtered_findings:
+        print_finding(finding, args.minimal, args.json)
+    # There were findings, so return with a non-zero exit code
     exit(1)
 
 

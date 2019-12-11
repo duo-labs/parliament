@@ -39,8 +39,8 @@ def print_finding(finding, minimal_output=False, json_output=False):
         )
     else:
         print(
-            "{} - {} - {} - {}".format(
-                finding.severity, finding.title, finding.detail, finding.location
+            "{} - {} - {} - {} - {}".format(
+                finding.severity, finding.title, finding.description, finding.detail, finding.location
             )
         )
 

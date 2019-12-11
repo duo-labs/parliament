@@ -164,17 +164,17 @@ class Policy:
         # Check Version
         if "Version" not in self.policy_json:
             self.add_finding(
-                "MALFORMED", detail="Policy does not contain a Version element"
+                "NO_VERSION"
             )
-            return False
-        self.version = self.policy_json["Version"]
+        else:
+            self.version = self.policy_json["Version"]
 
-        if self.version not in ["2012-10-17", "2008-10-17"]:
-            self.add_finding("INVALID_VERSION", location={"string": self.version})
-        elif self.version != "2012-10-17":
-            # TODO I should have a check so that if an older version is being used,
-            # and a variable is detected, it should be marked as higher severity.
-            self.add_finding("OLD_VERSION", location={"string": self.version})
+            if self.version not in ["2012-10-17", "2008-10-17"]:
+                self.add_finding("INVALID_VERSION", location={"string": self.version})
+            elif self.version != "2012-10-17":
+                # TODO I should have a check so that if an older version is being used,
+                # and a variable is detected, it should be marked as higher severity.
+                self.add_finding("OLD_VERSION", location={"string": self.version})
 
         # Check Statements
         if "Statement" not in self.policy_json:

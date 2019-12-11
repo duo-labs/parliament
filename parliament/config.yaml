@@ -58,7 +58,7 @@ BAD_PATTERN_FOR_MFA:
 INVALID_SID:
   title: Invalid SID
   description: Statement Sid does match regex [0-9A-Za-z]*
-  severity: MEDIUM
+  severity: LOW
   group: INVALID
 
 INVALID_ARN:
@@ -66,6 +66,11 @@ INVALID_ARN:
   description: Malformed resource, should have the form arn:partition:service:region:account:id
   severity: MEDIUM
   group: INVALID
+
+NO_VERSION:
+  title: Policy does not contain a Version element
+  severity: LOW
+  group: NOT_IDEAL
 
 INVALID_VERSION:
   title: Invalid Version

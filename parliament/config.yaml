@@ -44,6 +44,16 @@ MISMATCHED_TYPE:
   severity: MEDIUM
   group: INVALID
 
+UNKNOWN_ACTION:
+  title: Unknown action
+  severity: LOW
+  group: INVALID
+
+UNKNOWN_PREFIX:
+  title: Unknown prefix
+  severity: LOW
+  group: INVALID
+
 UNKNOWN_CONDITION_FOR_ACTION:
   title: Unknown condition for action
   description: The given condition is not documented to work with the given action
@@ -58,7 +68,7 @@ BAD_PATTERN_FOR_MFA:
 INVALID_SID:
   title: Invalid SID
   description: Statement Sid does match regex [0-9A-Za-z]*
-  severity: MEDIUM
+  severity: LOW
   group: INVALID
 
 INVALID_ARN:
@@ -66,6 +76,11 @@ INVALID_ARN:
   description: Malformed resource, should have the form arn:partition:service:region:account:id
   severity: MEDIUM
   group: INVALID
+
+NO_VERSION:
+  title: Policy does not contain a Version element
+  severity: LOW
+  group: NOT_IDEAL
 
 INVALID_VERSION:
   title: Invalid Version

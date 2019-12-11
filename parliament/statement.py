@@ -3,7 +3,7 @@ import json
 import fnmatch
 import re
 
-from . import iam_definition, is_arn_match, expand_action
+from . import iam_definition, is_arn_match, expand_action, UnknownActionException
 from .finding import Finding
 from .misc import make_list, ACCESS_DECISION
 
@@ -50,7 +50,7 @@ def get_privilege_info(service, action):
                     privilege_info["service_resources"] = service_info["resources"]
                     privilege_info["service_conditions"] = service_info["conditions"]
                     return privilege_info
-    raise Exception("Unknown action {}:{}".format(service, action))
+    raise UnknownActionException("Unknown action {}:{}".format(service, action))
 
 
 def get_arn_format(resource_type, service_resources):
@@ -279,8 +279,10 @@ class Statement:
             for action in make_list(self.stmt["Action"]):
                 if action == "*" or action == "*:*":
                     return True
+                
+                expanded_actions = expand_action(action, raise_exceptions=False)
 
-                for action_struct in expand_action(action, raise_exceptions=False):
+                for action_struct in expanded_actions:
                     if (
                         action_struct["service"] == privilege_prefix
                         and action_struct["action"] == privilege_name
@@ -619,6 +621,7 @@ class Statement:
 
         # Check Sid
         if "Sid" in self.stmt and not re.fullmatch("[0-9A-Za-z]*", self.stmt["Sid"]):
+            # The grammar is defined at https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_grammar.html
             self.add_finding("INVALID_SID", detail=self.stmt)
             return False
 
@@ -686,6 +689,9 @@ class Statement:
             try:
                 # Given an action such as "s3:List*", return all the possible values it could have
                 expanded_actions.extend(expand_action(action))
+            except UnknownActionException as e:
+                self.add_finding("UNKNOWN_ACTION", detail=e, location={"string": self.stmt})
+                return False
             except Exception as e:
                 self.add_finding("EXCEPTION", detail=e, location={"string": self.stmt})
                 return False
@@ -750,6 +756,7 @@ class Statement:
         # https://github.com/SummitRoute/aws_managed_policies/blob/4b71905a9042e66b22bc3d2b9cb1378b1e1d239e/policies/AWSEC2SpotServiceRolePolicy#L21
 
         if not has_malformed_resource and effect == "Allow":
+            actions_without_matching_resources = []
             # Ensure the required resources for each action exist
             # Iterate through each action
             for action_struct in expanded_actions:
@@ -767,12 +774,7 @@ class Statement:
                         if resource == "*":
                             match_found = True
                     if not match_found:
-                        self.add_finding(
-                            "RESOURCE_MISMATCH",
-                            detail="No resources match for {}:{} which requires a resource format of *".format(
-                                action_struct["service"], action_struct["action"]
-                            ),
-                        )
+                        actions_without_matching_resources.append({'action': '{}:{}'.format(action_struct["service"], action_struct["action"]), 'required_format': '*'})
 
                 # Iterate through the resources defined in the action definition
                 for resource_type in privilege_info["resource_types"]:
@@ -799,15 +801,12 @@ class Statement:
                             continue
 
                     if not match_found:
-                        self.add_finding(
-                            "RESOURCE_MISMATCH",
-                            detail="No resources match for {}:{} which requires a resource format of {} for the resource {}".format(
-                                action_struct["service"],
-                                action_struct["action"],
-                                arn_format,
-                                resource_type,
-                            ),
-                        )
+                        actions_without_matching_resources.append({'action': '{}:{}'.format(action_struct["service"], action_struct["action"]), 'required_format': arn_format})
+            if actions_without_matching_resources:
+                self.add_finding(
+                        "RESOURCE_MISMATCH",
+                        detail=actions_without_matching_resources
+                    )
 
         # If conditions exist, it will be an element, which was previously made into a list
         if len(conditions) == 1:

@@ -756,6 +756,7 @@ class Statement:
         # https://github.com/SummitRoute/aws_managed_policies/blob/4b71905a9042e66b22bc3d2b9cb1378b1e1d239e/policies/AWSEC2SpotServiceRolePolicy#L21
 
         if not has_malformed_resource and effect == "Allow":
+            actions_without_matching_resources = []
             # Ensure the required resources for each action exist
             # Iterate through each action
             for action_struct in expanded_actions:
@@ -773,12 +774,7 @@ class Statement:
                         if resource == "*":
                             match_found = True
                     if not match_found:
-                        self.add_finding(
-                            "RESOURCE_MISMATCH",
-                            detail="No resources match for {}:{} which requires a resource format of *".format(
-                                action_struct["service"], action_struct["action"]
-                            ),
-                        )
+                        actions_without_matching_resources.append({'action': '{}:{}'.format(action_struct["service"], action_struct["action"]), 'required_format': '*'})
 
                 # Iterate through the resources defined in the action definition
                 for resource_type in privilege_info["resource_types"]:
@@ -805,15 +801,12 @@ class Statement:
                             continue
 
                     if not match_found:
-                        self.add_finding(
-                            "RESOURCE_MISMATCH",
-                            detail="No resources match for {}:{} which requires a resource format of {} for the resource {}".format(
-                                action_struct["service"],
-                                action_struct["action"],
-                                arn_format,
-                                resource_type,
-                            ),
-                        )
+                        actions_without_matching_resources.append({'action': '{}:{}'.format(action_struct["service"], action_struct["action"]), 'required_format': arn_format})
+            if actions_without_matching_resources:
+                self.add_finding(
+                        "RESOURCE_MISMATCH",
+                        detail=actions_without_matching_resources
+                    )
 
         # If conditions exist, it will be an element, which was previously made into a list
         if len(conditions) == 1:

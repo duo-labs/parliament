@@ -3,7 +3,13 @@ import json
 import fnmatch
 import re
 
-from . import iam_definition, is_arn_match, expand_action, UnknownActionException
+from . import (
+    iam_definition,
+    is_arn_match,
+    expand_action,
+    UnknownActionException,
+    UnknownPrefixException,
+)
 from .finding import Finding
 from .misc import make_list, ACCESS_DECISION
 
@@ -279,7 +285,7 @@ class Statement:
             for action in make_list(self.stmt["Action"]):
                 if action == "*" or action == "*:*":
                     return True
-                
+
                 expanded_actions = expand_action(action, raise_exceptions=False)
 
                 for action_struct in expanded_actions:
@@ -690,13 +696,19 @@ class Statement:
                 # Given an action such as "s3:List*", return all the possible values it could have
                 expanded_actions.extend(expand_action(action))
             except UnknownActionException as e:
-                self.add_finding("UNKNOWN_ACTION", detail=str(e), location={"string": self.stmt})
+                self.add_finding(
+                    "UNKNOWN_ACTION", detail=str(e), location={"string": self.stmt}
+                )
                 return False
             except UnknownPrefixException as e:
-                self.add_finding("UNKNOWN_PREFIX", detail=str(e), location={"string": self.stmt})
+                self.add_finding(
+                    "UNKNOWN_PREFIX", detail=str(e), location={"string": self.stmt}
+                )
                 return False
             except Exception as e:
-                self.add_finding("EXCEPTION", detail=str(e), location={"string": self.stmt})
+                self.add_finding(
+                    "EXCEPTION", detail=str(e), location={"string": self.stmt}
+                )
                 return False
 
         # Check the resources are correct formatted correctly
@@ -777,7 +789,14 @@ class Statement:
                         if resource == "*":
                             match_found = True
                     if not match_found:
-                        actions_without_matching_resources.append({'action': '{}:{}'.format(action_struct["service"], action_struct["action"]), 'required_format': '*'})
+                        actions_without_matching_resources.append(
+                            {
+                                "action": "{}:{}".format(
+                                    action_struct["service"], action_struct["action"]
+                                ),
+                                "required_format": "*",
+                            }
+                        )
 
                 # Iterate through the resources defined in the action definition
                 for resource_type in privilege_info["resource_types"]:
@@ -804,12 +823,18 @@ class Statement:
                             continue
 
                     if not match_found:
-                        actions_without_matching_resources.append({'action': '{}:{}'.format(action_struct["service"], action_struct["action"]), 'required_format': arn_format})
+                        actions_without_matching_resources.append(
+                            {
+                                "action": "{}:{}".format(
+                                    action_struct["service"], action_struct["action"]
+                                ),
+                                "required_format": arn_format,
+                            }
+                        )
             if actions_without_matching_resources:
                 self.add_finding(
-                        "RESOURCE_MISMATCH",
-                        detail=actions_without_matching_resources
-                    )
+                    "RESOURCE_MISMATCH", detail=actions_without_matching_resources
+                )
 
         # If conditions exist, it will be an element, which was previously made into a list
         if len(conditions) == 1:

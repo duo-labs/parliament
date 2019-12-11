@@ -7,6 +7,7 @@ from nose.tools import (
     assert_count_equal,
 )
 
+from parliament import UnknownPrefixException, UnknownActionException
 from parliament.statement import expand_action
 
 
@@ -61,19 +62,19 @@ class TestActionExpansion(unittest.TestCase):
         try:
             expand_action("333:listallmybuckets")
             assert False
-        except ValueError as e:
+        except UnknownPrefixException as e:
             assert True
 
     def test_exception_bad_action(self):
         try:
             expand_action("s3:zzz")
             assert False
-        except ValueError as e:
+        except UnknownActionException as e:
             assert True
 
     def test_exception_bad_expansion(self):
         try:
             expand_action("s3:zzz*")
             assert False
-        except ValueError as e:
+        except UnknownActionException as e:
             assert True

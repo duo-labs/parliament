@@ -44,6 +44,9 @@ def analyze_policy_string(policy_str, filepath=None):
     policy.analyze()
     return policy
 
+class UnknownPrefixException(Exception):
+    pass
+
 class UnknownActionException(Exception):
     pass
 
@@ -211,7 +214,7 @@ def expand_action(action, raise_exceptions=True):
                     )
 
     if not service_match and raise_exceptions:
-        raise ValueError("Unknown prefix {}".format(prefix))
+        raise UnknownPrefixException("Unknown prefix {}".format(prefix))
 
     if len(actions) == 0 and raise_exceptions:
         raise UnknownActionException("Unknown action {}:{}".format(prefix, unexpanded_action))

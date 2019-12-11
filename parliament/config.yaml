@@ -49,6 +49,11 @@ UNKNOWN_ACTION:
   severity: LOW
   group: INVALID
 
+UNKNOWN_PREFIX:
+  title: Unknown prefix
+  severity: LOW
+  group: INVALID
+
 UNKNOWN_CONDITION_FOR_ACTION:
   title: Unknown condition for action
   description: The given condition is not documented to work with the given action

@@ -140,7 +140,7 @@ def main():
     elif args.file:
         with open(args.file) as f:
             contents = f.read()
-            policy = analyze_policy_string(contents)
+            policy = analyze_policy_string(contents, args.file)
             for finding in policy.findings:
                 findings.extend(policy.findings)
     else:

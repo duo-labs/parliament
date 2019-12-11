@@ -44,6 +44,11 @@ MISMATCHED_TYPE:
   severity: MEDIUM
   group: INVALID
 
+UNKNOWN_ACTION:
+  title: Unknown action
+  severity: LOW
+  group: INVALID
+
 UNKNOWN_CONDITION_FOR_ACTION:
   title: Unknown condition for action
   description: The given condition is not documented to work with the given action

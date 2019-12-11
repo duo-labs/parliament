@@ -3,7 +3,7 @@ import json
 import fnmatch
 import re
 
-from . import iam_definition, is_arn_match, expand_action
+from . import iam_definition, is_arn_match, expand_action, UnknownActionException
 from .finding import Finding
 from .misc import make_list, ACCESS_DECISION
 
@@ -50,7 +50,7 @@ def get_privilege_info(service, action):
                     privilege_info["service_resources"] = service_info["resources"]
                     privilege_info["service_conditions"] = service_info["conditions"]
                     return privilege_info
-    raise Exception("Unknown action {}:{}".format(service, action))
+    raise UnknownActionException("Unknown action {}:{}".format(service, action))
 
 
 def get_arn_format(resource_type, service_resources):
@@ -279,8 +279,10 @@ class Statement:
             for action in make_list(self.stmt["Action"]):
                 if action == "*" or action == "*:*":
                     return True
+                
+                expanded_actions = expand_action(action, raise_exceptions=False)
 
-                for action_struct in expand_action(action, raise_exceptions=False):
+                for action_struct in expanded_actions:
                     if (
                         action_struct["service"] == privilege_prefix
                         and action_struct["action"] == privilege_name
@@ -687,6 +689,9 @@ class Statement:
             try:
                 # Given an action such as "s3:List*", return all the possible values it could have
                 expanded_actions.extend(expand_action(action))
+            except UnknownActionException as e:
+                self.add_finding("UNKNOWN_ACTION", detail=e, location={"string": self.stmt})
+                return False
             except Exception as e:
                 self.add_finding("EXCEPTION", detail=e, location={"string": self.stmt})
                 return False

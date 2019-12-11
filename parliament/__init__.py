@@ -1,7 +1,7 @@
 """
 This library is a linter for AWS IAM policies.
 """
-__version__ = "0.3.1"
+__version__ = "0.3.2"
 
 import os
 import json
@@ -44,6 +44,8 @@ def analyze_policy_string(policy_str, filepath=None):
     policy.analyze()
     return policy
 
+class UnknownActionException(Exception):
+    pass
 
 def is_arn_match(resource_type, arn_format, resource):
     """
@@ -212,7 +214,7 @@ def expand_action(action, raise_exceptions=True):
         raise ValueError("Unknown prefix {}".format(prefix))
 
     if len(actions) == 0 and raise_exceptions:
-        raise ValueError("Unknown action {}:{}".format(prefix, unexpanded_action))
+        raise UnknownActionException("Unknown action {}:{}".format(prefix, unexpanded_action))
 
     return actions
 

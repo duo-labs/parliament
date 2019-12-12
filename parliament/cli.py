@@ -6,13 +6,12 @@ from os.path import isfile, join
 import sys
 import json
 
-from parliament import analyze_policy_string, enhance_finding
+from parliament import analyze_policy_string, enhance_finding, override_config
 
 
 def is_finding_filtered(finding, minimum_severity="LOW"):
     # Return True if the finding should not be displayed
-    minimum_severity = minimum_severity.upper()
-    finding = enhance_finding(finding)
+    minimum_severity = minimum_severity.upper()    
     severity_choices = ["MUTE", "INFO", "LOW", "MEDIUM", "HIGH", "CRITICAL"]
     if severity_choices.index(finding.severity) < severity_choices.index(
         minimum_severity
@@ -73,6 +72,11 @@ def main():
         "--minimum_severity",
         help="Minimum severity to display. Options: CRITICAL, HIGH, MEDIUM, LOW, INFO",
         default="LOW",
+    )
+    parser.add_argument(
+        "--config",
+        help="Custom config file for over-riding values",
+        type=str
     )
     args = parser.parse_args()
 
@@ -149,7 +153,9 @@ def main():
         exit(-1)
 
     filtered_findings = []
+    override_config(args.config)
     for finding in findings:
+        finding = enhance_finding(finding)
         if not is_finding_filtered(finding, args.minimum_severity):
             filtered_findings.append(finding)
 

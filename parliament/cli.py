@@ -178,7 +178,7 @@ def main():
     for finding in filtered_findings:
         print_finding(finding, args.minimal, args.json)
     # There were findings, so return with a non-zero exit code
-    exit(1)
+    exit(len(filtered_findings))
 
 
 if __name__ == "__main__":

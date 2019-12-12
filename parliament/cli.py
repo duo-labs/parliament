@@ -7,16 +7,25 @@ import sys
 import json
 
 from parliament import analyze_policy_string, enhance_finding, override_config
+from parliament.misc import make_list
 
 
 def is_finding_filtered(finding, minimum_severity="LOW"):
     # Return True if the finding should not be displayed
-    minimum_severity = minimum_severity.upper()    
+    minimum_severity = minimum_severity.upper()
     severity_choices = ["MUTE", "INFO", "LOW", "MEDIUM", "HIGH", "CRITICAL"]
     if severity_choices.index(finding.severity) < severity_choices.index(
         minimum_severity
     ):
         return True
+
+    for location_type, locations_to_ignore in finding.ignore_locations.items():
+        for location_to_ignore in make_list(locations_to_ignore):
+            if (
+                location_to_ignore.lower()
+                in str(finding.location.get(location_type, "")).lower()
+            ):
+                return True
     return False
 
 
@@ -39,7 +48,11 @@ def print_finding(finding, minimal_output=False, json_output=False):
     else:
         print(
             "{} - {} - {} - {} - {}".format(
-                finding.severity, finding.title, finding.description, finding.detail, finding.location
+                finding.severity,
+                finding.title,
+                finding.description,
+                finding.detail,
+                finding.location,
             )
         )
 
@@ -74,9 +87,7 @@ def main():
         default="LOW",
     )
     parser.add_argument(
-        "--config",
-        help="Custom config file for over-riding values",
-        type=str
+        "--config", help="Custom config file for over-riding values", type=str
     )
     args = parser.parse_args()
 

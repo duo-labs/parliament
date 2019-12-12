@@ -710,17 +710,17 @@ class Statement:
                 expanded_actions.extend(expand_action(action))
             except UnknownActionException as e:
                 self.add_finding(
-                    "UNKNOWN_ACTION", detail=str(e), location={"string": self.stmt}
+                    "UNKNOWN_ACTION", detail=str(e), location={"unknown_action": action, "statement": self.stmt}
                 )
                 return False
             except UnknownPrefixException as e:
                 self.add_finding(
-                    "UNKNOWN_PREFIX", detail=str(e), location={"string": self.stmt}
+                    "UNKNOWN_PREFIX", detail=str(e), location={"statement": self.stmt}
                 )
                 return False
             except Exception as e:
                 self.add_finding(
-                    "EXCEPTION", detail=str(e), location={"string": self.stmt}
+                    "EXCEPTION", detail=str(e), location={"statement": self.stmt}
                 )
                 return False
 
@@ -846,7 +846,7 @@ class Statement:
                         )
             if actions_without_matching_resources:
                 self.add_finding(
-                    "RESOURCE_MISMATCH", detail=actions_without_matching_resources
+                    "RESOURCE_MISMATCH", detail=actions_without_matching_resources, location={"actions": actions}
                 )
 
         # If conditions exist, it will be an element, which was previously made into a list

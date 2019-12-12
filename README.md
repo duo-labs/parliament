@@ -17,13 +17,93 @@ pip install parliament
 
 # Usage
 ```
-$ parliament --string '{"Version":"2012-10-17","Statement": {"Effect": "Allow","Action":["s3:GetObject"],"Resource": ["arn:aws:s3:::bucket1"]}}'
-INVALID - No resources match for s3:GetObject which requires a resource format of arn:*:s3:::*/* for the resource object* - {'filepath': None}
+cat > test.json << EOF
+{
+    "Version": "2012-10-17",
+    "Statement": {
+        "Effect": "Allow",
+        "Action":["s3:GetObject"],
+        "Resource": ["arn:aws:s3:::bucket1"]
+    }
+}
+EOF
+
+parliament --file test.json
 ```
 
-This example is showing that a resource specifying an S3 bucket (not an object path) was given in a policy with s3:GetObject, which requires an object path. 
+This will output:
+```
+MEDIUM - No resources match for the given action -  - [{'action': 's3:GetObject', 'required_format': 'arn:*:s3:::*/*'}] - {'actions': ['s3:GetObject'], 'filepath': 'test.json'}
+```
 
-See `./bin/parliament.py` for further examples.
+This example is showing that the action s3:GetObject requires a resource matching an object path (ie. it must have a "/" in it).
+
+## Custom config file
+You may decide you want to change the severity of a finding, the text associated with it, or that you want to ignore certain types of findings.  To support this, you can provide an override config file.  First, create a test.json file:
+
+```
+{
+    "Version": "2012-10-17",
+    "Id": "123",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Action": "s3:abc",
+        "Resource": "*"
+      },
+      {
+        "Effect": "Allow",
+        "Action": ["s3:*", "ec2:*"],
+        "Resource": "arn:aws:s3:::test/*"
+      }
+    ]
+ }
+```
+
+This will have two findings:
+- LOW - Unknown action -  - Unknown action s3:abc
+- MEDIUM - No resources match for the given action
+
+The second finding will be very long, because every s3 and ec2 action are expanded and most are incorrect for the S3 object path resource that is provided.
+
+Now create a file `config_override.yaml` with the following contents:
+
+```
+UNKNOWN_ACTION:
+  severity: MEDIUM
+  ignore_locations:
+    filepath:
+      - testa.json
+      - .py
+
+RESOURCE_MISMATCH:
+  ignore_locations:
+    actions: "s3:*"
+```
+
+Now run: `parliament --file test.json --config config_override.yaml`
+You will have only one output: `MEDIUM - Unknown action -  - Unknown action s3:abc`
+
+Notice that the severity of that finding has been changed from a `LOW` to a `MEDIUM`.  Also, note that the other finding is gone, because the previous `RESOURCE_MISMATCH` finding contained an `actions` element of `["s3:*", "ec2:*"]`.  The ignore logic looks for any of the values you provide in the element within `location`.  This means that we are doing `if "s3:*" in str(["s3:*", "ec2:*"])`
+
+Now rename `test.json` to `testa.json` and rerun the command.  You will no longer have any output, because we are filtering based on the filepath for `UNKNOWN_ACTION` and filtering for any filepaths that contain `testa.json` or `.py`.
+
+You can also check the exit status with `echo $?` and see the exit status is 0 when there are no findings.  The exit status is set to the number of findings (ex. 10 findings results in an exit status of 10).
+
+
+
+
+## Using parliament as a library
+Parliament was meant to be used a library in other projects. A basic example follows.
+
+```
+from parliament import analyze_policy_string
+
+analyzed_policy = analyze_policy_string(policy_doc)
+for f in analyzed_policy.findings:
+  print(f)
+```
+
 
 # Development
 Setup a testing environment

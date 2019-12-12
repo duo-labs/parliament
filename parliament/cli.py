@@ -19,13 +19,14 @@ def is_finding_filtered(finding, minimum_severity="LOW"):
     ):
         return True
 
-    for location_type, locations_to_ignore in finding.ignore_locations.items():
-        for location_to_ignore in make_list(locations_to_ignore):
-            if (
-                location_to_ignore.lower()
-                in str(finding.location.get(location_type, "")).lower()
-            ):
-                return True
+    if finding.ignore_locations:
+        for location_type, locations_to_ignore in finding.ignore_locations.items():
+            for location_to_ignore in make_list(locations_to_ignore):
+                if (
+                    location_to_ignore.lower()
+                    in str(finding.location.get(location_type, "")).lower()
+                ):
+                    return True
     return False
 
 

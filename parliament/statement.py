@@ -143,8 +143,8 @@ OPERATORS = {
 
 GLOBAL_CONDITION_KEYS = {
     "aws:CurrentTime": "Date",
-    "aws:EpochTime": "Date",
-    "aws:MultiFactorAuthAge": "Date",
+    "aws:EpochTime": "Date", # This needs to accept Date or Numeric
+    "aws:MultiFactorAuthAge": "Numeric",
     "aws:MultiFactorAuthPresent": "Bool",
     "aws:PrincipalOrgID": "String",
     "aws:PrincipalArn": "Arn",

@@ -287,3 +287,22 @@ class TestFormatting(unittest.TestCase):
         )
         print(policy.findings)
         assert_equal(len(policy.findings), 0)
+    
+    def test_condition_with_MultiFactorAuthAge(self):
+        policy = analyze_policy_string(
+            """{
+    "Version": "2012-10-17",
+    "Id": "123",
+    "Statement": [
+      {
+        "Sid": "",
+        "Effect": "Deny",
+        "Action": "*",
+        "Resource": "*",
+        "Condition": { "NumericGreaterThan": { "aws:MultiFactorAuthAge": "28800" }}
+      }
+    ]
+ }"""
+        )
+        print(policy.findings)
+        assert_equal(len(policy.findings), 0)

@@ -1,7 +1,7 @@
 """
 This library is a linter for AWS IAM policies.
 """
-__version__ = "0.3.4"
+__version__ = "0.3.5"
 
 import os
 import json
@@ -19,6 +19,19 @@ config_path = pkg_resources.resource_filename(__name__, "config.yaml")
 config = yaml.safe_load(open(config_path, "r"))
 
 
+def override_config(override_config_path):
+    if override_config_path is None:
+        return
+
+    # Load the override file
+    override_config = yaml.safe_load(open(override_config_path, "r"))
+
+    # Over-write the settings
+    for finding_type, settings in override_config.items():
+        for setting, settting_value in settings.items():
+            config[finding_type][setting] = settting_value
+
+
 def enhance_finding(finding):
     if finding.issue not in config:
         raise Exception("Uknown finding issue: {}".format(finding.issue))
@@ -26,6 +39,7 @@ def enhance_finding(finding):
     finding.severity = config_settings["severity"]
     finding.title = config_settings["title"]
     finding.description = config_settings.get("description", "")
+    finding.ignore_locations =  config_settings.get("ignore_locations", None)
     return finding
 
 
@@ -44,11 +58,14 @@ def analyze_policy_string(policy_str, filepath=None):
     policy.analyze()
     return policy
 
+
 class UnknownPrefixException(Exception):
     pass
 
+
 class UnknownActionException(Exception):
     pass
+
 
 def is_arn_match(resource_type, arn_format, resource):
     """
@@ -217,7 +234,9 @@ def expand_action(action, raise_exceptions=True):
         raise UnknownPrefixException("Unknown prefix {}".format(prefix))
 
     if len(actions) == 0 and raise_exceptions:
-        raise UnknownActionException("Unknown action {}:{}".format(prefix, unexpanded_action))
+        raise UnknownActionException(
+            "Unknown action {}:{}".format(prefix, unexpanded_action)
+        )
 
     return actions
 

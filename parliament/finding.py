@@ -10,6 +10,7 @@ class Finding:
     severity = ""
     title = ""
     description = ""
+    ignore_locations = {}
 
     def __init__(self, issue, detail, location):
         self.issue = issue

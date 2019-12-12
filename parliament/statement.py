@@ -460,6 +460,34 @@ class Statement:
                 return False
 
         for key in condition_block:
+
+            # Check for known bad pattern
+            if operator.lower() == "bool":
+                if key.lower() == "aws:MultiFactorAuthPresent".lower() and "false" in make_list(
+                    condition_block[key]
+                ):
+                    self.add_finding(
+                        "BAD_PATTERN_FOR_MFA",
+                        detail='The condition {"Bool": {"aws:MultiFactorAuthPresent":"false"}} is bad because aws:MultiFactorAuthPresent may not exist so it does not enforce MFA. You likely want to use a Deny with BoolIfExists.',
+                        location={"location": condition_block},
+                    )
+            elif operator.lower() == "null":
+                if key.lower == "aws:MultiFactorAuthPresent".lower() and "false" in make_list(
+                    condition_block[key]
+                ):
+                    self.add_finding(
+                        "BAD_PATTERN_FOR_MFA",
+                        detail='The condition {"Null": {"aws:MultiFactorAuthPresent":"false"}} is bad because aws:MultiFactorAuthPresent it does not enforce MFA, and only checks if the value exists. You likely want to use an Allow with {"Bool": {"aws:MultiFactorAuthPresent":"true"}}.',
+                        location={"location": condition_block},
+                    )
+            
+            if operator.lower() in ["null"]:
+                # The following condition is valid:
+                # "Condition": { "Null": { "aws:MultiFactorAuthAge": true }
+                # If we check further we'll get a MISMATCHED_TYPE finding due to
+                # aws:MultiFactorAuthAge being checked against a bool value instead of a date
+                continue
+            
             # The key here from the example is "s3:prefix"
             condition_type = get_global_key_type(key)
             if condition_type:
@@ -538,26 +566,6 @@ class Statement:
                             ),
                             location={"location": condition_block},
                         )
-
-            # Check for known bad pattern
-            if operator.lower() == "bool":
-                if key.lower() == "aws:MultiFactorAuthPresent".lower() and "false" in make_list(
-                    condition_block[key]
-                ):
-                    self.add_finding(
-                        "BAD_PATTERN_FOR_MFA",
-                        detail='The condition {"Bool": {"aws:MultiFactorAuthPresent":"false"}} is bad because aws:MultiFactorAuthPresent may not exist so it does not enforce MFA. You likely want to use a Deny with BoolIfExists.',
-                        location={"location": condition_block},
-                    )
-            elif operator.lower() == "null":
-                if key.lower == "aws:MultiFactorAuthPresent".lower() and "false" in make_list(
-                    condition_block[key]
-                ):
-                    self.add_finding(
-                        "BAD_PATTERN_FOR_MFA",
-                        detail='The condition {"Null": {"aws:MultiFactorAuthPresent":"false"}} is bad because aws:MultiFactorAuthPresent it does not enforce MFA, and only checks if the value exists. You likely want to use an Allow with {"Bool": {"aws:MultiFactorAuthPresent":"true"}}.',
-                        location={"location": condition_block},
-                    )
 
         return
 

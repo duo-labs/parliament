@@ -255,7 +255,7 @@ class TestFormatting(unittest.TestCase):
         )
         assert_false(len(policy.findings) == 0, "Operator type mismatch")
 
-    def test_condition_type(self):
+    def test_condition_type_unqoted_bool(self):
         policy = analyze_policy_string(
             """{
     "Version": "2012-10-17",
@@ -264,6 +264,26 @@ class TestFormatting(unittest.TestCase):
         "Action": "kms:CreateGrant",
         "Resource": "*",
         "Condition": {"Bool": {"kms:GrantIsForAWSResource": true}} }}"""
+        )
+        print(policy.findings)
+        assert_equal(len(policy.findings), 0)
+    
+    def test_condition_with_null(self):
+        policy = analyze_policy_string(
+            """{
+    "Version": "2012-10-17",
+    "Id": "123",
+    "Statement": [
+      {
+        "Sid": "",
+        "Effect": "Deny",
+        "Principal": "*",
+        "Action": "s3:*",
+        "Resource": "arn:aws:s3:::examplebucket/taxdocuments/*",
+        "Condition": { "Null": { "aws:MultiFactorAuthAge": true }}
+      }
+    ]
+ }"""
         )
         print(policy.findings)
         assert_equal(len(policy.findings), 0)

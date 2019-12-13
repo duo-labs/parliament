@@ -88,7 +88,7 @@ Notice that the severity of that finding has been changed from a `LOW` to a `MED
 
 Now rename `test.json` to `testa.json` and rerun the command.  You will no longer have any output, because we are filtering based on the filepath for `UNKNOWN_ACTION` and filtering for any filepaths that contain `testa.json` or `.py`.
 
-You can also check the exit status with `echo $?` and see the exit status is 0 when there are no findings.  The exit status is set to the number of findings (ex. 10 findings results in an exit status of 10).
+You can also check the exit status with `echo $?` and see the exit status is 0 when there are no findings. The exit status will be non-zero when there are findings.
 
 
 

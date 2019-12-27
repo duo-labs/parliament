@@ -576,7 +576,7 @@ class Statement:
         If it is maformed, return False
         """
         actions = []
-        resouces = []
+        resources = []
         conditions = []
 
         # Check no unknown elements exist

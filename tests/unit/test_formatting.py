@@ -267,7 +267,7 @@ class TestFormatting(unittest.TestCase):
         )
         print(policy.findings)
         assert_equal(len(policy.findings), 0)
-    
+
     def test_condition_with_null(self):
         policy = analyze_policy_string(
             """{
@@ -287,7 +287,7 @@ class TestFormatting(unittest.TestCase):
         )
         print(policy.findings)
         assert_equal(len(policy.findings), 0)
-    
+
     def test_condition_with_MultiFactorAuthAge(self):
         policy = analyze_policy_string(
             """{
@@ -304,5 +304,44 @@ class TestFormatting(unittest.TestCase):
     ]
  }"""
         )
+        print(policy.findings)
+        assert_equal(len(policy.findings), 0)
+
+    def test_redshift_GetClusterCredentials(self):
+        policy = analyze_policy_string(
+            """{
+    "Version": "2012-10-17",
+    "Id": "123",
+    "Statement": [
+        {
+            "Action": "redshift:GetClusterCredentials",
+            "Effect": "Allow",
+            "Resource": "arn:aws:redshift:us-west-2:123456789012:dbuser:the_cluster/the_user"
+        }
+    ]
+ }"""
+        )
+
+        # This privilege has a required format of arn:*:redshift:*:*:dbuser:*/*
+        print(policy.findings)
+        assert_equal(len(policy.findings), 0)
+
+    def test_lambda_AddLayerVersionPermission(self):
+        policy = analyze_policy_string(
+            """{
+    "Version": "2012-10-17",
+    "Id": "123",
+    "Statement": [
+        {
+            "Sid": "TestPol",
+            "Effect": "Allow",
+            "Action": "lambda:AddLayerVersionPermission",
+            "Resource": "arn:aws:lambda:*:123456789012:layer:sol-*:*"
+        }
+    ]
+ }"""
+        )
+
+        # This privilege has a required format of arn:*:redshift:*:*:dbuser:*/*
         print(policy.findings)
         assert_equal(len(policy.findings), 0)

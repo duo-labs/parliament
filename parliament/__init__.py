@@ -238,6 +238,9 @@ def expand_action(action, raise_exceptions=True):
       {'service':'iam', 'action': 'ListUsers'}, ...
     ]
     """
+    if action == "*":
+        action = "*:*"
+
     parts = action.split(":")
     if len(parts) != 2:
         raise ValueError("Action should be in form service:action")
@@ -247,7 +250,7 @@ def expand_action(action, raise_exceptions=True):
     actions = []
     service_match = None
     for service in iam_definition:
-        if service["prefix"] == prefix.lower():
+        if service["prefix"] == prefix.lower() or prefix == "*":
             service_match = service
 
             for privilege in service["privileges"]:

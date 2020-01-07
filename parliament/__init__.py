@@ -39,7 +39,7 @@ def enhance_finding(finding):
     finding.severity = config_settings["severity"]
     finding.title = config_settings["title"]
     finding.description = config_settings.get("description", "")
-    finding.ignore_locations =  config_settings.get("ignore_locations", None)
+    finding.ignore_locations = config_settings.get("ignore_locations", None)
     return finding
 
 
@@ -90,7 +90,7 @@ def is_arn_match(resource_type, arn_format, resource):
     The problem can be simplified because we only care about globbed strings, not full regexes,
     but there are no Python libraries, but here is one in Go: https://github.com/Pathgather/glob-intersection
 
-    We can some cheat because after the first sections of the arn match, meaning until the 5th colon (with some
+    We can cheat some because after the first sections of the arn match, meaning until the 5th colon (with some
     rules there to allow empty or asterisk sections), we only need to match the ID part.
     So the above is simplified to "*/*" and "*personalize*".
 
@@ -110,12 +110,15 @@ def is_arn_match(resource_type, arn_format, resource):
         if "/" in resource:
             return False
 
+    # The ARN has at least 6 parts, separated by a colon. Ensure these exist.
     arn_parts = arn_format.split(":")
     if len(arn_parts) < 6:
         raise Exception("Unexpected format for ARN: {}".format(arn_format))
     resource_parts = resource.split(":")
     if len(resource_parts) < 6:
         raise Exception("Unexpected format for resource: {}".format(resource))
+
+    # For the first 5 parts (ex. arn:aws:SERVICE:REGION:ACCOUNT:), ensure these match appropriately
     for position in range(0, 5):
         if arn_parts[position] == "*" or arn_parts[position] == "":
             continue
@@ -126,12 +129,20 @@ def is_arn_match(resource_type, arn_format, resource):
         else:
             return False
 
-    arn_id = "".join(arn_parts[5:])
-    resource_id = "".join(resource_parts[5:])
+    # Everything up to and including the account ID section matches, so now try to match the remainder
+
+    arn_id = ":".join(arn_parts[5:])
+    resource_id = ":".join(resource_parts[5:])
+
+    print("Checking {} matches {}".format(arn_id, resource_id))  # TODO REMOVE
 
     # At this point we might have something like:
     # log-group:* for arn_id and
     # log-group:/aws/elasticbeanstalk* for resource_id
+
+    # Alternatively we might have multiple colon separated sections, such as:
+    # dbuser:*/* for arn_id and
+    # dbuser:the_cluster/the_user for resource_id
 
     # Look for exact match
     # Examples:
@@ -149,6 +160,25 @@ def is_arn_match(resource_type, arn_format, resource):
     if "*" not in arn_id and "*" not in resource_id:
         return False
 
+    # Remove the start of a string that matches.
+    # "dbuser:*/*", "dbuser:the_cluster/the_user" -> "*/*", "the_cluster/the_user"
+    # "layer:*:*", "layer:sol-*:*" -> "*:*", "sol-*:*"
+
+    def get_starting_match(s1, s2):
+        match = ""
+        for i in range(len(s1)):
+            if i > len(s2) - 1:
+                break
+            if s1[i] == "*" or s2[i] == "*":
+                break
+            if s1[i] == s2[i]:
+                match += s1[i]
+        return match
+
+    match_len = len(get_starting_match(arn_id, resource_id))
+    arn_id = arn_id[match_len:]
+    resource_id = resource_id[match_len:]
+
     # If either is an asterisk it matches
     # Examples:
     # "*", "mybucket" -> True
@@ -165,7 +195,7 @@ def is_arn_match(resource_type, arn_format, resource):
 
     # If one begins with an asterisk and the other ends with one, it should match
     # Examples:
-    # "*/*" and "*personalize*" -> True
+    # "*/" and "personalize*" -> True
     if (arn_id[0] == "*" and resource_id[-1] == "*") or (
         arn_id[-1] == "*" and resource_id[0] == "*"
     ):
@@ -182,6 +212,7 @@ def is_arn_match(resource_type, arn_format, resource):
 
     # Check situation where it begins and ends with asterisks, such as "*/*"
     if arn_id[0] == "*" and arn_id[-1] == "*":
+        # Now only check the middle matches
         if arn_id[1:-1] in resource_id:
             return True
     if resource_id[0] == "*" and resource_id[-1] == "*":

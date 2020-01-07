@@ -1,6 +1,6 @@
 .DS_Store
 .coverage
-utils/docs.aws.amazon.com/
+utils/docs/
 *.pyc
 *.egg-info
 .eggs

@@ -78,3 +78,7 @@ class TestActionExpansion(unittest.TestCase):
             assert False
         except UnknownActionException as e:
             assert True
+
+    def test_expand_all(self):
+        assert_true(len(expand_action("*")) > 1000)
+        assert_true(len(expand_action("*:*")) > 1000)

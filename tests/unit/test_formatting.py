@@ -345,3 +345,31 @@ class TestFormatting(unittest.TestCase):
         # This privilege has a required format of arn:*:redshift:*:*:dbuser:*/*
         print(policy.findings)
         assert_equal(len(policy.findings), 0)
+
+
+
+    def test_lambda_AddLayerVersionPermission(self):
+        policy = analyze_policy_string(
+            """{
+    "Version": "2012-10-17",
+    "Id": "123",
+    "Statement": [
+        {
+            "Action": [
+                "ec2:TerminateInstances"
+            ],
+            "Effect": "Allow",
+            "Resource": "*",
+            "Condition": {
+                "ArnEquals": {
+                    "ec2:InstanceProfile": "arn:aws:iam::123456789012:instance-profile/my_role"
+                }
+            }
+        }
+    ]
+ }"""
+        )
+
+        # This privilege has a required format of arn:*:redshift:*:*:dbuser:*/*
+        print(policy.findings)
+        assert_equal(len(policy.findings), 0)

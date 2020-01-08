@@ -8,8 +8,6 @@ parliament is an AWS IAM linting library. It reviews policies looking for proble
 
 This library duplicates (and adds to!) much of the functionality in the web console page when reviewing IAM policies in the browser.  We wanted that functionality as a library.
 
-The IAM data is obtained from scraping the docs [here](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_actions-resources-contextkeys.html) and parsing this information with beautifulsoup using `./utils/update_iam_data.py`.
-
 # Installation
 ```
 pip install parliament
@@ -91,8 +89,6 @@ Now rename `test.json` to `testa.json` and rerun the command.  You will no longe
 You can also check the exit status with `echo $?` and see the exit status is 0 when there are no findings. The exit status will be non-zero when there are findings.
 
 
-
-
 ## Using parliament as a library
 Parliament was meant to be used a library in other projects. A basic example follows.
 
@@ -121,3 +117,10 @@ Run locally as:
 ```
 bin/parliament
 ```
+
+## Updating the privilege info
+The IAM data is obtained from scraping the docs [here](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_actions-resources-contextkeys.html) and parsing this information with beautifulsoup using `./utils/update_iam_data.py`.
+
+# Projects that use Parliament
+- [CloudMapper](https://github.com/duo-labs/cloudmapper): Has functionality to audit AWS environments and will audit the IAM policies as part of that.
+- [tf-parliament](https://github.com/rdkls/tf-parliament): Runs Parliament against terraform files

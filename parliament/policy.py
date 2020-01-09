@@ -1,4 +1,8 @@
 import json
+import pkgutil
+import importlib
+import os
+from pathlib import Path
 
 from .statement import Statement
 from .finding import Finding
@@ -143,7 +147,7 @@ class Policy:
 
         check_bucket_privesc(refs, "PutLifecycleConfiguration", "DeleteObject")
 
-    def analyze(self):
+    def analyze(self, ignore_private_auditors=False):
         """
         Returns False if this policy is so broken that it couldn't be analyzed further.
         On True, it may still have findings.
@@ -163,9 +167,7 @@ class Policy:
 
         # Check Version
         if "Version" not in self.policy_json:
-            self.add_finding(
-                "NO_VERSION"
-            )
+            self.add_finding("NO_VERSION")
         else:
             self.version = self.policy_json["Version"]
 
@@ -193,5 +195,27 @@ class Policy:
 
         # Look for bad patterns
         self.check_for_bad_patterns()
+
+        if not ignore_private_auditors:
+            # Import any private auditing modules
+            private_auditors_directory = "private_auditors"
+            private_auditors_directory_path = (
+                Path(os.path.abspath(__file__)).parent / private_auditors_directory
+            )
+
+            private_auditors = {}
+            for importer, name, _ in pkgutil.iter_modules(
+                [private_auditors_directory_path]
+            ):
+                full_package_name = "parliament.%s.%s" % (
+                    private_auditors_directory,
+                    name,
+                )
+                module = importlib.import_module(full_package_name)
+                private_auditors[name] = module
+
+            # Run them
+            for m in private_auditors:
+                private_auditors[m].audit(self)
 
         return True

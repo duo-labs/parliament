@@ -1,7 +1,7 @@
 """
 This library is a linter for AWS IAM policies.
 """
-__version__ = "0.3.7"
+__version__ = "0.4.0"
 
 import os
 import json
@@ -28,6 +28,8 @@ def override_config(override_config_path):
 
     # Over-write the settings
     for finding_type, settings in override_config.items():
+        if finding_type not in config:
+            config[finding_type] = {}
         for setting, settting_value in settings.items():
             config[finding_type][setting] = settting_value
 
@@ -43,7 +45,7 @@ def enhance_finding(finding):
     return finding
 
 
-def analyze_policy_string(policy_str, filepath=None):
+def analyze_policy_string(policy_str, filepath=None, ignore_private_auditors=False):
     """Given a string reperesenting a policy, convert it to a Policy object with findings"""
 
     try:
@@ -55,7 +57,7 @@ def analyze_policy_string(policy_str, filepath=None):
         return policy
 
     policy = Policy(policy_json, filepath)
-    policy.analyze()
+    policy.analyze(ignore_private_auditors=ignore_private_auditors)
     return policy
 
 
@@ -133,8 +135,6 @@ def is_arn_match(resource_type, arn_format, resource):
 
     arn_id = ":".join(arn_parts[5:])
     resource_id = ":".join(resource_parts[5:])
-
-    print("Checking {} matches {}".format(arn_id, resource_id))  # TODO REMOVE
 
     # At this point we might have something like:
     # log-group:* for arn_id and

@@ -5,13 +5,14 @@ from os import listdir
 from os.path import isfile, join
 import sys
 import json
+import re
 
 from parliament import analyze_policy_string, enhance_finding, override_config
 from parliament.misc import make_list
 
 
 def is_finding_filtered(finding, minimum_severity="LOW"):
-    # Return True if the finding should not be displayed
+    # Return True if the finding should be filtered (ie. return False if it should be displayed)
     minimum_severity = minimum_severity.upper()
     severity_choices = ["MUTE", "INFO", "LOW", "MEDIUM", "HIGH", "CRITICAL"]
     if severity_choices.index(finding.severity) < severity_choices.index(
@@ -20,13 +21,38 @@ def is_finding_filtered(finding, minimum_severity="LOW"):
         return True
 
     if finding.ignore_locations:
-        for location_type, locations_to_ignore in finding.ignore_locations.items():
-            for location_to_ignore in make_list(locations_to_ignore):
-                if (
-                    location_to_ignore.lower()
-                    in str(finding.location.get(location_type, "")).lower()
-                ):
-                    return True
+        # The ignore_locations element looks like this:
+        #
+        # ignore_locations:
+        # - filepath: "test.json"
+        #   action: "s3:GetObject"
+        #   resource: 
+        #   - "a"
+        #   - "b"
+        # - action: "s3:GetObject"
+        #   resource: 
+        #    - "c.*"
+        #
+        # Assuming the finding has these types of values in the `location` element, 
+        # this will ignore any finding that matches the filepath to "test.json" 
+        # AND action to "s3:GetObject" 
+        # AND the resource to "a" OR "b"
+        # It will also ignore a resource that matches "c.*".
+        
+        for ignore_location in finding.ignore_locations:
+            all_match = True
+            for location_type, locations_to_ignore in ignore_location.items():
+                has_array_match = False
+                for location_to_ignore in make_list(locations_to_ignore):
+                    if re.fullmatch(
+                        location_to_ignore.lower(),
+                        str(finding.location.get(location_type, "")).lower(),
+                    ):
+                        has_array_match = True
+                if not has_array_match:
+                    all_match = False
+            if all_match:
+                return True
     return False
 
 

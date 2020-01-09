@@ -4,8 +4,6 @@ if [ -f .coverage ]; then
 fi
 
 export PRIVATE_TESTS=""
-echo "echo"
-echo $PRIVATE_TESTS
 if [ -d parliament/private_auditors/tests/ ]; then
   export PRIVATE_TESTS="parliament/private_auditors/tests/"
 fi

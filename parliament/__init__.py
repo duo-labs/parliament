@@ -1,7 +1,7 @@
 """
 This library is a linter for AWS IAM policies.
 """
-__version__ = "0.4.0"
+__version__ = "0.4.1"
 
 import os
 import json
@@ -45,7 +45,7 @@ def enhance_finding(finding):
     return finding
 
 
-def analyze_policy_string(policy_str, filepath=None, ignore_private_auditors=False):
+def analyze_policy_string(policy_str, filepath=None, ignore_private_auditors=False, private_auditors_custom_path=None):
     """Given a string reperesenting a policy, convert it to a Policy object with findings"""
 
     try:
@@ -57,7 +57,7 @@ def analyze_policy_string(policy_str, filepath=None, ignore_private_auditors=Fal
         return policy
 
     policy = Policy(policy_json, filepath)
-    policy.analyze(ignore_private_auditors=ignore_private_auditors)
+    policy.analyze(ignore_private_auditors, private_auditors_custom_path)
     return policy
 
 

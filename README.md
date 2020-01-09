@@ -101,8 +101,8 @@ You can have multiple elements in `ignore_locations`.  For example,
 
 Assuming the finding has these types of values in the `location` element, this will ignore any finding that matches the filepath to "test.json" AND action to "s3:GetObject" AND the resource to "a" OR "b".  It will also ignore a resource that matches "c.*".
 
-# Custom auditors
-This section will show how to create your own custom auditor to look for any policies that grant access to either of the sensitive buckets `secretbucket` and `othersecretbucket`.
+# Private auditors
+This section will show how to create your own private auditor to look for any policies that grant access to either of the sensitive buckets `secretbucket` and `othersecretbucket`.
 
 Create a file `test.json` with contents:
 ```
@@ -190,8 +190,38 @@ ignore_locations:
     resource: "arn:aws:s3:::secretbucket/\\*"
 ```
 
+## Unit tests for private auditors
 
-## Using parliament as a library
+To create unit tests for our new private auditor, create the directory `./parliament/private_auditors/tests/` and create the file `test_sensitive_bucket_access.py` there with the contents:
+
+```
+import unittest
+from nose.tools import raises, assert_equal
+
+# import parliament
+from parliament import analyze_policy_string
+
+class TestCustom(unittest.TestCase):
+    """Test class for custom auditor"""
+
+    def test_my_auditor(self):
+        policy = analyze_policy_string(
+            """{
+    "Version": "2012-10-17",
+    "Statement": {
+        "Effect": "Allow",
+        "Action": "s3:GetObject",
+        "Resource": "arn:aws:s3:::secretbucket/*"}}""",
+        )
+        assert_equal(len(policy.findings), 1)
+```
+
+That test ensures that for the given policy (which is granting read access to our secret bucket) one finding will be created.
+
+Now when you run `./tests/scripts/unit_tests.sh` there should be one additional test run.
+
+
+# Using parliament as a library
 Parliament was meant to be used a library in other projects. A basic example follows.
 
 ```

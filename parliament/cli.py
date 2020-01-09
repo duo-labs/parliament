@@ -114,9 +114,17 @@ def main():
         default="LOW",
     )
     parser.add_argument(
+        "--private_auditors",
+        help="Directory of the private auditors. Defaults to looking in private_auditors in the same directory as the iam_definition.json file.",
+        default=None,
+    )
+    parser.add_argument(
         "--config", help="Custom config file for over-riding values", type=str
     )
     args = parser.parse_args()
+
+    if args.private_auditors is not None and "." in args.private_auditors:
+        raise Exception("The path to the private_auditors must not have periods")
 
     if args.minimal and args.json:
         raise Exception("You cannot choose both minimal and json output")
@@ -139,7 +147,7 @@ def main():
                 policy_string = json.dumps(
                     policy_file_json["PolicyVersion"]["Document"]
                 )
-                policy = analyze_policy_string(policy_string, filepath)
+                policy = analyze_policy_string(policy_string, filepath, private_auditors_custom_path=args.private_auditors)
                 findings.extend(policy.findings)
 
     elif args.auth_details_file:
@@ -155,7 +163,7 @@ def main():
                     if not version["IsDefaultVersion"]:
                         continue
                     policy = analyze_policy_string(
-                        json.dumps(version["Document"]), policy["Arn"]
+                        json.dumps(version["Document"]), policy["Arn"], 
                     )
                     findings.extend(policy.findings)
 
@@ -163,28 +171,28 @@ def main():
             for user in auth_details_json["UserDetailList"]:
                 for policy in user.get("UserPolicyList", []):
                     policy = analyze_policy_string(
-                        json.dumps(version["Document"]), user["Arn"]
+                        json.dumps(version["Document"]), user["Arn"], private_auditors_custom_path=args.private_auditors
                     )
                     findings.extend(policy.findings)
             for role in auth_details_json["RoleDetailList"]:
                 for policy in role.get("RolePolicyList", []):
                     policy = analyze_policy_string(
-                        json.dumps(version["Document"]), role["Arn"]
+                        json.dumps(version["Document"]), role["Arn"], private_auditors_custom_path=args.private_auditors
                     )
                     findings.extend(policy.findings)
             for group in auth_details_json["GroupDetailList"]:
                 for policy in group.get("GroupPolicyList", []):
                     policy = analyze_policy_string(
-                        json.dumps(version["Document"]), group["Arn"]
+                        json.dumps(version["Document"]), group["Arn"], private_auditors_custom_path=args.private_auditors
                     )
                     findings.extend(policy.findings)
     elif args.string:
-        policy = analyze_policy_string(args.string)
+        policy = analyze_policy_string(args.string, private_auditors_custom_path=args.private_auditors)
         findings.extend(policy.findings)
     elif args.file:
         with open(args.file) as f:
             contents = f.read()
-            policy = analyze_policy_string(contents, args.file)
+            policy = analyze_policy_string(contents, args.file, private_auditors_custom_path=args.private_auditors)
             findings.extend(policy.findings)
     else:
         parser.print_help()

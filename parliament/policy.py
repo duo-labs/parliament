@@ -147,7 +147,7 @@ class Policy:
 
         check_bucket_privesc(refs, "PutLifecycleConfiguration", "DeleteObject")
 
-    def analyze(self, ignore_private_auditors=False):
+    def analyze(self, ignore_private_auditors=False, private_auditors_custom_path=None):
         """
         Returns False if this policy is so broken that it couldn't be analyzed further.
         On True, it may still have findings.
@@ -203,6 +203,9 @@ class Policy:
                 Path(os.path.abspath(__file__)).parent / private_auditors_directory
             )
 
+            if private_auditors_custom_path is not None:
+                private_auditors_directory_path = private_auditors_custom_path
+
             private_auditors = {}
             for importer, name, _ in pkgutil.iter_modules(
                 [private_auditors_directory_path]
@@ -211,6 +214,11 @@ class Policy:
                     private_auditors_directory,
                     name,
                 )
+
+                if private_auditors_custom_path is not None:
+                    path_with_dots = private_auditors_directory_path.replace("/", ".").replace("\\", ".")
+                    full_package_name =  path_with_dots + "." + name
+
                 module = importlib.import_module(full_package_name)
                 private_auditors[name] = module
 

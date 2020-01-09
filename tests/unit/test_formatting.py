@@ -60,7 +60,8 @@ class TestFormatting(unittest.TestCase):
     "Statement": {
         "Effect": "Allow",
         "Action": "s3:listallmybuckets",
-        "Resource": "*"}}"""
+        "Resource": "*"}}""",
+            ignore_private_auditors=True,
         )
         assert_equal(len(policy.findings), 0)
 
@@ -75,7 +76,8 @@ class TestFormatting(unittest.TestCase):
         {
         "Effect": "Allow",
         "Action": "iam:listusers",
-        "Resource": "*"}]}"""
+        "Resource": "*"}]}""",
+            ignore_private_auditors=True,
         )
         assert_equal(len(policy.findings), 0)
 
@@ -104,7 +106,8 @@ class TestFormatting(unittest.TestCase):
         "Effect": "Allow",
         "Action": "s3:listbucket",
         "Resource": "arn:aws:s3:::bucket-name",
-        "Condition": {"DateGreaterThan" :{"aws:CurrentTime" : "2019-07-16T12:00:00Z"}} }}"""
+        "Condition": {"DateGreaterThan" :{"aws:CurrentTime" : "2019-07-16T12:00:00Z"}} }}""",
+            ignore_private_auditors=True,
         )
         assert_equal(len(policy.findings), 0)
 
@@ -128,7 +131,8 @@ class TestFormatting(unittest.TestCase):
         "Effect": "Allow",
         "Action": "s3:listbucket",
         "Resource": "arn:aws:s3:::bucket-name",
-        "Condition": {"StringEquals": {"s3:prefix":["home/${aws:username}/*"]}} }}"""
+        "Condition": {"StringEquals": {"s3:prefix":["home/${aws:username}/*"]}} }}""",
+            ignore_private_auditors=True,
         )
         assert_equal(len(policy.findings), 0)
 
@@ -159,7 +163,6 @@ class TestFormatting(unittest.TestCase):
         "Resource": "arn:aws:s3:::bucket-name",
         "Condition": {"StringEquals": {"s3:signatureage":"bad"}} }}"""
         )
-        print(policy.findings)
         assert_false(len(policy.findings) == 0, 'Wrong type, "bad" should be a number')
 
     def test_condition_multiple(self):
@@ -174,7 +177,8 @@ class TestFormatting(unittest.TestCase):
         "Condition": {
             "DateGreaterThan" :{"aws:CurrentTime" : "2019-07-16T12:00:00Z"},
             "StringEquals": {"s3:prefix":["home/${aws:username}/*"]}
-        } }}"""
+        } }}""",
+            ignore_private_auditors=True,
         )
         assert_equal(len(policy.findings), 0)
 
@@ -228,7 +232,8 @@ class TestFormatting(unittest.TestCase):
         "Effect": "Allow",
         "Action": "s3:listbucket",
         "Resource": "arn:aws:s3:::bucket-name",
-        "Condition": {"StringEqualsIfExists": {"s3:prefix":["home/${aws:username}/*"]}} }}"""
+        "Condition": {"StringEqualsIfExists": {"s3:prefix":["home/${aws:username}/*"]}} }}""",
+            ignore_private_auditors=True,
         )
         print(policy.findings)
         assert_equal(len(policy.findings), 0)
@@ -263,7 +268,8 @@ class TestFormatting(unittest.TestCase):
         "Effect": "Allow",
         "Action": "kms:CreateGrant",
         "Resource": "*",
-        "Condition": {"Bool": {"kms:GrantIsForAWSResource": true}} }}"""
+        "Condition": {"Bool": {"kms:GrantIsForAWSResource": true}} }}""",
+            ignore_private_auditors=True,
         )
         print(policy.findings)
         assert_equal(len(policy.findings), 0)
@@ -283,7 +289,8 @@ class TestFormatting(unittest.TestCase):
         "Condition": { "Null": { "aws:MultiFactorAuthAge": true }}
       }
     ]
- }"""
+ }""",
+            ignore_private_auditors=True,
         )
         print(policy.findings)
         assert_equal(len(policy.findings), 0)
@@ -302,7 +309,8 @@ class TestFormatting(unittest.TestCase):
         "Condition": { "NumericGreaterThan": { "aws:MultiFactorAuthAge": "28800" }}
       }
     ]
- }"""
+ }""",
+            ignore_private_auditors=True,
         )
         print(policy.findings)
         assert_equal(len(policy.findings), 0)
@@ -319,7 +327,8 @@ class TestFormatting(unittest.TestCase):
             "Resource": "arn:aws:redshift:us-west-2:123456789012:dbuser:the_cluster/the_user"
         }
     ]
- }"""
+ }""",
+            ignore_private_auditors=True,
         )
 
         # This privilege has a required format of arn:*:redshift:*:*:dbuser:*/*
@@ -339,14 +348,13 @@ class TestFormatting(unittest.TestCase):
             "Resource": "arn:aws:lambda:*:123456789012:layer:sol-*:*"
         }
     ]
- }"""
+ }""",
+            ignore_private_auditors=True,
         )
 
         # This privilege has a required format of arn:*:redshift:*:*:dbuser:*/*
         print(policy.findings)
         assert_equal(len(policy.findings), 0)
-
-
 
     def test_lambda_AddLayerVersionPermission(self):
         policy = analyze_policy_string(
@@ -367,7 +375,8 @@ class TestFormatting(unittest.TestCase):
             }
         }
     ]
- }"""
+ }""",
+            ignore_private_auditors=True,
         )
 
         # This privilege has a required format of arn:*:redshift:*:*:dbuser:*/*

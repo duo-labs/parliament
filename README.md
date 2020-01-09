@@ -72,21 +72,123 @@ UNKNOWN_ACTION:
   ignore_locations:
     filepath:
       - testa.json
-      - .py
+      - .*.py
 
 RESOURCE_MISMATCH:
   ignore_locations:
-    actions: "s3:*"
+    actions: ".*s3.*"
 ```
 
 Now run: `parliament --file test.json --config config_override.yaml`
 You will have only one output: `MEDIUM - Unknown action -  - Unknown action s3:abc`
 
-Notice that the severity of that finding has been changed from a `LOW` to a `MEDIUM`.  Also, note that the other finding is gone, because the previous `RESOURCE_MISMATCH` finding contained an `actions` element of `["s3:*", "ec2:*"]`.  The ignore logic looks for any of the values you provide in the element within `location`.  This means that we are doing `if "s3:*" in str(["s3:*", "ec2:*"])`
+Notice that the severity of that finding has been changed from a `LOW` to a `MEDIUM`.  Also, note that the other finding is gone, because the previous `RESOURCE_MISMATCH` finding contained an `actions` element of `["s3:*", "ec2:*"]`.  The ignore logic converts the value you provide, and the finding value to lowercase,
+and then uses your string as a regex.  This means that we are checking if `s3` is in `str(["s3:*", "ec2:*"])`
 
 Now rename `test.json` to `testa.json` and rerun the command.  You will no longer have any output, because we are filtering based on the filepath for `UNKNOWN_ACTION` and filtering for any filepaths that contain `testa.json` or `.py`.
 
 You can also check the exit status with `echo $?` and see the exit status is 0 when there are no findings. The exit status will be non-zero when there are findings.
+
+You can have multiple elements in `ignore_locations`.  For example,
+```
+- filepath: "test.json"
+  action: "s3:GetObject"
+  resource: 
+  - "a"
+  - "b"
+- resource: "c.*"
+```
+
+Assuming the finding has these types of values in the `location` element, this will ignore any finding that matches the filepath to "test.json" AND action to "s3:GetObject" AND the resource to "a" OR "b".  It will also ignore a resource that matches "c.*".
+
+# Custom auditors
+This section will show how to create your own custom auditor to look for any policies that grant access to either of the sensitive buckets `secretbucket` and `othersecretbucket`.
+
+Create a file `test.json` with contents:
+```
+{
+    "Version": "2012-10-17",
+    "Statement": {
+        "Effect": "Allow",
+        "Action": "s3:GetObject",
+        "Resource": "arn:aws:s3:::secretbucket/*"
+    }
+}
+```
+This is an example of the policy we want to alert on. That policy will normally not generate any findings.
+
+Create the file `config_override.yaml` with contents:
+
+```
+SENSITIVE_BUCKET_ACCESS:
+  title: Sensitive bucket access
+  description: Allows read access to an important S3 bucket
+  severity: MEDIUM
+  group: CUSTOM
+```
+
+In the `parliament` directory (that contains iam_definition.json), create the directory `private_auditors` and the file `parliament/private_auditors/sensitive_bucket_access.py`
+
+
+```
+from parliament import is_arn_match, expand_action
+
+def audit(policy):
+    action_resources = {}
+    for action in expand_action("s3:*"):
+        # Iterates through a list of containing elements such as
+        # {'service': 's3', 'action': 'GetObject'}
+        action_name = "{}:{}".format(action["service"], action["action"])
+        action_resources[action_name] = policy.get_allowed_resources(action["service"], action["action"])
+    
+    for action_name in action_resources:
+        resources = action_resources[action_name]
+        for r in resources:
+            if is_arn_match("object", "arn:aws:s3:::secretbucket*", r) or is_arn_match("object", "arn:aws:s3:::othersecretbucket*", r):
+                policy.add_finding("SENSITIVE_BUCKET_ACCESS", location={"action": action_name, "resource": r})
+```
+
+This will look for any s3 access to the buckets of interest, including not only object access such as `s3:GetObject` access, but also things like `s3:PutBucketAcl`.
+
+Running against our test file, we'll get the following output:
+```
+./bin/parliament --file test.json --config config_override.yaml --json
+
+{"issue": "SENSITIVE_BUCKET_ACCESS", "title": "Sensitive bucket access", "severity": "MEDIUM", "description": "Allows read access to an important S3 bucket", "detail": "", "location": {"action": "s3:GetObject", "resource": "arn:aws:s3:::secretbucket/*", "filepath": "test.json"}}
+```
+
+You can now decide if this specific situation is ok for you, and choose to ignore it by modifying the
+`config_override.yaml` to include:
+
+```
+ignore_locations:
+  - filepath: "test.json"
+    action: "s3:GetObject"
+    resource: "arn:aws:s3:::secretbucket/\\*"
+```
+
+Notice that I had to double-escape the escape asterisk.  If another policy is created, say in test2.json that you'd like to ignore, you can just append those values to the list:
+
+```
+ignore_locations:
+  - filepath: "test.json"
+    action: "s3:GetObject"
+    resource: "arn:aws:s3:::secretbucket/\\*"
+  - filepath: "test2.json"
+    action: "s3:GetObject"
+    resource: "arn:aws:s3:::secretbucket/\\*"
+```
+
+Or you could do:
+
+```
+ignore_locations:
+  - filepath:
+    - "test.json"
+    - "test2.json"
+    action: "s3:GetObject"
+    resource: "arn:aws:s3:::secretbucket/\\*"
+```
 
 
 ## Using parliament as a library

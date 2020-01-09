@@ -16,7 +16,8 @@ class TestResourceFormatting(unittest.TestCase):
     "Statement": {
         "Effect": "Allow",
         "Action": "s3:listallmybuckets",
-        "Resource": "s3"}}"""
+        "Resource": "s3"}}""",
+            ignore_private_auditors=True,
         )
         assert_equal(len(policy.findings), 1)
 
@@ -27,7 +28,8 @@ class TestResourceFormatting(unittest.TestCase):
     "Statement": {
         "Effect": "Allow",
         "Action": "s3:getobject",
-        "Resource": "arn:aws:s3:::my_corporate_bucket/*"}}"""
+        "Resource": "arn:aws:s3:::my_corporate_bucket/*"}}""",
+            ignore_private_auditors=True,
         )
         print(policy.findings)
         assert_equal(len(policy.findings), 0)
@@ -53,8 +55,12 @@ class TestResourceFormatting(unittest.TestCase):
         assert_true(is_arn_match("object", "arn:*:s3:::*/*", "arn:*:s3:::*/*"))
         assert_true(is_arn_match("object", "*", "arn:*:s3:::*/*"))
         assert_true(is_arn_match("object", "arn:*:s3:::*/*", "*"))
-        assert_true(is_arn_match("object", "arn:*:s3:::*/*", "arn:aws:s3:::*personalize*"))
-        assert_true(is_arn_match("bucket", "arn:*:s3:::mybucket", "arn:*:s3:::mybucket"))
+        assert_true(
+            is_arn_match("object", "arn:*:s3:::*/*", "arn:aws:s3:::*personalize*")
+        )
+        assert_true(
+            is_arn_match("bucket", "arn:*:s3:::mybucket", "arn:*:s3:::mybucket")
+        )
         assert_false(
             is_arn_match("bucket", "arn:*:s3:::mybucket", "arn:*:s3:::mybucket/*"),
             "Bucket and object types should not match",
@@ -63,16 +69,23 @@ class TestResourceFormatting(unittest.TestCase):
             is_arn_match("object", "arn:*:s3:::*/*", "arn:aws:s3:::examplebucket"),
             "Object and bucket types should not match",
         )
-        assert_true(is_arn_match("bucket", "arn:*:s3:::mybucket*", "arn:*:s3:::mybucket2"))
+        assert_true(
+            is_arn_match("bucket", "arn:*:s3:::mybucket*", "arn:*:s3:::mybucket2")
+        )
         assert_true(is_arn_match("bucket", "arn:*:s3:::*", "arn:*:s3:::mybucket2"))
         assert_false(
-            is_arn_match("object", "arn:*:s3:::*/*", "arn:aws:logs:*:*:/aws/cloudfront/*")
+            is_arn_match(
+                "object", "arn:*:s3:::*/*", "arn:aws:logs:*:*:/aws/cloudfront/*"
+            )
         )
         assert_false(
-            is_arn_match("object", "arn:aws:s3:::*/*", "arn:aws:logs:*:*:/aws/cloudfront/*")
+            is_arn_match(
+                "object", "arn:aws:s3:::*/*", "arn:aws:logs:*:*:/aws/cloudfront/*"
+            )
         )
         assert_true(
-            is_arn_match("cloudfront", 
+            is_arn_match(
+                "cloudfront",
                 "arn:aws:logs:*:*:/aws/cloudfront/*",
                 "arn:aws:logs:us-east-1:000000000000:/aws/cloudfront/test",
             )

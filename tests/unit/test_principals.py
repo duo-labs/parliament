@@ -21,7 +21,8 @@ class TestPrincipals(unittest.TestCase):
       "Resource":["arn:aws:s3:::examplebucket/*"]
     }
   ]
-}"""
+}""",
+            ignore_private_auditors=True,
         )
         assert_true(len(policy.findings) == 0, "Basic S3 bucket policy")
 
@@ -36,7 +37,8 @@ class TestPrincipals(unittest.TestCase):
       "Resource":["arn:aws:s3:::examplebucket/*"]
     }
   ]
-}"""
+}""",
+            ignore_private_auditors=True,
         )
         assert_true(
             len(policy.findings) == 0,
@@ -54,7 +56,8 @@ class TestPrincipals(unittest.TestCase):
       "Resource":["arn:aws:s3:::examplebucket/*"]
     }
   ]
-}"""
+}""",
+            ignore_private_auditors=True,
         )
         assert_true(
             len(policy.findings) == 0,
@@ -72,7 +75,8 @@ class TestPrincipals(unittest.TestCase):
       "Resource":["arn:aws:s3:::examplebucket/*"]
     }
   ]
-}"""
+}""",
+            ignore_private_auditors=True,
         )
         assert_true(len(policy.findings) == 0, "S3 bucket policy with ARN of user")
 
@@ -87,7 +91,8 @@ class TestPrincipals(unittest.TestCase):
       "Resource":["arn:aws:s3:::examplebucket/*"]
     }
   ]
-}"""
+}""",
+            ignore_private_auditors=True,
         )
         assert_true(len(policy.findings) == 0, "Federated access")
 
@@ -105,6 +110,7 @@ class TestPrincipals(unittest.TestCase):
       "Resource":["arn:aws:s3:::examplebucket/*"]
     }
   ]
-}"""
+}""",
+            ignore_private_auditors=True,
         )
         assert_true(len(policy.findings) == 0, "Basic S3 bucket policy")

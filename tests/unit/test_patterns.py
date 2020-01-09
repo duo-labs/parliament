@@ -20,7 +20,6 @@ class TestPatterns(unittest.TestCase):
         )
         assert_false(len(policy.findings) == 0, "Policy contains bad MFA check")
 
-
     def test_resource_policy_privilege_escalation(self):
         # This policy is actually granting essentially s3:* due to the ability to put a policy on a bucket
         policy = analyze_policy_string(
@@ -33,7 +32,6 @@ class TestPatterns(unittest.TestCase):
         }}"""
         )
         assert_false(len(policy.findings) == 0, "Resource policy privilege escalation")
-
 
         policy = analyze_policy_string(
             """{
@@ -75,7 +73,8 @@ class TestPatterns(unittest.TestCase):
     def test_resource_policy_privilege_escalation_with_deny(self):
         # This test ensures if we have an allow on a specific resource, but a Deny on *,
         # that it is denied.
-        policy = analyze_policy_string("""{
+        policy = analyze_policy_string(
+            """{
     "Version": "2012-10-17",
     "Statement": [
         {
@@ -88,10 +87,14 @@ class TestPatterns(unittest.TestCase):
         "Action": "*",
         "Resource": "*"
         }
-        ]}""")
+        ]}""",
+            ignore_private_auditors=True,
+        )
         print(policy.findings)
-        assert_true(len(policy.findings) == 0, "Resource policy privilege escalation does not exist because all our denied")
-
+        assert_true(
+            len(policy.findings) == 0,
+            "Resource policy privilege escalation does not exist because all our denied",
+        )
 
     def test_resource_policy_privilege_escalation_at_bucket_level(self):
         policy = analyze_policy_string(
@@ -104,8 +107,7 @@ class TestPatterns(unittest.TestCase):
         }}"""
         )
         assert_false(
-            len(policy.findings) == 0,
-            "Resource policy privilege escalation",
+            len(policy.findings) == 0, "Resource policy privilege escalation",
         )
 
         policy = analyze_policy_string(
@@ -120,14 +122,14 @@ class TestPatterns(unittest.TestCase):
         "Effect": "Allow",
         "Action": ["s3:*Object"],
         "Resource": ["arn:aws:s3:::bucket2/*"]
-        }]}"""
+        }]}""",
+            ignore_private_auditors=True,
         )
         print(policy.findings)
 
         # There is one finding for "No resources match for s3:ListAllMyBuckets which requires a resource format of *"
         assert_true(
-            len(policy.findings) == 1,
-            "Buckets do not match so no escalation possible",
+            len(policy.findings) == 1, "Buckets do not match so no escalation possible",
         )
 
 

@@ -26,19 +26,19 @@ def is_finding_filtered(finding, minimum_severity="LOW"):
         # ignore_locations:
         # - filepath: "test.json"
         #   action: "s3:GetObject"
-        #   resource: 
+        #   resource:
         #   - "a"
         #   - "b"
         # - action: "s3:GetObject"
-        #   resource: 
+        #   resource:
         #    - "c.*"
         #
-        # Assuming the finding has these types of values in the `location` element, 
-        # this will ignore any finding that matches the filepath to "test.json" 
-        # AND action to "s3:GetObject" 
+        # Assuming the finding has these types of values in the `location` element,
+        # this will ignore any finding that matches the filepath to "test.json"
+        # AND action to "s3:GetObject"
         # AND the resource to "a" OR "b"
         # It will also ignore a resource that matches "c.*".
-        
+
         for ignore_location in finding.ignore_locations:
             all_match = True
             for location_type, locations_to_ignore in ignore_location.items():
@@ -147,7 +147,11 @@ def main():
                 policy_string = json.dumps(
                     policy_file_json["PolicyVersion"]["Document"]
                 )
-                policy = analyze_policy_string(policy_string, filepath, private_auditors_custom_path=args.private_auditors)
+                policy = analyze_policy_string(
+                    policy_string,
+                    filepath,
+                    private_auditors_custom_path=args.private_auditors,
+                )
                 findings.extend(policy.findings)
 
     elif args.auth_details_file:
@@ -163,7 +167,7 @@ def main():
                     if not version["IsDefaultVersion"]:
                         continue
                     policy = analyze_policy_string(
-                        json.dumps(version["Document"]), policy["Arn"], 
+                        json.dumps(version["Document"]), policy["Arn"],
                     )
                     findings.extend(policy.findings)
 
@@ -171,28 +175,38 @@ def main():
             for user in auth_details_json["UserDetailList"]:
                 for policy in user.get("UserPolicyList", []):
                     policy = analyze_policy_string(
-                        json.dumps(version["Document"]), user["Arn"], private_auditors_custom_path=args.private_auditors
+                        json.dumps(version["Document"]),
+                        user["Arn"],
+                        private_auditors_custom_path=args.private_auditors,
                     )
                     findings.extend(policy.findings)
             for role in auth_details_json["RoleDetailList"]:
                 for policy in role.get("RolePolicyList", []):
                     policy = analyze_policy_string(
-                        json.dumps(version["Document"]), role["Arn"], private_auditors_custom_path=args.private_auditors
+                        json.dumps(version["Document"]),
+                        role["Arn"],
+                        private_auditors_custom_path=args.private_auditors,
                     )
                     findings.extend(policy.findings)
             for group in auth_details_json["GroupDetailList"]:
                 for policy in group.get("GroupPolicyList", []):
                     policy = analyze_policy_string(
-                        json.dumps(version["Document"]), group["Arn"], private_auditors_custom_path=args.private_auditors
+                        json.dumps(version["Document"]),
+                        group["Arn"],
+                        private_auditors_custom_path=args.private_auditors,
                     )
                     findings.extend(policy.findings)
     elif args.string:
-        policy = analyze_policy_string(args.string, private_auditors_custom_path=args.private_auditors)
+        policy = analyze_policy_string(
+            args.string, private_auditors_custom_path=args.private_auditors
+        )
         findings.extend(policy.findings)
     elif args.file:
         with open(args.file) as f:
             contents = f.read()
-            policy = analyze_policy_string(contents, args.file, private_auditors_custom_path=args.private_auditors)
+            policy = analyze_policy_string(
+                contents, args.file, private_auditors_custom_path=args.private_auditors
+            )
             findings.extend(policy.findings)
     else:
         parser.print_help()

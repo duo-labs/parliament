@@ -42,6 +42,13 @@ class Policy:
         return all_findings
 
     @property
+    def finding_ids(self):
+        finding_ids = set()
+        for finding in self.findings:
+            finding_ids.add(finding.issue)
+        return finding_ids
+
+    @property
     def is_valid(self):
         for stmt in self.statements:
             if not stmt.is_valid:

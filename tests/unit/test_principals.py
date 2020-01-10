@@ -24,7 +24,9 @@ class TestPrincipals(unittest.TestCase):
 }""",
             ignore_private_auditors=True,
         )
-        assert_true(len(policy.findings) == 0, "Basic S3 bucket policy")
+        assert_equal(
+            policy.finding_ids, set(), "Basic S3 bucket policy",
+        )
 
         policy = analyze_policy_string(
             """{
@@ -40,8 +42,9 @@ class TestPrincipals(unittest.TestCase):
 }""",
             ignore_private_auditors=True,
         )
-        assert_true(
-            len(policy.findings) == 0,
+        assert_equal(
+            policy.finding_ids,
+            set(),
             "S3 bucket policy with two accounts granted access via account ARN",
         )
 
@@ -59,8 +62,9 @@ class TestPrincipals(unittest.TestCase):
 }""",
             ignore_private_auditors=True,
         )
-        assert_true(
-            len(policy.findings) == 0,
+        assert_equal(
+            policy.finding_ids,
+            set(),
             "S3 bucket policy with one account granted access via ID",
         )
 
@@ -78,7 +82,9 @@ class TestPrincipals(unittest.TestCase):
 }""",
             ignore_private_auditors=True,
         )
-        assert_true(len(policy.findings) == 0, "S3 bucket policy with ARN of user")
+        assert_equal(
+            policy.finding_ids, set(), "S3 bucket policy with ARN of user",
+        )
 
         policy = analyze_policy_string(
             """{
@@ -94,7 +100,9 @@ class TestPrincipals(unittest.TestCase):
 }""",
             ignore_private_auditors=True,
         )
-        assert_true(len(policy.findings) == 0, "Federated access")
+        assert_equal(
+            policy.finding_ids, set(), "Federated access",
+        )
 
     def test_bad_principals(self):
         # Good principal
@@ -113,4 +121,6 @@ class TestPrincipals(unittest.TestCase):
 }""",
             ignore_private_auditors=True,
         )
-        assert_true(len(policy.findings) == 0, "Basic S3 bucket policy")
+        assert_equal(
+            policy.finding_ids, set(), "Basic S3 bucket policy",
+        )

@@ -45,7 +45,12 @@ def enhance_finding(finding):
     return finding
 
 
-def analyze_policy_string(policy_str, filepath=None, ignore_private_auditors=False, private_auditors_custom_path=None):
+def analyze_policy_string(
+    policy_str,
+    filepath=None,
+    ignore_private_auditors=False,
+    private_auditors_custom_path=None,
+):
     """Given a string reperesenting a policy, convert it to a Policy object with findings"""
 
     try:

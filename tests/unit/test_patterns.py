@@ -16,9 +16,14 @@ class TestPatterns(unittest.TestCase):
         "Action": "*",
         "Resource": "*",
         "Condition": {"Bool": {"aws:MultiFactorAuthPresent":"false"}}
-        }}"""
+        }}""",
+            ignore_private_auditors=True,
         )
-        assert_false(len(policy.findings) == 0, "Policy contains bad MFA check")
+        assert_equal(
+            policy.finding_ids,
+            set(["BAD_PATTERN_FOR_MFA"]),
+            "Policy contains bad MFA check",
+        )
 
     def test_resource_policy_privilege_escalation(self):
         # This policy is actually granting essentially s3:* due to the ability to put a policy on a bucket
@@ -29,9 +34,14 @@ class TestPatterns(unittest.TestCase):
         "Effect": "Allow",
         "Action": ["s3:GetObject", "s3:PutBucketPolicy"],
         "Resource": "*"
-        }}"""
+        }}""",
+            ignore_private_auditors=True,
         )
-        assert_false(len(policy.findings) == 0, "Resource policy privilege escalation")
+        assert_equal(
+            policy.finding_ids,
+            set(["RESOURCE_POLICY_PRIVILEGE_ESCALATION"]),
+            "Resource policy privilege escalation",
+        )
 
         policy = analyze_policy_string(
             """{
@@ -62,11 +72,13 @@ class TestPatterns(unittest.TestCase):
     ],
     "Effect": "Deny"
 }
-        ]}"""
+        ]}""",
+            ignore_private_auditors=True,
         )
 
-        assert_false(
-            len(policy.findings) == 0,
+        assert_equal(
+            policy.finding_ids,
+            set(["RESOURCE_POLICY_PRIVILEGE_ESCALATION"]),
             "Resource policy privilege escalation across two statement",
         )
 
@@ -90,9 +102,9 @@ class TestPatterns(unittest.TestCase):
         ]}""",
             ignore_private_auditors=True,
         )
-        print(policy.findings)
-        assert_true(
-            len(policy.findings) == 0,
+        assert_equal(
+            policy.finding_ids,
+            set(),
             "Resource policy privilege escalation does not exist because all our denied",
         )
 
@@ -104,10 +116,13 @@ class TestPatterns(unittest.TestCase):
         "Effect": "Allow",
         "Action": ["s3:GetObject", "s3:PutBucketPolicy"],
         "Resource": ["arn:aws:s3:::bucket", "arn:aws:s3:::bucket/*"]
-        }}"""
+        }}""",
+            ignore_private_auditors=True,
         )
-        assert_false(
-            len(policy.findings) == 0, "Resource policy privilege escalation",
+        assert_equal(
+            policy.finding_ids,
+            set(["RESOURCE_POLICY_PRIVILEGE_ESCALATION"]),
+            "Resource policy privilege escalation",
         )
 
         policy = analyze_policy_string(
@@ -125,13 +140,16 @@ class TestPatterns(unittest.TestCase):
         }]}""",
             ignore_private_auditors=True,
         )
-        print(policy.findings)
-
         # There is one finding for "No resources match for s3:ListAllMyBuckets which requires a resource format of *"
-        assert_true(
-            len(policy.findings) == 1, "Buckets do not match so no escalation possible",
+        assert_equal(
+            policy.finding_ids,
+            set(["RESOURCE_MISMATCH"]),
+            "Buckets do not match so no escalation possible",
         )
 
+
+# # # The following test for detections of various bad patterns, but unfortunately
+# # # these detections were never implemented.
 
 # #     def test_bad_tagging(self):
 # #         # This was the original policy used by AmazonSageMakerFullAccess

@@ -33,7 +33,6 @@ class TestGetResourcesForPrivilege(unittest.TestCase):
             "s3:PutObject not in policy",
         )
 
-
     def test_policy_multiple_resources(self):
         policy = analyze_policy_string(
             """{

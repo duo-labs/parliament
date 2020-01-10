@@ -81,15 +81,17 @@ class Policy:
             (meaning each statement must have an explicit allow or deny on the privilege) 
             determine if it is allowed, which means no Deny effects.
             """
+            has_allow = False
             for stmt in stmts:
-                if not stmt.effect_allow:
-
+                if stmt.effect_allow:
+                    has_allow = True
+                else:
                     # If there is a Condition in the Deny, we don't count this as Deny'ing the action
                     # entirely so skip it
                     if "Condition" in stmt.stmt:
                         continue
                     return False
-            return True
+            return has_allow
 
         allowed_resources = []
         all_references = self.get_references(privilege_prefix, privilege_name)
@@ -221,8 +223,10 @@ class Policy:
                 )
 
                 if private_auditors_custom_path is not None:
-                    path_with_dots = private_auditors_directory_path.replace("/", ".").replace("\\", ".")
-                    full_package_name =  path_with_dots + "." + name
+                    path_with_dots = private_auditors_directory_path.replace(
+                        "/", "."
+                    ).replace("\\", ".")
+                    full_package_name = path_with_dots + "." + name
 
                 module = importlib.import_module(full_package_name)
                 private_auditors[name] = module

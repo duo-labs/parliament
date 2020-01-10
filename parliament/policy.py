@@ -83,6 +83,11 @@ class Policy:
             """
             for stmt in stmts:
                 if not stmt.effect_allow:
+
+                    # If there is a Condition in the Deny, we don't count this as Deny'ing the action
+                    # entirely so skip it
+                    if "Condition" in stmt.stmt:
+                        continue
                     return False
             return True
 

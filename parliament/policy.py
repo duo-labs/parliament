@@ -110,7 +110,10 @@ class Policy:
             # I should do regex intersections across each resource, but this will avoid
             # common situations for now
             if resource == "*" and not resource_is_allowed:
-                return []
+                # Only apply this case when the deny statement has no condition
+                for stmt in all_references[resource]:
+                    if not stmt.effect_allow and "Condition" not in stmt.stmt:
+                        return []
 
             if resource_is_allowed:
                 allowed_resources.append(resource)

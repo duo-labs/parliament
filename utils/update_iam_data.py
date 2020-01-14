@@ -61,7 +61,7 @@ def update_html_docs_directory(html_docs_destination):
             # file.write(str(soup.html))
             file.write(str(soup.prettify()))
             file.close()
-        print(f"{page} downloaded")
+        #print(f"{page} downloaded")
 
 def chomp(string):
     """This chomp cleans up all white-space, not just at the ends"""
@@ -84,8 +84,7 @@ def no_white_space(string):
 # Create the docs directory
 Path("docs").mkdir(parents=True, exist_ok=True)
 
-#update_html_docs_directory("docs/")
-#exit(-1)
+update_html_docs_directory("docs/")
 
 mypath = "./docs/"
 schema = []

@@ -22,7 +22,8 @@ class TestFormatting(unittest.TestCase):
         "Effect": "Allow",
         "Action": "s3:listallmybuckets",
         "NotAction": "s3:listallmybuckets",
-        "Resource": "*"}}"""
+        "Resource": "*"}}""",
+            ignore_private_auditors=True,
         )
         assert_equal(
             policy.finding_ids,
@@ -36,7 +37,8 @@ class TestFormatting(unittest.TestCase):
     "Version": "2012-10-17",
     "Statement": {
         "Effect": "Allow",
-        "Resource": "*"}}"""
+        "Resource": "*"}}""",
+            ignore_private_auditors=True,
         )
         assert_equal(
             policy.finding_ids, set(["MALFORMED"]), "Policy does not have an Action"
@@ -57,7 +59,8 @@ class TestFormatting(unittest.TestCase):
         "Sid": "Statement With Spaces And Special Chars!?",
         "Effect": "Allow",
         "Action": "s3:listallmybuckets",
-        "Resource": "*"}}"""
+        "Resource": "*"}}""",
+            ignore_private_auditors=True,
         )
         assert_equal(
             policy.finding_ids, set(["INVALID_SID"]), "Policy statement has invalid Sid"
@@ -106,7 +109,8 @@ class TestFormatting(unittest.TestCase):
         {
         "Effect": "Allow",
         "Action": ["iam:listusers", "iam:list"],
-        "Resource": "*"}]}"""
+        "Resource": "*"}]}""",
+            ignore_private_auditors=True,
         )
         assert_equal(
             policy.finding_ids,
@@ -135,7 +139,8 @@ class TestFormatting(unittest.TestCase):
         "Effect": "Allow",
         "Action": "s3:listbucket",
         "Resource": "arn:aws:s3:::bucket-name",
-        "Condition": {"DateGreaterThan" :{"bad" : "2019-07-16T12:00:00Z"}} }}"""
+        "Condition": {"DateGreaterThan" :{"bad" : "2019-07-16T12:00:00Z"}} }}""",
+            ignore_private_auditors=True,
         )
         assert_equal(
             policy.finding_ids,
@@ -165,7 +170,8 @@ class TestFormatting(unittest.TestCase):
         "Effect": "Allow",
         "Action": "s3:listbucket",
         "Resource": "arn:aws:s3:::bucket-name",
-        "Condition": {"StringEquals": {"s3:x-amz-storage-class":"bad"}} }}"""
+        "Condition": {"StringEquals": {"s3:x-amz-storage-class":"bad"}} }}""",
+            ignore_private_auditors=True,
         )
         assert_equal(
             policy.finding_ids,
@@ -182,7 +188,8 @@ class TestFormatting(unittest.TestCase):
         "Effect": "Allow",
         "Action": "s3:listbucket",
         "Resource": "arn:aws:s3:::bucket-name",
-        "Condition": {"StringEquals": {"s3:signatureage":"bad"}} }}"""
+        "Condition": {"StringEquals": {"s3:signatureage":"bad"}} }}""",
+            ignore_private_auditors=True,
         )
         assert_equal(
             policy.finding_ids,
@@ -218,7 +225,8 @@ class TestFormatting(unittest.TestCase):
         "Condition": {
             "DateGreaterThan" :{"aws:CurrentTime" : "bad"},
             "StringEquals": {"s3:prefix":["home/${aws:username}/*"]}
-        } }}"""
+        } }}""",
+            ignore_private_auditors=True,
         )
         assert_equal(
             policy.finding_ids, set(["MISMATCHED_TYPE"]), "First condition is bad"
@@ -235,7 +243,8 @@ class TestFormatting(unittest.TestCase):
         "Condition": {
             "DateGreaterThan" :{"aws:CurrentTime" : "2019-07-16T12:00:00Z"},
             "StringEquals": {"s3:x":["home/${aws:username}/*"]}
-        } }}"""
+        } }}""",
+            ignore_private_auditors=True,
         )
         assert_equal(
             policy.finding_ids,
@@ -251,11 +260,12 @@ class TestFormatting(unittest.TestCase):
         "Effect": "Allow",
         "Action": ["ec2:*", "s3:*"],
         "Resource": "*",
-        "Condition": {"StringNotEquals": {"iam:ResourceTag/status":"prod"}} }}"""
+        "Condition": {"StringNotEquals": {"iam:ResourceTag/status":"prod"}} }}""",
+            ignore_private_auditors=True,
         )
         assert_equal(
             policy.finding_ids,
-            set(["UNKNOWN_CONDITION_FOR_ACTION", "SENSITIVE_BUCKET_ACCESS"]),
+            set(["UNKNOWN_CONDITION_FOR_ACTION"]),
             "Condition mismatch",
         )
 
@@ -279,7 +289,8 @@ class TestFormatting(unittest.TestCase):
         "Effect": "Allow",
         "Action": "s3:listbucket",
         "Resource": "arn:aws:s3:::bucket-name",
-        "Condition": {"bad": {"s3:prefix":["home/${aws:username}/*"]}} }}"""
+        "Condition": {"bad": {"s3:prefix":["home/${aws:username}/*"]}} }}""",
+            ignore_private_auditors=True,
         )
         assert_equal(
             policy.finding_ids,
@@ -294,7 +305,8 @@ class TestFormatting(unittest.TestCase):
         "Effect": "Allow",
         "Action": "s3:listbucket",
         "Resource": "arn:aws:s3:::bucket-name",
-        "Condition": {"NumericEquals": {"s3:prefix":["home/${aws:username}/*"]}} }}"""
+        "Condition": {"NumericEquals": {"s3:prefix":["home/${aws:username}/*"]}} }}""",
+            ignore_private_auditors=True,
         )
         assert_equal(
             policy.finding_ids, set(["MISMATCHED_TYPE"]), "Operator type mismatch"

@@ -1,7 +1,7 @@
 """
 This library is a linter for AWS IAM policies.
 """
-__version__ = "0.4.3"
+__version__ = "0.4.4"
 
 import os
 import json
@@ -89,14 +89,7 @@ def is_arn_match(resource_type, arn_format, resource):
     - arn_format: ARN regex from the docs
     - resource: ARN regex from IAM policy
 
-    Notes:
-
-    This problem is known as finding the intersection of two regexes.
-    There is a library for this here https://github.com/qntm/greenery but it is far too slow,
-    taking over two minutes for that example before I killed the process.
-    The problem can be simplified because we only care about globbed strings, not full regexes,
-    but there are no Python libraries, but here is one in Go: https://github.com/Pathgather/glob-intersection
-
+    
     We can cheat some because after the first sections of the arn match, meaning until the 5th colon (with some
     rules there to allow empty or asterisk sections), we only need to match the ID part.
     So the above is simplified to "*/*" and "*personalize*".
@@ -126,6 +119,7 @@ def is_arn_match(resource_type, arn_format, resource):
         raise Exception("Unexpected format for resource: {}".format(resource))
 
     # For the first 5 parts (ex. arn:aws:SERVICE:REGION:ACCOUNT:), ensure these match appropriately
+    # We do this because we don't want "arn:*:s3:::*/*" and "arn:aws:logs:*:*:/aws/cloudfront/*" to return True
     for position in range(0, 5):
         if arn_parts[position] == "*" or arn_parts[position] == "":
             continue
@@ -137,102 +131,25 @@ def is_arn_match(resource_type, arn_format, resource):
             return False
 
     # Everything up to and including the account ID section matches, so now try to match the remainder
-
     arn_id = ":".join(arn_parts[5:])
     resource_id = ":".join(resource_parts[5:])
 
-    # At this point we might have something like:
-    # log-group:* for arn_id and
-    # log-group:/aws/elasticbeanstalk* for resource_id
-
-    # Alternatively we might have multiple colon separated sections, such as:
-    # dbuser:*/* for arn_id and
-    # dbuser:the_cluster/the_user for resource_id
-
-    # Look for exact match
-    # Examples:
-    # "mybucket", "mybucket" -> True
-    # "*", "*" -> True
-    if arn_id == resource_id:
-        return True
-
     # Some of the arn_id's contain regexes of the form "[key]" so replace those with "*"
-    arn_id = re.sub(r"\[.+?\]", "*", arn_id)
+    resource_id = re.sub(r"\[.+?\]", "*", resource_id)
 
-    # If neither contain an asterisk they can't match
-    # Example:
-    # "mybucket", "mybucketotherthing" -> False
-    if "*" not in arn_id and "*" not in resource_id:
-        return False
+    return is_glob_match(arn_id, resource_id)
 
-    # Remove the start of a string that matches.
-    # "dbuser:*/*", "dbuser:the_cluster/the_user" -> "*/*", "the_cluster/the_user"
-    # "layer:*:*", "layer:sol-*:*" -> "*:*", "sol-*:*"
 
-    def get_starting_match(s1, s2):
-        match = ""
-        for i in range(len(s1)):
-            if i > len(s2) - 1:
-                break
-            if s1[i] == "*" or s2[i] == "*":
-                break
-            if s1[i] == s2[i]:
-                match += s1[i]
-        return match
-
-    match_len = len(get_starting_match(arn_id, resource_id))
-    arn_id = arn_id[match_len:]
-    resource_id = resource_id[match_len:]
-
-    # If either is an asterisk it matches
-    # Examples:
-    # "*", "mybucket" -> True
-    # "mybucket", "*" -> True
-    if arn_id == "*" or resource_id == "*":
+def is_glob_match(s1, s2):
+    if s1 == s2 or s1 == "*" or s2 == "*":
         return True
-
-    # We already checked if they are equal, so we know both aren't "", but if one is, and the other is not,
-    # and the other is not "*" (which we just checked), then these do not match
-    # Examples:
-    # "", "mybucket" -> False
-    if arn_id == "" or resource_id == "":
-        return False
-
-    # If one begins with an asterisk and the other ends with one, it should match
-    # Examples:
-    # "*/" and "personalize*" -> True
-    if (arn_id[0] == "*" and resource_id[-1] == "*") or (
-        arn_id[-1] == "*" and resource_id[0] == "*"
-    ):
-        return True
-
-    # At this point, we are trying to check the following
-    # "*/*", "mybucket" -> False
-    # "*/*", "mybucket/abc" -> True
-    # "mybucket*", "mybucketotherthing" -> True
-    # "*mybucket", "*myotherthing" -> False
-
-    # We are going to cheat and miss some possible situations, because writing something
-    # to do this correctly by generating a state machine seems much harder.
-
-    # Check situation where it begins and ends with asterisks, such as "*/*"
-    if arn_id[0] == "*" and arn_id[-1] == "*":
-        # Now only check the middle matches
-        if arn_id[1:-1] in resource_id:
-            return True
-    if resource_id[0] == "*" and resource_id[-1] == "*":
-        if resource_id[1:-1] in arn_id:
-            return True
-
-    # Check where one ends with an asterisk
-    if arn_id[-1] == "*":
-        if resource_id[: len(arn_id) - 1] == arn_id[:-1]:
-            return True
-    if resource_id[-1] == "*":
-        if arn_id[: len(resource_id) - 1] == resource_id[:-1]:
-            return True
-
-    return False
+    if s1[0] == "*" and s2[0] == "*":
+        return is_glob_match(s1[1:], s2) or is_glob_match(s1, s2[1:])
+    if s1[0] == "*":
+        return any(is_glob_match(s1[1:], s2[i:]) for i in range(len(s2)))
+    if s2[0] == "*":
+        return any(is_glob_match(s1[i:], s2[1:]) for i in range(len(s1)))
+    return s1[0] == s2[0] and is_glob_match(s1[1:], s2[1:])
 
 
 def expand_action(action, raise_exceptions=True):

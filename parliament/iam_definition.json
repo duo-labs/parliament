@@ -8267,7 +8267,7 @@
       {
         "access_level": "Write",
         "description": "Associates a KMS key to a backup vault",
-        "privilege": "Mount",
+        "privilege": "MountCapsule",
         "resource_types": [
           {
             "condition_keys": [],
@@ -42707,7 +42707,23 @@
     "service_name": "Amazon Kinesis Firehose"
   },
   {
-    "conditions": [],
+    "conditions": [
+      {
+        "condition": "aws:RequestTag/${TagKey}",
+        "description": "Filters actions based on the allowed set of values for each of the tags",
+        "type": "String"
+      },
+      {
+        "condition": "aws:ResourceTag/${TagKey}",
+        "description": "Filters actions based on tag-value assoicated with the resource",
+        "type": "String"
+      },
+      {
+        "condition": "aws:TagKeys",
+        "description": "Filters actions based on the presence of mandatory tags in the request",
+        "type": "String"
+      }
+    ],
     "prefix": "fms",
     "privileges": [
       {
@@ -42743,6 +42759,13 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "policy*"
+          },
+          {
+            "condition_keys": [
+              "aws:ResourceTag/${TagKey}"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -42855,6 +42878,18 @@
         ]
       },
       {
+        "access_level": "Read",
+        "description": "Lists the Tags for a given resource.",
+        "privilege": "ListTagsForResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "policy*"
+          }
+        ]
+      },
+      {
         "access_level": "Write",
         "description": "Designates the IAM role and Amazon Simple Notification Service (SNS) topic that AWS Firewall Manager (FM) could use to notify the FM administrator about major FM events and errors across the organization.",
         "privilege": "PutNotificationChannel",
@@ -42875,6 +42910,53 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "policy*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Tagging",
+        "description": "Adds a Tag to a given resource.",
+        "privilege": "TagResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "policy*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Tagging",
+        "description": "Removes a Tag from a given resource.",
+        "privilege": "UntagResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "policy*"
+          },
+          {
+            "condition_keys": [
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       }
@@ -42882,7 +42964,9 @@
     "resources": [
       {
         "arn": "arn:${Partition}:fms:${Region}:${Account}:policy/${Id}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "policy"
       }
     ],
@@ -54179,6 +54263,42 @@
       },
       {
         "access_level": "Write",
+        "description": "Creates a provisioning claim.",
+        "privilege": "CreateProvisioningClaim",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "provisioningtemplate*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Creates a fleet provisioning template.",
+        "privilege": "CreateProvisioningTemplate",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "provisioningtemplate*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Creates a new version of a fleet provisioning template.",
+        "privilege": "CreateProvisioningTemplateVersion",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "provisioningtemplate*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Creates a role alias.",
         "privilege": "CreateRoleAlias",
         "resource_types": [
@@ -54465,6 +54585,30 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "policy*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Deletes a fleet provisioning template.",
+        "privilege": "DeleteProvisioningTemplate",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "provisioningtemplate*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Deletes a fleet provisioning template version.",
+        "privilege": "DeleteProvisioningTemplateVersion",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "provisioningtemplate*"
           }
         ]
       },
@@ -54758,6 +54902,30 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "thing"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Returns information about a fleet provisioning template.",
+        "privilege": "DescribeProvisioningTemplate",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "provisioningtemplate*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Returns information about a fleet provisioning template version.",
+        "privilege": "DescribeProvisioningTemplateVersion",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "provisioningtemplate*"
           }
         ]
       },
@@ -55368,6 +55536,30 @@
         "access_level": "List",
         "description": "Lists the things associated with the specified principal.",
         "privilege": "ListPrincipalThings",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "A list of fleet provisioning template versions.",
+        "privilege": "ListProvisioningTemplateVersions",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "provisioningtemplate*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Lists the fleet provisioning templates in your AWS account.",
+        "privilege": "ListProvisioningTemplates",
         "resource_types": [
           {
             "condition_keys": [],
@@ -56232,6 +56424,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Updates a fleet provisioning template.",
+        "privilege": "UpdateProvisioningTemplate",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "provisioningtemplate*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Updates the role alias",
         "privilege": "UpdateRoleAlias",
         "resource_types": [
@@ -56481,6 +56685,11 @@
           "aws:ResourceTag/${TagKey}"
         ],
         "resource": "rule"
+      },
+      {
+        "arn": "arn:${Partition}:iot:${Region}:${Account}:provisioningtemplate/${provisioningTemplate}",
+        "condition_keys": [],
+        "resource": "provisioningtemplate"
       }
     ],
     "service_name": "AWS IoT"
@@ -101003,6 +101212,18 @@
       },
       {
         "access_level": "Read",
+        "description": "Gets the properties associated with an asynchronous batch translation job including name, ID, status, source and target languages, input/output S3 buckets, and so on.",
+        "privilege": "DescribeTextTranslationJob",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
         "description": "Retrieves a custom terminology.",
         "privilege": "GetTerminology",
         "resource_types": [
@@ -101029,6 +101250,42 @@
         "access_level": "Read",
         "description": "Provides a list of custom terminologies associated with your account.",
         "privilege": "ListTerminologies",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Gets a list of the batch translation jobs that you have submitted.",
+        "privilege": "ListTextTranslationJobs",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Starts an asynchronous batch translation job. Batch translation jobs can be used to translate large volumes of text across multiple documents at once.",
+        "privilege": "StartTextTranslationJob",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Stops an asynchronous batch translation job that is in progress.",
+        "privilege": "StopTextTranslationJob",
         "resource_types": [
           {
             "condition_keys": [],
@@ -104197,6 +104454,18 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Shares a workload with another account.",
+        "privilege": "CreateWorkloadShare",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "workload*"
           }
         ]
       },

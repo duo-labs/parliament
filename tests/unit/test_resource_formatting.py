@@ -2,7 +2,7 @@ import unittest
 from nose.tools import raises, assert_equal, assert_true, assert_false
 
 # import parliament
-from parliament import analyze_policy_string, is_arn_match
+from parliament import analyze_policy_string, is_arn_match, is_glob_match
 from parliament.statement import is_valid_region, is_valid_account_id
 
 
@@ -90,3 +90,24 @@ class TestResourceFormatting(unittest.TestCase):
                 "arn:aws:logs:us-east-1:000000000000:/aws/cloudfront/test",
             )
         )
+
+    def test_is_glob_match(self):
+        tests = [
+            # string1, string2, whether they match
+            ("a", "b", False),
+            ("a", "a", True),
+            ("a", "*", True),
+            ("*", "a", True),
+            ("a*a", "*", True),
+            ("a*a", "a*b", False),
+            ("a*a", "aa", True),
+            ("a*a", "aba", True),
+            ("*a*", "*b*", True),  # Example "ab"
+            ("a*a*", "a*b*", True),  # Example "aba"
+        ]
+
+        for s1, s2, expected in tests:
+            assert_true(
+                is_glob_match(s1, s2) == expected,
+                "Matching {} with {} should return {}".format(s1, s2, expected),
+            )

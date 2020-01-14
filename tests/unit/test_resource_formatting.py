@@ -104,6 +104,8 @@ class TestResourceFormatting(unittest.TestCase):
             ("a*a", "aba", True),
             ("*a*", "*b*", True),  # Example "ab"
             ("a*a*", "a*b*", True),  # Example "aba"
+            ("aaaaaa:/b", "aa*a:/b", True),
+            ("*/*", "*personalize*", True), # Example "personalize/"
         ]
 
         for s1, s2, expected in tests:

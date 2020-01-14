@@ -2,6 +2,7 @@ import json
 import pkgutil
 import importlib
 import os
+import sys
 from pathlib import Path
 
 from .statement import Statement
@@ -222,6 +223,8 @@ class Policy:
 
             if private_auditors_custom_path is not None:
                 private_auditors_directory_path = private_auditors_custom_path
+                # Ensure we can import from this directory
+                sys.path.append(".")
 
             private_auditors = {}
             for importer, name, _ in pkgutil.iter_modules(
@@ -240,6 +243,13 @@ class Policy:
 
                 module = importlib.import_module(full_package_name)
                 private_auditors[name] = module
+
+            if len(private_auditors) == 0 and private_auditors_custom_path is not None:
+                raise Exception(
+                    "No private auditors found at {}".format(
+                        private_auditors_custom_path
+                    )
+                )
 
             # Run them
             for m in private_auditors:

@@ -141,6 +141,7 @@ def is_arn_match(resource_type, arn_format, resource):
 
 
 def is_glob_match(s1, s2):
+    # This comes from https://github.com/duo-labs/parliament/issues/36#issuecomment-574001764
     if s1 == s2 or s1 == "*" or s2 == "*":
         return True
     if s1[0] == "*" and s2[0] == "*":

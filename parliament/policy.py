@@ -4,10 +4,12 @@ import importlib
 import os
 import sys
 from pathlib import Path
-
 from .statement import Statement
 from .finding import Finding
 from .misc import make_list, ACCESS_DECISION
+from policy_sentry.shared.database import connect_db
+from policy_sentry.util.policy_files import get_actions_from_policy
+from policy_sentry.analysis.analyze import determine_actions_to_expand
 
 
 class Policy:
@@ -71,6 +73,13 @@ class Policy:
                 references[resource] = references.get(resource, [])
                 references[resource].append(stmt)
         return references
+
+    def get_allowed_actions(self):
+        """Return a complete list of actions that are allowed by the policy."""
+        db_session = connect_db('bundled')
+        actions_in_policy = get_actions_from_policy(self.policy_json)
+        expanded_actions = determine_actions_to_expand(db_session, actions_in_policy)
+        return expanded_actions
 
     def get_allowed_resources(self, privilege_prefix, privilege_name):
         """

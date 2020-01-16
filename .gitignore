@@ -5,7 +5,10 @@ utils/docs/
 *.egg-info
 .eggs
 venv/
+.venv/
 .coverage
 htmlcov/
 dist/
 parliament/private_auditors
+.idea/*
+.vscode/*

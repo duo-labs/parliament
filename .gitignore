@@ -9,3 +9,6 @@ venv/
 htmlcov/
 dist/
 parliament/private_auditors
+tmp/*
+.idea/*
+.vscode

@@ -18,6 +18,7 @@ class TestResourceFormatting(unittest.TestCase):
         "Action": "s3:listallmybuckets",
         "Resource": "s3"}}""",
             ignore_private_auditors=True,
+            include_community_auditors=False,
         )
         assert_equal(len(policy.findings), 1)
 
@@ -30,6 +31,7 @@ class TestResourceFormatting(unittest.TestCase):
         "Action": "s3:getobject",
         "Resource": "arn:aws:s3:::my_corporate_bucket/*"}}""",
             ignore_private_auditors=True,
+            include_community_auditors=False,
         )
         print(policy.findings)
         assert_equal(len(policy.findings), 0)

@@ -70,13 +70,13 @@ Now create a file `config_override.yaml` with the following contents:
 UNKNOWN_ACTION:
   severity: MEDIUM
   ignore_locations:
-    filepath:
-      - testa.json
-      - .*.py
+  - filepath:
+    - testa.json
+    - .*.py
 
 RESOURCE_MISMATCH:
   ignore_locations:
-    actions: ".*s3.*"
+  - actions: ".*s3.*"
 ```
 
 Now run: `parliament --file test.json --config config_override.yaml`

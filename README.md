@@ -244,12 +244,12 @@ for f in analyzed_policy.findings:
 Setup a testing environment
 ```
 python3 -m venv ./venv && source venv/bin/activate
-pip3 install boto3 jmespath pyyaml nose coverage beautifulsoup4 requests
+pip3 install -r requirements.txt
 ```
 
 Run unit tests with:
 ```
-./tests/scripts/unit_tests.sh
+make test
 ```
 
 Run locally as:
@@ -263,3 +263,4 @@ The IAM data is obtained from scraping the docs [here](https://docs.aws.amazon.c
 # Projects that use Parliament
 - [CloudMapper](https://github.com/duo-labs/cloudmapper): Has functionality to audit AWS environments and will audit the IAM policies as part of that.
 - [tf-parliament](https://github.com/rdkls/tf-parliament): Runs Parliament against terraform files
+- [iam-lint](https://github.com/xen0l/iam-lint): Github action for linting AWS IAM policy documents 

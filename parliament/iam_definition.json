@@ -7699,6 +7699,18 @@
     "privileges": [
       {
         "access_level": "Write",
+        "description": "Copy into a backup vault",
+        "privilege": "CopyIntoBackupVault",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Creates a new backup plan",
         "privilege": "CreateBackupPlan",
         "resource_types": [
@@ -7844,6 +7856,21 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "backupVault*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Describes a copy job",
+        "privilege": "DescribeCopyJob",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -8065,6 +8092,18 @@
       },
       {
         "access_level": "List",
+        "description": "List copy jobs",
+        "privilege": "ListCopyJobs",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
         "description": "Lists protected resources by AWS Backup.",
         "privilege": "ListProtectedResources",
         "resource_types": [
@@ -8158,6 +8197,28 @@
               "iam:PassRole"
             ],
             "resource_type": "backupVault*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Copy a backup from a source region to a destination region.",
+        "privilege": "StartCopyJob",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [
+              "iam:PassRole"
+            ],
+            "resource_type": "recoveryPoint*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -14022,7 +14083,7 @@
         ]
       },
       {
-        "access_level": "List",
+        "access_level": "Read",
         "description": "Grants permission to list settings for the trails associated with the current region for your account",
         "privilege": "DescribeTrails",
         "resource_types": [
@@ -14118,7 +14179,7 @@
         ]
       },
       {
-        "access_level": "List",
+        "access_level": "Read",
         "description": "Grants permission to look up API activity events captured by CloudTrail that create, update, or delete resources in your account",
         "privilege": "LookupEvents",
         "resource_types": [
@@ -17034,6 +17095,285 @@
       }
     ],
     "service_name": "AWS CodeDeploy"
+  },
+  {
+    "conditions": [],
+    "prefix": "codeguru-profiler",
+    "privileges": [
+      {
+        "access_level": "Write",
+        "description": "Grants permission for an agent to register with the orchestration service and retrieve profiling configuration information",
+        "privilege": "ConfigureAgent",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "ProfilingGroup*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to create a profiling group",
+        "privilege": "CreateProfilingGroup",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "ProfilingGroup*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to delete a profiling group",
+        "privilege": "DeleteProfilingGroup",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "ProfilingGroup*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to describe a profiling group",
+        "privilege": "DescribeProfilingGroup",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "ProfilingGroup*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to get a recommendations report",
+        "privilege": "GetFindingsReport",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "ProfilingGroup*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to get a summary of recent recommendations for each profiling group in the account",
+        "privilege": "GetFindingsReportAccountSummary",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to get aggregated profiles for a specific profiling group",
+        "privilege": "GetProfile",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "ProfilingGroup*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permissions to list the available recommendations reports for a specific profiling group",
+        "privilege": "ListFindingsReports",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "ProfilingGroup*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permissions to list the start times of the available aggregated profiles for a specific profiling group",
+        "privilege": "ListProfileTimes",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "ProfilingGroup*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permissions to list profiling groups in the account",
+        "privilege": "ListProfilingGroups",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permissions to submit a profile collected by an agent belonging to a specific profiling group for aggregation",
+        "privilege": "PostAgentProfile",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "ProfilingGroup*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permissions to update a specific profiling group",
+        "privilege": "UpdateProfilingGroup",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "ProfilingGroup*"
+          }
+        ]
+      }
+    ],
+    "resources": [
+      {
+        "arn": "arn:${Partition}:codeguru-profiler:${Region}:${Account}:profilingGroup/${profilingGroupName}",
+        "condition_keys": [],
+        "resource": "ProfilingGroup"
+      }
+    ],
+    "service_name": "Amazon CodeGuru Profiler"
+  },
+  {
+    "conditions": [
+      {
+        "condition": "aws:ResourceTag/${TagKey}",
+        "description": "Filters actions based on tag key-value pairs attached to the resource",
+        "type": "String"
+      }
+    ],
+    "prefix": "codeguru-reviewer",
+    "privileges": [
+      {
+        "access_level": "Write",
+        "description": "Grants permission to associates a repository with Amazon CodeGuru Reviewer.",
+        "privilege": "AssociateRepository",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [
+              "codecommit:ListRepositories",
+              "codecommit:TagResource",
+              "events:PutRule",
+              "events:PutTargets",
+              "iam:CreateServiceLinkedRole"
+            ],
+            "resource_type": "repository"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to perform webbased oauth handshake for 3rd party providers.",
+        "privilege": "CreateConnectionToken",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to describe a repository association.",
+        "privilege": "DescribeRepositoryAssociation",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to disassociate a repository with Amazon CodeGuru Reviewer.",
+        "privilege": "DisassociateRepository",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [
+              "codecommit:UntagResource",
+              "events:DeleteRule",
+              "events:RemoveTargets"
+            ],
+            "resource_type": "association*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to view pull request metrics in console.",
+        "privilege": "GetMetricsData",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to list summary of repository associations.",
+        "privilege": "ListRepositoryAssociations",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to list 3rd party providers repositories in console.",
+        "privilege": "ListThirdPartyRepositories",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      }
+    ],
+    "resources": [
+      {
+        "arn": "arn:${Partition}:codeguru-reviewer::${Account}:association:${ResourceId}",
+        "condition_keys": [],
+        "resource": "association"
+      },
+      {
+        "arn": "arn:${Partition}:codecommit:${Region}:${Account}:${RepositoryName}",
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
+        "resource": "repository"
+      }
+    ],
+    "service_name": "Amazon CodeGuru Reviewer"
   },
   {
     "conditions": [
@@ -39694,17 +40034,17 @@
     "conditions": [
       {
         "condition": "aws:RequestTag/${TagKey}",
-        "description": "",
+        "description": "Filters actions based on the allowed set of values for each of the tags",
         "type": "String"
       },
       {
         "condition": "aws:ResourceTag/${TagKey}",
-        "description": "",
+        "description": "Filters actions based on tag key-value pairs attached to the resource",
         "type": "String"
       },
       {
         "condition": "aws:TagKeys",
-        "description": "",
+        "description": "Filters actions based on the presence of mandatory tags in the request",
         "type": "String"
       }
     ],
@@ -39714,6 +40054,54 @@
         "access_level": "Write",
         "description": "Starts a backup job for an existing file system.",
         "privilege": "Backup",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "file-system*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Permission for allowing read-access to a file system.",
+        "privilege": "ClientMount",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Permission for allowing root-access to a file system.",
+        "privilege": "ClientRootAccess",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "file-system*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Permission for allowing write-access to a file system.",
+        "privilege": "ClientWrite",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "file-system*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Creates an access point for the specified file system.",
+        "privilege": "CreateAccessPoint",
         "resource_types": [
           {
             "condition_keys": [],
@@ -39771,8 +40159,32 @@
       },
       {
         "access_level": "Write",
+        "description": "Deletes the specified access point.",
+        "privilege": "DeleteAccessPoint",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Deletes a file system, permanently severing access to its contents.",
         "privilege": "DeleteFileSystem",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "file-system*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Clears the resource-level policy for a given file system.",
+        "privilege": "DeleteFileSystemPolicy",
         "resource_types": [
           {
             "condition_keys": [],
@@ -39809,6 +40221,18 @@
             ],
             "dependent_actions": [],
             "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Returns the current resource-level policy for a given file system.",
+        "privilege": "DescribeFileSystemPolicy",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "file-system"
           }
         ]
       },
@@ -39873,9 +40297,33 @@
         ]
       },
       {
+        "access_level": "Read",
+        "description": "Returns the tags associated with the specified Amazon EFS resource.",
+        "privilege": "ListTagsForResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "file-system*"
+          }
+        ]
+      },
+      {
         "access_level": "Write",
         "description": "Modifies the set of security groups in effect for a mount target.",
         "privilege": "ModifyMountTargetSecurityGroups",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "file-system*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Apply a resource-level policy granting and/or restricting actions from given actors for the specified file system.",
+        "privilege": "PutFileSystemPolicy",
         "resource_types": [
           {
             "condition_keys": [],
@@ -39910,6 +40358,30 @@
       },
       {
         "access_level": "Write",
+        "description": "Creates or overwrites tags associated with the specified Amazon EFS resource.",
+        "privilege": "TagResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Deletes the specified tags from a specified Amazon EFS resource.",
+        "privilege": "UntagResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Updates the throughput mode or the amount of provisioned throughput of an existing file system.",
         "privilege": "UpdateFileSystem",
         "resource_types": [
@@ -39928,6 +40400,13 @@
           "aws:ResourceTag/${TagKey}"
         ],
         "resource": "file-system"
+      },
+      {
+        "arn": "arn:${Partition}:elasticfilesystem:${Region}:${Account}:access-point/${AccessPointId}",
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
+        "resource": "access-point"
       }
     ],
     "service_name": "Amazon Elastic File System"
@@ -60576,6 +61055,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Adds VPC configuration to the application.",
+        "privilege": "AddApplicationVpcConfiguration",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "application*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Creates an application.",
         "privilege": "CreateApplication",
         "resource_types": [
@@ -60665,6 +61156,18 @@
         "access_level": "Write",
         "description": "Deletes a snapshot for an application.",
         "privilege": "DeleteApplicationSnapshot",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "application*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Deletes the specified VPC configuration of the application.",
+        "privilege": "DeleteApplicationVpcConfiguration",
         "resource_types": [
           {
             "condition_keys": [],
@@ -75644,11 +76147,16 @@
         "privilege": "AcceptResourceShareInvitation",
         "resource_types": [
           {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "resource-share-invitation*"
+          },
+          {
             "condition_keys": [
               "ram:ShareOwnerAccountId"
             ],
             "dependent_actions": [],
-            "resource_type": "resource-share-invitation*"
+            "resource_type": ""
           }
         ]
       },
@@ -75658,27 +76166,48 @@
         "privilege": "AssociateResourceShare",
         "resource_types": [
           {
-            "condition_keys": [
-              "ram:AllowsExternalPrincipals"
-            ],
+            "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "resource-share*"
+          },
+          {
+            "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
+              "ram:ResourceShareName",
+              "ram:AllowsExternalPrincipals",
+              "ram:Principal",
+              "ram:RequestedResourceType",
+              "ram:ResourceArn"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
       {
         "access_level": "Write",
-        "description": "Associate a Permission with a Resource Share.",
+        "description": "Associate a Permission with a Resource Share",
         "privilege": "AssociateResourceSharePermission",
         "resource_types": [
           {
-            "condition_keys": [
-              "ram:AllowsExternalPrincipals",
-              "ram:ResourceShareName",
-              "ram:RequestedAllowsExternalPrincipals"
-            ],
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "permission*"
+          },
+          {
+            "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "resource-share*"
+          },
+          {
+            "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
+              "ram:AllowsExternalPrincipals",
+              "ram:ResourceShareName",
+              "ram:PermissionArn"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -75689,17 +76218,12 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys",
               "ram:RequestedResourceType",
               "ram:ResourceArn",
-              "ram:RequestedAllowsExternalPrincipals"
-            ],
-            "dependent_actions": [],
-            "resource_type": "resource-share"
-          },
-          {
-            "condition_keys": [
-              "aws:RequestTag/${TagKey}",
-              "aws:TagKeys"
+              "ram:RequestedAllowsExternalPrincipals",
+              "ram:Principal"
             ],
             "dependent_actions": [],
             "resource_type": ""
@@ -75712,11 +76236,18 @@
         "privilege": "DeleteResourceShare",
         "resource_types": [
           {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "resource-share*"
+          },
+          {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
+              "ram:ResourceShareName",
               "ram:AllowsExternalPrincipals"
             ],
             "dependent_actions": [],
-            "resource_type": "resource-share*"
+            "resource_type": ""
           }
         ]
       },
@@ -75726,33 +76257,54 @@
         "privilege": "DisassociateResourceShare",
         "resource_types": [
           {
-            "condition_keys": [
-              "ram:AllowsExternalPrincipals"
-            ],
+            "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "resource-share*"
+          },
+          {
+            "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
+              "ram:ResourceShareName",
+              "ram:AllowsExternalPrincipals",
+              "ram:Principal",
+              "ram:RequestedResourceType",
+              "ram:ResourceArn"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
       {
         "access_level": "Write",
-        "description": "Disassociate a Permission from a Resource Share.",
+        "description": "Disassociate a Permission from a Resource Share",
         "privilege": "DisassociateResourceSharePermission",
         "resource_types": [
           {
-            "condition_keys": [
-              "ram:AllowsExternalPrincipals",
-              "ram:ResourceShareName",
-              "ram:RequestedAllowsExternalPrincipals"
-            ],
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "permission*"
+          },
+          {
+            "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "resource-share*"
+          },
+          {
+            "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
+              "ram:AllowsExternalPrincipals",
+              "ram:ResourceShareName",
+              "ram:PermissionArn"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
       {
         "access_level": "Write",
-        "description": "Grants permission to access customer's organization and create a SLR in the customer's account.",
+        "description": "Grants permission to access customer's organization and create a SLR in the customer's account",
         "privilege": "EnableSharingWithAwsOrganization",
         "resource_types": [
           {
@@ -75764,21 +76316,26 @@
       },
       {
         "access_level": "Read",
-        "description": "Gets the contents of an AWS RAM permission.",
+        "description": "Gets the contents of an AWS RAM permission",
         "privilege": "GetPermission",
         "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "permission*"
+          },
           {
             "condition_keys": [
               "ram:PermissionArn"
             ],
             "dependent_actions": [],
-            "resource_type": "permission*"
+            "resource_type": ""
           }
         ]
       },
       {
         "access_level": "Read",
-        "description": "Gets the policies for the specified resources that you own and have shared.",
+        "description": "Gets the policies for the specified resources that you own and have shared",
         "privilege": "GetResourcePolicies",
         "resource_types": [
           {
@@ -75794,11 +76351,9 @@
         "privilege": "GetResourceShareAssociations",
         "resource_types": [
           {
-            "condition_keys": [
-              "ram:ResourceShareName"
-            ],
+            "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "resource-share"
+            "resource_type": ""
           }
         ]
       },
@@ -75810,14 +76365,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "resource-share"
-          },
-          {
-            "condition_keys": [
-              "ram:ShareOwnerAccountId"
-            ],
-            "dependent_actions": [],
-            "resource_type": "resource-share-invitation"
+            "resource_type": ""
           }
         ]
       },
@@ -75827,11 +76375,9 @@
         "privilege": "GetResourceShares",
         "resource_types": [
           {
-            "condition_keys": [
-              "ram:ResourceShareName"
-            ],
+            "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "resource-share"
+            "resource_type": ""
           }
         ]
       },
@@ -75849,7 +76395,7 @@
       },
       {
         "access_level": "List",
-        "description": "Lists the AWS RAM permissions.",
+        "description": "Lists the AWS RAM permissions",
         "privilege": "ListPermissions",
         "resource_types": [
           {
@@ -75861,7 +76407,7 @@
       },
       {
         "access_level": "List",
-        "description": "Retrieve list of principals for a specified resource",
+        "description": "Lists the principals that you have shared resources with or that have shared resources with you",
         "privilege": "ListPrincipals",
         "resource_types": [
           {
@@ -75873,23 +76419,28 @@
       },
       {
         "access_level": "List",
-        "description": "List the Permissions associated with a Resource Share.",
+        "description": "List the Permissions associated with a Resource Share",
         "privilege": "ListResourceSharePermissions",
         "resource_types": [
           {
-            "condition_keys": [
-              "ram:AllowsExternalPrincipals",
-              "ram:ResourceShareName",
-              "ram:RequestedAllowsExternalPrincipals"
-            ],
+            "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "resource-share*"
+          },
+          {
+            "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
+              "ram:ResourceShareName",
+              "ram:AllowsExternalPrincipals"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
       {
         "access_level": "List",
-        "description": "Retrieve list of resources for a specified principal",
+        "description": "Lists the resources that you added to a resource shares or the resources that are shared with you",
         "privilege": "ListResources",
         "resource_types": [
           {
@@ -75905,11 +76456,16 @@
         "privilege": "RejectResourceShareInvitation",
         "resource_types": [
           {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "resource-share-invitation*"
+          },
+          {
             "condition_keys": [
               "ram:ShareOwnerAccountId"
             ],
             "dependent_actions": [],
-            "resource_type": "resource-share-invitation*"
+            "resource_type": ""
           }
         ]
       },
@@ -75945,6 +76501,7 @@
           },
           {
             "condition_keys": [
+              "aws:RequestTag/${TagKey}",
               "aws:TagKeys"
             ],
             "dependent_actions": [],
@@ -75958,13 +76515,19 @@
         "privilege": "UpdateResourceShare",
         "resource_types": [
           {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "resource-share*"
+          },
+          {
             "condition_keys": [
-              "ram:AllowsExternalPrincipals",
+              "aws:ResourceTag/${TagKey}",
               "ram:ResourceShareName",
+              "ram:AllowsExternalPrincipals",
               "ram:RequestedAllowsExternalPrincipals"
             ],
             "dependent_actions": [],
-            "resource_type": "resource-share*"
+            "resource_type": ""
           }
         ]
       }
@@ -75973,7 +76536,9 @@
       {
         "arn": "arn:${Partition}:ram:${Region}:${Account}:resource-share/${ResourcePath}",
         "condition_keys": [
-          "aws:ResourceTag/${TagKey}"
+          "aws:ResourceTag/${TagKey}",
+          "ram:AllowsExternalPrincipals",
+          "ram:ResourceShareName"
         ],
         "resource": "resource-share"
       },
@@ -75984,7 +76549,9 @@
       },
       {
         "arn": "arn:${Partition}:ram::${Account}:permission/${ResourcePath}",
-        "condition_keys": [],
+        "condition_keys": [
+          "ram:PermissionArn"
+        ],
         "resource": "permission"
       }
     ],
@@ -76244,6 +76811,18 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "cluster*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Cancels an export task in progress.",
+        "privilege": "CancelExportTask",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -77205,6 +77784,18 @@
       },
       {
         "access_level": "List",
+        "description": "Returns information about the export tasks.",
+        "privilege": "DescribeExportTasks",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
         "description": "Returns information about Aurora global database clusters.",
         "privilege": "DescribeGlobalClusters",
         "resource_types": [
@@ -78053,6 +78644,20 @@
       },
       {
         "access_level": "Write",
+        "description": "Starts a new Export task for a DB snapshot.",
+        "privilege": "StartExportTask",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [
+              "iam:PassRole"
+            ],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Enables the user to stop Activity Stream.",
         "privilege": "StopActivityStream",
         "resource_types": [
@@ -78129,6 +78734,7 @@
           "rds:DatabaseName",
           "rds:MultiAz",
           "rds:Piops",
+          "rds:StorageEncrypted",
           "rds:StorageSize",
           "rds:Vpc",
           "rds:db-tag/${TagKey}"
@@ -78328,17 +78934,17 @@
     "conditions": [
       {
         "condition": "redshift:DbName",
-        "description": "Control access based on the database name.",
+        "description": "Filters access by the database name",
         "type": "String"
       },
       {
         "condition": "redshift:DbUser",
-        "description": "Control access based on the database user name.",
+        "description": "Filters access by the database user name",
         "type": "String"
       },
       {
         "condition": "redshift:DurationSeconds",
-        "description": "Control access based on the number of seconds until a temporary credential set expires.",
+        "description": "Filters access by the number of seconds until a temporary credential set expires",
         "type": "String"
       }
     ],
@@ -78346,7 +78952,7 @@
     "privileges": [
       {
         "access_level": "Write",
-        "description": "Exchanges a DC1 Reserved Node for a DC2 Reserved Node with no changes to the configuration (term, payment type, or number of nodes) and no additional costs",
+        "description": "Grants permission to exchange a DC1 reserved node for a DC2 reserved node with no changes to the configuration",
         "privilege": "AcceptReservedNodeExchange",
         "resource_types": [
           {
@@ -78358,7 +78964,7 @@
       },
       {
         "access_level": "Permissions management",
-        "description": "Adds an inbound (ingress) rule to an Amazon Redshift security group.",
+        "description": "Grants permission to add an inbound (ingress) rule to an Amazon Redshift security group",
         "privilege": "AuthorizeClusterSecurityGroupIngress",
         "resource_types": [
           {
@@ -78375,7 +78981,7 @@
       },
       {
         "access_level": "Permissions management",
-        "description": "Authorizes the specified AWS customer account to restore the specified snapshot",
+        "description": "Grants permission to the specified AWS account to restore a snapshot",
         "privilege": "AuthorizeSnapshotAccess",
         "resource_types": [
           {
@@ -78387,7 +78993,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes the snapshots in a batch of size upto 100",
+        "description": "Grants permission to delete snapshots in a batch of size upto 100",
         "privilege": "BatchDeleteClusterSnapshots",
         "resource_types": [
           {
@@ -78399,7 +79005,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Modifies the settings for a batch of snapshots",
+        "description": "Grants permission to modify settings for a list of snapshots",
         "privilege": "BatchModifyClusterSnapshots",
         "resource_types": [
           {
@@ -78411,7 +79017,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Give permission to Cancel a Query through Redshift Query Editor",
+        "description": "Grants permission to cancel a query through the Amazon Redshift console",
         "privilege": "CancelQuery",
         "resource_types": [
           {
@@ -78423,7 +79029,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Controls whether a user can see queries in the Amazon Redshift console in the Queries tab of the Cluster section.",
+        "description": "Grants permission to see queries in the Amazon Redshift console",
         "privilege": "CancelQuerySession",
         "resource_types": [
           {
@@ -78435,7 +79041,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Cancels an ongoing classic resize",
+        "description": "Grants permission to cancel a resize operation",
         "privilege": "CancelResize",
         "resource_types": [
           {
@@ -78447,7 +79053,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Copies the specified automated cluster snapshot to a new manual cluster snapshot",
+        "description": "Grants permission to copy a cluster snapshot",
         "privilege": "CopyClusterSnapshot",
         "resource_types": [
           {
@@ -78459,7 +79065,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Creates a new cluster",
+        "description": "Grants permission to create a cluster",
         "privilege": "CreateCluster",
         "resource_types": [
           {
@@ -78471,7 +79077,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Creates an Amazon Redshift parameter group",
+        "description": "Grants permission to create an Amazon Redshift parameter group",
         "privilege": "CreateClusterParameterGroup",
         "resource_types": [
           {
@@ -78483,7 +79089,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Creates a new Amazon Redshift security group",
+        "description": "Grants permission to create an Amazon Redshift security group",
         "privilege": "CreateClusterSecurityGroup",
         "resource_types": [
           {
@@ -78495,7 +79101,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Creates a manual snapshot of the specified cluster",
+        "description": "Grants permission to create a manual snapshot of the specified cluster",
         "privilege": "CreateClusterSnapshot",
         "resource_types": [
           {
@@ -78507,7 +79113,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Creates a new Amazon Redshift subnet group",
+        "description": "Grants permission to create an Amazon Redshift subnet group",
         "privilege": "CreateClusterSubnetGroup",
         "resource_types": [
           {
@@ -78519,7 +79125,7 @@
       },
       {
         "access_level": "Permissions management",
-        "description": "Give permission to auto create the specified redshift user if it does not exist",
+        "description": "Grants permission to automatically create the specified Amazon Redshift user if it does not exist",
         "privilege": "CreateClusterUser",
         "resource_types": [
           {
@@ -78538,7 +79144,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Creates an Amazon Redshift event notification subscription",
+        "description": "Grants permission to create an Amazon Redshift event notification subscription",
         "privilege": "CreateEventSubscription",
         "resource_types": [
           {
@@ -78550,7 +79156,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Creates an HSM client certificate that an Amazon Redshift cluster will use to connect to the client's HSM in order to store and retrieve the keys used to encrypt the cluster databases",
+        "description": "Grants permission to create an HSM client certificate that a cluster uses to connect to an HSM",
         "privilege": "CreateHsmClientCertificate",
         "resource_types": [
           {
@@ -78562,7 +79168,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Creates an HSM configuration that contains the information required by an Amazon Redshift cluster to store and use database encryption keys in a Hardware Security Module (HSM)",
+        "description": "Grants permission to create an HSM configuration that contains information required by a cluster to store and use database encryption keys in a hardware security module (HSM)",
         "privilege": "CreateHsmConfiguration",
         "resource_types": [
           {
@@ -78574,7 +79180,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Give permission to Create Saved Queries through Redshift Saved Queries",
+        "description": "Grants permission to create saved SQL queries through the Amazon Redshift console",
         "privilege": "CreateSavedQuery",
         "resource_types": [
           {
@@ -78586,7 +79192,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Creates a new Amazon Redshift scheduled action",
+        "description": "Grants permission to create an Amazon Redshift scheduled action",
         "privilege": "CreateScheduledAction",
         "resource_types": [
           {
@@ -78598,7 +79204,7 @@
       },
       {
         "access_level": "Permissions management",
-        "description": "Creates a snapshot copy grant that permits Amazon Redshift to use a customer master key (CMK) from AWS Key Management Service (AWS KMS) to encrypt copied snapshots in a destination region",
+        "description": "Grants permission to create a snapshot copy grant and encrypt copied snapshots in a destination AWS Region",
         "privilege": "CreateSnapshotCopyGrant",
         "resource_types": [
           {
@@ -78610,7 +79216,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Creates the given snapshot schedule",
+        "description": "Grants permission to create a snapshot schedule",
         "privilege": "CreateSnapshotSchedule",
         "resource_types": [
           {
@@ -78622,7 +79228,7 @@
       },
       {
         "access_level": "Tagging",
-        "description": "Adds one or more tags to a specified resource",
+        "description": "Grants permission to add one or more tags to a specified resource",
         "privilege": "CreateTags",
         "resource_types": [
           {
@@ -78634,7 +79240,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes a previously provisioned cluster",
+        "description": "Grants permission to delete a previously provisioned cluster",
         "privilege": "DeleteCluster",
         "resource_types": [
           {
@@ -78646,7 +79252,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes a specified Amazon Redshift parameter group",
+        "description": "Grants permission to delete an Amazon Redshift parameter group",
         "privilege": "DeleteClusterParameterGroup",
         "resource_types": [
           {
@@ -78658,7 +79264,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes an Amazon Redshift security group",
+        "description": "Grants permission to delete an Amazon Redshift security group",
         "privilege": "DeleteClusterSecurityGroup",
         "resource_types": [
           {
@@ -78670,7 +79276,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes the specified manual snapshot",
+        "description": "Grants permission to delete a manual snapshot",
         "privilege": "DeleteClusterSnapshot",
         "resource_types": [
           {
@@ -78682,7 +79288,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes the specified cluster subnet group",
+        "description": "Grants permission to delete a cluster subnet group",
         "privilege": "DeleteClusterSubnetGroup",
         "resource_types": [
           {
@@ -78694,7 +79300,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes an Amazon Redshift event notification subscription",
+        "description": "Grants permission to delete an Amazon Redshift event notification subscription",
         "privilege": "DeleteEventSubscription",
         "resource_types": [
           {
@@ -78706,7 +79312,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes the specified HSM client certificate",
+        "description": "Grants permission to delete an HSM client certificate",
         "privilege": "DeleteHsmClientCertificate",
         "resource_types": [
           {
@@ -78718,7 +79324,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes the specified Amazon Redshift HSM configuration",
+        "description": "Grants permission to delete an Amazon Redshift HSM configuration",
         "privilege": "DeleteHsmConfiguration",
         "resource_types": [
           {
@@ -78730,7 +79336,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Give permission to Delete Saved Queries through Redshift Saved Queries",
+        "description": "Grants permission to delete saved SQL queries through the Amazon Redshift console",
         "privilege": "DeleteSavedQueries",
         "resource_types": [
           {
@@ -78742,7 +79348,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Delete the specified Amazon Redshift scheduled action",
+        "description": "Grants permission to delete an Amazon Redshift scheduled action",
         "privilege": "DeleteScheduledAction",
         "resource_types": [
           {
@@ -78754,7 +79360,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes the specified snapshot copy grant",
+        "description": "Grants permission to delete a snapshot copy grant",
         "privilege": "DeleteSnapshotCopyGrant",
         "resource_types": [
           {
@@ -78766,7 +79372,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes the given snapshot schedule",
+        "description": "Grants permission to delete a snapshot schedule",
         "privilege": "DeleteSnapshotSchedule",
         "resource_types": [
           {
@@ -78778,7 +79384,7 @@
       },
       {
         "access_level": "Tagging",
-        "description": "Deletes a tag or tags from a resource",
+        "description": "Grants permission to delete a tag or tags from a resource",
         "privilege": "DeleteTags",
         "resource_types": [
           {
@@ -78790,7 +79396,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Enables the user to get a list of attributes attached to an account",
+        "description": "Grants permission to describe attributes attached to the specified AWS account",
         "privilege": "DescribeAccountAttributes",
         "resource_types": [
           {
@@ -78802,7 +79408,7 @@
       },
       {
         "access_level": "List",
-        "description": "Enables the user to get a list of database revisions for a cluster",
+        "description": "Grants permission to describe database revisions for a cluster",
         "privilege": "DescribeClusterDbRevisions",
         "resource_types": [
           {
@@ -78814,7 +79420,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns a list of Amazon Redshift parameter groups, including parameter groups you created and the default parameter group",
+        "description": "Grants permission to describe Amazon Redshift parameter groups, including parameter groups you created and the default parameter group",
         "privilege": "DescribeClusterParameterGroups",
         "resource_types": [
           {
@@ -78826,7 +79432,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns a detailed list of parameters contained within the specified Amazon Redshift parameter group",
+        "description": "Grants permission to describe parameters contained within an Amazon Redshift parameter group",
         "privilege": "DescribeClusterParameters",
         "resource_types": [
           {
@@ -78838,7 +79444,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns information about Amazon Redshift security groups",
+        "description": "Grants permission to describe Amazon Redshift security groups",
         "privilege": "DescribeClusterSecurityGroups",
         "resource_types": [
           {
@@ -78850,7 +79456,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns one or more snapshot objects, which contain metadata about your cluster snapshots",
+        "description": "Grants permission to describe one or more snapshot objects, which contain metadata about your cluster snapshots",
         "privilege": "DescribeClusterSnapshots",
         "resource_types": [
           {
@@ -78862,7 +79468,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns one or more cluster subnet group objects, which contain metadata about your cluster subnet groups",
+        "description": "Grants permission to describe one or more cluster subnet group objects, which contain metadata about your cluster subnet groups",
         "privilege": "DescribeClusterSubnetGroups",
         "resource_types": [
           {
@@ -78874,7 +79480,7 @@
       },
       {
         "access_level": "List",
-        "description": "Enables the user to get a list of all the available maintenance tracks",
+        "description": "Grants permission to describe available maintenance tracks",
         "privilege": "DescribeClusterTracks",
         "resource_types": [
           {
@@ -78886,7 +79492,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns descriptions of the available Amazon Redshift cluster versions",
+        "description": "Grants permission to describe available Amazon Redshift cluster versions",
         "privilege": "DescribeClusterVersions",
         "resource_types": [
           {
@@ -78898,7 +79504,7 @@
       },
       {
         "access_level": "List",
-        "description": "Returns properties of provisioned clusters including general cluster properties, cluster database properties, maintenance and backup properties, and security and access properties",
+        "description": "Grants permission to describe properties of provisioned clusters",
         "privilege": "DescribeClusters",
         "resource_types": [
           {
@@ -78910,7 +79516,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns a list of parameter settings for the specified parameter group family",
+        "description": "Grants permission to describe parameter settings for a parameter group family",
         "privilege": "DescribeDefaultClusterParameters",
         "resource_types": [
           {
@@ -78922,7 +79528,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Displays a list of event categories for all event source types, or for a specified source type",
+        "description": "Grants permission to describe event categories for all event source types, or for a specified source type",
         "privilege": "DescribeEventCategories",
         "resource_types": [
           {
@@ -78934,7 +79540,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Lists descriptions of all the Amazon Redshift event notifications subscription for a customer account",
+        "description": "Grants permission to describe Amazon Redshift event notification subscriptions for the specified AWS account",
         "privilege": "DescribeEventSubscriptions",
         "resource_types": [
           {
@@ -78946,7 +79552,7 @@
       },
       {
         "access_level": "List",
-        "description": "Returns events related to clusters, security groups, snapshots, and parameter groups for the past 14 days",
+        "description": "Grants permission to describe events related to clusters, security groups, snapshots, and parameter groups for the past 14 days",
         "privilege": "DescribeEvents",
         "resource_types": [
           {
@@ -78958,7 +79564,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns information about the specified HSM client certificate",
+        "description": "Grants permission to describe HSM client certificates",
         "privilege": "DescribeHsmClientCertificates",
         "resource_types": [
           {
@@ -78970,7 +79576,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns information about the specified Amazon Redshift HSM configuration",
+        "description": "Grants permission to describe Amazon Redshift HSM configurations",
         "privilege": "DescribeHsmConfigurations",
         "resource_types": [
           {
@@ -78982,7 +79588,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Describes whether information, such as queries and connection attempts, is being logged for the specified Amazon Redshift cluster",
+        "description": "Grants permission to describe whether information, such as queries and connection attempts, is being logged for a cluster",
         "privilege": "DescribeLoggingStatus",
         "resource_types": [
           {
@@ -78994,7 +79600,7 @@
       },
       {
         "access_level": "List",
-        "description": "For the restore-cluster action type, enables the user to get a list of possible node configurations such as node type, number of nodes, and disk usage. For the recommended-node-configuration action type, enables the user to get a list of recommended configurations based on an existing cluster or snapshot.",
+        "description": "Grants permission to describe properties of possible node configurations such as node type, number of nodes, and disk usage for the specified action type",
         "privilege": "DescribeNodeConfigurationOptions",
         "resource_types": [
           {
@@ -79006,7 +79612,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns a list of orderable cluster options",
+        "description": "Grants permission to describe orderable cluster options",
         "privilege": "DescribeOrderableClusterOptions",
         "resource_types": [
           {
@@ -79018,7 +79624,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Give permission to Describe Query through Redshift Query Editor",
+        "description": "Grants permission to describe a query through the Amazon Redshift console",
         "privilege": "DescribeQuery",
         "resource_types": [
           {
@@ -79030,7 +79636,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns a list of the available reserved node offerings by Amazon Redshift with their descriptions including the node type, the fixed and recurring costs of reserving the node and duration the node will be reserved for you",
+        "description": "Grants permission to describe available reserved node offerings by Amazon Redshift",
         "privilege": "DescribeReservedNodeOfferings",
         "resource_types": [
           {
@@ -79042,7 +79648,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns the descriptions of the reserved nodes",
+        "description": "Grants permission to describe the reserved nodes",
         "privilege": "DescribeReservedNodes",
         "resource_types": [
           {
@@ -79054,7 +79660,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns information about the last resize operation for the specified cluster",
+        "description": "Grants permission to describe the last resize operation for a cluster",
         "privilege": "DescribeResize",
         "resource_types": [
           {
@@ -79066,7 +79672,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Return a list of saved queries to Amazon Redshift console.",
+        "description": "Grants permission to describe saved queries through the Amazon Redshift console",
         "privilege": "DescribeSavedQueries",
         "resource_types": [
           {
@@ -79078,7 +79684,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Describe created Amazon Redshift scheduled actions",
+        "description": "Grants permission to describe created Amazon Redshift scheduled actions",
         "privilege": "DescribeScheduledActions",
         "resource_types": [
           {
@@ -79090,7 +79696,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns a list of snapshot copy grants owned by the AWS account in the destination region",
+        "description": "Grants permission to describe snapshot copy grants owned by the specified AWS account in the destination AWS Region",
         "privilege": "DescribeSnapshotCopyGrants",
         "resource_types": [
           {
@@ -79102,7 +79708,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Describes created snapshot schedules",
+        "description": "Grants permission to describe snapshot schedules",
         "privilege": "DescribeSnapshotSchedules",
         "resource_types": [
           {
@@ -79114,7 +79720,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns account level backups storage size and provisional storage",
+        "description": "Grants permission to describe account level backups storage size and provisional storage",
         "privilege": "DescribeStorage",
         "resource_types": [
           {
@@ -79126,7 +79732,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Give permission to Describe Table through Redshift Query Editor",
+        "description": "Grants permission to describe a table through the Amazon Redshift console",
         "privilege": "DescribeTable",
         "resource_types": [
           {
@@ -79138,7 +79744,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Lists the status of one or more table restore requests made using the RestoreTableFromClusterSnapshot API action",
+        "description": "Grants permission to describe status of one or more table restore requests made using the RestoreTableFromClusterSnapshot API action",
         "privilege": "DescribeTableRestoreStatus",
         "resource_types": [
           {
@@ -79150,7 +79756,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns a list of tags",
+        "description": "Grants permission to describe tags",
         "privilege": "DescribeTags",
         "resource_types": [
           {
@@ -79162,7 +79768,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Stops logging information, such as queries and connection attempts, for the specified Amazon Redshift cluster",
+        "description": "Grants permission to disable logging information, such as queries and connection attempts, for a cluster",
         "privilege": "DisableLogging",
         "resource_types": [
           {
@@ -79174,7 +79780,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Disables the automatic copying of snapshots from one region to another region for a specified cluster",
+        "description": "Grants permission to disable the automatic copy of snapshots for a cluster",
         "privilege": "DisableSnapshotCopy",
         "resource_types": [
           {
@@ -79186,7 +79792,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Starts logging information, such as queries and connection attempts, for the specified Amazon Redshift cluster",
+        "description": "Grants permission to enable logging information, such as queries and connection attempts, for a cluster",
         "privilege": "EnableLogging",
         "resource_types": [
           {
@@ -79198,7 +79804,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Enables the automatic copy of snapshots from one region to another region for a specified cluster",
+        "description": "Grants permission to enable the automatic copy of snapshots for a cluster",
         "privilege": "EnableSnapshotCopy",
         "resource_types": [
           {
@@ -79210,7 +79816,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Give permission to Execute Query through Redshift Query Editor",
+        "description": "Grants permission to execute a query through the Amazon Redshift console",
         "privilege": "ExecuteQuery",
         "resource_types": [
           {
@@ -79222,7 +79828,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Give permission to Fetch Query Results through Redshift Query Editor",
+        "description": "Grants permission to fetch query results through the Amazon Redshift console",
         "privilege": "FetchResults",
         "resource_types": [
           {
@@ -79234,7 +79840,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Get a temporary cluster credential for the specified redshift user",
+        "description": "Grants permission to get temporary credentials to access an Amazon Redshift database by the specified AWS account",
         "privilege": "GetClusterCredentials",
         "resource_types": [
           {
@@ -79265,7 +79871,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns an array of DC2 ReservedNodeOfferings that matches the payment type, term, and usage price of the given DC1 reserved node",
+        "description": "Grants permission to get an array of DC2 ReservedNodeOfferings that matches the payment type, term, and usage price of the given DC1 reserved node",
         "privilege": "GetReservedNodeExchangeOfferings",
         "resource_types": [
           {
@@ -79277,7 +79883,7 @@
       },
       {
         "access_level": "Permissions management",
-        "description": "Give permission to join the specified redshift groups",
+        "description": "Grants permission to join the specified Amazon Redshift group",
         "privilege": "JoinGroup",
         "resource_types": [
           {
@@ -79289,7 +79895,7 @@
       },
       {
         "access_level": "List",
-        "description": "Give permission to List Databases through Redshift Query Editor",
+        "description": "Grants permission to list databases through the Amazon Redshift console",
         "privilege": "ListDatabases",
         "resource_types": [
           {
@@ -79301,7 +79907,7 @@
       },
       {
         "access_level": "List",
-        "description": "Give permission to List Saved Queries through Redshift Saved Queries",
+        "description": "Grants permission to list saved queries through the Amazon Redshift console",
         "privilege": "ListSavedQueries",
         "resource_types": [
           {
@@ -79313,7 +79919,7 @@
       },
       {
         "access_level": "List",
-        "description": "Give permission to List Schemas through Redshift Query Editor",
+        "description": "Grants permission to list schemas through the Amazon Redshift console",
         "privilege": "ListSchemas",
         "resource_types": [
           {
@@ -79325,7 +79931,7 @@
       },
       {
         "access_level": "List",
-        "description": "Give permission to List Tables through Redshift Query Editor",
+        "description": "Grants permission to list tables through the Amazon Redshift console",
         "privilege": "ListTables",
         "resource_types": [
           {
@@ -79337,7 +79943,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Modifies the settings for a cluster",
+        "description": "Grants permission to modify the settings of a cluster",
         "privilege": "ModifyCluster",
         "resource_types": [
           {
@@ -79349,7 +79955,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Enables the user to modify the database revision of a cluster",
+        "description": "Grants permission to modify the database revision of a cluster",
         "privilege": "ModifyClusterDbRevision",
         "resource_types": [
           {
@@ -79361,7 +79967,7 @@
       },
       {
         "access_level": "Permissions management",
-        "description": "Modifies the list of AWS Identity and Access Management (IAM) roles that can be used by the cluster to access other AWS services",
+        "description": "Grants permission to modify the list of AWS Identity and Access Management (IAM) roles that can be used by a cluster to access other AWS services",
         "privilege": "ModifyClusterIamRoles",
         "resource_types": [
           {
@@ -79373,7 +79979,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Enables the user to modify the maintenance settings of a cluster",
+        "description": "Grants permission to modify the maintenance settings of a cluster",
         "privilege": "ModifyClusterMaintenance",
         "resource_types": [
           {
@@ -79385,7 +79991,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Modifies the parameters of a parameter group",
+        "description": "Grants permission to modify the parameters of a parameter group",
         "privilege": "ModifyClusterParameterGroup",
         "resource_types": [
           {
@@ -79397,7 +80003,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Modifies the settings for a snapshot",
+        "description": "Grants permission to modify the settings of a snapshot",
         "privilege": "ModifyClusterSnapshot",
         "resource_types": [
           {
@@ -79409,7 +80015,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Modifies the snapshot schedule settings for a cluster",
+        "description": "Grants permission to modify a snapshot schedule for a cluster",
         "privilege": "ModifyClusterSnapshotSchedule",
         "resource_types": [
           {
@@ -79421,7 +80027,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Modifies a cluster subnet group to include the specified list of VPC subnets",
+        "description": "Grants permission to modify a cluster subnet group to include the specified list of VPC subnets",
         "privilege": "ModifyClusterSubnetGroup",
         "resource_types": [
           {
@@ -79433,7 +80039,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Modifies an existing Amazon Redshift event notification subscription",
+        "description": "Grants permission to modify an existing Amazon Redshift event notification subscription",
         "privilege": "ModifyEventSubscription",
         "resource_types": [
           {
@@ -79445,7 +80051,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Give permission to Modify existing Saved Queries through Redshift Saved Queries",
+        "description": "Grants permission to modify an existing saved query through the Amazon Redshift console",
         "privilege": "ModifySavedQuery",
         "resource_types": [
           {
@@ -79457,7 +80063,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Modifies an existing Amazon Redshift scheduled action",
+        "description": "Grants permission to modify an existing Amazon Redshift scheduled action",
         "privilege": "ModifyScheduledAction",
         "resource_types": [
           {
@@ -79469,7 +80075,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Modifies the number of days to retain automated snapshots in the destination region after they are copied from the source region",
+        "description": "Grants permission to modify the number of days to retain snapshots in the destination AWS Region after they are copied from the source AWS Region",
         "privilege": "ModifySnapshotCopyRetentionPeriod",
         "resource_types": [
           {
@@ -79481,7 +80087,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Modifies the given snapshot schedule",
+        "description": "Grants permission to modify a snapshot schedule",
         "privilege": "ModifySnapshotSchedule",
         "resource_types": [
           {
@@ -79493,7 +80099,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Allows you to purchase reserved nodes. Amazon Redshift offers a predefined set of reserved node offerings",
+        "description": "Grants permission to purchase a reserved node",
         "privilege": "PurchaseReservedNodeOffering",
         "resource_types": [
           {
@@ -79505,7 +80111,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Reboots a cluster",
+        "description": "Grants permission to reboot a cluster",
         "privilege": "RebootCluster",
         "resource_types": [
           {
@@ -79517,7 +80123,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Sets one or more parameters of the specified parameter group to their default values and sets the source values of the parameters to \"engine-default\"",
+        "description": "Grants permission to set one or more parameters of a parameter group to their default values and set the source values of the parameters to \"engine-default\"",
         "privilege": "ResetClusterParameterGroup",
         "resource_types": [
           {
@@ -79529,7 +80135,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Changes the size of the cluster. You can change the cluster's type, or change the number or type of nodes",
+        "description": "Grants permission to change the size of a cluster",
         "privilege": "ResizeCluster",
         "resource_types": [
           {
@@ -79541,7 +80147,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Creates a new cluster from a snapshot",
+        "description": "Grants permission to create a cluster from a snapshot",
         "privilege": "RestoreFromClusterSnapshot",
         "resource_types": [
           {
@@ -79553,7 +80159,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Creates a new table from a table in an Amazon Redshift cluster snapshot",
+        "description": "Grants permission to create a table from a table in an Amazon Redshift cluster snapshot",
         "privilege": "RestoreTableFromClusterSnapshot",
         "resource_types": [
           {
@@ -79570,7 +80176,7 @@
       },
       {
         "access_level": "Permissions management",
-        "description": "Revokes an ingress rule in an Amazon Redshift security group for a previously authorized IP range or Amazon EC2 security group",
+        "description": "Grants permission to revoke an ingress rule in an Amazon Redshift security group for a previously authorized IP range or Amazon EC2 security group",
         "privilege": "RevokeClusterSecurityGroupIngress",
         "resource_types": [
           {
@@ -79587,7 +80193,7 @@
       },
       {
         "access_level": "Permissions management",
-        "description": "Removes the ability of the specified AWS customer account to restore the specified snapshot",
+        "description": "Grants permission to revoke access from the specified AWS account to restore a snapshot",
         "privilege": "RevokeSnapshotAccess",
         "resource_types": [
           {
@@ -79599,7 +80205,7 @@
       },
       {
         "access_level": "Permissions management",
-        "description": "Rotates the encryption keys for a cluster",
+        "description": "Grants permission to rotate an encryption key for a cluster",
         "privilege": "RotateEncryptionKey",
         "resource_types": [
           {
@@ -79611,7 +80217,7 @@
       },
       {
         "access_level": "List",
-        "description": "Give permission to View Query Results From Console through Redshift Query Editor",
+        "description": "Grants permission to view query results through the Amazon Redshift console",
         "privilege": "ViewQueriesFromConsole",
         "resource_types": [
           {
@@ -79623,7 +80229,7 @@
       },
       {
         "access_level": "List",
-        "description": "Controls whether a user can terminate running queries and loads from the Cluster section in the Amazon Redshift console.",
+        "description": "Grants permission to terminate running queries and loads through the Amazon Redshift console",
         "privilege": "ViewQueriesInConsole",
         "resource_types": [
           {
@@ -88786,6 +89392,18 @@
         ]
       },
       {
+        "access_level": "Read",
+        "description": "Grants permission to retrieve information about Security Hub standards controls.",
+        "privilege": "DescribeStandardsControls",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "hub*"
+          }
+        ]
+      },
+      {
         "access_level": "Write",
         "description": "Grants permission to disable the findings importing for a Security Hub integrated product.",
         "privilege": "DisableImportFindingsForProduct",
@@ -89061,6 +89679,18 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "insight*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to update Security Hub standards controls.",
+        "privilege": "UpdateStandardsControl",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "hub*"
           }
         ]
       }
@@ -92760,6 +93390,18 @@
         "access_level": "Write",
         "description": "Updates the details of the list of email addresses that the DRT can use to contact you during a suspected attack",
         "privilege": "UpdateEmergencyContactSettings",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Updates the details of an existing subscription",
+        "privilege": "UpdateSubscription",
         "resource_types": [
           {
             "condition_keys": [],

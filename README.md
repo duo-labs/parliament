@@ -237,12 +237,12 @@ for f in analyzed_policy.findings:
 Setup a testing environment
 ```
 python3 -m venv ./venv && source venv/bin/activate
-pip3 install boto3 jmespath pyyaml nose coverage beautifulsoup4 requests
+pip3 install -r requirements.txt
 ```
 
 Run unit tests with:
 ```
-./tests/scripts/unit_tests.sh
+make test
 ```
 
 Run locally as:

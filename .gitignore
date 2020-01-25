@@ -8,4 +8,5 @@ venv/
 .coverage
 htmlcov/
 dist/
+.env/
 parliament/private_auditors

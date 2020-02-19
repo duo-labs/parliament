@@ -15,4 +15,4 @@ s3transfer==0.3.2
 six==1.14.0
 soupsieve==1.9.5
 urllib3==1.25.8
-policy_sentry==0.6.10
+policy_sentry==0.7.0.2

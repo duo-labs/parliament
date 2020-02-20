@@ -163,6 +163,16 @@ def main():
                 if "arn:aws:iam::aws:" not in policy["Arn"]:
                     continue
 
+                # Ignore AWS Service-linked roles
+                if (
+                        policy["Path"] == "/service-role/"
+                        or policy["Path"] == "/aws-service-role/"
+                        or policy["PolicyName"].startswith("AWSServiceRoleFor")
+                        or policy["PolicyName"].endswith("ServiceRolePolicy")
+                        or policy["PolicyName"].endswith("ServiceLinkedRolePolicy")
+                ):
+                    continue
+
                 for version in policy["PolicyVersionList"]:
                     if not version["IsDefaultVersion"]:
                         continue
@@ -175,7 +185,7 @@ def main():
             for user in auth_details_json["UserDetailList"]:
                 for policy in user.get("UserPolicyList", []):
                     policy = analyze_policy_string(
-                        json.dumps(version["Document"]),
+                        json.dumps(policy["PolicyDocument"]),
                         user["Arn"],
                         private_auditors_custom_path=args.private_auditors,
                     )
@@ -183,7 +193,7 @@ def main():
             for role in auth_details_json["RoleDetailList"]:
                 for policy in role.get("RolePolicyList", []):
                     policy = analyze_policy_string(
-                        json.dumps(version["Document"]),
+                        json.dumps(policy["PolicyDocument"]),
                         role["Arn"],
                         private_auditors_custom_path=args.private_auditors,
                     )
@@ -191,7 +201,7 @@ def main():
             for group in auth_details_json["GroupDetailList"]:
                 for policy in group.get("GroupPolicyList", []):
                     policy = analyze_policy_string(
-                        json.dumps(version["Document"]),
+                        json.dumps(policy["PolicyDocument"]),
                         group["Arn"],
                         private_auditors_custom_path=args.private_auditors,
                     )

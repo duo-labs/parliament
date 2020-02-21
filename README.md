@@ -257,3 +257,4 @@ The IAM data is obtained from scraping the docs [here](https://docs.aws.amazon.c
 - [CloudMapper](https://github.com/duo-labs/cloudmapper): Has functionality to audit AWS environments and will audit the IAM policies as part of that.
 - [tf-parliament](https://github.com/rdkls/tf-parliament): Runs Parliament against terraform files
 - [iam-lint](https://github.com/xen0l/iam-lint): Github action for linting AWS IAM policy documents 
+- [Paco](https://paco-cloud.io): Cloud orchestration tool that integrates Parliament as a library to verify a project's IAM Policies and warns about findings.

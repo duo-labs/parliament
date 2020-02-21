@@ -33,13 +33,13 @@ CREDENTIALS_EXPOSURE_ACTIONS = [
 
 def audit(policy):
     actions = policy.get_allowed_actions()
-    
-    
+
     credentials_exposure_actions_in_policy = []
     for action in actions:
         if action in CREDENTIALS_EXPOSURE_ACTIONS:
             credentials_exposure_actions_in_policy.append(action)
     if len(credentials_exposure_actions_in_policy) > 0:
-        policy.add_finding("CREDENTIALS_EXPOSURE",
-                           location={"actions": credentials_exposure_actions_in_policy})
-
+        policy.add_finding(
+            "CREDENTIALS_EXPOSURE",
+            location={"actions": credentials_exposure_actions_in_policy},
+        )

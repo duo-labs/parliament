@@ -25,9 +25,16 @@ class TestPermissionsManagement(unittest.TestCase):
           ]
         }
         """
-        policy = analyze_policy_string(example_policy_string, include_community_auditors=True)
+        policy = analyze_policy_string(
+            example_policy_string, include_community_auditors=True
+        )
 
         assert_equal(
             policy.finding_ids,
-            set(['PERMISSIONS_MANAGEMENT_ACTIONS', 'RESOURCE_POLICY_PRIVILEGE_ESCALATION'])
+            set(
+                [
+                    "PERMISSIONS_MANAGEMENT_ACTIONS",
+                    "RESOURCE_POLICY_PRIVILEGE_ESCALATION",
+                ]
+            ),
         )

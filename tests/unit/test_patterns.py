@@ -17,7 +17,7 @@ class TestPatterns(unittest.TestCase):
         "Resource": "*",
         "Condition": {"Bool": {"aws:MultiFactorAuthPresent":"false"}}
         }}""",
-            ignore_private_auditors=True
+            ignore_private_auditors=True,
         )
         assert_equal(
             policy.finding_ids,
@@ -35,7 +35,7 @@ class TestPatterns(unittest.TestCase):
         "Action": ["s3:GetObject", "s3:PutBucketPolicy"],
         "Resource": "*"
         }}""",
-            ignore_private_auditors=True
+            ignore_private_auditors=True,
         )
         assert_equal(
             policy.finding_ids,
@@ -73,7 +73,7 @@ class TestPatterns(unittest.TestCase):
     "Effect": "Deny"
 }
         ]}""",
-            ignore_private_auditors=True
+            ignore_private_auditors=True,
         )
 
         assert_equal(
@@ -100,7 +100,7 @@ class TestPatterns(unittest.TestCase):
         "Resource": "*"
         }
         ]}""",
-            ignore_private_auditors=True
+            ignore_private_auditors=True,
         )
         assert_equal(
             policy.finding_ids,
@@ -117,7 +117,7 @@ class TestPatterns(unittest.TestCase):
         "Action": ["s3:GetObject", "s3:PutBucketPolicy"],
         "Resource": ["arn:aws:s3:::bucket", "arn:aws:s3:::bucket/*"]
         }}""",
-            ignore_private_auditors=True
+            ignore_private_auditors=True,
         )
         assert_equal(
             policy.finding_ids,
@@ -138,7 +138,7 @@ class TestPatterns(unittest.TestCase):
         "Action": ["s3:*Object"],
         "Resource": ["arn:aws:s3:::bucket2/*"]
         }]}""",
-            ignore_private_auditors=True
+            ignore_private_auditors=True,
         )
         # There is one finding for "No resources match for s3:ListAllMyBuckets which requires a resource format of *"
         assert_equal(

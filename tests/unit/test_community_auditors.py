@@ -22,17 +22,19 @@ class TestCommunityAuditors(unittest.TestCase):
           ]
         }
         """
-        policy = analyze_policy_string(example_policy_with_wildcards, include_community_auditors=True)
-        '''
+        policy = analyze_policy_string(
+            example_policy_with_wildcards, include_community_auditors=True
+        )
+        """
         The resulting findings will look like this:
         MEDIUM - Credentials exposure - Policy grants access to API calls that can return credentials to the user -  - {'actions': ['ecr:getauthorizationtoken'], 'filepath': 'wildcards.json'}
         MEDIUM - Permissions management actions - Allows the principal to modify IAM, RAM, identity-based policies, or resource based policies. -  - {'actions': ['ecr:setrepositorypolicy', 's3:bypassgovernanceretention', 's3:deleteaccesspointpolicy', 's3:deletebucketpolicy', 's3:objectowneroverridetobucketowner', 's3:putaccesspointpolicy', 's3:putaccountpublicaccessblock', 's3:putbucketacl', 's3:putbucketpolicy', 's3:putbucketpublicaccessblock', 's3:putobjectacl', 's3:putobjectversionacl'], 'filepath': 'wildcards.json'}
         
         We are just not including the full results here because the Permissions management actions might expand as AWS expands their API. We don't want to have to update the unit tests every time that happens.
-        '''
+        """
         assert_equal(
             policy.finding_ids,
-            set(['CREDENTIALS_EXPOSURE', 'PERMISSIONS_MANAGEMENT_ACTIONS'])
+            set(["CREDENTIALS_EXPOSURE", "PERMISSIONS_MANAGEMENT_ACTIONS"]),
         )
 
     def test_analyze_policy_string_disable_community(self):
@@ -51,9 +53,8 @@ class TestCommunityAuditors(unittest.TestCase):
           ]
         }
         """
-        policy = analyze_policy_string(example_policy_with_wildcards, include_community_auditors=False)
-        
-        assert_equal(
-            policy.finding_ids,
-            set([])
+        policy = analyze_policy_string(
+            example_policy_with_wildcards, include_community_auditors=False
         )
+
+        assert_equal(policy.finding_ids, set([]))

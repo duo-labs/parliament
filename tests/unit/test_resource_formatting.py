@@ -17,7 +17,7 @@ class TestResourceFormatting(unittest.TestCase):
         "Effect": "Allow",
         "Action": "s3:listallmybuckets",
         "Resource": "s3"}}""",
-            ignore_private_auditors=True
+            ignore_private_auditors=True,
         )
         assert_equal(len(policy.findings), 1)
 
@@ -29,7 +29,7 @@ class TestResourceFormatting(unittest.TestCase):
         "Effect": "Allow",
         "Action": "s3:getobject",
         "Resource": "arn:aws:s3:::my_corporate_bucket/*"}}""",
-            ignore_private_auditors=True
+            ignore_private_auditors=True,
         )
         print(policy.findings)
         assert_equal(len(policy.findings), 0)
@@ -105,7 +105,7 @@ class TestResourceFormatting(unittest.TestCase):
             ("*a*", "*b*", True),  # Example "ab"
             ("a*a*", "a*b*", True),  # Example "aba"
             ("aaaaaa:/b", "aa*a:/b", True),
-            ("*/*", "*personalize*", True), # Example "personalize/"
+            ("*/*", "*personalize*", True),  # Example "personalize/"
             ("", "*", True),
             ("", "**", True),
             ("", "a", False),

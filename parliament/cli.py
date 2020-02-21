@@ -125,7 +125,7 @@ def main():
         "--include-community-auditors",
         help="Use this flag to enable community-provided auditors",
         default=None,
-        action="store_true"
+        action="store_true",
     )
     args = parser.parse_args()
 
@@ -208,16 +208,18 @@ def main():
                     findings.extend(policy.findings)
     elif args.string:
         policy = analyze_policy_string(
-            args.string, private_auditors_custom_path=args.private_auditors,
+            args.string,
+            private_auditors_custom_path=args.private_auditors,
             include_community_auditors=args.include_community_auditors,
-
         )
         findings.extend(policy.findings)
     elif args.file:
         with open(args.file) as f:
             contents = f.read()
             policy = analyze_policy_string(
-                contents, args.file, private_auditors_custom_path=args.private_auditors,
+                contents,
+                args.file,
+                private_auditors_custom_path=args.private_auditors,
                 include_community_auditors=args.include_community_auditors,
             )
             findings.extend(policy.findings)
@@ -230,7 +232,9 @@ def main():
     if args.include_community_auditors:
         community_auditors_directory = "community_auditors"
         community_auditors_override_file = (
-                Path(abspath(__file__)).parent / community_auditors_directory / 'config_override.yaml'
+            Path(abspath(__file__)).parent
+            / community_auditors_directory
+            / "config_override.yaml"
         )
         override_config(community_auditors_override_file)
     for finding in findings:

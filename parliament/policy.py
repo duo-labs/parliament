@@ -5,6 +5,7 @@ import os
 import sys
 from pathlib import Path
 
+from . import expand_action
 from .statement import Statement
 from .finding import Finding
 from .misc import make_list, ACCESS_DECISION
@@ -71,6 +72,31 @@ class Policy:
                 references[resource] = references.get(resource, [])
                 references[resource].append(stmt)
         return references
+
+
+    def get_allowed_actions(self):
+        actions_referenced = set()
+        for stmt in self.statements:
+            actions = make_list(stmt.stmt["Action"])
+            for action in actions:
+                expanded_actions = expand_action(action)
+                for expanded_action in expanded_actions:
+                    actions_referenced.add('{}:{}'.format(expanded_action['service'], expanded_action['action']))
+        
+        # actions_referenced is now a set like: {'lambda:UpdateFunctionCode', 'glue:UpdateDevEndpoint'}
+        # We need to identify which of these are actually allowed though, as some of those could just be a deny
+        # Worst case scenario though, we have a list of every action if someone included Action '*'
+        
+        allowed_actions = []
+        for action in actions_referenced:
+            parts = action.split(':')
+            allowed_resources = self.get_allowed_resources(parts[0], parts[1])
+            if len(allowed_resources) > 0:
+                action = action.lower()
+                allowed_actions.append(action)
+        return allowed_actions
+
+
 
     def get_allowed_resources(self, privilege_prefix, privilege_name):
         """
@@ -271,6 +297,7 @@ class Policy:
                     community_auditors_directory,
                     name,
                 )
+                
                 path_with_dots = full_package_name.replace("/", ".")
                 full_package_name = path_with_dots
 

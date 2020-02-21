@@ -142,6 +142,9 @@ OPERATORS = {
 }
 
 GLOBAL_CONDITION_KEYS = {
+    "aws:CalledVia": "String",
+    "aws:CalledViaFirst": "String",
+    "aws:CalledViaLast": "String",
     "aws:CurrentTime": "Date",
     "aws:EpochTime": "Date",  # This needs to accept Date or Numeric
     "aws:MultiFactorAuthAge": "Numeric",

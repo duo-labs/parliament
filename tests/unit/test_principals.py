@@ -22,8 +22,7 @@ class TestPrincipals(unittest.TestCase):
     }
   ]
 }""",
-            ignore_private_auditors=True,
-            include_community_auditors=False,
+            ignore_private_auditors=True
         )
         assert_equal(
             policy.finding_ids, set(), "Basic S3 bucket policy",
@@ -41,8 +40,7 @@ class TestPrincipals(unittest.TestCase):
     }
   ]
 }""",
-            ignore_private_auditors=True,
-            include_community_auditors=False,
+            ignore_private_auditors=True
         )
         assert_equal(
             policy.finding_ids,
@@ -62,8 +60,7 @@ class TestPrincipals(unittest.TestCase):
     }
   ]
 }""",
-            ignore_private_auditors=True,
-            include_community_auditors=False,
+            ignore_private_auditors=True
         )
         assert_equal(
             policy.finding_ids,
@@ -83,8 +80,7 @@ class TestPrincipals(unittest.TestCase):
     }
   ]
 }""",
-            ignore_private_auditors=True,
-            include_community_auditors=False,
+            ignore_private_auditors=True
         )
         assert_equal(
             policy.finding_ids, set(), "S3 bucket policy with ARN of user",
@@ -102,8 +98,7 @@ class TestPrincipals(unittest.TestCase):
     }
   ]
 }""",
-            ignore_private_auditors=True,
-            include_community_auditors=False,
+            ignore_private_auditors=True
         )
         assert_equal(
             policy.finding_ids, set(), "Federated access",
@@ -124,8 +119,7 @@ class TestPrincipals(unittest.TestCase):
     }
   ]
 }""",
-            ignore_private_auditors=True,
-            include_community_auditors=False,
+            ignore_private_auditors=True
         )
         assert_equal(
             policy.finding_ids, set(), "Basic S3 bucket policy",

@@ -74,8 +74,7 @@ class TestFormatting(unittest.TestCase):
         "Effect": "Allow",
         "Action": "s3:listallmybuckets",
         "Resource": "*"}}""",
-            ignore_private_auditors=True,
-            include_community_auditors=False,
+            ignore_private_auditors=True
         )
         assert_equal(
             policy.finding_ids, set(),
@@ -93,8 +92,7 @@ class TestFormatting(unittest.TestCase):
         "Effect": "Allow",
         "Action": "iam:listusers",
         "Resource": "*"}]}""",
-            ignore_private_auditors=True,
-            include_community_auditors=False,
+            ignore_private_auditors=True
         )
         assert_equal(
             policy.finding_ids, set(),
@@ -112,8 +110,7 @@ class TestFormatting(unittest.TestCase):
         "Effect": "Allow",
         "Action": ["iam:listusers", "iam:list"],
         "Resource": "*"}]}""",
-            ignore_private_auditors=True,
-            include_community_auditors=False,
+            ignore_private_auditors=True
         )
         assert_equal(
             policy.finding_ids,
@@ -130,8 +127,7 @@ class TestFormatting(unittest.TestCase):
         "Action": "s3:listbucket",
         "Resource": "arn:aws:s3:::bucket-name",
         "Condition": {"DateGreaterThan" :{"aws:CurrentTime" : "2019-07-16T12:00:00Z"}} }}""",
-            ignore_private_auditors=True,
-            include_community_auditors=False,
+            ignore_private_auditors=True
         )
         assert_equal(policy.finding_ids, set())
 
@@ -144,8 +140,7 @@ class TestFormatting(unittest.TestCase):
         "Action": "s3:listbucket",
         "Resource": "arn:aws:s3:::bucket-name",
         "Condition": {"DateGreaterThan" :{"bad" : "2019-07-16T12:00:00Z"}} }}""",
-            ignore_private_auditors=True,
-            include_community_auditors=False,
+            ignore_private_auditors=True
         )
         assert_equal(
             policy.finding_ids,
@@ -162,8 +157,7 @@ class TestFormatting(unittest.TestCase):
         "Action": "s3:listbucket",
         "Resource": "arn:aws:s3:::bucket-name",
         "Condition": {"StringEquals": {"s3:prefix":["home/${aws:username}/*"]}} }}""",
-            ignore_private_auditors=True,
-            include_community_auditors=False,
+            ignore_private_auditors=True
         )
         assert_equal(policy.finding_ids, set())
 
@@ -177,8 +171,7 @@ class TestFormatting(unittest.TestCase):
         "Action": "s3:listbucket",
         "Resource": "arn:aws:s3:::bucket-name",
         "Condition": {"StringEquals": {"s3:x-amz-storage-class":"bad"}} }}""",
-            ignore_private_auditors=True,
-            include_community_auditors=False,
+            ignore_private_auditors=True
         )
         assert_equal(
             policy.finding_ids,
@@ -196,8 +189,7 @@ class TestFormatting(unittest.TestCase):
         "Action": "s3:listbucket",
         "Resource": "arn:aws:s3:::bucket-name",
         "Condition": {"StringEquals": {"s3:signatureage":"bad"}} }}""",
-            ignore_private_auditors=True,
-            include_community_auditors=False,
+            ignore_private_auditors=True
         )
         assert_equal(
             policy.finding_ids,
@@ -218,8 +210,7 @@ class TestFormatting(unittest.TestCase):
             "DateGreaterThan" :{"aws:CurrentTime" : "2019-07-16T12:00:00Z"},
             "StringEquals": {"s3:prefix":["home/${aws:username}/*"]}
         } }}""",
-            ignore_private_auditors=True,
-            include_community_auditors=False,
+            ignore_private_auditors=True
         )
         assert_equal(policy.finding_ids, set())
 
@@ -235,8 +226,7 @@ class TestFormatting(unittest.TestCase):
             "DateGreaterThan" :{"aws:CurrentTime" : "bad"},
             "StringEquals": {"s3:prefix":["home/${aws:username}/*"]}
         } }}""",
-            ignore_private_auditors=True,
-            include_community_auditors=False,
+            ignore_private_auditors=True
         )
         assert_equal(
             policy.finding_ids, set(["MISMATCHED_TYPE"]), "First condition is bad"
@@ -254,8 +244,7 @@ class TestFormatting(unittest.TestCase):
             "DateGreaterThan" :{"aws:CurrentTime" : "2019-07-16T12:00:00Z"},
             "StringEquals": {"s3:x":["home/${aws:username}/*"]}
         } }}""",
-            ignore_private_auditors=True,
-            include_community_auditors=False,
+            ignore_private_auditors=True
         )
         assert_equal(
             policy.finding_ids,
@@ -272,8 +261,7 @@ class TestFormatting(unittest.TestCase):
         "Action": ["ec2:*", "s3:*"],
         "Resource": "*",
         "Condition": {"StringNotEquals": {"iam:ResourceTag/status":"prod"}} }}""",
-            ignore_private_auditors=True,
-            include_community_auditors=False,
+            ignore_private_auditors=True
         )
         assert_equal(
             policy.finding_ids,
@@ -290,8 +278,7 @@ class TestFormatting(unittest.TestCase):
         "Action": "s3:listbucket",
         "Resource": "arn:aws:s3:::bucket-name",
         "Condition": {"StringEqualsIfExists": {"s3:prefix":["home/${aws:username}/*"]}} }}""",
-            ignore_private_auditors=True,
-            include_community_auditors=False,
+            ignore_private_auditors=True
         )
         assert_equal(policy.finding_ids, set())
 
@@ -303,8 +290,7 @@ class TestFormatting(unittest.TestCase):
         "Action": "s3:listbucket",
         "Resource": "arn:aws:s3:::bucket-name",
         "Condition": {"bad": {"s3:prefix":["home/${aws:username}/*"]}} }}""",
-            ignore_private_auditors=True,
-            include_community_auditors=False,
+            ignore_private_auditors=True
         )
         assert_equal(
             policy.finding_ids,
@@ -320,8 +306,7 @@ class TestFormatting(unittest.TestCase):
         "Action": "s3:listbucket",
         "Resource": "arn:aws:s3:::bucket-name",
         "Condition": {"NumericEquals": {"s3:prefix":["home/${aws:username}/*"]}} }}""",
-            ignore_private_auditors=True,
-            include_community_auditors=False,
+            ignore_private_auditors=True
         )
         assert_equal(
             policy.finding_ids, set(["MISMATCHED_TYPE"]), "Operator type mismatch"
@@ -336,8 +321,7 @@ class TestFormatting(unittest.TestCase):
         "Action": "kms:CreateGrant",
         "Resource": "*",
         "Condition": {"Bool": {"kms:GrantIsForAWSResource": true}} }}""",
-            ignore_private_auditors=True,
-            include_community_auditors=False,
+            ignore_private_auditors=True
         )
         assert_equal(
             policy.finding_ids, set(),
@@ -359,8 +343,7 @@ class TestFormatting(unittest.TestCase):
       }
     ]
  }""",
-            ignore_private_auditors=True,
-            include_community_auditors=False,
+            ignore_private_auditors=True
         )
         assert_equal(
             policy.finding_ids, set(),
@@ -381,8 +364,7 @@ class TestFormatting(unittest.TestCase):
       }
     ]
  }""",
-            ignore_private_auditors=True,
-            include_community_auditors=False,
+            ignore_private_auditors=True
         )
         assert_equal(
             policy.finding_ids, set(),
@@ -401,8 +383,7 @@ class TestFormatting(unittest.TestCase):
         }
     ]
  }""",
-            ignore_private_auditors=True,
-            include_community_auditors=False,
+            ignore_private_auditors=True
         )
 
         # This privilege has a required format of arn:*:redshift:*:*:dbuser:*/*
@@ -424,8 +405,7 @@ class TestFormatting(unittest.TestCase):
         }
     ]
  }""",
-            ignore_private_auditors=True,
-            include_community_auditors=False,
+            ignore_private_auditors=True
         )
 
         # This privilege has a required format of arn:*:redshift:*:*:dbuser:*/*
@@ -453,8 +433,7 @@ class TestFormatting(unittest.TestCase):
         }
     ]
  }""",
-            ignore_private_auditors=True,
-            include_community_auditors=False,
+            ignore_private_auditors=True
         )
 
         # This privilege has a required format of arn:*:redshift:*:*:dbuser:*/*

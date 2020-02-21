@@ -18,8 +18,7 @@ class TestGetResourcesForPrivilege(unittest.TestCase):
           "Resource":["arn:aws:s3:::examplebucket/*"]
         }
       ]
-    }""",
-            include_community_auditors=False,
+    }"""
         )
 
         assert_equal(
@@ -45,8 +44,7 @@ class TestGetResourcesForPrivilege(unittest.TestCase):
               "Resource":["arn:aws:s3:::examplebucket", "arn:aws:s3:::examplebucket/*"]
             }
           ]
-        }""",
-            include_community_auditors=False,
+        }"""
         )
 
         assert_equal(

@@ -50,7 +50,7 @@ def analyze_policy_string(
     filepath=None,
     ignore_private_auditors=False,
     private_auditors_custom_path=None,
-    include_community_auditors=True,
+    include_community_auditors=False,
 ):
     """Given a string reperesenting a policy, convert it to a Policy object with findings"""
 

@@ -1,0 +1,17 @@
+PERMISSIONS_MANAGEMENT_ACTIONS:
+  title: Permissions management actions
+  description: Allows the principal to modify IAM, RAM, identity-based policies, or resource based policies.
+  severity: MEDIUM
+  group: CUSTOM
+
+PRIVILEGE_ESCALATION:
+  title: Privilege escalation
+  description: Actions contain a combination of Privilege Escalation actions established by Rhino Security Labs
+  severity: HIGH
+  group: CUSTOM
+
+CREDENTIALS_EXPOSURE:
+  title: Credentials exposure
+  description: Policy grants access to API calls that can return credentials to the user
+  severity: MEDIUM
+  group: CUSTOM

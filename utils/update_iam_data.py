@@ -10,16 +10,16 @@ from pathlib import Path
 from bs4 import BeautifulSoup
 
 # Code for get_links_from_base_actions_resources_conditions_page and update_html_docs_directory borrowed from https://github.com/salesforce/policy_sentry/blob/1126f174f49050b95bddf7549aedaf11fa51a50b/policy_sentry/scraping/awsdocs.py#L31
-BASE_DOCUMENTATION_URL = \
-    "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_actions-resources-contextkeys.partial.html"
+BASE_DOCUMENTATION_URL = "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_actions-resources-contextkeys.partial.html"
+
 
 def get_links_from_base_actions_resources_conditions_page():
     """Gets the links from the actions, resources, and conditions keys page, and returns their filenames."""
     html = requests.get(BASE_DOCUMENTATION_URL)
     soup = BeautifulSoup(html.content, "html.parser")
     html_filenames = []
-    for i in soup.find('div', {'class': 'highlights'}).findAll('a'):
-        html_filenames.append(i['href'])
+    for i in soup.find("div", {"class": "highlights"}).findAll("a"):
+        html_filenames.append(i["href"])
     return html_filenames
 
 
@@ -30,18 +30,18 @@ def update_html_docs_directory(html_docs_destination):
     :return:
     """
     link_url_prefix = "https://docs.aws.amazon.com/IAM/latest/UserGuide/"
-    initial_html_filenames_list = get_links_from_base_actions_resources_conditions_page()
+    initial_html_filenames_list = (
+        get_links_from_base_actions_resources_conditions_page()
+    )
     # Remove the relative path so we can download it
-    html_filenames = [sub.replace('./', '')
-                      for sub in initial_html_filenames_list]
+    html_filenames = [sub.replace("./", "") for sub in initial_html_filenames_list]
     # Replace '.html' with '.partial.html' because that's where the current docs live
-    html_filenames = [sub.replace('.html', '.partial.html')
-                      for sub in html_filenames]
+    html_filenames = [sub.replace(".html", ".partial.html") for sub in html_filenames]
 
     for page in html_filenames:
         response = requests.get(link_url_prefix + page, allow_redirects=False)
         # Replace the CSS stuff. Basically this:
-        '''
+        """
         <link href='href="https://docs.aws.amazon.com/images/favicon.ico"' rel="icon" type="image/ico"/>
         <link href='href="https://docs.aws.amazon.com/images/favicon.ico"' rel="shortcut icon" type="image/ico"/>
         <link href='href="https://docs.aws.amazon.com/font/css/font-awesome.min.css"' rel="stylesheet" type="text/css"/>
@@ -49,19 +49,21 @@ def update_html_docs_directory(html_docs_destination):
         <link href='href="https://docs.aws.amazon.com/css/awsdocs.css?v=20181221"' rel="stylesheet" type="text/css"/>
         <link href='href="https://docs.aws.amazon.com/assets/marketing/css/marketing-target.css"' rel="stylesheet" type="text/css"/>
         list_amazonkendra.html downloaded
-        '''
-        soup = BeautifulSoup(response.content, 'html.parser')
-        for link in soup.find_all('link'):
-            if link.get('href').startswith('/'):
-                temp = link.attrs['href']
-                link.attrs['href'] = link.attrs['href'].replace(
-                    temp, f"https://docs.aws.amazon.com{temp}")
+        """
+        soup = BeautifulSoup(response.content, "html.parser")
+        for link in soup.find_all("link"):
+            if link.get("href").startswith("/"):
+                temp = link.attrs["href"]
+                link.attrs["href"] = link.attrs["href"].replace(
+                    temp, f"https://docs.aws.amazon.com{temp}"
+                )
 
-        with open(html_docs_destination + page, 'w') as file:
+        with open(html_docs_destination + page, "w") as file:
             # file.write(str(soup.html))
             file.write(str(soup.prettify()))
             file.close()
-        #print(f"{page} downloaded")
+        # print(f"{page} downloaded")
+
 
 def chomp(string):
     """This chomp cleans up all white-space, not just at the ends"""
@@ -73,13 +75,13 @@ def chomp(string):
     response = re.sub("^[ ]*", "", response)  # Clean start
     return re.sub("[ ]*$", "", response)  # Clean end
 
+
 def no_white_space(string):
     string = str(string)
     response = string.replace("\n", "")  # Convert line ends to spaces
-    response = re.sub(
-        "[ ]*", "", response
-    )
+    response = re.sub("[ ]*", "", response)
     return response
+
 
 # Create the docs directory
 Path("docs").mkdir(parents=True, exist_ok=True)
@@ -89,7 +91,7 @@ update_html_docs_directory("docs/")
 mypath = "./docs/"
 schema = []
 
-#for filename in ['list_amazonathena.partial.html']:
+# for filename in ['list_amazonathena.partial.html']:
 for filename in [f for f in listdir(mypath) if isfile(join(mypath, f))]:
     if not filename.startswith("list_"):
         continue
@@ -127,7 +129,9 @@ for filename in [f for f in listdir(mypath) if isfile(join(mypath, f))]:
         for table in tables:
             # There can be 3 tables, the actions table, an ARN table, and a condition key table
             # Example: https://docs.aws.amazon.com/IAM/latest/UserGuide/list_awssecuritytokenservice.html
-            if "<th> Actions </th>" not in [chomp(str(x)) for x in table.find_all("th")]:
+            if "<th> Actions </th>" not in [
+                chomp(str(x)) for x in table.find_all("th")
+            ]:
                 continue
 
             rows = table.find_all("tr")
@@ -220,7 +224,9 @@ for filename in [f for f in listdir(mypath) if isfile(join(mypath, f))]:
 
         # Get resource table
         for table in tables:
-            if "<th> Resource Types </th>" not in [chomp(str(x)) for x in table.find_all("th")]:
+            if "<th> Resource Types </th>" not in [
+                chomp(str(x)) for x in table.find_all("th")
+            ]:
                 continue
 
             rows = table.find_all("tr")
@@ -285,5 +291,5 @@ for filename in [f for f in listdir(mypath) if isfile(join(mypath, f))]:
         schema.append(service_schema)
 
 
-schema.sort(key=lambda x: x["prefix"]) 
+schema.sort(key=lambda x: x["prefix"])
 print(json.dumps(schema, indent=2, sort_keys=True))

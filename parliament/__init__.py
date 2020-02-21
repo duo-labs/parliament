@@ -50,6 +50,7 @@ def analyze_policy_string(
     filepath=None,
     ignore_private_auditors=False,
     private_auditors_custom_path=None,
+    include_community_auditors=False,
 ):
     """Given a string reperesenting a policy, convert it to a Policy object with findings"""
 
@@ -62,7 +63,11 @@ def analyze_policy_string(
         return policy
 
     policy = Policy(policy_json, filepath)
-    policy.analyze(ignore_private_auditors, private_auditors_custom_path)
+    policy.analyze(
+        ignore_private_auditors,
+        private_auditors_custom_path,
+        include_community_auditors,
+    )
     return policy
 
 
@@ -142,25 +147,25 @@ def is_arn_match(resource_type, arn_format, resource):
 
 def is_glob_match(s1, s2):
     # This comes from https://github.com/duo-labs/parliament/issues/36#issuecomment-574001764
-    
+
     # If strings are equal, TRUE
     if s1 == s2:
         return True
     # If either string is all '*'s, TRUE
-    if s1 and all(c == '*' for c in s1) or s2 and all(c == '*' for c in s2):
+    if s1 and all(c == "*" for c in s1) or s2 and all(c == "*" for c in s2):
         return True
     # If either string is '', FALSE (already handled case if both are '' in A)
     if not s1 or not s2:
         return False
     # At this point, we know that both s1 and s2 are non-empty, so safe to access [0]'th element
     # If both strings start with '*', TRUE if match first with remainder of second or second with remainder of first
-    if s1[0] == s2[0] == '*':
+    if s1[0] == s2[0] == "*":
         return is_glob_match(s1[1:], s2) or is_glob_match(s1, s2[1:])
     # If s1 starts with '*', TRUE if remainder of s1 matches any length remainder of s2
-    if s1[0] == '*':
+    if s1[0] == "*":
         return any(is_glob_match(s1[1:], s2[i:]) for i in range(len(s2)))
     # If s2 starts with '*', TRUE if remainder of s2 matches any length remainder of s1
-    if s2[0] == '*':
+    if s2[0] == "*":
         return any(is_glob_match(s1[i:], s2[1:]) for i in range(len(s1)))
     # TRUE if s1 and s2 both have same first element and remainder of s1 matches remainder of s2
     return s1[0] == s2[0] and is_glob_match(s1[1:], s2[1:])

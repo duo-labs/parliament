@@ -9198,6 +9198,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Grants permission to associate the specified sign-in delegate groups with the specified Amazon Chime account.",
+        "privilege": "AssociateSigninDelegateGroupsWithAccount",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Grants permission to authorize an Active Directory for your Amazon Chime Enterprise account",
         "privilege": "AuthorizeDirectory",
         "resource_types": [
@@ -9421,6 +9433,18 @@
         "access_level": "Write",
         "description": "Grants permission to add a room member",
         "privilege": "CreateRoomMembership",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to create a user under the specified Amazon Chime account.",
+        "privilege": "CreateUser",
         "resource_types": [
           {
             "condition_keys": [],
@@ -9711,6 +9735,18 @@
         "access_level": "Write",
         "description": "Grants permission to disassociate multiple phone numbers from the specified Amazon Chime Voice Connector Group",
         "privilege": "DisassociatePhoneNumbersFromVoiceConnectorGroup",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to disassociate the specified sign-in delegate groups from the specified Amazon Chime account.",
+        "privilege": "DisassociateSigninDelegateGroupsFromAccount",
         "resource_types": [
           {
             "condition_keys": [],
@@ -10838,6 +10874,21 @@
   {
     "conditions": [
       {
+        "condition": "aws:RequestTag/${TagKey}",
+        "description": "Filters actions based on the presence of tag key-value pairs in the request",
+        "type": "String"
+      },
+      {
+        "condition": "aws:ResourceTag/${TagKey}",
+        "description": "Filters actions based on tag key-value pairs attached to the resource",
+        "type": "String"
+      },
+      {
+        "condition": "aws:TagKeys",
+        "description": "Filters actions based on the presence of tag keys in the request",
+        "type": "String"
+      },
+      {
         "condition": "cloud9:EnvironmentId",
         "description": "Filters access by the AWS Cloud9 environment ID",
         "type": "String"
@@ -10897,6 +10948,11 @@
         "privilege": "CreateEnvironmentMembership",
         "resource_types": [
           {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "environment*"
+          },
+          {
             "condition_keys": [
               "cloud9:UserArn",
               "cloud9:EnvironmentId",
@@ -10929,7 +10985,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "environment*"
           }
         ]
       },
@@ -10938,6 +10994,11 @@
         "description": "Grants permission to get information about environment members for an AWS Cloud9 development environment.",
         "privilege": "DescribeEnvironmentMemberships",
         "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "environment*"
+          },
           {
             "condition_keys": [
               "cloud9:UserArn",
@@ -10956,7 +11017,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "environment*"
           }
         ]
       },
@@ -10997,6 +11058,57 @@
         ]
       },
       {
+        "access_level": "Read",
+        "description": "Lists tags for a cloud9 environment",
+        "privilege": "ListTagsForResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "environment*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Adds tags to a cloud9 environment",
+        "privilege": "TagResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "environment*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Removes tags from a cloud9 environment",
+        "privilege": "UntagResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "environment*"
+          },
+          {
+            "condition_keys": [
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
         "access_level": "Write",
         "description": "Grants permission to change the settings of an existing AWS Cloud9 development environment.",
         "privilege": "UpdateEnvironment",
@@ -11013,6 +11125,11 @@
         "description": "Grants permission to change the settings of an existing environment member for an AWS Cloud9 development environment.",
         "privilege": "UpdateEnvironmentMembership",
         "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "environment*"
+          },
           {
             "condition_keys": [
               "cloud9:UserArn",
@@ -11040,7 +11157,9 @@
     "resources": [
       {
         "arn": "arn:${Partition}:cloud9:${Region}:${Account}:environment:${ResourceId}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "environment"
       }
     ],
@@ -13299,7 +13418,23 @@
     "service_name": "Amazon CloudFront"
   },
   {
-    "conditions": [],
+    "conditions": [
+      {
+        "condition": "aws:RequestTag/${TagKey}",
+        "description": "Filters actions based on the presence of tag key-value pairs in the request",
+        "type": "String"
+      },
+      {
+        "condition": "aws:ResourceTag/${TagKey}",
+        "description": "Filters actions based on tag key-value pairs attached to the resource",
+        "type": "String"
+      },
+      {
+        "condition": "aws:TagKeys",
+        "description": "Filters actions based on the presence of tag keys in the request",
+        "type": "String"
+      }
+    ],
     "prefix": "cloudhsm",
     "privileges": [
       {
@@ -13316,11 +13451,39 @@
       },
       {
         "access_level": "Write",
+        "description": "Creates a copy of a backup in the specified region",
+        "privilege": "CopyBackupToRegion",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "backup*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Creates a new AWS CloudHSM cluster",
         "privilege": "CreateCluster",
         "resource_types": [
           {
             "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "backup"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
             "dependent_actions": [],
             "resource_type": ""
           }
@@ -13340,13 +13503,13 @@
       },
       {
         "access_level": "Write",
-        "description": "Creates a new hardware security module (HSM) in the specified AWS CloudHSM cluster.",
+        "description": "Creates a new hardware security module (HSM) in the specified AWS CloudHSM cluster",
         "privilege": "CreateHsm",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "cluster*"
           }
         ]
       },
@@ -13364,13 +13527,25 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes the specified AWS CloudHSM cluster.",
+        "description": "Deletes the specified CloudHSM backup",
+        "privilege": "DeleteBackup",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "backup*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Deletes the specified AWS CloudHSM cluster",
         "privilege": "DeleteCluster",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "cluster*"
           }
         ]
       },
@@ -13388,7 +13563,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes the specified HSM.",
+        "description": "Deletes the specified HSM",
         "privilege": "DeleteHsm",
         "resource_types": [
           {
@@ -13412,7 +13587,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Gets information about backups of AWS CloudHSM clusters.",
+        "description": "Gets information about backups of AWS CloudHSM clusters",
         "privilege": "DescribeBackups",
         "resource_types": [
           {
@@ -13424,7 +13599,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Gets information about AWS CloudHSM clusters.",
+        "description": "Gets information about AWS CloudHSM clusters",
         "privilege": "DescribeClusters",
         "resource_types": [
           {
@@ -13484,13 +13659,13 @@
       },
       {
         "access_level": "Write",
-        "description": "Claims an AWS CloudHSM cluster.",
+        "description": "Claims an AWS CloudHSM cluster",
         "privilege": "InitializeCluster",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "cluster*"
           }
         ]
       },
@@ -13544,13 +13719,18 @@
       },
       {
         "access_level": "Read",
-        "description": "Gets a list of tags for the specified AWS CloudHSM cluster.",
+        "description": "Gets a list of tags for the specified AWS CloudHSM cluster",
         "privilege": "ListTags",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "backup"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "cluster"
           }
         ]
       },
@@ -13615,12 +13795,37 @@
         ]
       },
       {
+        "access_level": "Write",
+        "description": "Restores the specified CloudHSM backup",
+        "privilege": "RestoreBackup",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "backup*"
+          }
+        ]
+      },
+      {
         "access_level": "Tagging",
-        "description": "Adds or overwrites one or more tags for the specified AWS CloudHSM cluster.",
+        "description": "Adds or overwrites one or more tags for the specified AWS CloudHSM cluster",
         "privilege": "TagResource",
         "resource_types": [
           {
             "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "backup"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "cluster"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
             "dependent_actions": [],
             "resource_type": ""
           }
@@ -13628,18 +13833,45 @@
       },
       {
         "access_level": "Tagging",
-        "description": "Removes the specified tag or tags from the specified AWS CloudHSM cluster.",
+        "description": "Removes the specified tag or tags from the specified AWS CloudHSM cluster",
         "privilege": "UntagResource",
         "resource_types": [
           {
             "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "backup"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "cluster"
+          },
+          {
+            "condition_keys": [
+              "aws:TagKeys"
+            ],
             "dependent_actions": [],
             "resource_type": ""
           }
         ]
       }
     ],
-    "resources": [],
+    "resources": [
+      {
+        "arn": "arn:${Partition}:cloudhsm:${Region}:${Account}:backup/${CloudHsmBackupInstanceName}",
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
+        "resource": "backup"
+      },
+      {
+        "arn": "arn:${Partition}:cloudhsm:${Region}:${Account}:cluster/${CloudHsmClusterInstanceName}",
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
+        "resource": "cluster"
+      }
+    ],
     "service_name": "AWS CloudHSM"
   },
   {
@@ -22641,6 +22873,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Grants permissions to initiate a chat using the Amazon Connect API.",
+        "privilege": "StartChatContact",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "contact-flow*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Grants permissions to initiate outbound calls using the Amazon Connect API.",
         "privilege": "StartOutboundVoiceContact",
         "resource_types": [
@@ -22653,7 +22897,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Grants permissions to stop contacts that were initiated using the Amazon Connect API. If you use this operation on an active contact the contact ends, even if an agent is active on a call with a customer.",
+        "description": "Grants permissions to stop contacts that were initiated using the Amazon Connect API. If you use this operation on an active contact the contact ends, even if the agent is active on a call with a customer.",
         "privilege": "StopContact",
         "resource_types": [
           {
@@ -29064,8 +29308,32 @@
       },
       {
         "access_level": "Write",
+        "description": "Deletes from the system the certificate that was registered for a secured LDAP connection.",
+        "privilege": "DeregisterCertificate",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "directory*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Removes the specified directory as a publisher to the specified SNS topic.",
         "privilege": "DeregisterEventTopic",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "directory*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Displays information about the certificate registered for a secured LDAP connection.",
+        "privilege": "DescribeCertificate",
         "resource_types": [
           {
             "condition_keys": [],
@@ -29124,6 +29392,18 @@
       },
       {
         "access_level": "Read",
+        "description": "Describes the status of LDAP security for the specified directory.",
+        "privilege": "DescribeLDAPSSettings",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "directory*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
         "description": "Returns the shared directories in your account.",
         "privilege": "DescribeSharedDirectories",
         "resource_types": [
@@ -29160,6 +29440,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Deactivates LDAP secure calls for the specified directory.",
+        "privilege": "DisableLDAPS",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "directory*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Disables multi-factor authentication (MFA) with the Remote Authentication Dial In User Service (RADIUS) server for an AD Connector directory.",
         "privilege": "DisableRadius",
         "resource_types": [
@@ -29174,6 +29466,18 @@
         "access_level": "Write",
         "description": "Disables single-sign on for a directory.",
         "privilege": "DisableSso",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "directory*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Activates the switch for the specific directory to always use LDAP secure calls.",
+        "privilege": "EnableLDAPS",
         "resource_types": [
           {
             "condition_keys": [],
@@ -29255,6 +29559,18 @@
         ]
       },
       {
+        "access_level": "List",
+        "description": "For the specified directory, lists all the certificates registered for a secured LDAP connection.",
+        "privilege": "ListCertificates",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "directory*"
+          }
+        ]
+      },
+      {
         "access_level": "Read",
         "description": "Lists the address blocks that you have added to a directory.",
         "privilege": "ListIpRoutes",
@@ -29294,6 +29610,18 @@
         "access_level": "Read",
         "description": "Lists all tags on an Amazon Directory Services directory.",
         "privilege": "ListTagsForResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "directory*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Registers a certificate for secured LDAP connection.",
+        "privilege": "RegisterCertificate",
         "resource_types": [
           {
             "condition_keys": [],
@@ -29462,6 +29790,18 @@
         "access_level": "Write",
         "description": "Updates the Remote Authentication Dial In User Service (RADIUS) server information for an AD Connector directory.",
         "privilege": "UpdateRadius",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "directory*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Updates the trust that has been set up between your AWS Managed Microsoft AD directory and an on-premises Active Directory.",
+        "privilege": "UpdateTrust",
         "resource_types": [
           {
             "condition_keys": [],
@@ -29922,7 +30262,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "table"
+            "resource_type": ""
           }
         ]
       },
@@ -38166,7 +38506,10 @@
       },
       {
         "arn": "arn:${Partition}:ecs:${region}:${Account}:task-set/${ClusterName}/${ServiceName}/${TaskSetId}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}",
+          "ecs:ResourceTag/${TagKey}"
+        ],
         "resource": "task-set"
       }
     ],
@@ -40165,7 +40508,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "access-point*"
           }
         ]
       },
@@ -40221,6 +40564,18 @@
             ],
             "dependent_actions": [],
             "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Returns the descriptions of Amazon EFS access points.",
+        "privilege": "DescribeAccessPoints",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "file-system*"
           }
         ]
       },
@@ -40357,7 +40712,7 @@
         ]
       },
       {
-        "access_level": "Write",
+        "access_level": "Tagging",
         "description": "Creates or overwrites tags associated with the specified Amazon EFS resource.",
         "privilege": "TagResource",
         "resource_types": [
@@ -40369,7 +40724,7 @@
         ]
       },
       {
-        "access_level": "Write",
+        "access_level": "Tagging",
         "description": "Deletes the specified tags from a specified Amazon EFS resource.",
         "privilege": "UntagResource",
         "resource_types": [
@@ -42283,6 +42638,18 @@
         "access_level": "Read",
         "description": "Grants permission to send HTTP HEAD requests to the Elasticsearch APIs.",
         "privilege": "ESHttpHead",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "domain"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to send HTTP PATCH requests to the Elasticsearch APIs.",
+        "privilege": "ESHttpPatch",
         "resource_types": [
           {
             "condition_keys": [],
@@ -57174,6 +57541,26 @@
     "service_name": "AWS IoT"
   },
   {
+    "conditions": [],
+    "prefix": "iot-device-tester",
+    "privileges": [
+      {
+        "access_level": "Write",
+        "description": "Grants permissions for IoT Device Tester to send usage metrics on your behalf",
+        "privilege": "SendMetrics",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      }
+    ],
+    "resources": [],
+    "service_name": "AWS IoT Device Tester"
+  },
+  {
     "conditions": [
       {
         "condition": "aws:RequestTag/${TagKey}",
@@ -63390,6 +63777,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Deletes the event invoke configuration parameters for the specified Lambda function.",
+        "privilege": "DeleteFunctionEventInvokeConfig",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "function*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Deletes a version of a function layer.",
         "privilege": "DeleteLayerVersion",
         "resource_types": [
@@ -63397,6 +63796,23 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "layerVersion*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Deletes the provisioned concurrency configuration for a function.",
+        "privilege": "DeleteProvisionedConcurrencyConfig",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "function alias"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "function version"
           }
         ]
       },
@@ -63481,8 +63897,32 @@
       },
       {
         "access_level": "Read",
+        "description": "Returns details about the concurrency configuration for a function.",
+        "privilege": "GetFunctionConcurrency",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "function*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
         "description": "Returns the configuration information of the Lambda function.",
         "privilege": "GetFunctionConfiguration",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "function*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Returns the event invoke configuration parameters for the specified Lambda function.",
+        "privilege": "GetFunctionEventInvokeConfig",
         "resource_types": [
           {
             "condition_keys": [],
@@ -63524,6 +63964,23 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "function*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Retrieves the provisioned concurrency configuration for a function's alias or version.",
+        "privilege": "GetProvisionedConcurrencyConfig",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "function alias"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "function version"
           }
         ]
       },
@@ -63577,6 +64034,18 @@
       },
       {
         "access_level": "List",
+        "description": "Returns a list of all event invoke configuration parameters for the Lambda function, its alias and versions",
+        "privilege": "ListFunctionEventInvokeConfigs",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "function*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
         "description": "Returns a list of your Lambda functions.",
         "privilege": "ListFunctions",
         "resource_types": [
@@ -63608,6 +64077,18 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Retrieves a list of provisioned concurrency configurations for a function.",
+        "privilege": "ListProvisionedConcurrencyConfigs",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "function*"
           }
         ]
       },
@@ -63668,6 +64149,35 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "function*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Adds the event invoke configuration parameters for the specified Lambda function by using the values provided in the request.",
+        "privilege": "PutFunctionEventInvokeConfig",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "function*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Adds a provisioned concurrency configuration to a function's alias or version.",
+        "privilege": "PutProvisionedConcurrencyConfig",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "function alias"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "function version"
           }
         ]
       },
@@ -63787,6 +64297,18 @@
             "resource_type": ""
           }
         ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Updates the event invoke configuration parameters for the specified Lambda function by using the values provided in the request.",
+        "privilege": "UpdateFunctionEventInvokeConfig",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "function*"
+          }
+        ]
       }
     ],
     "resources": [
@@ -63794,6 +64316,16 @@
         "arn": "arn:${Partition}:lambda:${Region}:${Account}:function:${FunctionName}",
         "condition_keys": [],
         "resource": "function"
+      },
+      {
+        "arn": "arn:${Partition}:lambda:${Region}:${Account}:function:${FunctionName}:${Version}",
+        "condition_keys": [],
+        "resource": "function version"
+      },
+      {
+        "arn": "arn:${Partition}:lambda:${Region}:${Account}:function:${FunctionName}:${Alias}",
+        "condition_keys": [],
+        "resource": "function alias"
       },
       {
         "arn": "arn:${Partition}:lambda:${Region}:${Account}:layer:${LayerName}",
@@ -64725,7 +65257,7 @@
         ]
       },
       {
-        "access_level": "List",
+        "access_level": "Write",
         "description": "Creates a new Amazon EC2 instance from an exported Amazon Lightsail snapshot.",
         "privilege": "CreateCloudFormationStack",
         "resource_types": [
@@ -70712,6 +71244,22 @@
       },
       {
         "access_level": "Write",
+        "description": "Create an email template.",
+        "privilege": "CreateEmailTemplate",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys",
+              "aws:ResourceTag/${TagKey}"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Create an export job that exports endpoint definitions to Amazon S3.",
         "privilege": "CreateExportJob",
         "resource_types": [
@@ -70757,6 +71305,22 @@
       },
       {
         "access_level": "Write",
+        "description": "Create a push notification template.",
+        "privilege": "CreatePushTemplate",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys",
+              "aws:ResourceTag/${TagKey}"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Create a segment that is based on endpoint data reported to Pinpoint by your app. To allow a user to create a segment by importing endpoint data from outside of Pinpoint, allow the mobiletargeting:CreateImportJob action.",
         "privilege": "CreateSegment",
         "resource_types": [
@@ -70765,6 +71329,38 @@
             "dependent_actions": [],
             "resource_type": "apps*"
           },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys",
+              "aws:ResourceTag/${TagKey}"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Create an sms message template.",
+        "privilege": "CreateSmsTemplate",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys",
+              "aws:ResourceTag/${TagKey}"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Create a voice message template.",
+        "privilege": "CreateVoiceTemplate",
+        "resource_types": [
           {
             "condition_keys": [
               "aws:RequestTag/${TagKey}",
@@ -70891,6 +71487,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Delete an email template or an email template version.",
+        "privilege": "DeleteEmailTemplate",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "templates*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Delete an endpoint.",
         "privilege": "DeleteEndpoint",
         "resource_types": [
@@ -70944,6 +71552,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Delete a push notification template or a push notification template version.",
+        "privilege": "DeletePushTemplate",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "templates*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Delete a specific segment.",
         "privilege": "DeleteSegment",
         "resource_types": [
@@ -70973,6 +71593,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Delete an sms message template or an sms message template version.",
+        "privilege": "DeleteSmsTemplate",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "templates*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Delete all of the endpoints that are associated with a user ID.",
         "privilege": "DeleteUserEndpoints",
         "resource_types": [
@@ -70992,6 +71624,18 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "apps*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Delete a voice message template or a voice message template version.",
+        "privilege": "DeleteVoiceTemplate",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "templates*"
           }
         ]
       },
@@ -71209,6 +71853,18 @@
       },
       {
         "access_level": "Read",
+        "description": "Retrieve information about a specific or the active version of an email template.",
+        "privilege": "GetEmailTemplate",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "templates*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
         "description": "Retrieve information about a specific endpoint.",
         "privilege": "GetEndpoint",
         "resource_types": [
@@ -71305,6 +71961,18 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "journeys*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Retrieve information about a specific or the active version of an push notification template.",
+        "privilege": "GetPushTemplate",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "templates*"
           }
         ]
       },
@@ -71419,6 +72087,18 @@
       },
       {
         "access_level": "Read",
+        "description": "Retrieve information about a specific or the active version of an sms message template.",
+        "privilege": "GetSmsTemplate",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "templates*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
         "description": "Retrieve information about the endpoints that are associated with a user ID.",
         "privilege": "GetUserEndpoints",
         "resource_types": [
@@ -71438,6 +72118,18 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "apps*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Retrieve information about a specific or the active version of a voice message template.",
+        "privilege": "GetVoiceTemplate",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "templates*"
           }
         ]
       },
@@ -71472,6 +72164,30 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "segments"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Retrieve all versions about a specific template.",
+        "privilege": "ListTemplateVersions",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "templates*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Retrieve metadata about the queried templates.",
+        "privilege": "ListTemplates",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "templates*"
           }
         ]
       },
@@ -71730,6 +72446,26 @@
       },
       {
         "access_level": "Write",
+        "description": "Update a specific email template under the same version or generate a new version.",
+        "privilege": "UpdateEmailTemplate",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "templates*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Create an endpoint or update the information for an endpoint.",
         "privilege": "UpdateEndpoint",
         "resource_types": [
@@ -71816,6 +72552,26 @@
       },
       {
         "access_level": "Write",
+        "description": "Update a specific push notification template under the same version or generate a new version.",
+        "privilege": "UpdatePushTemplate",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "templates*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Update a specific segment.",
         "privilege": "UpdateSegment",
         "resource_types": [
@@ -71853,6 +72609,38 @@
       },
       {
         "access_level": "Write",
+        "description": "Update a specific sms message template under the same version or generate a new version.",
+        "privilege": "UpdateSmsTemplate",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "templates*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Upate the active version parameter of a specific template.",
+        "privilege": "UpdateTemplateActiveVersion",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "templates*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Update the Voice channel for an app.",
         "privilege": "UpdateVoiceChannel",
         "resource_types": [
@@ -71860,6 +72648,26 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "apps*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Update a specific voice message template under the same version or generate a new version.",
+        "privilege": "UpdateVoiceTemplate",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "templates*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       }
@@ -71892,6 +72700,13 @@
           "aws:ResourceTag/${TagKey}"
         ],
         "resource": "segments"
+      },
+      {
+        "arn": "arn:${Partition}:mobiletargeting:${Region}:${Account}:templates/${TemplateName}/${ChannelType}",
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
+        "resource": "templates"
       }
     ],
     "service_name": "Amazon Pinpoint"
@@ -75749,6 +76564,21 @@
   {
     "conditions": [
       {
+        "condition": "aws:RequestTag/${TagKey}",
+        "description": "Filters actions based on the presence of tag key-value pairs in the request",
+        "type": "String"
+      },
+      {
+        "condition": "aws:ResourceTag/${TagKey}",
+        "description": "Filters actions based on tag key-value pairs attached to the resource",
+        "type": "String"
+      },
+      {
+        "condition": "aws:TagKeys",
+        "description": "Filters actions based on the presence of tag keys in the request",
+        "type": "String"
+      },
+      {
         "condition": "quicksight:IamArn",
         "description": "IAM user ARN or role ARN.",
         "type": "String"
@@ -75780,6 +76610,26 @@
       },
       {
         "access_level": "Write",
+        "description": "Creates a dashboard from a template",
+        "privilege": "CreateDashboard",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "dashboard*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Create a QuickSight group.",
         "privilege": "CreateGroup",
         "resource_types": [
@@ -75806,6 +76656,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Creates an assignment with one specified IAM Policy ARN that will be assigned to specified groups or users of QuickSight.",
+        "privilege": "CreateIAMPolicyAssignment",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "assignment*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "CreateReader enables the user to provision Amazon QuickSight readers.",
         "privilege": "CreateReader",
         "resource_types": [
@@ -75818,6 +76680,38 @@
       },
       {
         "access_level": "Write",
+        "description": "Creates a template from an existing QuickSight analysis or template",
+        "privilege": "CreateTemplate",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "template*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Creates a template alias for a template",
+        "privilege": "CreateTemplateAlias",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "template*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "CreateUser enables the user to provision Amazon QuickSight authors and readers.",
         "privilege": "CreateUser",
         "resource_types": [
@@ -75825,6 +76719,18 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "user*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Deletes a dashboard",
+        "privilege": "DeleteDashboard",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "dashboard*"
           }
         ]
       },
@@ -75856,6 +76762,42 @@
       },
       {
         "access_level": "Write",
+        "description": "Update an existing assignment.",
+        "privilege": "DeleteIAMPolicyAssignment",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "assignment*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Deletes a template",
+        "privilege": "DeleteTemplate",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "template*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Deletes the item that the specified template alias points to",
+        "privilege": "DeleteTemplateAlias",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "template*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Delete the QuickSight user that is associated with the identity of the IAM user/role making the call. The IAM user is not deleted as a result of this call.",
         "privilege": "DeleteUser",
         "resource_types": [
@@ -75880,6 +76822,30 @@
       },
       {
         "access_level": "Read",
+        "description": "Provides a summary for a dashboard",
+        "privilege": "DescribeDashboard",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "dashboard*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Describes read and write permissions for a dashboard",
+        "privilege": "DescribeDashboardPermissions",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "dashboard*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
         "description": "Return a QuickSight group\u2019s description and ARN.",
         "privilege": "DescribeGroup",
         "resource_types": [
@@ -75892,8 +76858,68 @@
       },
       {
         "access_level": "Read",
+        "description": "Describe an existing assignment.",
+        "privilege": "DescribeIAMPolicyAssignment",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "assignment*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Describes a template's metadata",
+        "privilege": "DescribeTemplate",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "template*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Describes the template alias for a template",
+        "privilege": "DescribeTemplateAlias",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "template*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Describes read and write permissions on a template",
+        "privilege": "DescribeTemplatePermissions",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "template*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
         "description": "Return information about a user, given the user name.",
         "privilege": "DescribeUser",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "user*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Return an auth code representing a QuickSight user.",
+        "privilege": "GetAuthCode",
         "resource_types": [
           {
             "condition_keys": [],
@@ -75928,6 +76954,30 @@
       },
       {
         "access_level": "List",
+        "description": "Lists all the versions of the dashboards in the QuickSight subscription",
+        "privilege": "ListDashboardVersions",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "dashboard*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Lists dashboards in an AWS account",
+        "privilege": "ListDashboards",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "dashboard*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
         "description": "Return a list of member users in a group.",
         "privilege": "ListGroupMemberships",
         "resource_types": [
@@ -75947,6 +76997,83 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "group*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "List all assignments in the current Amazon QuickSight account.",
+        "privilege": "ListIAMPolicyAssignments",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "assignment*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "List all assignments assigned to a user and the groups it belongs",
+        "privilege": "ListIAMPolicyAssignmentsForUser",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "assignment*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "List tags of a QuickSight resource.",
+        "privilege": "ListTagsForResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "dashboard"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "template"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Lists all the aliases of a template",
+        "privilege": "ListTemplateAliases",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "template*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Lists all the versions of the templates in the current Amazon QuickSight account",
+        "privilege": "ListTemplateVersions",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "template*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Lists all the templates in the current Amazon QuickSight account",
+        "privilege": "ListTemplates",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "template*"
           }
         ]
       },
@@ -76026,6 +77153,31 @@
         ]
       },
       {
+        "access_level": "Tagging",
+        "description": "Add tags to a QuickSight resource",
+        "privilege": "TagResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "dashboard"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "template"
+          },
+          {
+            "condition_keys": [
+              "aws:TagKeys",
+              "aws:RequestTag/${TagKey}"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
         "access_level": "Write",
         "description": "Unsubscribe enables the user to unsubscribe from Amazon QuickSight, which permanently deletes all users and their resources from Amazon QuickSight.",
         "privilege": "Unsubscribe",
@@ -76038,6 +77190,66 @@
         ]
       },
       {
+        "access_level": "Tagging",
+        "description": "Remove tags from a QuickSight resource.",
+        "privilege": "UntagResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "dashboard"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "template"
+          },
+          {
+            "condition_keys": [
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Updates a dashboard in an AWS account",
+        "privilege": "UpdateDashboard",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "dashboard*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Updates read and write permissions on a dashboard",
+        "privilege": "UpdateDashboardPermissions",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "dashboard*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Updates the published version of a dashboard",
+        "privilege": "UpdateDashboardPublishedVersion",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "dashboard*"
+          }
+        ]
+      },
+      {
         "access_level": "Write",
         "description": "Change group description.",
         "privilege": "UpdateGroup",
@@ -76046,6 +77258,54 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "group*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Update an existing assignment.",
+        "privilege": "UpdateIAMPolicyAssignment",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "assignment*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Updates a template from an existing Amazon QuickSight analysis or another template",
+        "privilege": "UpdateTemplate",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "template*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Updates the template alias of a template",
+        "privilege": "UpdateTemplateAlias",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "template*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Updates the resource permissions for a template",
+        "privilege": "UpdateTemplatePermissions",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "template*"
           }
         ]
       },
@@ -76075,8 +77335,22 @@
       },
       {
         "arn": "arn:${Partition}:quicksight:${Region}:${Account}:dashboard/${ResourceId}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "dashboard"
+      },
+      {
+        "arn": "arn:${Partition}:quicksight:${Region}:${Account}:template/${ResourceId}",
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
+        "resource": "template"
+      },
+      {
+        "arn": "arn:${Partition}:quicksight::${Account}:assignment/${ResourceId}",
+        "condition_keys": [],
+        "resource": "assignment"
       }
     ],
     "service_name": "Amazon QuickSight"
@@ -80622,6 +81896,18 @@
         ]
       },
       {
+        "access_level": "Read",
+        "description": "Gets text detection results for a Rekognition Video analysis started by StartTextDetection.",
+        "privilege": "GetTextDetection",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
         "access_level": "Write",
         "description": "Detects faces in the input image and adds them to the specified collection.",
         "privilege": "IndexFaces",
@@ -80798,6 +82084,18 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "streamprocessor*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Starts asynchronous detection of text in a video.",
+        "privilege": "StartTextDetection",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -81107,6 +82405,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Cancel a simulation job batch",
+        "privilege": "CancelSimulationJobBatch",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "simulationJobBatch*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Create a deployment job",
         "privilege": "CreateDeploymentJob",
         "resource_types": [
@@ -81367,6 +82677,18 @@
         ]
       },
       {
+        "access_level": "Read",
+        "description": "Describe a simulation job batch",
+        "privilege": "DescribeSimulationJobBatch",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "simulationJobBatch*"
+          }
+        ]
+      },
+      {
         "access_level": "List",
         "description": "List deployment jobs",
         "privilege": "ListDeploymentJobs",
@@ -81428,6 +82750,18 @@
       },
       {
         "access_level": "List",
+        "description": "List simulation job batches",
+        "privilege": "ListSimulationJobBatches",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
         "description": "List simulation jobs",
         "privilege": "ListSimulationJobs",
         "resource_types": [
@@ -81472,6 +82806,11 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "simulationJob"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "simulationJobBatch"
           }
         ]
       },
@@ -81501,6 +82840,23 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "simulationJob*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Create a simulation job batch",
+        "privilege": "StartSimulationJobBatch",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "aws:TagKeys",
+              "aws:RequestTag/${TagKey}"
+            ],
+            "dependent_actions": [
+              "iam:CreateServiceLinkedRole"
+            ],
+            "resource_type": ""
           }
         ]
       },
@@ -81554,6 +82910,11 @@
             "resource_type": "simulationJob"
           },
           {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "simulationJobBatch"
+          },
+          {
             "condition_keys": [
               "aws:TagKeys",
               "aws:RequestTag/${TagKey}"
@@ -81597,6 +82958,11 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "simulationJob"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "simulationJobBatch"
           },
           {
             "condition_keys": [
@@ -81653,6 +83019,13 @@
           "aws:ResourceTag/${TagKey}"
         ],
         "resource": "simulationJob"
+      },
+      {
+        "arn": "arn:${Partition}:robomaker:${Region}:${Account}:simulation-job-batch/${SimulationJobBatchId}",
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
+        "resource": "simulationJobBatch"
       },
       {
         "arn": "arn:${Partition}:robomaker:${Region}:${Account}:deployment-job/${DeploymentJobId}",
@@ -89388,6 +90761,18 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to retrieve information about Security Hub standards.",
+        "privilege": "DescribeStandards",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "hub*"
           }
         ]
       },
@@ -106152,7 +107537,23 @@
     "service_name": "Amazon WorkLink"
   },
   {
-    "conditions": [],
+    "conditions": [
+      {
+        "condition": "aws:RequestTag/${TagKey}",
+        "description": "Filters actions based on the presence of tag key-value pairs in the request",
+        "type": "String"
+      },
+      {
+        "condition": "aws:ResourceTag/${TagKey}",
+        "description": "Filters actions based on tag key-value pairs attached to the resource",
+        "type": "String"
+      },
+      {
+        "condition": "aws:TagKeys",
+        "description": "Filters actions based on the presence of tag keys in the request",
+        "type": "String"
+      }
+    ],
     "prefix": "workmail",
     "privileges": [
       {
@@ -106163,7 +107564,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106175,7 +107576,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106187,7 +107588,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106199,7 +107600,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106211,7 +107612,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106223,7 +107624,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106235,7 +107636,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106247,7 +107648,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106271,7 +107672,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106283,7 +107684,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106295,7 +107696,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106307,7 +107708,19 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Deletes an access control rule for the specified WorkMail organization.",
+        "privilege": "DeleteAccessControlRule",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106319,7 +107732,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106331,7 +107744,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106343,7 +107756,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106355,7 +107768,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106367,7 +107780,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106379,7 +107792,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106391,7 +107804,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106403,7 +107816,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106415,7 +107828,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106427,7 +107840,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106439,7 +107852,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106451,7 +107864,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106475,7 +107888,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106487,7 +107900,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106511,7 +107924,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106523,7 +107936,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106535,7 +107948,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106547,7 +107960,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106571,7 +107984,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106583,7 +107996,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106595,7 +108008,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106607,7 +108020,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106619,7 +108032,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106631,7 +108044,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106643,7 +108056,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106655,7 +108068,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106667,7 +108080,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106679,7 +108092,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106691,7 +108104,19 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Gets the effects of an organization's access control rules as they apply to a specified IPv4 address, access protocol action, or user ID.",
+        "privilege": "GetAccessControlEffect",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106703,7 +108128,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106715,7 +108140,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106727,7 +108152,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106739,7 +108164,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106751,7 +108176,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106763,7 +108188,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106775,7 +108200,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106787,7 +108212,19 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Lists the access control rules for the specified organization.",
+        "privilege": "ListAccessControlRules",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106799,7 +108236,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106811,7 +108248,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106823,7 +108260,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106835,7 +108272,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106847,7 +108284,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106859,7 +108296,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106883,7 +108320,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106895,7 +108332,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106907,7 +108344,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106919,7 +108356,19 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to list the tags applied to an Amazon WorkMail organization resource.",
+        "privilege": "ListTagsForResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106931,7 +108380,19 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Adds a new access control rule for the specified organization. The rule allows or denies access to the organization for the specified IPv4 addresses, access protocol actions, and user IDs. Adding a new rule with the same name as an existing rule replaces the older rule.",
+        "privilege": "PutAccessControlRule",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106943,7 +108404,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106955,7 +108416,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106967,7 +108428,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106979,7 +108440,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -106991,7 +108452,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -107003,7 +108464,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -107015,7 +108476,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -107027,7 +108488,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -107039,7 +108500,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -107051,7 +108512,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -107063,7 +108524,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -107075,7 +108536,19 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
+          }
+        ]
+      },
+      {
+        "access_level": "Tagging",
+        "description": "Grants permission to tag the specified Amazon WorkMail organization resource.",
+        "privilege": "TagResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "organization*"
           }
         ]
       },
@@ -107087,7 +108560,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -107099,7 +108572,19 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
+          }
+        ]
+      },
+      {
+        "access_level": "Tagging",
+        "description": "Grants permission to untag the specified Amazon WorkMail organization resource.",
+        "privilege": "UntagResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "organization*"
           }
         ]
       },
@@ -107111,7 +108596,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -107123,7 +108608,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -107135,7 +108620,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -107147,7 +108632,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -107159,7 +108644,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -107171,7 +108656,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       },
@@ -107183,12 +108668,20 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "organization*"
           }
         ]
       }
     ],
-    "resources": [],
+    "resources": [
+      {
+        "arn": "arn:${Partition}:workmail:${Region}:${Account}:organization/${ResourceId}",
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
+        "resource": "organization"
+      }
+    ],
     "service_name": "Amazon WorkMail"
   },
   {

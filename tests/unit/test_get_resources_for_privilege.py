@@ -10,15 +10,16 @@ class TestGetResourcesForPrivilege(unittest.TestCase):
     def test_policy_simple(self):
         policy = analyze_policy_string(
             """{
-  "Version":"2012-10-17",
-  "Statement":[
-    {
-      "Effect":"Allow",
-      "Action":["s3:GetObject"],
-      "Resource":["arn:aws:s3:::examplebucket/*"]
-    }
-  ]
-}"""
+      "Version":"2012-10-17",
+      "Statement":[
+        {
+          "Effect":"Allow",
+          "Action":["s3:GetObject"],
+          "Resource":["arn:aws:s3:::examplebucket/*"]
+        }
+      ]
+    }""",
+            include_community_auditors=False,
         )
 
         assert_equal(
@@ -36,15 +37,16 @@ class TestGetResourcesForPrivilege(unittest.TestCase):
     def test_policy_multiple_resources(self):
         policy = analyze_policy_string(
             """{
-  "Version":"2012-10-17",
-  "Statement":[
-    {
-      "Effect":"Allow",
-      "Action": "s3:*",
-      "Resource":["arn:aws:s3:::examplebucket", "arn:aws:s3:::examplebucket/*"]
-    }
-  ]
-}"""
+          "Version":"2012-10-17",
+          "Statement":[
+            {
+              "Effect":"Allow",
+              "Action": "s3:*",
+              "Resource":["arn:aws:s3:::examplebucket", "arn:aws:s3:::examplebucket/*"]
+            }
+          ]
+        }""",
+            include_community_auditors=False,
         )
 
         assert_equal(

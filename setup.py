@@ -44,7 +44,8 @@ setup(
     install_requires=[
         'boto3',
         'jmespath',
-        'pyyaml'
+        'pyyaml',
+        'policy_sentry'
     ],
     setup_requires=['nose'],
     packages=find_packages(exclude=['tests*']),

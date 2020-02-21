@@ -101,7 +101,9 @@ You can have multiple elements in `ignore_locations`.  For example,
 
 Assuming the finding has these types of values in the `location` element, this will ignore any finding that matches the filepath to "test.json" AND action to "s3:GetObject" AND the resource to "a" OR "b".  It will also ignore a resource that matches "c.*".
 
-# Private auditors
+# Custom auditors
+
+## Private Auditors
 This section will show how to create your own private auditor to look for any policies that grant access to either of the sensitive buckets `secretbucket` and `othersecretbucket`.
 
 Create a file `test.json` with contents:
@@ -232,6 +234,11 @@ for f in analyzed_policy.findings:
   print(f)
 ```
 
+## Community auditors
+
+* The process for community auditors is the same as private auditors, except that:
+ - The community auditors are located in the `parliament/community_auditors` folder instead of the `parliament/private_auditors`
+ - The community auditors are bundled with the package and users can include them in their testing by specifying `--include-community-auditors` flag.
 
 # Development
 Setup a testing environment

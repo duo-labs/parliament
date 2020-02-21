@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-
+from pathlib import Path
 import argparse
 from os import listdir
-from os.path import isfile, join
+from os.path import isfile, join, abspath
 import sys
 import json
 import re
@@ -121,6 +121,12 @@ def main():
     parser.add_argument(
         "--config", help="Custom config file for over-riding values", type=str
     )
+    parser.add_argument(
+        "--include-community-auditors",
+        help="Use this flag to enable community-provided auditors",
+        default=None,
+        action="store_true"
+    )
     args = parser.parse_args()
 
     if args.private_auditors is not None and "." in args.private_auditors:
@@ -151,6 +157,7 @@ def main():
                     policy_string,
                     filepath,
                     private_auditors_custom_path=args.private_auditors,
+                    include_community_auditors=args.include_community_auditors,
                 )
                 findings.extend(policy.findings)
 
@@ -178,6 +185,7 @@ def main():
                         json.dumps(version["Document"]),
                         user["Arn"],
                         private_auditors_custom_path=args.private_auditors,
+                        include_community_auditors=args.include_community_auditors,
                     )
                     findings.extend(policy.findings)
             for role in auth_details_json["RoleDetailList"]:
@@ -186,6 +194,7 @@ def main():
                         json.dumps(version["Document"]),
                         role["Arn"],
                         private_auditors_custom_path=args.private_auditors,
+                        include_community_auditors=args.include_community_auditors,
                     )
                     findings.extend(policy.findings)
             for group in auth_details_json["GroupDetailList"]:
@@ -194,18 +203,22 @@ def main():
                         json.dumps(version["Document"]),
                         group["Arn"],
                         private_auditors_custom_path=args.private_auditors,
+                        include_community_auditors=args.include_community_auditors,
                     )
                     findings.extend(policy.findings)
     elif args.string:
         policy = analyze_policy_string(
-            args.string, private_auditors_custom_path=args.private_auditors
+            args.string, private_auditors_custom_path=args.private_auditors,
+            include_community_auditors=args.include_community_auditors,
+
         )
         findings.extend(policy.findings)
     elif args.file:
         with open(args.file) as f:
             contents = f.read()
             policy = analyze_policy_string(
-                contents, args.file, private_auditors_custom_path=args.private_auditors
+                contents, args.file, private_auditors_custom_path=args.private_auditors,
+                include_community_auditors=args.include_community_auditors,
             )
             findings.extend(policy.findings)
     else:
@@ -214,6 +227,12 @@ def main():
 
     filtered_findings = []
     override_config(args.config)
+    if args.include_community_auditors:
+        community_auditors_directory = "community_auditors"
+        community_auditors_override_file = (
+                Path(abspath(__file__)).parent / community_auditors_directory / 'config_override.yaml'
+        )
+        override_config(community_auditors_override_file)
     for finding in findings:
         finding = enhance_finding(finding)
         if not is_finding_filtered(finding, args.minimum_severity):

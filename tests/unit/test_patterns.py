@@ -18,6 +18,7 @@ class TestPatterns(unittest.TestCase):
         "Condition": {"Bool": {"aws:MultiFactorAuthPresent":"false"}}
         }}""",
             ignore_private_auditors=True,
+            include_community_auditors=False,
         )
         assert_equal(
             policy.finding_ids,
@@ -36,6 +37,7 @@ class TestPatterns(unittest.TestCase):
         "Resource": "*"
         }}""",
             ignore_private_auditors=True,
+            include_community_auditors=False,
         )
         assert_equal(
             policy.finding_ids,
@@ -74,6 +76,7 @@ class TestPatterns(unittest.TestCase):
 }
         ]}""",
             ignore_private_auditors=True,
+            include_community_auditors=False,
         )
 
         assert_equal(
@@ -101,6 +104,7 @@ class TestPatterns(unittest.TestCase):
         }
         ]}""",
             ignore_private_auditors=True,
+            include_community_auditors=False,
         )
         assert_equal(
             policy.finding_ids,
@@ -118,6 +122,7 @@ class TestPatterns(unittest.TestCase):
         "Resource": ["arn:aws:s3:::bucket", "arn:aws:s3:::bucket/*"]
         }}""",
             ignore_private_auditors=True,
+            include_community_auditors=False,
         )
         assert_equal(
             policy.finding_ids,
@@ -139,6 +144,7 @@ class TestPatterns(unittest.TestCase):
         "Resource": ["arn:aws:s3:::bucket2/*"]
         }]}""",
             ignore_private_auditors=True,
+            include_community_auditors=False,
         )
         # There is one finding for "No resources match for s3:ListAllMyBuckets which requires a resource format of *"
         assert_equal(

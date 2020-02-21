@@ -18,12 +18,16 @@ class TestPermissionsManagement(unittest.TestCase):
               "Action": [
                 "lambda:addpermission",
                 "s3:putbucketacl",
-                "ram:CreateResourceShare",
+                "ram:CreateResourceShare"
               ],
               "Resource": "*"
             }
           ]
         }
         """
-        policy = analyze_policy_string(example_policy_string)
-        assert_equal(len(policy.findings), 1)
+        policy = analyze_policy_string(example_policy_string, include_community_auditors=True)
+
+        assert_equal(
+            policy.finding_ids,
+            set(['PERMISSIONS_MANAGEMENT_ACTIONS', 'RESOURCE_POLICY_PRIVILEGE_ESCALATION'])
+        )

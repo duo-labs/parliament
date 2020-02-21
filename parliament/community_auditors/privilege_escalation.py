@@ -1,18 +1,15 @@
-from policy_sentry.shared.database import connect_db
-from policy_sentry.util.policy_files import get_actions_from_policy
-from policy_sentry.analysis.analyze import determine_actions_to_expand
-
-
 def audit(policy):
-    db_session = connect_db('bundled')
-    actions_in_policy = get_actions_from_policy(policy.policy_json)
-    expanded_actions = determine_actions_to_expand(db_session, actions_in_policy)
-    permissions_on_other_users(policy, expanded_actions)
+    actions = policy.get_allowed_actions()
+    permissions_on_other_users(policy, actions)
 
 
 # Categories based on https://know.bishopfox.com/blog/5-privesc-attack-vectors-in-aws
 
 def permissions_on_other_users(policy, expanded_actions):
+    # Turn into lowercase
+    expanded_actions_normalized = [x.lower() for x in expanded_actions]
+    expanded_actions = set(expanded_actions_normalized)
+
     escalation_methods = {
         # 1. IAM Permissions on Other Users
         'CreateAccessKey': [
@@ -101,9 +98,8 @@ def permissions_on_other_users(policy, expanded_actions):
             'lambda:updatefunctioncode'
         ]
     }
+
     for key in escalation_methods:
-        # turn into lowercase
-        # [x.lower() for x in escalation_methods[key]]
-        if set(escalation_methods[key]).issubset(set(expanded_actions)):
+        if set(escalation_methods[key]).issubset(expanded_actions):
             policy.add_finding("PRIVILEGE_ESCALATION", location={"type": key, "actions": escalation_methods[key]})
 

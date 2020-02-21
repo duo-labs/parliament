@@ -1,8 +1,4 @@
 from parliament import is_arn_match, expand_action
-from policy_sentry.shared.database import connect_db
-from policy_sentry.querying.actions import get_actions_with_access_level
-from policy_sentry.util.policy_files import get_actions_from_policy
-from policy_sentry.analysis.analyze import determine_actions_to_expand
 
 # https://gist.github.com/kmcquade/33860a617e651104d243c324ddf7992a
 CREDENTIALS_EXPOSURE_ACTIONS = [
@@ -36,9 +32,9 @@ CREDENTIALS_EXPOSURE_ACTIONS = [
 
 
 def audit(policy):
-    db_session = connect_db('bundled')
-    actions_in_policy = get_actions_from_policy(policy.policy_json)
-    actions = determine_actions_to_expand(db_session, actions_in_policy)
+    actions = policy.get_allowed_actions()
+    
+    
     credentials_exposure_actions_in_policy = []
     for action in actions:
         if action in CREDENTIALS_EXPOSURE_ACTIONS:

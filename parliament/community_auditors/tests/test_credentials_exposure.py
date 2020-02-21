@@ -24,7 +24,10 @@ class TestCredentialsManagement(unittest.TestCase):
           ]
         }
         """
-        policy = analyze_policy_string(example_policy_string)
-        print(policy.policy_json)
-        print(policy.findings)
-        assert_equal(len(policy.findings), 2)
+        policy = analyze_policy_string(example_policy_string, include_community_auditors=True)
+
+        assert_equal(
+            policy.finding_ids,
+            set(["CREDENTIALS_EXPOSURE", "PERMISSIONS_MANAGEMENT_ACTIONS"])
+        )
+        

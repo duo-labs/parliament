@@ -1,14 +1,23 @@
 #!/usr/bin/env python3
-from pathlib import Path
 import argparse
-from os import listdir
-from os.path import isfile, join, abspath
-import sys
 import json
+import logging
 import re
+import sys
+from os import walk
+from os.path import abspath
+from os.path import join
+from pathlib import Path
 
-from parliament import analyze_policy_string, enhance_finding, override_config
+from parliament import (
+    analyze_policy_string,
+    enhance_finding,
+    override_config,
+    __version__,
+)
 from parliament.misc import make_list
+
+logger = logging.getLogger(__name__)
 
 
 def is_finding_filtered(finding, minimum_severity="LOW"):
@@ -84,6 +93,31 @@ def print_finding(finding, minimal_output=False, json_output=False):
         )
 
 
+def find_files(directory, exclude_pattern=None, policy_extension=""):
+    exclude = None
+    if exclude_pattern:
+        exclude = re.compile(exclude_pattern)
+
+    discovered_files = []
+    for root, _, files in walk(directory):
+        for name in files:
+            if name.endswith(policy_extension):
+                file = join(root, name)
+                if exclude:
+                    result = exclude.match(file)
+                    if result:
+                        logger.info(
+                            'Found file %s matches exclude pattern "%s"',
+                            file,
+                            exclude_pattern,
+                        )
+                        continue
+                logger.info("Found file %s", file)
+                discovered_files.append(file)
+
+    return discovered_files
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -103,6 +137,18 @@ def main():
     )
     parser.add_argument("--file", help="Provide a policy in a file", type=str)
     parser.add_argument(
+        "--directory", help="Provide a path to directory with policy files", type=str
+    )
+    parser.add_argument(
+        "--policy-extension",
+        help="Policy file extension to scan for in directory mode",
+        default="json",
+        type=str,
+    )
+    parser.add_argument(
+        "--exclude-pattern", help="File name pattern to exclude", type=str
+    )
+    parser.add_argument(
         "--minimal", help="Minimal output", default=False, action="store_true"
     )
     parser.add_argument(
@@ -112,6 +158,7 @@ def main():
         "--minimum_severity",
         help="Minimum severity to display. Options: CRITICAL, HIGH, MEDIUM, LOW, INFO",
         default="LOW",
+        choices=["CRITICAL", "HIGH", "MEDIUM", "LOW", "INFO"],
     )
     parser.add_argument(
         "--private_auditors",
@@ -127,7 +174,33 @@ def main():
         default=None,
         action="store_true",
     )
+    parser.add_argument(
+        "-v",
+        "--verbose",
+        help="Increase output verbosity",
+        action="store_true",
+        default=False,
+    )
+    parser.add_argument(
+        "--version",
+        action="version",
+        version="%(prog)s {version}".format(version=__version__),
+    )
     args = parser.parse_args()
+
+    log_level = logging.ERROR
+    log_format = "%(message)s"
+
+    # We want to silence dependencies
+    logging.getLogger("botocore").setLevel(logging.CRITICAL)
+    logging.getLogger("boto3").setLevel(logging.CRITICAL)
+    logging.getLogger("urllib3").setLevel(logging.CRITICAL)
+
+    if args.verbose:
+        log_level = logging.INFO
+        log_format = "%(message)s"
+
+    logging.basicConfig(level=log_level, stream=sys.stderr, format=log_format)
 
     if args.private_auditors is not None and "." in args.private_auditors:
         raise Exception("The path to the private_auditors must not have periods")
@@ -140,14 +213,9 @@ def main():
     findings = []
 
     if args.aws_managed_policies:
-        filenames = [
-            f
-            for f in listdir(args.aws_managed_policies)
-            if isfile(join(args.aws_managed_policies, f))
-        ]
-        for filename in filenames:
-            filepath = join(args.aws_managed_policies, filename)
-            with open(filepath) as f:
+        file_paths = find_files(directory=args.aws_managed_policies)
+        for file_path in file_paths:
+            with open(file_path) as f:
                 contents = f.read()
                 policy_file_json = json.loads(contents)
                 policy_string = json.dumps(
@@ -155,7 +223,7 @@ def main():
                 )
                 policy = analyze_policy_string(
                     policy_string,
-                    filepath,
+                    file_path,
                     private_auditors_custom_path=args.private_auditors,
                     include_community_auditors=args.include_community_auditors,
                 )
@@ -172,11 +240,11 @@ def main():
 
                 # Ignore AWS Service-linked roles
                 if (
-                        policy["Path"] == "/service-role/"
-                        or policy["Path"] == "/aws-service-role/"
-                        or policy["PolicyName"].startswith("AWSServiceRoleFor")
-                        or policy["PolicyName"].endswith("ServiceRolePolicy")
-                        or policy["PolicyName"].endswith("ServiceLinkedRolePolicy")
+                    policy["Path"] == "/service-role/"
+                    or policy["Path"] == "/aws-service-role/"
+                    or policy["PolicyName"].startswith("AWSServiceRoleFor")
+                    or policy["PolicyName"].endswith("ServiceRolePolicy")
+                    or policy["PolicyName"].endswith("ServiceLinkedRolePolicy")
                 ):
                     continue
 
@@ -233,6 +301,22 @@ def main():
                 include_community_auditors=args.include_community_auditors,
             )
             findings.extend(policy.findings)
+    elif args.directory:
+        file_paths = find_files(
+            directory=args.directory,
+            exclude_pattern=args.exclude_pattern,
+            policy_extension=args.policy_extension,
+        )
+        for file_path in file_paths:
+            with open(file_path) as f:
+                contents = f.read()
+                policy = analyze_policy_string(
+                    contents,
+                    file_name,
+                    private_auditors_custom_path=args.private_auditors,
+                    include_community_auditors=args.include_community_auditors,
+                )
+                findings.extend(policy.findings)
     else:
         parser.print_help()
         exit(-1)

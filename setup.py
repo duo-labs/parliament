@@ -37,7 +37,10 @@ setup(
     install_requires=["boto3", "jmespath", "pyyaml", "policy_sentry"],
     setup_requires=["nose"],
     packages=find_packages(exclude=["tests*"]),
-    package_data={"parliament": ["iam_definition.json", "config.yaml"]},
+    package_data={
+        "parliament": ["iam_definition.json", "config.yaml"],
+        "parliament.community_auditors": ["config_override.yaml"],
+    },
     zip_safe=True,
     license="BSD 3",
     keywords="aws parliament iam lint audit",

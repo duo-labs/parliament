@@ -140,13 +140,13 @@ def main():
         "--directory", help="Provide a path to directory with policy files", type=str
     )
     parser.add_argument(
-        "--policy-extension",
-        help="Policy file extension to scan for in directory mode",
+        "--include_policy_extension",
+        help="Policy file extension to scan for in directory mode (ex. \".json\")",
         default="json",
         type=str,
     )
     parser.add_argument(
-        "--exclude-pattern", help="File name pattern to exclude", type=str
+        "--exclude_pattern", help="File name regex pattern to exclude (ex. \".*venv.*\")", type=str
     )
     parser.add_argument(
         "--minimal", help="Minimal output", default=False, action="store_true"
@@ -305,14 +305,14 @@ def main():
         file_paths = find_files(
             directory=args.directory,
             exclude_pattern=args.exclude_pattern,
-            policy_extension=args.policy_extension,
+            policy_extension=args.include_policy_extension,
         )
         for file_path in file_paths:
             with open(file_path) as f:
                 contents = f.read()
                 policy = analyze_policy_string(
                     contents,
-                    file_name,
+                    file_path,
                     private_auditors_custom_path=args.private_auditors,
                     include_community_auditors=args.include_community_auditors,
                 )

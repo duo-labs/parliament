@@ -40389,6 +40389,11 @@
         "condition": "aws:TagKeys",
         "description": "Filters actions based on the presence of mandatory tags in the request",
         "type": "String"
+      },
+      {
+        "condition": "elasticfilesystem:AccessPointArn",
+        "description": "The ARN of the access point used to mount the file system",
+        "type": "String"
       }
     ],
     "prefix": "elasticfilesystem",
@@ -40411,7 +40416,9 @@
         "privilege": "ClientMount",
         "resource_types": [
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "elasticfilesystem:AccessPointArn"
+            ],
             "dependent_actions": [],
             "resource_type": ""
           }
@@ -40426,6 +40433,13 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "file-system*"
+          },
+          {
+            "condition_keys": [
+              "elasticfilesystem:AccessPointArn"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -40438,6 +40452,13 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "file-system*"
+          },
+          {
+            "condition_keys": [
+              "elasticfilesystem:AccessPointArn"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -42895,6 +42916,14 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "event-bus*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -43110,7 +43139,12 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "rule*"
+            "resource_type": "event-bus"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "rule"
           }
         ]
       },
@@ -43238,7 +43272,12 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "rule*"
+            "resource_type": "event-bus"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "rule"
           },
           {
             "condition_keys": [
@@ -43270,7 +43309,12 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "rule*"
+            "resource_type": "event-bus"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "rule"
           },
           {
             "condition_keys": [
@@ -43290,7 +43334,9 @@
       },
       {
         "arn": "arn:${Partition}:events:${Region}:${Account}:event-bus/${EventBusName}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "event-bus"
       },
       {
@@ -100773,7 +100819,7 @@
         "resource": "share"
       },
       {
-        "arn": "arn:${Partition}:storagegateway:${Region}:${Account}:gateway/${TapeBarcode}",
+        "arn": "arn:${Partition}:storagegateway:${Region}:${Account}:tape/${TapeBarcode}",
         "condition_keys": [
           "aws:ResourceTag/${TagKey}"
         ],

@@ -34,7 +34,7 @@ setup(
     test_suite="tests/unit",
     tests_require=TESTS_REQUIRE,
     extras_require={"dev": TESTS_REQUIRE + ["autoflake", "autopep8", "pylint"]},
-    install_requires=["boto3", "jmespath", "pyyaml", "policy_sentry"],
+    install_requires=["boto3", "jmespath", "pyyaml"],
     setup_requires=["nose"],
     packages=find_packages(exclude=["tests*"]),
     package_data={

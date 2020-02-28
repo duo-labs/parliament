@@ -3,6 +3,7 @@ import pkgutil
 import importlib
 import os
 import sys
+import logging
 from pathlib import Path
 
 from . import expand_action
@@ -285,6 +286,7 @@ class Policy:
 
             # Run them
             for m in private_auditors:
+                logging.info("*** Checking with private auditor: {}".format(m))
                 private_auditors[m].audit(self)
 
         if include_community_auditors is True:

@@ -36,6 +36,24 @@ MEDIUM - No resources match for the given action -  - [{'action': 's3:GetObject'
 
 This example is showing that the action s3:GetObject requires a resource matching an object path (ie. it must have a "/" in it).
 
+The different input types allowed include:
+- --file: Filename
+- --directory: A directory path, for exmaple: `--directory . --include_policy_extension json --exclude_pattern ".*venv.*"`
+- --aws-managed-policies: For use specifically with the repo https://github.com/SummitRoute/aws_managed_policies
+- --auth-details-file: For use with the file returned by "aws iam get-account-authorization-details"
+- --string: Provide a string such as '{"Version": "2012-10-17","Statement": {"Effect": "Allow","Action": ["s3:GetObject", "s3:PutBucketPolicy"],"Resource": ["arn:aws:s3:::bucket1", "arn:aws:s3:::bucket2/*"]}}'
+
+## Using parliament as a library
+Parliament was meant to be used a library in other projects. A basic example follows.
+
+```
+from parliament import analyze_policy_string
+
+analyzed_policy = analyze_policy_string(policy_doc)
+for f in analyzed_policy.findings:
+  print(f)
+```
+
 ## Custom config file
 You may decide you want to change the severity of a finding, the text associated with it, or that you want to ignore certain types of findings.  To support this, you can provide an override config file.  First, create a test.json file:
 
@@ -222,17 +240,6 @@ That test ensures that for the given policy (which is granting read access to ou
 
 Now when you run `./tests/scripts/unit_tests.sh` there should be one additional test run.
 
-
-# Using parliament as a library
-Parliament was meant to be used a library in other projects. A basic example follows.
-
-```
-from parliament import analyze_policy_string
-
-analyzed_policy = analyze_policy_string(policy_doc)
-for f in analyzed_policy.findings:
-  print(f)
-```
 
 ## Community auditors
 

@@ -286,7 +286,7 @@ class Policy:
 
             # Run them
             for m in private_auditors:
-                logging.info("*** Checking with private auditor: {}".format(m))
+                logging.info(f"*** Checking with private auditor: {m}")
                 private_auditors[m].audit(self)
 
         if include_community_auditors is True:
@@ -313,6 +313,7 @@ class Policy:
 
             # Run them
             for m in community_auditors:
+                logging.info(f"*** Checking with community auditor: {m}")
                 community_auditors[m].audit(self)
 
         return True

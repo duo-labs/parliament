@@ -80,8 +80,8 @@ class TestActionExpansion(unittest.TestCase):
             assert True
 
     def test_expand_all(self):
-        assert_true(len(expand_action("*")) > 1000)
-        assert_true(len(expand_action("*:*")) > 1000)
+        assert_true(len(expand_action("*")) > 5000)
+        assert_true(len(expand_action("*:*")) > 5000)
 
     def test_expand_iq(self):
         expand_action("iq:*")

@@ -34,7 +34,13 @@ class TestCommunityAuditors(unittest.TestCase):
         """
         assert_equal(
             policy.finding_ids,
-            set(["CREDENTIALS_EXPOSURE", "PERMISSIONS_MANAGEMENT_ACTIONS"]),
+            set(
+                [
+                    "RESOURCE_STAR",
+                    "CREDENTIALS_EXPOSURE",
+                    "PERMISSIONS_MANAGEMENT_ACTIONS",
+                ]
+            ),
         )
 
     def test_analyze_policy_string_disable_community(self):
@@ -57,4 +63,4 @@ class TestCommunityAuditors(unittest.TestCase):
             example_policy_with_wildcards, include_community_auditors=False
         )
 
-        assert_equal(policy.finding_ids, set([]))
+        assert_equal(policy.finding_ids, set(["RESOURCE_STAR"]))

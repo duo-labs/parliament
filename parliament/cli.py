@@ -141,12 +141,14 @@ def main():
     )
     parser.add_argument(
         "--include_policy_extension",
-        help="Policy file extension to scan for in directory mode (ex. \".json\")",
+        help='Policy file extension to scan for in directory mode (ex. ".json")',
         default="json",
         type=str,
     )
     parser.add_argument(
-        "--exclude_pattern", help="File name regex pattern to exclude (ex. \".*venv.*\")", type=str
+        "--exclude_pattern",
+        help='File name regex pattern to exclude (ex. ".*venv.*")',
+        type=str,
     )
     parser.add_argument(
         "--minimal", help="Minimal output", default=False, action="store_true"

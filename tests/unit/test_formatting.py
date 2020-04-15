@@ -265,7 +265,7 @@ class TestFormatting(unittest.TestCase):
         )
         assert_equal(
             policy.finding_ids,
-            set(["UNKNOWN_CONDITION_FOR_ACTION"]),
+            set(["UNKNOWN_CONDITION_FOR_ACTION", "RESOURCE_STAR"]),
             "Condition mismatch",
         )
 
@@ -324,7 +324,7 @@ class TestFormatting(unittest.TestCase):
             ignore_private_auditors=True,
         )
         assert_equal(
-            policy.finding_ids, set(),
+            policy.finding_ids, set(["RESOURCE_STAR"]),
         )
 
     def test_condition_with_null(self):
@@ -413,7 +413,7 @@ class TestFormatting(unittest.TestCase):
             policy.finding_ids, set(),
         )
 
-    def test_lambda_AddLayerVersionPermission(self):
+    def test_lambda_TerminateInstances(self):
         policy = analyze_policy_string(
             """{
     "Version": "2012-10-17",
@@ -436,7 +436,57 @@ class TestFormatting(unittest.TestCase):
             ignore_private_auditors=True,
         )
 
-        # This privilege has a required format of arn:*:redshift:*:*:dbuser:*/*
+        assert_equal(
+            policy.finding_ids, set(["RESOURCE_STAR"]),
+        )
+
+    def test_priv_that_requires_star_resource(self):
+        policy = analyze_policy_string(
+            """{
+    "Version": "2012-10-17",
+    "Id": "123",
+    "Statement": [
+        {
+            "Action": [
+                "guardduty:ListDetectors"
+            ],
+            "Effect": "Allow",
+            "Resource": "*"
+        }
+    ]
+}""",
+            ignore_private_auditors=True,
+        )
+
+        # guardduty:ListDetectors has no required resources, so it can have "*".
+        # This should not create a RESOURCE_STAR finding
+
         assert_equal(
             policy.finding_ids, set(),
+        )
+
+    def test_condition_operator_values(self):
+        policy = analyze_policy_string(
+            """{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "ec2:TerminateInstances"
+            ],
+            "Effect": "Allow",
+            "Resource": "*",
+            "Condition": {
+                "StringEquals": {
+                    "ec2:InstanceProfile": "arn:aws:iam::123456789012:instance-profile/my_role"
+                }
+            }
+        }
+    ]
+}""",
+            ignore_private_auditors=True,
+        )
+
+        assert_equal(
+            policy.finding_ids, set(["RESOURCE_STAR", "MISMATCHED_TYPE_BUT_USABLE"]),
         )

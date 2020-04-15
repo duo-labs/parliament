@@ -558,18 +558,33 @@ class Statement:
                     # if operator_type_requirement.lower() == 'string' and condition_type.lower() = 'arn':
                     #     # Ignore these.
                     #     pass
-                    if operator_type_requirement != translate_documentation_types(
+                    documenation_condition_type = translate_documentation_types(
                         condition_type
-                    ):
-                        self.add_finding(
-                            "MISMATCHED_TYPE",
-                            detail="Type mismatch: {} requires a value of type {} but given {}".format(
-                                operator,
-                                operator_type_requirement,
-                                translate_documentation_types(condition_type),
-                            ),
-                            location={"location": condition_block},
-                        )
+                    )
+                    if operator_type_requirement != documenation_condition_type:
+                        if (
+                            operator_type_requirement == "String"
+                            and documenation_condition_type == "Arn"
+                        ):
+                            self.add_finding(
+                                "MISMATCHED_TYPE_BUT_USABLE",
+                                detail="Type mismatch: {} requires a value of type {} but given {}".format(
+                                    operator,
+                                    operator_type_requirement,
+                                    translate_documentation_types(condition_type),
+                                ),
+                                location={"location": condition_block},
+                            )
+                        else:
+                            self.add_finding(
+                                "MISMATCHED_TYPE",
+                                detail="Type mismatch: {} requires a value of type {} but given {}".format(
+                                    operator,
+                                    operator_type_requirement,
+                                    translate_documentation_types(condition_type),
+                                ),
+                                location={"location": condition_block},
+                            )
 
         return
 
@@ -832,12 +847,13 @@ class Statement:
                     # At least one resource has to match the action's required resources
                     match_found = False
                     for resource in resources:
-                        if is_arn_match(resource_type, arn_format, resource):
+                        if resource == "*":
+                            self.add_finding(
+                                "RESOURCE_STAR", location={"actions": actions},
+                            )
                             match_found = True
                             continue
-                        if resource == "*":
-                            # TODO I shouldn't allow this as a match,
-                            # but am for now as I'll get too many findings otherwise
+                        if is_arn_match(resource_type, arn_format, resource):
                             match_found = True
                             continue
 

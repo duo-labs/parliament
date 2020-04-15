@@ -39,7 +39,7 @@ class TestPatterns(unittest.TestCase):
         )
         assert_equal(
             policy.finding_ids,
-            set(["RESOURCE_POLICY_PRIVILEGE_ESCALATION"]),
+            set(["RESOURCE_POLICY_PRIVILEGE_ESCALATION", "RESOURCE_STAR"]),
             "Resource policy privilege escalation",
         )
 
@@ -78,7 +78,7 @@ class TestPatterns(unittest.TestCase):
 
         assert_equal(
             policy.finding_ids,
-            set(["RESOURCE_POLICY_PRIVILEGE_ESCALATION"]),
+            set(["RESOURCE_POLICY_PRIVILEGE_ESCALATION", "RESOURCE_STAR"]),
             "Resource policy privilege escalation across two statement",
         )
 

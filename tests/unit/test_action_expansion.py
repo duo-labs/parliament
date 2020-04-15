@@ -61,24 +61,34 @@ class TestActionExpansion(unittest.TestCase):
     def test_exception_bad_service(self):
         try:
             expand_action("333:listallmybuckets")
-            assert False
+            assert False, "333 is not a valid prefix"
         except UnknownPrefixException as e:
             assert True
 
     def test_exception_bad_action(self):
         try:
             expand_action("s3:zzz")
-            assert False
+            assert False, "s3:zzz is not a valid action"
         except UnknownActionException as e:
             assert True
 
     def test_exception_bad_expansion(self):
         try:
             expand_action("s3:zzz*")
-            assert False
+            assert False, "No expansion is possible from s3:zzz*"
         except UnknownActionException as e:
             assert True
 
     def test_expand_all(self):
-        assert_true(len(expand_action("*")) > 1000)
-        assert_true(len(expand_action("*:*")) > 1000)
+        assert_true(len(expand_action("*")) > 5000)
+        assert_true(len(expand_action("*:*")) > 5000)
+
+    def test_expand_iq(self):
+        expand_action("iq:*")
+        assert True
+
+        try:
+            expand_action("iq:dostuff")
+            assert False, "iq:dostuff is invalid"
+        except UnknownActionException as e:
+            assert True

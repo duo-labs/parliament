@@ -39,6 +39,11 @@ MISMATCHED_TYPE_OPERATION_TO_NULL:
   severity: MEDIUM
   group: INVALID
 
+MISMATCHED_TYPE_BUT_USABLE:
+  title: Mismatched type, but usable. For example, you may be using a StringEquals to match against an ARN, when an ArnEquals would be more correct. 
+  severity: LOW
+  group: INVALID
+
 MISMATCHED_TYPE:
   title: Mismatched type
   severity: MEDIUM
@@ -97,4 +102,9 @@ OLD_VERSION:
 RESOURCE_MISMATCH:
   title: No resources match for the given action
   severity: MEDIUM
+  group: MALFORMED
+
+RESOURCE_STAR:
+  title: Unnecessary use of Resource *
+  severity: LOW
   group: MALFORMED

@@ -35,6 +35,7 @@ class TestPermissionsManagement(unittest.TestCase):
                 [
                     "PERMISSIONS_MANAGEMENT_ACTIONS",
                     "RESOURCE_POLICY_PRIVILEGE_ESCALATION",
+                    "RESOURCE_STAR"
                 ]
             ),
         )

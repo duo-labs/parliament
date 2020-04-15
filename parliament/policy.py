@@ -317,6 +317,8 @@ class Policy:
                 try:
                     community_auditors[m].audit(self)
                 except Exception as e:
-                    self.add_finding("EXCEPTION", detail=str(e), location={"community_auditor": m})
+                    self.add_finding(
+                        "EXCEPTION", detail=str(e), location={"community_auditor": m}
+                    )
 
         return True

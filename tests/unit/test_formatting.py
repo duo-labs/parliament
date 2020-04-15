@@ -324,7 +324,7 @@ class TestFormatting(unittest.TestCase):
             ignore_private_auditors=True,
         )
         assert_equal(
-            policy.finding_ids, set(['RESOURCE_STAR']),
+            policy.finding_ids, set(["RESOURCE_STAR"]),
         )
 
     def test_condition_with_null(self):
@@ -437,7 +437,7 @@ class TestFormatting(unittest.TestCase):
         )
 
         assert_equal(
-            policy.finding_ids, set(['RESOURCE_STAR']),
+            policy.finding_ids, set(["RESOURCE_STAR"]),
         )
 
     def test_priv_that_requires_star_resource(self):
@@ -465,7 +465,6 @@ class TestFormatting(unittest.TestCase):
             policy.finding_ids, set(),
         )
 
-    
     def test_condition_operator_values(self):
         policy = analyze_policy_string(
             """{
@@ -489,6 +488,5 @@ class TestFormatting(unittest.TestCase):
         )
 
         assert_equal(
-            policy.finding_ids, set(['RESOURCE_STAR', 'MISMATCHED_TYPE_BUT_USABLE']),
+            policy.finding_ids, set(["RESOURCE_STAR", "MISMATCHED_TYPE_BUT_USABLE"]),
         )
-

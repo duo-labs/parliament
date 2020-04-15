@@ -558,9 +558,14 @@ class Statement:
                     # if operator_type_requirement.lower() == 'string' and condition_type.lower() = 'arn':
                     #     # Ignore these.
                     #     pass
-                    documenation_condition_type = translate_documentation_types(condition_type)
+                    documenation_condition_type = translate_documentation_types(
+                        condition_type
+                    )
                     if operator_type_requirement != documenation_condition_type:
-                        if operator_type_requirement == 'String' and documenation_condition_type == 'Arn':
+                        if (
+                            operator_type_requirement == "String"
+                            and documenation_condition_type == "Arn"
+                        ):
                             self.add_finding(
                                 "MISMATCHED_TYPE_BUT_USABLE",
                                 detail="Type mismatch: {} requires a value of type {} but given {}".format(
@@ -844,15 +849,13 @@ class Statement:
                     for resource in resources:
                         if resource == "*":
                             self.add_finding(
-                                "RESOURCE_STAR",
-                                location={"actions": actions},
+                                "RESOURCE_STAR", location={"actions": actions},
                             )
                             match_found = True
                             continue
                         if is_arn_match(resource_type, arn_format, resource):
                             match_found = True
                             continue
-                        
 
                     if not match_found:
                         actions_without_matching_resources.append(

@@ -464,3 +464,31 @@ class TestFormatting(unittest.TestCase):
         assert_equal(
             policy.finding_ids, set(),
         )
+
+    
+    def test_condition_operator_values(self):
+        policy = analyze_policy_string(
+            """{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "ec2:TerminateInstances"
+            ],
+            "Effect": "Allow",
+            "Resource": "*",
+            "Condition": {
+                "StringEquals": {
+                    "ec2:InstanceProfile": "arn:aws:iam::123456789012:instance-profile/my_role"
+                }
+            }
+        }
+    ]
+}""",
+            ignore_private_auditors=True,
+        )
+
+        assert_equal(
+            policy.finding_ids, set(['RESOURCE_STAR', 'MISMATCHED_TYPE_BUT_USABLE']),
+        )
+

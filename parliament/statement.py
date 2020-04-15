@@ -558,18 +558,28 @@ class Statement:
                     # if operator_type_requirement.lower() == 'string' and condition_type.lower() = 'arn':
                     #     # Ignore these.
                     #     pass
-                    if operator_type_requirement != translate_documentation_types(
-                        condition_type
-                    ):
-                        self.add_finding(
-                            "MISMATCHED_TYPE",
-                            detail="Type mismatch: {} requires a value of type {} but given {}".format(
-                                operator,
-                                operator_type_requirement,
-                                translate_documentation_types(condition_type),
-                            ),
-                            location={"location": condition_block},
-                        )
+                    documenation_condition_type = translate_documentation_types(condition_type)
+                    if operator_type_requirement != documenation_condition_type:
+                        if operator_type_requirement == 'String' and documenation_condition_type == 'Arn':
+                            self.add_finding(
+                                "MISMATCHED_TYPE_BUT_USABLE",
+                                detail="Type mismatch: {} requires a value of type {} but given {}".format(
+                                    operator,
+                                    operator_type_requirement,
+                                    translate_documentation_types(condition_type),
+                                ),
+                                location={"location": condition_block},
+                            )
+                        else:
+                            self.add_finding(
+                                "MISMATCHED_TYPE",
+                                detail="Type mismatch: {} requires a value of type {} but given {}".format(
+                                    operator,
+                                    operator_type_requirement,
+                                    translate_documentation_types(condition_type),
+                                ),
+                                location={"location": condition_block},
+                            )
 
         return
 

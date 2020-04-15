@@ -439,3 +439,28 @@ class TestFormatting(unittest.TestCase):
         assert_equal(
             policy.finding_ids, set(['RESOURCE_STAR']),
         )
+
+    def test_priv_that_requires_star_resource(self):
+        policy = analyze_policy_string(
+            """{
+    "Version": "2012-10-17",
+    "Id": "123",
+    "Statement": [
+        {
+            "Action": [
+                "guardduty:ListDetectors"
+            ],
+            "Effect": "Allow",
+            "Resource": "*"
+        }
+    ]
+}""",
+            ignore_private_auditors=True,
+        )
+
+        # guardduty:ListDetectors has no required resources, so it can have "*".
+        # This should not create a RESOURCE_STAR finding
+
+        assert_equal(
+            policy.finding_ids, set(),
+        )

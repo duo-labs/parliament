@@ -832,14 +832,17 @@ class Statement:
                     # At least one resource has to match the action's required resources
                     match_found = False
                     for resource in resources:
+                        if resource == "*":
+                            self.add_finding(
+                                "RESOURCE_STAR",
+                                location={"actions": actions},
+                            )
+                            match_found = True
+                            continue
                         if is_arn_match(resource_type, arn_format, resource):
                             match_found = True
                             continue
-                        if resource == "*":
-                            # TODO I shouldn't allow this as a match,
-                            # but am for now as I'll get too many findings otherwise
-                            match_found = True
-                            continue
+                        
 
                     if not match_found:
                         actions_without_matching_resources.append(

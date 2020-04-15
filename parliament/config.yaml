@@ -98,3 +98,8 @@ RESOURCE_MISMATCH:
   title: No resources match for the given action
   severity: MEDIUM
   group: MALFORMED
+
+RESOURCE_STAR:
+  title: Unnecessary use of Resource *
+  severity: LOW
+  group: MALFORMED

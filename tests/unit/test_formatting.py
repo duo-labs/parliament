@@ -265,7 +265,7 @@ class TestFormatting(unittest.TestCase):
         )
         assert_equal(
             policy.finding_ids,
-            set(["UNKNOWN_CONDITION_FOR_ACTION"]),
+            set(["UNKNOWN_CONDITION_FOR_ACTION", "RESOURCE_STAR"]),
             "Condition mismatch",
         )
 
@@ -324,7 +324,7 @@ class TestFormatting(unittest.TestCase):
             ignore_private_auditors=True,
         )
         assert_equal(
-            policy.finding_ids, set(),
+            policy.finding_ids, set(['RESOURCE_STAR']),
         )
 
     def test_condition_with_null(self):
@@ -413,7 +413,7 @@ class TestFormatting(unittest.TestCase):
             policy.finding_ids, set(),
         )
 
-    def test_lambda_AddLayerVersionPermission(self):
+    def test_lambda_TerminateInstances(self):
         policy = analyze_policy_string(
             """{
     "Version": "2012-10-17",
@@ -436,7 +436,6 @@ class TestFormatting(unittest.TestCase):
             ignore_private_auditors=True,
         )
 
-        # This privilege has a required format of arn:*:redshift:*:*:dbuser:*/*
         assert_equal(
-            policy.finding_ids, set(),
+            policy.finding_ids, set(['RESOURCE_STAR']),
         )

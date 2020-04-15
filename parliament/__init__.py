@@ -194,6 +194,12 @@ def expand_action(action, raise_exceptions=True):
         if service["prefix"] == prefix.lower() or prefix == "*":
             service_match = service
 
+            if len(service["privileges"]) == 0 and prefix != '*':
+                # Service has no privileges, so the action must be *
+                # For example iq:*
+                if unexpanded_action.lower() == '*':
+                    return []
+
             for privilege in service["privileges"]:
                 if fnmatch.fnmatchcase(
                     privilege["privilege"].lower(), unexpanded_action.lower()

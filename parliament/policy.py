@@ -314,6 +314,9 @@ class Policy:
             # Run them
             for m in community_auditors:
                 logging.info(f"*** Checking with community auditor: {m}")
-                community_auditors[m].audit(self)
+                try:
+                    community_auditors[m].audit(self)
+                except Exception as e:
+                    self.add_finding("EXCEPTION", detail=str(e), location={"community_auditor": m})
 
         return True

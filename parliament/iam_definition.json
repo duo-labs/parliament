@@ -6815,6 +6815,7 @@
             "condition_keys": [
               "autoscaling:InstanceTypes",
               "autoscaling:LaunchConfigurationName",
+              "autoscaling:LaunchTemplateVersionSpecified",
               "autoscaling:LoadBalancerNames",
               "autoscaling:MaxSize",
               "autoscaling:MinSize",
@@ -7522,6 +7523,7 @@
             "condition_keys": [
               "autoscaling:InstanceTypes",
               "autoscaling:LaunchConfigurationName",
+              "autoscaling:LaunchTemplateVersionSpecified",
               "autoscaling:MaxSize",
               "autoscaling:MinSize",
               "autoscaling:VPCZoneIdentifiers"
@@ -14279,6 +14281,18 @@
         "access_level": "List",
         "description": "List the distributions associated with your AWS account (GET /2019-03-26/distribution?Marker=<MARKER>&MaxItems=<MAX_ITEMS>).",
         "privilege": "ListDistributions",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "List the distributions associated a Lambda function.",
+        "privilege": "ListDistributionsByLambdaFunction",
         "resource_types": [
           {
             "condition_keys": [],
@@ -24425,6 +24439,22 @@
       },
       {
         "access_level": "Write",
+        "description": "Grants permission to create an asset (for example, in a Job).",
+        "privilege": "CreateAsset",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:ResourceTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Grants permission to create a data set.",
         "privilege": "CreateDataSet",
         "resource_types": [
@@ -24505,7 +24535,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Grants permissions to get information about an asset.",
+        "description": "Grants permissions to get information about an asset and to export it (for example, in a Job).",
         "privilege": "GetAsset",
         "resource_types": [
           {
@@ -42547,6 +42577,18 @@
       },
       {
         "access_level": "List",
+        "description": "Grants permission to retrieve a list of the available platform branches.",
+        "privilege": "ListPlatformBranches",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
         "description": "Grants permission to retrieve a list of the available platforms.",
         "privilege": "ListPlatformVersions",
         "resource_types": [
@@ -46864,7 +46906,19 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes the detector version.",
+        "description": "Deletes the detector. Before deleting a detector, you must first delete all detector versions and rule versions associated with the detector.",
+        "privilege": "DeleteDetector",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Deletes the detector version. You cannot delete detector versions that are in ACTIVE status.",
         "privilege": "DeleteDetectorVersion",
         "resource_types": [
           {
@@ -46878,6 +46932,18 @@
         "access_level": "Write",
         "description": "Deletes the specified event.",
         "privilege": "DeleteEvent",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Deletes the rule version. You cannot delete a rule version if it is used by an ACTIVE or INACTIVE detector version.",
+        "privilege": "DeleteRuleVersion",
         "resource_types": [
           {
             "condition_keys": [],
@@ -63550,14 +63616,40 @@
   {
     "conditions": [],
     "prefix": "iq",
-    "privileges": [],
+    "privileges": [
+      {
+        "access_level": "Write",
+        "description": "Grants permission to submit new project requests",
+        "privilege": "CreateProject",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      }
+    ],
     "resources": [],
     "service_name": "AWS IQ"
   },
   {
     "conditions": [],
     "prefix": "iq-permission",
-    "privileges": [],
+    "privileges": [
+      {
+        "access_level": "Write",
+        "description": "Grants permission to approve an access grant",
+        "privilege": "ApproveAccessGrant",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      }
+    ],
     "resources": [],
     "service_name": "AWS IQ Permissions"
   },
@@ -63790,6 +63882,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Updates the number of broker nodes of the cluster.",
+        "privilege": "UpdateBrokerCount",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Updates the storage size of the broker nodes of the cluster",
         "privilege": "UpdateBrokerStorage",
         "resource_types": [
@@ -63804,6 +63908,18 @@
         "access_level": "Write",
         "description": "Update Kafka configuration running on a cluster.",
         "privilege": "UpdateClusterConfiguration",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Updates the monitoring settings for the cluster.",
+        "privilege": "UpdateMonitoring",
         "resource_types": [
           {
             "condition_keys": [],
@@ -66742,17 +66858,17 @@
     "conditions": [
       {
         "condition": "lambda:FunctionArn",
-        "description": "The ARN of a lambda function.",
+        "description": "Filters access by the ARN of an AWS Lambda function",
         "type": "ARN"
       },
       {
         "condition": "lambda:Layer",
-        "description": "The ARN of a lambda layer.",
+        "description": "Filters access by the ARN of an AWS Lambda layer",
         "type": "String"
       },
       {
         "condition": "lambda:Principal",
-        "description": "The AWS principal.",
+        "description": "Filters access by restricting the AWS service or account that can invoke a function",
         "type": "String"
       }
     ],
@@ -66760,7 +66876,7 @@
     "privileges": [
       {
         "access_level": "Permissions management",
-        "description": "Adds a permission policy to a version of a function layer.",
+        "description": "Grants permission to add permissions to the resource-based policy of a version of an AWS Lambda layer",
         "privilege": "AddLayerVersionPermission",
         "resource_types": [
           {
@@ -66772,7 +66888,7 @@
       },
       {
         "access_level": "Permissions management",
-        "description": "Adds a permission to the resource policy associated with the specified AWS Lambda function.",
+        "description": "Grants permission to give an AWS service or another account permission to use an AWS Lambda function",
         "privilege": "AddPermission",
         "resource_types": [
           {
@@ -66791,7 +66907,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Creates an alias that points to the specified Lambda function version.",
+        "description": "Grants permission to create an alias for a Lambda function version",
         "privilege": "CreateAlias",
         "resource_types": [
           {
@@ -66803,7 +66919,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Identifies a stream as an event source for a Lambda function.",
+        "description": "Grants permission to create a mapping between an event source and an AWS Lambda function",
         "privilege": "CreateEventSourceMapping",
         "resource_types": [
           {
@@ -66817,7 +66933,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Creates a new Lambda function.",
+        "description": "Grants permission to create an AWS Lambda function",
         "privilege": "CreateFunction",
         "resource_types": [
           {
@@ -66836,7 +66952,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes the specified Lambda function alias.",
+        "description": "Grants permission to delete an AWS Lambda function alias",
         "privilege": "DeleteAlias",
         "resource_types": [
           {
@@ -66848,7 +66964,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Removes an event source mapping.",
+        "description": "Grants permission to delete an AWS Lambda event source mapping",
         "privilege": "DeleteEventSourceMapping",
         "resource_types": [
           {
@@ -66867,7 +66983,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes the specified Lambda function code and configuration.",
+        "description": "Grants permission to delete an AWS Lambda function",
         "privilege": "DeleteFunction",
         "resource_types": [
           {
@@ -66879,7 +66995,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Remove concurrency limit set on a Lambda function.",
+        "description": "Grants permission to remove a concurrent execution limit from an AWS Lambda function",
         "privilege": "DeleteFunctionConcurrency",
         "resource_types": [
           {
@@ -66891,7 +67007,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes the event invoke configuration parameters for the specified Lambda function.",
+        "description": "Grants permission to delete the configuration for asynchronous invocation for an AWS Lambda function, version, or alias",
         "privilege": "DeleteFunctionEventInvokeConfig",
         "resource_types": [
           {
@@ -66903,7 +67019,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes a version of a function layer.",
+        "description": "Grants permission to delete a version of an AWS Lambda layer",
         "privilege": "DeleteLayerVersion",
         "resource_types": [
           {
@@ -66915,7 +67031,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes the provisioned concurrency configuration for a function.",
+        "description": "Grants permission to delete the provisioned concurrency configuration for an AWS Lambda function",
         "privilege": "DeleteProvisionedConcurrencyConfig",
         "resource_types": [
           {
@@ -66932,7 +67048,7 @@
       },
       {
         "access_level": "Permissions management",
-        "description": "Removes resource policy permission that allows Lambda replication service to retrieve function code and configuration.",
+        "description": "Grants permission to disable replication for a Lambda@Edge function",
         "privilege": "DisableReplication",
         "resource_types": [
           {
@@ -66944,7 +67060,7 @@
       },
       {
         "access_level": "Permissions management",
-        "description": "Adds a permission to resource policy that gives Lambda replication service permission to get function code and configuration.",
+        "description": "Grants permission to enable replication for a Lambda@Edge function",
         "privilege": "EnableReplication",
         "resource_types": [
           {
@@ -66956,7 +67072,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns account limits and usage statistics, such as concurrency and code storage.",
+        "description": "Grants permission to view details about an account's limits and usage in an AWS Region",
         "privilege": "GetAccountSettings",
         "resource_types": [
           {
@@ -66968,7 +67084,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns the specified alias information such as the alias ARN, description, and function version it is pointing to.",
+        "description": "Grants permission to view details about an AWS Lambda function alias",
         "privilege": "GetAlias",
         "resource_types": [
           {
@@ -66980,7 +67096,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns configuration information for the specified event source mapping.",
+        "description": "Grants permission to view details about an AWS Lambda event source mapping",
         "privilege": "GetEventSourceMapping",
         "resource_types": [
           {
@@ -66999,7 +67115,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns the configuration information of the Lambda function and a presigned URL link to the .zip file you uploaded with CreateFunction so you can download the .zip file.",
+        "description": "Grants permission to view details about an AWS Lambda function",
         "privilege": "GetFunction",
         "resource_types": [
           {
@@ -67011,7 +67127,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns details about the concurrency configuration for a function.",
+        "description": "Grants permission to view details about the reserved concurrency configuration for a function",
         "privilege": "GetFunctionConcurrency",
         "resource_types": [
           {
@@ -67023,7 +67139,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns the configuration information of the Lambda function.",
+        "description": "Grants permission to view details about the version-specific settings of an AWS Lambda function or version",
         "privilege": "GetFunctionConfiguration",
         "resource_types": [
           {
@@ -67035,7 +67151,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns the event invoke configuration parameters for the specified Lambda function.",
+        "description": "Grants permission to view the configuration for asynchronous invocation for a function, version, or alias",
         "privilege": "GetFunctionEventInvokeConfig",
         "resource_types": [
           {
@@ -67047,7 +67163,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns information about a version of a function layer, with a link to download the layer archive that is valid for 10 minutes.",
+        "description": "Grants permission to view details about a version of an AWS Lambda layer",
         "privilege": "GetLayerVersion",
         "resource_types": [
           {
@@ -67059,7 +67175,19 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns the permissions policy for a layer version.",
+        "description": "Grants permission to view details about a version of an AWS Lambda layer",
+        "privilege": "GetLayerVersionByArn",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "layerVersion*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to view the resource-based policy for a version of an AWS Lambda layer",
         "privilege": "GetLayerVersionPolicy",
         "resource_types": [
           {
@@ -67071,7 +67199,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns the resource policy associated with the specified Lambda function.",
+        "description": "Grants permission to view the resource-based policy for an AWS Lambda function, version, or alias",
         "privilege": "GetPolicy",
         "resource_types": [
           {
@@ -67083,7 +67211,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Retrieves the provisioned concurrency configuration for a function's alias or version.",
+        "description": "Grants permission to view the provisioned concurrency configuration for an AWS Lambda function's alias or version",
         "privilege": "GetProvisionedConcurrencyConfig",
         "resource_types": [
           {
@@ -67100,7 +67228,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Submits an invocation request to AWS Lambda. Is deprecated",
+        "description": "(Deprecated) Grants permission to invoke a function asynchronously",
         "privilege": "InvokeAsync",
         "resource_types": [
           {
@@ -67112,7 +67240,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Invokes a specific Lambda function.",
+        "description": "Grants permission to invoke an AWS Lambda function",
         "privilege": "InvokeFunction",
         "resource_types": [
           {
@@ -67124,7 +67252,7 @@
       },
       {
         "access_level": "List",
-        "description": "Returns list of aliases created for a Lambda function.",
+        "description": "Grants permission to retrieve a list of aliases for an AWS Lambda function",
         "privilege": "ListAliases",
         "resource_types": [
           {
@@ -67136,7 +67264,7 @@
       },
       {
         "access_level": "List",
-        "description": "Returns a list of event source mappings you created using the CreateEventSourceMapping.",
+        "description": "Grants permission to retrieve a list of AWS Lambda event source mappings",
         "privilege": "ListEventSourceMappings",
         "resource_types": [
           {
@@ -67148,7 +67276,7 @@
       },
       {
         "access_level": "List",
-        "description": "Returns a list of all event invoke configuration parameters for the Lambda function, its alias and versions",
+        "description": "Grants permission to retrieve a list of configurations for asynchronous invocation for a function",
         "privilege": "ListFunctionEventInvokeConfigs",
         "resource_types": [
           {
@@ -67160,7 +67288,7 @@
       },
       {
         "access_level": "List",
-        "description": "Returns a list of your Lambda functions.",
+        "description": "Grants permission to retrieve a list of AWS Lambda functions, with the version-specific configuration of each function",
         "privilege": "ListFunctions",
         "resource_types": [
           {
@@ -67172,7 +67300,7 @@
       },
       {
         "access_level": "List",
-        "description": "Returns a list of your Lambda layer versions.",
+        "description": "Grants permission to retrieve a list of versions of an AWS Lambda layer",
         "privilege": "ListLayerVersions",
         "resource_types": [
           {
@@ -67184,7 +67312,7 @@
       },
       {
         "access_level": "List",
-        "description": "Lists function layers and shows information about the latest version of each.",
+        "description": "Grants permission to retrieve a list of AWS Lambda layers, with details about the latest version of each layer",
         "privilege": "ListLayers",
         "resource_types": [
           {
@@ -67196,7 +67324,7 @@
       },
       {
         "access_level": "List",
-        "description": "Retrieves a list of provisioned concurrency configurations for a function.",
+        "description": "Grants permission to retrieve a list of provisioned concurrency configurations for an AWS Lambda function",
         "privilege": "ListProvisionedConcurrencyConfigs",
         "resource_types": [
           {
@@ -67208,7 +67336,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Lists tags for a Lambda function.",
+        "description": "Grants permission to retrieve a list of tags for an AWS Lambda function",
         "privilege": "ListTags",
         "resource_types": [
           {
@@ -67220,7 +67348,7 @@
       },
       {
         "access_level": "List",
-        "description": "List all versions of a function.",
+        "description": "Grants permission to retrieve a list of versions for an AWS Lambda function",
         "privilege": "ListVersionsByFunction",
         "resource_types": [
           {
@@ -67232,7 +67360,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Creates a function layer from a ZIP archive. Each time you call PublishLayerVersion with the same version name, a new version is created.",
+        "description": "Grants permission to create an AWS Lambda layer",
         "privilege": "PublishLayerVersion",
         "resource_types": [
           {
@@ -67244,7 +67372,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Publishes a version of your function from the current snapshot of $LATEST.",
+        "description": "Grants permission to create an AWS Lambda function version",
         "privilege": "PublishVersion",
         "resource_types": [
           {
@@ -67256,7 +67384,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Adds concurrency limit to a Lambda function.",
+        "description": "Grants permission to configure reserved concurrency for an AWS Lambda function",
         "privilege": "PutFunctionConcurrency",
         "resource_types": [
           {
@@ -67268,7 +67396,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Adds the event invoke configuration parameters for the specified Lambda function by using the values provided in the request.",
+        "description": "Grants permission to configures options for asynchronous invocation on an AWS Lambda function, version, or alias",
         "privilege": "PutFunctionEventInvokeConfig",
         "resource_types": [
           {
@@ -67280,7 +67408,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Adds a provisioned concurrency configuration to a function's alias or version.",
+        "description": "Grants permission to configure provisioned concurrency for an AWS Lambda function's alias or version",
         "privilege": "PutProvisionedConcurrencyConfig",
         "resource_types": [
           {
@@ -67297,7 +67425,7 @@
       },
       {
         "access_level": "Permissions management",
-        "description": "Removes a statement from the permissions policy for a layer version.",
+        "description": "Grants permission to remove a statement from the permissions policy for a version of an AWS Lambda layer",
         "privilege": "RemoveLayerVersionPermission",
         "resource_types": [
           {
@@ -67309,7 +67437,7 @@
       },
       {
         "access_level": "Permissions management",
-        "description": "You can remove individual permissions from an resource policy associated with a Lambda function by providing a statement ID that you provided when you added the permission.",
+        "description": "Grants permission to revoke function-use permission from an AWS service or another account",
         "privilege": "RemovePermission",
         "resource_types": [
           {
@@ -67328,7 +67456,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Adds tags to a Lambda function.",
+        "description": "Grants permission to add tags to an AWS Lambda function",
         "privilege": "TagResource",
         "resource_types": [
           {
@@ -67340,7 +67468,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Removes tags from a Lambda function.",
+        "description": "Grants permission to remove tags from an AWS Lambda function",
         "privilege": "UntagResource",
         "resource_types": [
           {
@@ -67352,7 +67480,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Using this API you can update the function version to which the alias points and the alias description.",
+        "description": "Grants permission to update the configuration of an AWS Lambda function's alias",
         "privilege": "UpdateAlias",
         "resource_types": [
           {
@@ -67364,7 +67492,7 @@
       },
       {
         "access_level": "Write",
-        "description": "You can update an event source mapping.",
+        "description": "Grants permission to update the configuration of an AWS Lambda event source mapping",
         "privilege": "UpdateEventSourceMapping",
         "resource_types": [
           {
@@ -67383,7 +67511,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Updates the code for the specified Lambda function.",
+        "description": "Grants permission to update the code of an AWS Lambda function",
         "privilege": "UpdateFunctionCode",
         "resource_types": [
           {
@@ -67395,7 +67523,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Updates the configuration parameters for the specified Lambda function by using the values provided in the request.",
+        "description": "Grants permission to modify the version-specific settings of an AWS Lambda function",
         "privilege": "UpdateFunctionConfiguration",
         "resource_types": [
           {
@@ -67414,7 +67542,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Updates the event invoke configuration parameters for the specified Lambda function by using the values provided in the request.",
+        "description": "Grants permission to modify the configuration for asynchronous invocation for an AWS Lambda function, version, or alias",
         "privilege": "UpdateFunctionEventInvokeConfig",
         "resource_types": [
           {
@@ -67566,6 +67694,21 @@
   {
     "conditions": [
       {
+        "condition": "aws:RequestTag/${TagKey}",
+        "description": "Filters access based on the tags in the request.",
+        "type": "String"
+      },
+      {
+        "condition": "aws:ResourceTag/${TagKey}",
+        "description": "Filters access by the tags attached to a Lex resource.",
+        "type": "String"
+      },
+      {
+        "condition": "aws:TagKeys",
+        "description": "Filters access based on the set of tag keys in the request.",
+        "type": "String"
+      },
+      {
         "condition": "lex:associatedIntents",
         "description": "Enables you to control access based on the intents included in the request.",
         "type": "String"
@@ -67591,7 +67734,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "bot*"
+            "resource_type": "bot version*"
           }
         ]
       },
@@ -67603,7 +67746,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "intent*"
+            "resource_type": "intent version*"
           }
         ]
       },
@@ -67615,7 +67758,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "slottype*"
+            "resource_type": "slottype version*"
           }
         ]
       },
@@ -67627,7 +67770,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "bot*"
+            "resource_type": "bot version*"
           }
         ]
       },
@@ -67639,7 +67782,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "bot*"
+            "resource_type": "bot alias*"
           }
         ]
       },
@@ -67663,7 +67806,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "bot*"
+            "resource_type": "bot version*"
           }
         ]
       },
@@ -67675,7 +67818,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "intent*"
+            "resource_type": "intent version*"
           }
         ]
       },
@@ -67687,7 +67830,24 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "intent*"
+            "resource_type": "intent version*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Removes session information for a specified bot, alias, and user ID.",
+        "privilege": "DeleteSession",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "bot alias"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "bot version"
           }
         ]
       },
@@ -67699,7 +67859,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "slottype*"
+            "resource_type": "slottype version*"
           }
         ]
       },
@@ -67711,7 +67871,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "slottype*"
+            "resource_type": "slottype version*"
           }
         ]
       },
@@ -67723,7 +67883,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "bot*"
+            "resource_type": "bot version*"
           }
         ]
       },
@@ -67735,7 +67895,12 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "bot*"
+            "resource_type": "bot alias"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "bot version"
           }
         ]
       },
@@ -67747,7 +67912,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "bot*"
+            "resource_type": "bot alias*"
           }
         ]
       },
@@ -67759,7 +67924,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "bot*"
+            "resource_type": ""
           }
         ]
       },
@@ -67795,7 +67960,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "bot*"
+            "resource_type": "bot version*"
           }
         ]
       },
@@ -67849,13 +68014,37 @@
       },
       {
         "access_level": "Read",
+        "description": "Exports Amazon Lex Resource in a requested format.",
+        "privilege": "GetExport",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "bot version*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Gets information about an import job started with StartImport.",
+        "privilege": "GetImport",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
         "description": "Returns information for a specific intent. In addition to the intent name, you must also specify the intent version.",
         "privilege": "GetIntent",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "intent*"
+            "resource_type": "intent version*"
           }
         ]
       },
@@ -67867,7 +68056,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "intent*"
+            "resource_type": "intent version*"
           }
         ]
       },
@@ -67885,13 +68074,30 @@
       },
       {
         "access_level": "Read",
+        "description": "Returns session information for a specified bot, alias, and user ID.",
+        "privilege": "GetSession",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "bot alias"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "bot version"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
         "description": "Returns information about a specific version of a slot type. In addition to specifying the slot type name, you must also specify the slot type version.",
         "privilege": "GetSlotType",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "slottype*"
+            "resource_type": "slottype version*"
           }
         ]
       },
@@ -67903,7 +68109,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "slottype*"
+            "resource_type": "slottype version*"
           }
         ]
       },
@@ -67927,7 +68133,29 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "bot*"
+            "resource_type": "bot version*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Lists tags for a Lex resource",
+        "privilege": "ListTagsForResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "bot"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "bot alias"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "channel"
           }
         ]
       },
@@ -67939,7 +68167,12 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "bot*"
+            "resource_type": "bot alias"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "bot version"
           }
         ]
       },
@@ -67951,7 +68184,12 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "bot*"
+            "resource_type": "bot alias"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "bot version"
           }
         ]
       },
@@ -67963,7 +68201,15 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "bot*"
+            "resource_type": "bot version*"
+          },
+          {
+            "condition_keys": [
+              "aws:TagKeys",
+              "aws:RequestTag/${TagKey}"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -67975,7 +68221,15 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "bot*"
+            "resource_type": "bot alias*"
+          },
+          {
+            "condition_keys": [
+              "aws:TagKeys",
+              "aws:RequestTag/${TagKey}"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -67987,7 +68241,24 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "intent*"
+            "resource_type": "intent version*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Creates a new session or modifies an existing session with an Amazon Lex bot.",
+        "privilege": "PutSession",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "bot alias"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "bot version"
           }
         ]
       },
@@ -67999,31 +68270,121 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "slottype*"
+            "resource_type": "slottype version*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Starts a job to import a resource to Amazon Lex.",
+        "privilege": "StartImport",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Tagging",
+        "description": "Adds or overwrites tags to a Lex resource",
+        "privilege": "TagResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "bot"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "bot alias"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "channel"
+          },
+          {
+            "condition_keys": [
+              "aws:TagKeys",
+              "aws:RequestTag/${TagKey}"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Tagging",
+        "description": "Removes tags from a Lex resource",
+        "privilege": "UntagResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "bot"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "bot alias"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "channel"
+          },
+          {
+            "condition_keys": [
+              "aws:TagKeys",
+              "aws:RequestTag/${TagKey}"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       }
     ],
     "resources": [
       {
-        "arn": "arn:${Partition}:lex:${Region}:${Account}:bot:${BotName}:${BotVersionOrAlias}",
-        "condition_keys": [],
+        "arn": "arn:${Partition}:lex:${Region}:${Account}:bot:${BotName}",
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "bot"
       },
       {
+        "arn": "arn:${Partition}:lex:${Region}:${Account}:bot:${BotName}:${BotVersion}",
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
+        "resource": "bot version"
+      },
+      {
+        "arn": "arn:${Partition}:lex:${Region}:${Account}:bot:${BotName}:${BotAlias}",
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
+        "resource": "bot alias"
+      },
+      {
         "arn": "arn:${Partition}:lex:${Region}:${Account}:bot-channel:${BotName}:${BotAlias}:${ChannelName}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "channel"
       },
       {
         "arn": "arn:${Partition}:lex:${Region}:${Account}:intent:${IntentName}:${IntentVersion}",
         "condition_keys": [],
-        "resource": "intent"
+        "resource": "intent version"
       },
       {
         "arn": "arn:${Partition}:lex:${Region}:${Account}:slottype:${SlotName}:${SlotVersion}",
         "condition_keys": [],
-        "resource": "slottype"
+        "resource": "slottype version"
       }
     ],
     "service_name": "Amazon Lex"
@@ -78022,6 +78383,11 @@
   {
     "conditions": [
       {
+        "condition": "organizations:PolicyType",
+        "description": "Enables you to filter the request to only the specified policy type names.",
+        "type": "String"
+      },
+      {
         "condition": "organizations:ServicePrincipal",
         "description": "Enables you to filter the request to only the specified service principal names.",
         "type": "String"
@@ -78065,6 +78431,13 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "root"
+          },
+          {
+            "condition_keys": [
+              "organizations:PolicyType"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -78139,7 +78512,9 @@
         "privilege": "CreatePolicy",
         "resource_types": [
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "organizations:PolicyType"
+            ],
             "dependent_actions": [],
             "resource_type": ""
           }
@@ -78190,6 +78565,13 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "policy*"
+          },
+          {
+            "condition_keys": [
+              "organizations:PolicyType"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -78226,6 +78608,13 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "account*"
+          },
+          {
+            "condition_keys": [
+              "organizations:PolicyType"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -78274,6 +78663,13 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "policy*"
+          },
+          {
+            "condition_keys": [
+              "organizations:PolicyType"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -78301,6 +78697,13 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "root"
+          },
+          {
+            "condition_keys": [
+              "organizations:PolicyType"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -78327,6 +78730,13 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "root*"
+          },
+          {
+            "condition_keys": [
+              "organizations:PolicyType"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -78365,6 +78775,13 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "root*"
+          },
+          {
+            "condition_keys": [
+              "organizations:PolicyType"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -78526,7 +78943,9 @@
         "privilege": "ListPolicies",
         "resource_types": [
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "organizations:PolicyType"
+            ],
             "dependent_actions": [],
             "resource_type": ""
           }
@@ -78551,6 +78970,13 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "root"
+          },
+          {
+            "condition_keys": [
+              "organizations:PolicyType"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -78587,6 +79013,13 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "policy*"
+          },
+          {
+            "condition_keys": [
+              "organizations:PolicyType"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -78669,6 +79102,13 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "policy*"
+          },
+          {
+            "condition_keys": [
+              "organizations:PolicyType"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       }
@@ -93915,7 +94355,7 @@
     "privileges": [
       {
         "access_level": "Write",
-        "description": "Grants permission to accept Security Hub invitations to become a member account.",
+        "description": "Grants permission to accept Security Hub invitations to become a member account",
         "privilege": "AcceptInvitation",
         "resource_types": [
           {
@@ -93927,7 +94367,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Grants permission to disable standards in Security Hub.",
+        "description": "Grants permission to disable standards in Security Hub",
         "privilege": "BatchDisableStandards",
         "resource_types": [
           {
@@ -93939,7 +94379,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Grants permission to enable standards in Security Hub.",
+        "description": "Grants permission to enable standards in Security Hub",
         "privilege": "BatchEnableStandards",
         "resource_types": [
           {
@@ -93951,7 +94391,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Grants permission to import findings into Security Hub from an integrated product.",
+        "description": "Grants permission to import findings into Security Hub from an integrated product",
         "privilege": "BatchImportFindings",
         "resource_types": [
           {
@@ -93965,7 +94405,19 @@
       },
       {
         "access_level": "Write",
-        "description": "Grants permission to create custom actions in Security Hub.",
+        "description": "Grants permission to update customer-controlled fields for a selected set of Security Hub findings",
+        "privilege": "BatchUpdateFindings",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to create custom actions in Security Hub",
         "privilege": "CreateActionTarget",
         "resource_types": [
           {
@@ -93977,7 +94429,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Grants permission to create insights in Security Hub. Insights are collections of related findings.",
+        "description": "Grants permission to create insights in Security Hub. Insights are collections of related findings",
         "privilege": "CreateInsight",
         "resource_types": [
           {
@@ -93989,7 +94441,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Grants permission to create member accounts in Security Hub.",
+        "description": "Grants permission to create member accounts in Security Hub",
         "privilege": "CreateMembers",
         "resource_types": [
           {
@@ -94001,7 +94453,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Grants permission to decline Security Hub invitations to become a member account.",
+        "description": "Grants permission to decline Security Hub invitations to become a member account",
         "privilege": "DeclineInvitations",
         "resource_types": [
           {
@@ -94013,7 +94465,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Grants permission to delete custom actions in Security Hub.",
+        "description": "Grants permission to delete custom actions in Security Hub",
         "privilege": "DeleteActionTarget",
         "resource_types": [
           {
@@ -94025,7 +94477,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Grants permission to delete insights from Security Hub.",
+        "description": "Grants permission to delete insights from Security Hub",
         "privilege": "DeleteInsight",
         "resource_types": [
           {
@@ -94037,7 +94489,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Grants permission to delete Security Hub invitations to become a member account.",
+        "description": "Grants permission to delete Security Hub invitations to become a member account",
         "privilege": "DeleteInvitations",
         "resource_types": [
           {
@@ -94049,7 +94501,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Grants permission to delete Security Hub member accounts.",
+        "description": "Grants permission to delete Security Hub member accounts",
         "privilege": "DeleteMembers",
         "resource_types": [
           {
@@ -94061,7 +94513,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Grants permission to retrieve a list of custom actions using the API.",
+        "description": "Grants permission to retrieve a list of custom actions using the API",
         "privilege": "DescribeActionTargets",
         "resource_types": [
           {
@@ -94073,7 +94525,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Grants permission to retrieve information about the hub resource in your account.",
+        "description": "Grants permission to retrieve information about the hub resource in your account",
         "privilege": "DescribeHub",
         "resource_types": [
           {
@@ -94085,7 +94537,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Grants permission to retrieve information about the available Security Hub product integrations.",
+        "description": "Grants permission to retrieve information about the available Security Hub product integrations",
         "privilege": "DescribeProducts",
         "resource_types": [
           {
@@ -94097,7 +94549,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Grants permission to retrieve information about Security Hub standards.",
+        "description": "Grants permission to retrieve information about Security Hub standards",
         "privilege": "DescribeStandards",
         "resource_types": [
           {
@@ -94109,7 +94561,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Grants permission to retrieve information about Security Hub standards controls.",
+        "description": "Grants permission to retrieve information about Security Hub standards controls",
         "privilege": "DescribeStandardsControls",
         "resource_types": [
           {
@@ -94121,7 +94573,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Grants permission to disable the findings importing for a Security Hub integrated product.",
+        "description": "Grants permission to disable the findings importing for a Security Hub integrated product",
         "privilege": "DisableImportFindingsForProduct",
         "resource_types": [
           {
@@ -94133,7 +94585,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Grants permission to disable Security Hub.",
+        "description": "Grants permission to disable Security Hub",
         "privilege": "DisableSecurityHub",
         "resource_types": [
           {
@@ -94145,7 +94597,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Grants permission to a Security Hub member account to disassociate from the associated master account.",
+        "description": "Grants permission to a Security Hub member account to disassociate from the associated master account",
         "privilege": "DisassociateFromMasterAccount",
         "resource_types": [
           {
@@ -94157,7 +94609,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Grants permission to disassociate Security Hub member accounts from the associated master account.",
+        "description": "Grants permission to disassociate Security Hub member accounts from the associated master account",
         "privilege": "DisassociateMembers",
         "resource_types": [
           {
@@ -94169,7 +94621,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Grants permission to enable the findings importing for a Security Hub integrated product.",
+        "description": "Grants permission to enable the findings importing for a Security Hub integrated product",
         "privilege": "EnableImportFindingsForProduct",
         "resource_types": [
           {
@@ -94181,7 +94633,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Grants permission to enable Security Hub.",
+        "description": "Grants permission to enable Security Hub",
         "privilege": "EnableSecurityHub",
         "resource_types": [
           {
@@ -94196,7 +94648,7 @@
       },
       {
         "access_level": "List",
-        "description": "Grants permission to retrieve a list of the standards that are enabled in Security Hub.",
+        "description": "Grants permission to retrieve a list of the standards that are enabled in Security Hub",
         "privilege": "GetEnabledStandards",
         "resource_types": [
           {
@@ -94208,7 +94660,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Grants permission to retrieve a list of findings from Security Hub.",
+        "description": "Grants permission to retrieve a list of findings from Security Hub",
         "privilege": "GetFindings",
         "resource_types": [
           {
@@ -94220,7 +94672,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Grants permission to retrieve insight results from Security Hub.",
+        "description": "Grants permission to retrieve insight results from Security Hub",
         "privilege": "GetInsightResults",
         "resource_types": [
           {
@@ -94232,7 +94684,7 @@
       },
       {
         "access_level": "List",
-        "description": "Grants permission to retrieve Security Hub insights.",
+        "description": "Grants permission to retrieve Security Hub insights",
         "privilege": "GetInsights",
         "resource_types": [
           {
@@ -94244,7 +94696,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Grants permission to retrieve the count of Security Hub membership invitations sent to the account.",
+        "description": "Grants permission to retrieve the count of Security Hub membership invitations sent to the account",
         "privilege": "GetInvitationsCount",
         "resource_types": [
           {
@@ -94256,7 +94708,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Grants permission to retrieve details about the Security Hub master account.",
+        "description": "Grants permission to retrieve details about the Security Hub master account",
         "privilege": "GetMasterAccount",
         "resource_types": [
           {
@@ -94268,7 +94720,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Grants permission to retrieve the details of Security Hub member accounts.",
+        "description": "Grants permission to retrieve the details of Security Hub member accounts",
         "privilege": "GetMembers",
         "resource_types": [
           {
@@ -94280,7 +94732,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Grants permission to invite other AWS accounts to become Security Hub member accounts.",
+        "description": "Grants permission to invite other AWS accounts to become Security Hub member accounts",
         "privilege": "InviteMembers",
         "resource_types": [
           {
@@ -94292,7 +94744,7 @@
       },
       {
         "access_level": "List",
-        "description": "Grants permission to retrieve the Security Hub integrated products that are currently enabled.",
+        "description": "Grants permission to retrieve the Security Hub integrated products that are currently enabled",
         "privilege": "ListEnabledProductsForImport",
         "resource_types": [
           {
@@ -94304,7 +94756,7 @@
       },
       {
         "access_level": "List",
-        "description": "Grants permission to retrieve the Security Hub invitations sent to the account.",
+        "description": "Grants permission to retrieve the Security Hub invitations sent to the account",
         "privilege": "ListInvitations",
         "resource_types": [
           {
@@ -94316,7 +94768,7 @@
       },
       {
         "access_level": "List",
-        "description": "Grants permission to retrieve details about Security Hub member accounts associated with the master account.",
+        "description": "Grants permission to retrieve details about Security Hub member accounts associated with the master account",
         "privilege": "ListMembers",
         "resource_types": [
           {
@@ -94328,7 +94780,7 @@
       },
       {
         "access_level": "List",
-        "description": "Grants permission to list of tags associated with a resource.",
+        "description": "Grants permission to list of tags associated with a resource",
         "privilege": "ListTagsForResource",
         "resource_types": [
           {
@@ -94340,7 +94792,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Grants permission to add tags to a Security Hub resource.",
+        "description": "Grants permission to add tags to a Security Hub resource",
         "privilege": "TagResource",
         "resource_types": [
           {
@@ -94352,7 +94804,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Grants permission to remove tags from a Security Hub resource.",
+        "description": "Grants permission to remove tags from a Security Hub resource",
         "privilege": "UntagResource",
         "resource_types": [
           {
@@ -94364,7 +94816,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Grants permission to update custom actions in Security Hub.",
+        "description": "Grants permission to update custom actions in Security Hub",
         "privilege": "UpdateActionTarget",
         "resource_types": [
           {
@@ -94376,7 +94828,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Grants permission to update Security Hub findings.",
+        "description": "Grants permission to update Security Hub findings",
         "privilege": "UpdateFindings",
         "resource_types": [
           {
@@ -94388,7 +94840,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Grants permission to update insights in Security Hub.",
+        "description": "Grants permission to update insights in Security Hub",
         "privilege": "UpdateInsight",
         "resource_types": [
           {
@@ -94400,7 +94852,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Grants permission to update Security Hub standards controls.",
+        "description": "Grants permission to update Security Hub standards controls",
         "privilege": "UpdateStandardsControl",
         "resource_types": [
           {
@@ -106152,6 +106604,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Deletes a previously submitted medical transcription job.",
+        "privilege": "DeleteMedicalTranscriptionJob",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Deletes a previously submitted transcription job along with any other generated results such as the transcription, models, and so on.",
         "privilege": "DeleteTranscriptionJob",
         "resource_types": [
@@ -106188,6 +106652,18 @@
       },
       {
         "access_level": "Read",
+        "description": "Returns information about a medical transcription job.",
+        "privilege": "GetMedicalTranscriptionJob",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
         "description": "Returns information about a transcription job.",
         "privilege": "GetTranscriptionJob",
         "resource_types": [
@@ -106214,6 +106690,18 @@
         "access_level": "Read",
         "description": "Gets information about a vocabulary filter.",
         "privilege": "GetVocabularyFilter",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Lists medical transcription jobs with the specified status.",
+        "privilege": "ListMedicalTranscriptionJobs",
         "resource_types": [
           {
             "condition_keys": [],
@@ -106266,6 +106754,20 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Starts an asynchronous job to transcribe medical speech to text.",
+        "privilege": "StartMedicalTranscriptionJob",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [
+              "s3:GetObject"
+            ],
             "resource_type": ""
           }
         ]

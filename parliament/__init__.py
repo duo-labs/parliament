@@ -8,6 +8,7 @@ import json
 import yaml
 import re
 import fnmatch
+import functools
 import pkg_resources
 
 # On initialization, load the IAM data
@@ -171,6 +172,7 @@ def is_glob_match(s1, s2):
     return s1[0] == s2[0] and is_glob_match(s1[1:], s2[1:])
 
 
+@functools.lru_cache(maxsize=1024)
 def expand_action(action, raise_exceptions=True):
     """
     Converts "iam:*List*" to

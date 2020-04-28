@@ -9,6 +9,16 @@ parliament is an AWS IAM linting library. It reviews policies looking for proble
 This library duplicates (and adds to!) much of the functionality in the web console page when reviewing IAM policies in the browser.  We wanted that functionality as a library.
 
 # Installation
+
+* Homebrew
+
+```
+brew tap duo-labs/parliament https://github.com/duo-labs/parliament
+brew install parliament
+```
+
+* Pip
+
 ```
 pip install parliament
 ```

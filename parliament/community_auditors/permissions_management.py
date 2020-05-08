@@ -1,6 +1,3 @@
-from parliament import is_arn_match, expand_action
-
-
 def audit(policy):
     # The following list is obtained from Policy Sentry via the following code.
     # This is done to avoid pulling in Policy Sentry and its requirements which adds ~50MB to this library.

@@ -1,5 +1,3 @@
-from parliament import is_arn_match, expand_action
-
 # https://gist.github.com/kmcquade/33860a617e651104d243c324ddf7992a
 CREDENTIALS_EXPOSURE_ACTIONS = [
     "codepipeline:pollforjobs",

@@ -1,5 +1,6 @@
 import unittest
-from nose.tools import raises, assert_equal
+
+from nose.tools import assert_equal
 
 # import parliament
 from parliament import analyze_policy_string
@@ -30,5 +31,11 @@ class TestCredentialsManagement(unittest.TestCase):
 
         assert_equal(
             policy.finding_ids,
-            set(["CREDENTIALS_EXPOSURE", "PERMISSIONS_MANAGEMENT_ACTIONS", "RESOURCE_STAR"]),
+            set(
+                [
+                    "CREDENTIALS_EXPOSURE",
+                    "PERMISSIONS_MANAGEMENT_ACTIONS",
+                    "RESOURCE_STAR",
+                ]
+            ),
         )

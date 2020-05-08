@@ -3,13 +3,13 @@ This library is a linter for AWS IAM policies.
 """
 __version__ = "0.4.12"
 
-import os
-import json
-import yaml
-import re
 import fnmatch
 import functools
+import json
+import re
+
 import pkg_resources
+import yaml
 
 # On initialization, load the IAM data
 iam_definition_path = pkg_resources.resource_filename(__name__, "iam_definition.json")
@@ -52,6 +52,7 @@ def analyze_policy_string(
     ignore_private_auditors=False,
     private_auditors_custom_path=None,
     include_community_auditors=False,
+    config=None,
 ):
     """Given a string reperesenting a policy, convert it to a Policy object with findings"""
 
@@ -63,7 +64,7 @@ def analyze_policy_string(
         policy.add_finding("MALFORMED_JSON", detail="json parsing error: {}".format(e))
         return policy
 
-    policy = Policy(policy_json, filepath)
+    policy = Policy(policy_json, filepath, config)
     policy.analyze(
         ignore_private_auditors,
         private_auditors_custom_path,

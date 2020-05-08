@@ -15,3 +15,12 @@ CREDENTIALS_EXPOSURE:
   description: Policy grants access to API calls that can return credentials to the user
   severity: MEDIUM
   group: CUSTOM
+
+SENSITIVE_ACCESS:
+  title: Sensitive resource access check
+  description: Policy contains sensitive operation and resource access
+  severity: HIGH
+  group: CUSTOM
+  # Resource definitions have to be in the format:
+  # - 'service:action': [afn1, arn2]
+  resources: []

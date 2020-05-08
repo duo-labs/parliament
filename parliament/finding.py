@@ -1,6 +1,3 @@
-import yaml
-
-
 class Finding:
     """ Class for storing findings """
 

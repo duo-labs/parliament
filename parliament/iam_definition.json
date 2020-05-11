@@ -3373,6 +3373,249 @@
     "service_name": "AWS AppConfig"
   },
   {
+    "conditions": [
+      {
+        "condition": "aws:RequestTag/${TagKey}",
+        "description": "Filters actions based on the allowed set of values for each of the tags",
+        "type": "String"
+      },
+      {
+        "condition": "aws:ResourceTag/${TagKey}",
+        "description": "Filters actions based on tag-value associated with the resource",
+        "type": "String"
+      },
+      {
+        "condition": "aws:TagKeys",
+        "description": "Filters actions based on the presence of mandatory tags in the request",
+        "type": "String"
+      }
+    ],
+    "prefix": "appflow",
+    "privileges": [
+      {
+        "access_level": "Write",
+        "description": "Grants permission to create a login profile to be used with AppFlow flows",
+        "privilege": "CreateConnectorProfile",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to create an AppFlow flow",
+        "privilege": "CreateFlow",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to delete a login profile set up for use with AppFlow",
+        "privilege": "DeleteConnectorProfile",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "connectorprofile*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to delete an AppFlow flow",
+        "privilege": "DeleteFlow",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "flow*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to describe all fields supported by AppFlow",
+        "privilege": "DescribeConnectorFields",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "connectorprofile*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to describe all login profiles configured in AppFlow",
+        "privilege": "DescribeConnectorProfiles",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to describe all connectors supported by AppFlow",
+        "privilege": "DescribeConnectors",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to describe all flow executions for a flow configured in AppFlow",
+        "privilege": "DescribeFlowExecution",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "flow*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to describe all flows configured in AppFlow",
+        "privilege": "DescribeFlows",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to list all fields supported by AppFlow",
+        "privilege": "ListConnectorFields",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "connectorprofile*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to list tags for a flow",
+        "privilege": "ListTagsForResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "flow*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to run a flow configured in AppFlow",
+        "privilege": "RunFlow",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "flow*"
+          }
+        ]
+      },
+      {
+        "access_level": "Tagging",
+        "description": "Grants permission to tag a flow",
+        "privilege": "TagResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "flow*"
+          },
+          {
+            "condition_keys": [
+              "aws:TagKeys",
+              "aws:RequestTag/${TagKey}"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Tagging",
+        "description": "Grants permission to untag a flow",
+        "privilege": "UntagResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "flow*"
+          },
+          {
+            "condition_keys": [
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to update an AppFlow flow",
+        "privilege": "UpdateFlow",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "flow*"
+          }
+        ]
+      }
+    ],
+    "resources": [
+      {
+        "arn": "arn:${Partition}:appflow::${Account}:flow/${flowName}",
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
+        "resource": "flow"
+      },
+      {
+        "arn": "arn:${Partition}:appflow::${Account}:connectorprofile/${profileName}",
+        "condition_keys": [],
+        "resource": "connectorprofile"
+      }
+    ],
+    "service_name": "Amazon AppFlow"
+  },
+  {
     "conditions": [],
     "prefix": "application-autoscaling",
     "privileges": [
@@ -9590,7 +9833,7 @@
         "resource": "table"
       }
     ],
-    "service_name": "AWS Managed Apache Cassandra Service"
+    "service_name": "Amazon Keyspaces (for Apache Cassandra)"
   },
   {
     "conditions": [],
@@ -13356,6 +13599,18 @@
         ]
       },
       {
+        "access_level": "Write",
+        "description": "Deregisters an existing CloudFormation type or type version",
+        "privilege": "DeregisterType",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
         "access_level": "Read",
         "description": "Retrieves your account's AWS CloudFormation limits.",
         "privilege": "DescribeAccountLimits",
@@ -13491,6 +13746,30 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "stack*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Returns information about the CloudFormation type requested",
+        "privilege": "DescribeType",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Returns information about the registration process for a CloudFormation type",
+        "privilege": "DescribeTypeRegistration",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -13711,6 +13990,54 @@
         ]
       },
       {
+        "access_level": "List",
+        "description": "Lists CloudFormation type registration attempts",
+        "privilege": "ListTypeRegistrations",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Lists versions of a particular CloudFormation type",
+        "privilege": "ListTypeVersions",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Lists available CloudFormation types",
+        "privilege": "ListTypes",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Registers a new CloudFormation type",
+        "privilege": "RegisterType",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
         "access_level": "Permissions management",
         "description": "Sets a stack policy for a specified stack.",
         "privilege": "SetStackPolicy",
@@ -13724,6 +14051,18 @@
             "condition_keys": [
               "cloudformation:StackPolicyUrl"
             ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Sets which version of a CloudFormation type applies to CloudFormation operations",
+        "privilege": "SetTypeDefaultVersion",
+        "resource_types": [
+          {
+            "condition_keys": [],
             "dependent_actions": [],
             "resource_type": ""
           }
@@ -13858,7 +14197,7 @@
         ]
       },
       {
-        "access_level": "Write",
+        "access_level": "Read",
         "description": "Validates a specified template.",
         "privilege": "ValidateTemplate",
         "resource_types": [
@@ -27142,6 +27481,18 @@
         "access_level": "Read",
         "description": "Grants permission to search the data stored in a behavior graph",
         "privilege": "SearchGraph",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Graph*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to start data ingest for a member account that has a status of ACCEPTED_BUT_DISABLED.",
+        "privilege": "StartMonitoringMember",
         "resource_types": [
           {
             "condition_keys": [],
@@ -59915,6 +60266,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Registers a device certificate with AWS IoT without a registered CA (certificate authority).",
+        "privilege": "RegisterCertificateWithoutCA",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Registers your thing.",
         "privilege": "RegisterThing",
         "resource_types": [
@@ -62027,6 +62390,21 @@
   {
     "conditions": [
       {
+        "condition": "aws:RequestTag/${TagKey}",
+        "description": "Filters actions based on the presence of tag key-value pairs in the request",
+        "type": "String"
+      },
+      {
+        "condition": "aws:ResourceTag/${TagKey}",
+        "description": "Filters actions based on the tags associated with the resource",
+        "type": "String"
+      },
+      {
+        "condition": "aws:TagKeys",
+        "description": "Filters actions based on the tag keys that are passed in the request",
+        "type": "String"
+      },
+      {
         "condition": "iotsitewise:assetHierarchyPath",
         "description": "String of asset IDs in the asset hierarchy separated by forward slash.",
         "type": "String"
@@ -62073,28 +62451,6 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "asset*"
-          }
-        ]
-      },
-      {
-        "access_level": "Write",
-        "description": "Associates the specified entities within a view for the specified group.",
-        "privilege": "AssociateViewEntities",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": "group*"
-          },
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": "view*"
-          },
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": "asset"
           }
         ]
       },
@@ -62148,6 +62504,14 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "project"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -62160,6 +62524,14 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "asset-model*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -62169,19 +62541,10 @@
         "privilege": "CreateAssetModel",
         "resource_types": [
           {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": ""
-          }
-        ]
-      },
-      {
-        "access_level": "Write",
-        "description": "Creates an asset template.",
-        "privilege": "CreateAssetTemplate",
-        "resource_types": [
-          {
-            "condition_keys": [],
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
             "dependent_actions": [],
             "resource_type": ""
           }
@@ -62196,16 +62559,12 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "project*"
-          }
-        ]
-      },
-      {
-        "access_level": "Write",
-        "description": "Creates a group.",
-        "privilege": "CreateGroup",
-        "resource_types": [
+          },
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
             "dependent_actions": [],
             "resource_type": ""
           }
@@ -62213,23 +62572,14 @@
       },
       {
         "access_level": "Write",
-        "description": "Registers a measurement data store.",
-        "privilege": "CreateMeasurementDataStore",
+        "description": "Creates a gateway.",
+        "privilege": "CreateGateway",
         "resource_types": [
           {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": ""
-          }
-        ]
-      },
-      {
-        "access_level": "Write",
-        "description": "Creates a metric type.",
-        "privilege": "CreateMetricType",
-        "resource_types": [
-          {
-            "condition_keys": [],
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
             "dependent_actions": [],
             "resource_type": ""
           }
@@ -62241,9 +62591,13 @@
         "privilege": "CreatePortal",
         "resource_types": [
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
             "dependent_actions": [
-              "sso:CreateManagedApplicationInstance"
+              "sso:CreateManagedApplicationInstance",
+              "sso:DescribeRegisteredRegions"
             ],
             "resource_type": ""
           }
@@ -62258,16 +62612,12 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "portal*"
-          }
-        ]
-      },
-      {
-        "access_level": "Write",
-        "description": "Creates a view.",
-        "privilege": "CreateView",
-        "resource_types": [
+          },
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
             "dependent_actions": [],
             "resource_type": ""
           }
@@ -62311,18 +62661,6 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes the specified asset template.",
-        "privilege": "DeleteAssetTemplate",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": "asset-template*"
-          }
-        ]
-      },
-      {
-        "access_level": "Write",
         "description": "Grants permission to delete a specified dashboard.",
         "privilege": "DeleteDashboard",
         "resource_types": [
@@ -62335,37 +62673,13 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes the specified group.",
-        "privilege": "DeleteGroup",
+        "description": "Deletes the specified gateway.",
+        "privilege": "DeleteGateway",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "group*"
-          }
-        ]
-      },
-      {
-        "access_level": "Write",
-        "description": "Deregisters the specified measurement data store.",
-        "privilege": "DeleteMeasurementDataStore",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": "measurement-data-store*"
-          }
-        ]
-      },
-      {
-        "access_level": "Write",
-        "description": "Deletes the specified metric type.",
-        "privilege": "DeleteMetricType",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": "metric-type*"
+            "resource_type": "gateway*"
           }
         ]
       },
@@ -62392,40 +62706,6 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "project*"
-          }
-        ]
-      },
-      {
-        "access_level": "Write",
-        "description": "Deletes the specified view.",
-        "privilege": "DeleteView",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": "view*"
-          }
-        ]
-      },
-      {
-        "access_level": "Write",
-        "description": "Deregisters the specified assets and groups from the specified view.",
-        "privilege": "DeregisterViewEntities",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": "view*"
-          },
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": "asset"
-          },
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": "group"
           }
         ]
       },
@@ -62479,30 +62759,6 @@
       },
       {
         "access_level": "Read",
-        "description": "Describes the specified asset templates.",
-        "privilege": "DescribeAssetTemplates",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": "asset-template*"
-          }
-        ]
-      },
-      {
-        "access_level": "Read",
-        "description": "Describes the specified assets.",
-        "privilege": "DescribeAssets",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": "asset*"
-          }
-        ]
-      },
-      {
-        "access_level": "Read",
         "description": "Grants permission to describe a specified dashboard.",
         "privilege": "DescribeDashboard",
         "resource_types": [
@@ -62515,13 +62771,25 @@
       },
       {
         "access_level": "Read",
-        "description": "Describes the groups for the account.",
-        "privilege": "DescribeGroups",
+        "description": "Describes the gateway for the account.",
+        "privilege": "DescribeGateway",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "group*"
+            "resource_type": "gateway*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Describes the specified gateway capability configuration.",
+        "privilege": "DescribeGatewayCapabilityConfiguration",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "gateway*"
           }
         ]
       },
@@ -62534,30 +62802,6 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": ""
-          }
-        ]
-      },
-      {
-        "access_level": "Read",
-        "description": "Describes the specified measurement data stores.",
-        "privilege": "DescribeMeasurementDataStores",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": "measurement-data-store*"
-          }
-        ]
-      },
-      {
-        "access_level": "Read",
-        "description": "Describes the metric types for the account.",
-        "privilege": "DescribeMetricTypes",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": "metric-type*"
           }
         ]
       },
@@ -62586,18 +62830,6 @@
         ]
       },
       {
-        "access_level": "Read",
-        "description": "Describes the specified views.",
-        "privilege": "DescribeViews",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": "view*"
-          }
-        ]
-      },
-      {
         "access_level": "Write",
         "description": "Disassociate child assets from the parent for specified model hiearchy.",
         "privilege": "DisassociateAssets",
@@ -62606,28 +62838,6 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "asset*"
-          }
-        ]
-      },
-      {
-        "access_level": "Write",
-        "description": "Disassociates the specified entities within a view for the specified group.",
-        "privilege": "DisassociateViewEntities",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": "group*"
-          },
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": "view*"
-          },
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": "asset"
           }
         ]
       },
@@ -62668,30 +62878,6 @@
         ]
       },
       {
-        "access_level": "Read",
-        "description": "Fetches the measurement data for the specified measurement and time interval.",
-        "privilege": "GetMeasurementData",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": "measurement*"
-          }
-        ]
-      },
-      {
-        "access_level": "Read",
-        "description": "Fetches the metric data for the specified metric and time interval.",
-        "privilege": "GetMetricData",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": "metric*"
-          }
-        ]
-      },
-      {
         "access_level": "Permissions management",
         "description": "Grants permission to list access policies for a specified portal or a project.",
         "privilege": "ListAccessPolicies",
@@ -62712,18 +62898,6 @@
         "access_level": "List",
         "description": "Lists the asset models for the account.",
         "privilege": "ListAssetModels",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": ""
-          }
-        ]
-      },
-      {
-        "access_level": "List",
-        "description": "Lists the asset templates for the account.",
-        "privilege": "ListAssetTemplates",
         "resource_types": [
           {
             "condition_keys": [],
@@ -62770,44 +62944,8 @@
       },
       {
         "access_level": "List",
-        "description": "Lists the groups for the account.",
-        "privilege": "ListGroups",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": ""
-          }
-        ]
-      },
-      {
-        "access_level": "List",
-        "description": "Lists the measurement data stores for the account.",
-        "privilege": "ListMeasurementDataStores",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": ""
-          }
-        ]
-      },
-      {
-        "access_level": "List",
-        "description": "Lists the measurement data streams for the specified measurement data store.",
-        "privilege": "ListMeasurementDataStreams",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": "measurement-data-store*"
-          }
-        ]
-      },
-      {
-        "access_level": "List",
-        "description": "Lists the metric types for the account.",
-        "privilege": "ListMetricTypes",
+        "description": "Lists the gateways for the account.",
+        "privilege": "ListGateways",
         "resource_types": [
           {
             "condition_keys": [],
@@ -62853,14 +62991,14 @@
         ]
       },
       {
-        "access_level": "List",
-        "description": "Lists the assets and groups for the specified view.",
-        "privilege": "ListViewEntities",
+        "access_level": "Read",
+        "description": "Grants permission to lists tag for a resource.",
+        "privilege": "ListTagsForResource",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "view*"
+            "resource_type": "access-policy"
           },
           {
             "condition_keys": [],
@@ -62870,17 +63008,32 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "group"
-          }
-        ]
-      },
-      {
-        "access_level": "List",
-        "description": "Lists the views for the account.",
-        "privilege": "ListViews",
-        "resource_types": [
+            "resource_type": "asset-model"
+          },
           {
             "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "dashboard"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "gateway"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "portal"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "project"
+          },
+          {
+            "condition_keys": [
+              "aws:ResourceTag/${TagKey}"
+            ],
             "dependent_actions": [],
             "resource_type": ""
           }
@@ -62899,14 +63052,14 @@
         ]
       },
       {
-        "access_level": "Write",
-        "description": "Registers the specified assets and groups with the specified view.",
-        "privilege": "RegisterViewEntities",
+        "access_level": "Tagging",
+        "description": "Grants permission to tag a resource.",
+        "privilege": "TagResource",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "view*"
+            "resource_type": "access-policy"
           },
           {
             "condition_keys": [],
@@ -62916,7 +63069,84 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "group"
+            "resource_type": "asset-model"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "dashboard"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "gateway"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "portal"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "project"
+          },
+          {
+            "condition_keys": [
+              "aws:TagKeys",
+              "aws:RequestTag/${TagKey}"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Tagging",
+        "description": "Grants permission to untag a resource.",
+        "privilege": "UntagResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "access-policy"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "asset"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "asset-model"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "dashboard"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "gateway"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "portal"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "project"
+          },
+          {
+            "condition_keys": [
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -62970,18 +63200,6 @@
       },
       {
         "access_level": "Write",
-        "description": "Updates the specified asset template.",
-        "privilege": "UpdateAssetTemplate",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": "asset-template*"
-          }
-        ]
-      },
-      {
-        "access_level": "Write",
         "description": "Grants permission to update a specified dashboard.",
         "privilege": "UpdateDashboard",
         "resource_types": [
@@ -62994,25 +63212,25 @@
       },
       {
         "access_level": "Write",
-        "description": "Updates the specified group.",
-        "privilege": "UpdateGroup",
+        "description": "Updates the specified gateway.",
+        "privilege": "UpdateGateway",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "group*"
+            "resource_type": "gateway*"
           }
         ]
       },
       {
         "access_level": "Write",
-        "description": "Updates metadata about the measurement data store.",
-        "privilege": "UpdateMeasurementDataStore",
+        "description": "Updates the specified gateway capability configuration.",
+        "privilege": "UpdateGatewayCapabilityConfiguration",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "measurement-data-store*"
+            "resource_type": "gateway*"
           }
         ]
       },
@@ -63039,89 +63257,56 @@
             "resource_type": "project*"
           }
         ]
-      },
-      {
-        "access_level": "Write",
-        "description": "Updates the specified view.",
-        "privilege": "UpdateView",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": "view*"
-          }
-        ]
       }
     ],
     "resources": [
       {
         "arn": "arn:${Partition}:iotsitewise:${Region}:${Account}:asset/${AssetId}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "asset"
       },
       {
-        "arn": "arn:${Partition}:iotsitewise:${Region}:${Account}:asset-template/${AssetTemplateId}",
-        "condition_keys": [],
-        "resource": "asset-template"
-      },
-      {
         "arn": "arn:${Partition}:iotsitewise:${Region}:${Account}:asset-model/${AssetModelId}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "asset-model"
       },
       {
         "arn": "arn:${Partition}:iotsitewise:${Region}:${Account}:gateway/${GatewayId}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "gateway"
       },
       {
-        "arn": "arn:${Partition}:iotsitewise:${Region}:${Account}:group/${GroupId}",
-        "condition_keys": [],
-        "resource": "group"
-      },
-      {
-        "arn": "arn:${Partition}:iotsitewise:${Region}:${Account}:measurement/${MeasurementId}",
-        "condition_keys": [],
-        "resource": "measurement"
-      },
-      {
-        "arn": "arn:${Partition}:iotsitewise:${Region}:${Account}:measurement-data-store/${MeasurementDataStoreId}",
-        "condition_keys": [],
-        "resource": "measurement-data-store"
-      },
-      {
-        "arn": "arn:${Partition}:iotsitewise:${Region}:${Account}:metric/${MetricId}",
-        "condition_keys": [],
-        "resource": "metric"
-      },
-      {
-        "arn": "arn:${Partition}:iotsitewise:${Region}:${Account}:metric-type/${MetricTypeId}",
-        "condition_keys": [],
-        "resource": "metric-type"
-      },
-      {
-        "arn": "arn:${Partition}:iotsitewise:${Region}:${Account}:view/${ViewId}",
-        "condition_keys": [],
-        "resource": "view"
-      },
-      {
         "arn": "arn:${Partition}:iotsitewise:${Region}:${Account}:portal/${PortalId}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "portal"
       },
       {
         "arn": "arn:${Partition}:iotsitewise:${Region}:${Account}:project/${ProjectId}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "project"
       },
       {
         "arn": "arn:${Partition}:iotsitewise:${Region}:${Account}:dashboard/${DashboardId}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "dashboard"
       },
       {
         "arn": "arn:${Partition}:iotsitewise:${Region}:${Account}:access-policy/${AccessPolicyId}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "access-policy"
       }
     ],
@@ -65330,6 +65515,18 @@
         "access_level": "List",
         "description": "Grants permission to describe the specified Kinesis video stream",
         "privilege": "DescribeStream",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "stream*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to get a media clip from a video stream",
+        "privilege": "GetClip",
         "resource_types": [
           {
             "condition_keys": [],
@@ -71492,6 +71689,34 @@
       },
       {
         "access_level": "Write",
+        "description": "Grants permission to update a member of an Amazon Managed Blockchain network.",
+        "privilege": "UpdateMember",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [
+              "iam:CreateServiceLinkedRole"
+            ],
+            "resource_type": "member*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to update a node from a member of an Amazon Managed Blockchain network.",
+        "privilege": "UpdateNode",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [
+              "iam:CreateServiceLinkedRole"
+            ],
+            "resource_type": "node*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Grants permission to cast a vote for a proposal on behalf of the blockchain network member specified.",
         "privilege": "VoteOnProposal",
         "resource_types": [
@@ -73528,7 +73753,23 @@
     "service_name": "AWS Elemental MediaPackage"
   },
   {
-    "conditions": [],
+    "conditions": [
+      {
+        "condition": "aws:RequestTag/${TagKey}",
+        "description": "Filters actions based on the presence of tag key-value pairs in the request",
+        "type": "String"
+      },
+      {
+        "condition": "aws:ResourceTag/${TagKey}",
+        "description": "Filters actions based on tag key-value pairs attached to the resource",
+        "type": "String"
+      },
+      {
+        "condition": "aws:TagKeys",
+        "description": "Filters actions based on the presence of tag keys in the request",
+        "type": "String"
+      }
+    ],
     "prefix": "mediapackage-vod",
     "privileges": [
       {
@@ -73537,7 +73778,10 @@
         "privilege": "CreateAsset",
         "resource_types": [
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
             "dependent_actions": [],
             "resource_type": ""
           }
@@ -73549,7 +73793,10 @@
         "privilege": "CreatePackagingConfiguration",
         "resource_types": [
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
             "dependent_actions": [],
             "resource_type": ""
           }
@@ -73561,7 +73808,10 @@
         "privilege": "CreatePackagingGroup",
         "resource_types": [
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
             "dependent_actions": [],
             "resource_type": ""
           }
@@ -73674,22 +73924,109 @@
             "resource_type": ""
           }
         ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to list the tags assigned to a PackagingGroup, PackagingConfiguration, or Asset.",
+        "privilege": "ListTagsForResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "assets"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "packaging-configurations"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "packaging-groups"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to assign tags to a PackagingGroup, PackagingConfiguration, or Asset.",
+        "privilege": "TagResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "assets"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "packaging-configurations"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "packaging-groups"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to delete tags from a PackagingGroup, PackagingConfiguration, or Asset.",
+        "privilege": "UntagResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "assets"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "packaging-configurations"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "packaging-groups"
+          },
+          {
+            "condition_keys": [
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
       }
     ],
     "resources": [
       {
         "arn": "arn:${Partition}:mediapackage-vod:${Region}:${Account}:assets/${AssetIdentifier}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "assets"
       },
       {
         "arn": "arn:${Partition}:mediapackage-vod:${Region}:${Account}:packaging-configurations/${PackagingConfigurationIdentifier}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "packaging-configurations"
       },
       {
         "arn": "arn:${Partition}:mediapackage-vod:${Region}:${Account}:packaging-groups/${PackagingGroupIdentifier}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "packaging-groups"
       }
     ],
@@ -79970,6 +80307,38 @@
     "service_name": "AWS Price List"
   },
   {
+    "conditions": [],
+    "prefix": "purchase-orders",
+    "privileges": [
+      {
+        "access_level": "Write",
+        "description": "Modify purchase orders and details",
+        "privilege": "ModifyPurchaseOrders",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "View purchase orders and details",
+        "privilege": "ViewPurchaseOrders",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      }
+    ],
+    "resources": [],
+    "service_name": "AWS Purchase Orders Console"
+  },
+  {
     "conditions": [
       {
         "condition": "aws:RequestTag/${TagKey}",
@@ -81546,7 +81915,7 @@
       },
       {
         "condition": "rds:DatabaseEngine",
-        "description": "A database engine, such as MySQL.",
+        "description": "A database engine. For possible values refer to engine parameter in https://docs.aws.amazon.com/AmazonRDS/latest/APIReference/API_CreateDBInstance.html",
         "type": "String"
       },
       {
@@ -93407,6 +93776,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Delete the resource-based policy attached to a given registry.",
+        "privilege": "DeleteResourcePolicy",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "registry*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Deletes an existing schema in your account.",
         "privilege": "DeleteSchema",
         "resource_types": [
@@ -93502,6 +93883,18 @@
         ]
       },
       {
+        "access_level": "Read",
+        "description": "Retrieves the resource-based policy attached to a given registry.",
+        "privilege": "GetResourcePolicy",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "registry*"
+          }
+        ]
+      },
+      {
         "access_level": "List",
         "description": "Lists all the discoverers in your account.",
         "privilege": "ListDiscoverers",
@@ -93580,6 +93973,18 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "schema*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Attach resource-based policy to the specific registry.",
+        "privilege": "PutResourcePolicy",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "registry*"
           }
         ]
       },
@@ -102290,6 +102695,18 @@
         ]
       },
       {
+        "access_level": "Read",
+        "description": "Obtains the regions where your organization has enabled AWS Single Sign-on",
+        "privilege": "DescribeRegisteredRegions",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
         "access_level": "Write",
         "description": "Disassociate a directory to be used by AWS Single Sign-On",
         "privilege": "DisassociateDirectory",
@@ -104861,7 +105278,12 @@
       },
       {
         "condition": "sts:ExternalId",
-        "description": "Filters actions based on the unique identifier equired when you assume a role in another account",
+        "description": "Filters actions based on the unique identifier required when you assume a role in another account",
+        "type": "String"
+      },
+      {
+        "condition": "sts:RoleSessionName",
+        "description": "Filters actions based on the role session name required when you assume a role",
         "type": "String"
       },
       {
@@ -104897,7 +105319,9 @@
               "aws:TagKeys",
               "aws:PrincipalTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
-              "sts:TransitiveTagKeys"
+              "sts:TransitiveTagKeys",
+              "sts:ExternalId",
+              "sts:RoleSessionName"
             ],
             "dependent_actions": [],
             "resource_type": ""
@@ -106274,25 +106698,37 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns information of all canaries or a canary.",
+        "description": "Returns information of all canaries.",
         "privilege": "DescribeCanaries",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "canary"
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Returns information about the last test run associated with all canaries.",
+        "privilege": "DescribeCanariesLastRun",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
       {
         "access_level": "Read",
         "description": "Returns information about all the test runs associated with a canary.",
-        "privilege": "DescribeTestRuns",
+        "privilege": "GetCanaryRuns",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "canary"
+            "resource_type": "canary*"
           }
         ]
       },

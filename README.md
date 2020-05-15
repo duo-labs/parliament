@@ -277,7 +277,7 @@ $ flask run
 It accepts a json payload of an IAM policy with a POST request.
 
 ```bash
-http post localhost:5000 < test.json
+$ http post localhost:5000 < test.json
 HTTP/1.1 200 OK
 Connection: keep-alive
 Content-Length: 171

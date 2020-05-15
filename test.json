@@ -1,0 +1,11 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "Stmt1589555570362",
+      "Action": "guardduty:*",
+      "Effect": "Allow",
+      "Resource": "*"
+    }
+  ]
+}

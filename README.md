@@ -267,6 +267,49 @@ bin/parliament
 ## Updating the privilege info
 The IAM data is obtained from scraping the docs [here](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_actions-resources-contextkeys.html) and parsing this information with beautifulsoup using `./utils/update_iam_data.py`.
 
+# API
+A small `Flask` API for parliament is implemented [here](parliament/api). You can run this API in development mode with:
+```bash
+$ FLASK_APP=parliament/api/main.py
+$ flask run
+```
+
+It accepts a json payload of an IAM policy with a POST request.
+
+```bash
+http post localhost:5000 < test.json
+HTTP/1.1 200 OK
+Connection: keep-alive
+Content-Length: 171
+Content-Type: application/json
+Date: Fri, 15 May 2020 16:37:29 GMT
+Server: nginx/1.17.10
+
+[
+    {
+        "description": "",
+        "detail": null,
+        "issue": "RESOURCE_STAR",
+        "location": {
+            "actions": [
+                "guardduty:*"
+            ],
+            "filepath": null
+        },
+        "severity": "LOW",
+        "title": "Unnecessary use of Resource *"
+    }
+]
+```
+
+It can also be run as a Docker container with:
+```bash
+$ docker build . -t parliament
+$ docker run --name parliament-api -p 80:80 parliament:latest
+$ http post localhost < test.json
+...
+```
+
 # Projects that use Parliament
 - [CloudMapper](https://github.com/duo-labs/cloudmapper): Has functionality to audit AWS environments and will audit the IAM policies as part of that.
 - [tf-parliament](https://github.com/rdkls/tf-parliament): Runs Parliament against terraform files

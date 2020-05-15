@@ -1,0 +1,110 @@
+EXCEPTION:
+  title: An exception occurred during the audit. 
+  description: Other issues cannot be checked for until this is fixed.
+  severity: CRITICAL
+  group: ERROR
+
+MALFORMED_JSON:
+  title: JSON is malformed
+  description: Other issues cannot be checked for until this is fixed.
+  severity: CRITICAL
+  group: ERROR
+
+MALFORMED:
+  title: Malformed
+  description: Policy does not contain a required element
+  severity: HIGH
+  group: MALFORMED
+
+RESOURCE_POLICY_PRIVILEGE_ESCALATION:
+  title: Possible resource policy privilege escalation
+  description: One example of this is an S3 bucket where s3:Delete is not allowed, but s3:PutBucketPolicy is, which could be abused to grant anonymous object deletion.
+  severity: MEDIUM
+  group: LOGICAL_INCONSISTANCY
+
+UNKNOWN_PRINCIPAL:
+  title: Unknown AWS principal
+  severity: MEDIUM
+  group: INVALID
+
+UNKNOWN_FEDERATION_SOURCE:
+  title: Unknown federation source
+  description: The federation element does not match a known pattern
+  severity: MEDIUM
+  group: INVALID
+
+MISMATCHED_TYPE_OPERATION_TO_NULL:
+  title: Mismatched type of operator to null
+  description: Null operation requires being matched against true or false but given something else
+  severity: MEDIUM
+  group: INVALID
+
+MISMATCHED_TYPE_BUT_USABLE:
+  title: Mismatched type, but usable. For example, you may be using a StringEquals to match against an ARN, when an ArnEquals would be more correct. 
+  severity: LOW
+  group: INVALID
+
+MISMATCHED_TYPE:
+  title: Mismatched type
+  severity: MEDIUM
+  group: INVALID
+
+UNKNOWN_ACTION:
+  title: Unknown action
+  severity: LOW
+  group: INVALID
+
+UNKNOWN_PREFIX:
+  title: Unknown prefix
+  severity: LOW
+  group: INVALID
+
+UNKNOWN_CONDITION_FOR_ACTION:
+  title: Unknown condition for action
+  description: The given condition is not documented to work with the given action
+  severity: MEDIUM
+  group: INVALID
+
+BAD_PATTERN_FOR_MFA:
+  title: "Bad pattern used for MFA check"
+  severity: MEDIUM
+  group: BAD_PATTERN
+
+INVALID_SID:
+  title: Invalid SID
+  description: Statement Sid does match regex [0-9A-Za-z]*
+  severity: LOW
+  group: INVALID
+
+INVALID_ARN:
+  title: Invalid ARN
+  description: Malformed resource, should have the form arn:partition:service:region:account:id
+  severity: MEDIUM
+  group: INVALID
+
+NO_VERSION:
+  title: Policy does not contain a Version element
+  severity: LOW
+  group: NOT_IDEAL
+
+INVALID_VERSION:
+  title: Invalid Version
+  description: "Unknown Version used. Version must be either 2012-10-17 or 2008-10-17"
+  severity: MEDIUM
+  group: INVALID
+
+OLD_VERSION:
+  title: Old version
+  description: "Older version used. Variables will not be allowed."
+  severity: LOW
+  group: OLD
+
+RESOURCE_MISMATCH:
+  title: No resources match for the given action
+  severity: MEDIUM
+  group: MALFORMED
+
+RESOURCE_STAR:
+  title: Unnecessary use of Resource *
+  severity: LOW
+  group: MALFORMED

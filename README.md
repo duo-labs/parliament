@@ -276,6 +276,21 @@ $ flask run
 
 It accepts a json payload of an IAM policy with a POST request.
 
+Where `test.json` is:
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "Stmt1589555570362",
+      "Action": "guardduty:*",
+      "Effect": "Allow",
+      "Resource": "*"
+    }
+  ]
+}
+```
+
 ```bash
 $ http post localhost:5000 < test.json
 HTTP/1.1 200 OK

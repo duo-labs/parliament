@@ -263,8 +263,12 @@ class Statement:
     findings = []
     effect_allow = True
     stmt = None
+    policy_id = None
 
     _is_valid = True
+
+    def set_policy_identifier(self, policy_id):
+        self.policy_id = policy_id
 
     def __init__(self, stmt, analyze=True):
         self.findings = []

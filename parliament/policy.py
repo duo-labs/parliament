@@ -1,15 +1,14 @@
-import json
-import pkgutil
 import importlib
-import os
-import sys
 import logging
+import os
+import pkgutil
+import sys
 from pathlib import Path
 
 from . import expand_action
-from .statement import Statement
 from .finding import Finding
-from .misc import make_list, ACCESS_DECISION
+from .misc import make_list
+from .statement import Statement
 
 
 class Policy:
@@ -19,11 +18,12 @@ class Policy:
     statements = []
     policy = None
 
-    def __init__(self, policy_json, filepath=None):
+    def __init__(self, policy_json, filepath=None, config=None):
         self._findings = []
         self.statements = []
         self.policy_json = policy_json
         self.filepath = filepath
+        self.config = config if config else {}
 
     def add_finding(self, finding, detail="", location={}):
         if "filepath" not in location:

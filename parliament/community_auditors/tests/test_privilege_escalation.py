@@ -1,5 +1,6 @@
 import unittest
-from nose.tools import raises, assert_equal
+
+from nose.tools import assert_equal
 
 # import parliament
 from parliament import analyze_policy_string

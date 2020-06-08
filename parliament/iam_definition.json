@@ -6487,14 +6487,22 @@
         ]
       },
       {
-        "access_level": "Write",
-        "description": "Deprecated. Applies only to AWS services and principals that use Athena JDBC driver earlier than 1.1.0. Use StopQueryExecution otherwise.",
-        "privilege": "CancelQueryExecution",
+        "access_level": "Tagging",
+        "description": "Grants permissions to create a datacatalog.",
+        "privilege": "CreateDataCatalog",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "workgroup*"
+            "resource_type": "datacatalog*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -6532,6 +6540,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Grants permissions to delete a datacatalog.",
+        "privilege": "DeleteDataCatalog",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "datacatalog*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Grants permissions to delete a named query specified.",
         "privilege": "DeleteNamedQuery",
         "resource_types": [
@@ -6556,37 +6576,25 @@
       },
       {
         "access_level": "Read",
-        "description": "Applies only to AWS services managed policy and principals that use an Athena JDBC driver version 1.1.0. Grants permissions to enable access to databases and tables.",
-        "privilege": "GetCatalogs",
+        "description": "Grants permissions to get a datacatalog.",
+        "privilege": "GetDataCatalog",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "datacatalog*"
           }
         ]
       },
       {
         "access_level": "Read",
-        "description": "Applies only to AWS services managed policy and principals that use an Athena JDBC driver version 1.1.0. Grants permissions to enable access to the specified database and table.",
-        "privilege": "GetExecutionEngine",
+        "description": "Grants permissions to get a database for a given datacatalog.",
+        "privilege": "GetDatabase",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
-          }
-        ]
-      },
-      {
-        "access_level": "Read",
-        "description": "Applies only to AWS services managed policy and principals that use an Athena JDBC driver version 1.1.0. Grants permissions to enable access to databases and tables.",
-        "privilege": "GetExecutionEngines",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "datacatalog*"
           }
         ]
       },
@@ -6604,30 +6612,6 @@
       },
       {
         "access_level": "Read",
-        "description": "Applies only to AWS services managed policy and principals that use an Athena JDBC driver version 1.1.0. Grants permissions to enable access to the specified database and table.",
-        "privilege": "GetNamespace",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": ""
-          }
-        ]
-      },
-      {
-        "access_level": "Read",
-        "description": "Applies only to AWS services managed policy and principals that use an Athena JDBC driver version 1.1.0. Grants permissions to enable access to databases and tables.",
-        "privilege": "GetNamespaces",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": ""
-          }
-        ]
-      },
-      {
-        "access_level": "Read",
         "description": "Grants permissions to get information about the specified query execution.",
         "privilege": "GetQueryExecution",
         "resource_types": [
@@ -6635,18 +6619,6 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "workgroup*"
-          }
-        ]
-      },
-      {
-        "access_level": "Read",
-        "description": "Deprecated. Applies only to AWS services and principals that use Athena JDBC driver earlier than 1.1.0. Use ListQueryExecutions otherwise.",
-        "privilege": "GetQueryExecutions",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": ""
           }
         ]
       },
@@ -6676,25 +6648,13 @@
       },
       {
         "access_level": "Read",
-        "description": "Applies only to AWS services managed policy and principals that use an Athena JDBC driver version 1.1.0. Grants permissions to enable access to the specified table.",
-        "privilege": "GetTable",
+        "description": "Grants permissions to get a metadata about a table for a given datacatalog.",
+        "privilege": "GetTableMetadata",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
-          }
-        ]
-      },
-      {
-        "access_level": "Read",
-        "description": "Applies only to AWS services managed policy and principals that use an Athena JDBC driver version 1.1.0. Grants permissions to enable access to tables.",
-        "privilege": "GetTables",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "datacatalog*"
           }
         ]
       },
@@ -6707,6 +6667,30 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "workgroup*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permissions to return a list of datacatalogs for the specified AWS account.",
+        "privilege": "ListDataCatalogs",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permissions to return a list of databases for a given datacatalog.",
+        "privilege": "ListDatabases",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "datacatalog*"
           }
         ]
       },
@@ -6735,10 +6719,27 @@
         ]
       },
       {
+        "access_level": "List",
+        "description": "Grants permissions to return a list of table metadata in a database for a given datacatalog.",
+        "privilege": "ListTableMetadata",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "datacatalog*"
+          }
+        ]
+      },
+      {
         "access_level": "Read",
-        "description": "Grants permissions to return a list of tags for a workgroup.",
+        "description": "Grants permissions to return a list of tags for a resource.",
         "privilege": "ListTagsForResource",
         "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "datacatalog*"
+          },
           {
             "condition_keys": [],
             "dependent_actions": [],
@@ -6750,18 +6751,6 @@
         "access_level": "List",
         "description": "Grants permissions to return a list of workgroups for the specified AWS account.",
         "privilege": "ListWorkGroups",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": ""
-          }
-        ]
-      },
-      {
-        "access_level": "Write",
-        "description": "Deprecated. Applies only to AWS services and principals that use Athena JDBC driver earlier than 1.1.0. Use StartQueryExecution otherwise.",
-        "privilege": "RunQuery",
         "resource_types": [
           {
             "condition_keys": [],
@@ -6796,9 +6785,14 @@
       },
       {
         "access_level": "Tagging",
-        "description": "Grants permissions to add a tag to a workgroup.",
+        "description": "Grants permissions to add a tag to a resource.",
         "privilege": "TagResource",
         "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "datacatalog*"
+          },
           {
             "condition_keys": [],
             "dependent_actions": [],
@@ -6816,9 +6810,14 @@
       },
       {
         "access_level": "Tagging",
-        "description": "Grants permissions to remove a tag from a workgroup.",
+        "description": "Grants permissions to remove a tag from a resource.",
         "privilege": "UntagResource",
         "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "datacatalog*"
+          },
           {
             "condition_keys": [],
             "dependent_actions": [],
@@ -6830,6 +6829,18 @@
             ],
             "dependent_actions": [],
             "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permissions to update a datacatalog.",
+        "privilege": "UpdateDataCatalog",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "datacatalog*"
           }
         ]
       },
@@ -6847,6 +6858,13 @@
       }
     ],
     "resources": [
+      {
+        "arn": "arn:${Partition}:athena:${Region}:${Account}:datacatalog/${DataCatalogName}",
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
+        "resource": "datacatalog"
+      },
       {
         "arn": "arn:${Partition}:athena:${Region}:${Account}:workgroup/${WorkGroupName}",
         "condition_keys": [
@@ -7875,7 +7893,18 @@
     "service_name": "AWS Auto Scaling"
   },
   {
-    "conditions": [],
+    "conditions": [
+      {
+        "condition": "aws-marketplace:AgreementType",
+        "description": "Enables you to control access based on the type of the agreement.",
+        "type": "String"
+      },
+      {
+        "condition": "aws-marketplace:PartyType",
+        "description": "Enables you to control access based on the party type of the agreement.",
+        "type": "String"
+      }
+    ],
     "prefix": "aws-marketplace",
     "privileges": [
       {
@@ -7904,6 +7933,18 @@
       },
       {
         "access_level": "Read",
+        "description": "Returns metadata about the agreement.",
+        "privilege": "DescribeAgreement",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
         "description": "Allows users to view the details of their incoming subscription requests (for providers who provide products that require subscription verification).",
         "privilege": "GetAgreementApprovalRequest",
         "resource_types": [
@@ -7918,6 +7959,18 @@
         "access_level": "Read",
         "description": "Allows users to view the details of their subscription requests for data products that require subscription verification.",
         "privilege": "GetAgreementRequest",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Returns a list of terms for an agreement.",
+        "privilege": "GetAgreementTerms",
         "resource_types": [
           {
             "condition_keys": [],
@@ -7954,6 +8007,18 @@
         "access_level": "Write",
         "description": "Allows users to decline an incoming subscription requests (for providers who provide products that require subscription verification).",
         "privilege": "RejectAgreementApprovalRequest",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Allows users to search their agreements.",
+        "privilege": "SearchAgreements",
         "resource_types": [
           {
             "condition_keys": [],
@@ -10230,7 +10295,23 @@
     "service_name": "AWS Chatbot"
   },
   {
-    "conditions": [],
+    "conditions": [
+      {
+        "condition": "aws:RequestTag/${TagKey}",
+        "description": "Filters actions based on the presence of tag key-value pairs in the request",
+        "type": "String"
+      },
+      {
+        "condition": "aws:ResourceTag/${TagKey}",
+        "description": "Filters actions based on tag key-value pairs attached to the resource",
+        "type": "String"
+      },
+      {
+        "condition": "aws:TagKeys",
+        "description": "Filters actions based on the presence of tag keys in the request",
+        "type": "String"
+      }
+    ],
     "prefix": "chime",
     "privileges": [
       {
@@ -10349,7 +10430,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "meeting*"
           }
         ]
       },
@@ -10471,7 +10552,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "meeting*"
           }
         ]
       },
@@ -10520,7 +10601,10 @@
         "privilege": "CreateMeeting",
         "resource_types": [
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
             "dependent_actions": [],
             "resource_type": ""
           }
@@ -10654,7 +10738,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "meeting*"
           }
         ]
       },
@@ -10728,7 +10812,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "meeting*"
           }
         ]
       },
@@ -10980,7 +11064,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "meeting*"
           }
         ]
       },
@@ -11058,7 +11142,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "meeting*"
           }
         ]
       },
@@ -11114,6 +11198,18 @@
         "access_level": "Read",
         "description": "Grants permission to get details of the specified proxy session for the specified Amazon Chime Voice Connector",
         "privilege": "GetProxySession",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Gets the retention settings for the specified Amazon Chime account.",
+        "privilege": "GetRetentionSettings",
         "resource_types": [
           {
             "condition_keys": [],
@@ -11370,7 +11466,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "meeting*"
           }
         ]
       },
@@ -11382,7 +11478,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "meeting*"
           }
         ]
       },
@@ -11493,7 +11589,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "meeting*"
           }
         ]
       },
@@ -11589,7 +11685,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "meeting"
           }
         ]
       },
@@ -11657,6 +11753,18 @@
         "access_level": "Write",
         "description": "Grants permission to update details for an events configuration for a bot to receive outgoing events",
         "privilege": "PutEventsConfiguration",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Puts retention settings for the specified Amazon Chime account",
+        "privilege": "PutRetentionSettings",
         "resource_types": [
           {
             "condition_keys": [],
@@ -11736,6 +11844,30 @@
         "access_level": "Write",
         "description": "Grants permission to add SIP termination credentials for the specified Amazon Chime Voice Connector",
         "privilege": "PutVoiceConnectorTerminationCredentials",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Redacts the specified Chime conversation Message",
+        "privilege": "RedactConversationMessage",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Redacts the specified Chime room Message",
+        "privilege": "RedactRoomMessage",
         "resource_types": [
           {
             "condition_keys": [],
@@ -11884,7 +12016,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "meeting*"
           }
         ]
       },
@@ -11895,6 +12027,15 @@
         "resource_types": [
           {
             "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "meeting*"
+          },
+          {
+            "condition_keys": [
+              "aws:TagKeys",
+              "aws:RequestTag/${TagKey}",
+              "aws:ResourceTag/${TagKey}"
+            ],
             "dependent_actions": [],
             "resource_type": ""
           }
@@ -11907,6 +12048,15 @@
         "resource_types": [
           {
             "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "meeting"
+          },
+          {
+            "condition_keys": [
+              "aws:TagKeys",
+              "aws:RequestTag/${TagKey}",
+              "aws:ResourceTag/${TagKey}"
+            ],
             "dependent_actions": [],
             "resource_type": ""
           }
@@ -11932,7 +12082,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "meeting*"
           }
         ]
       },
@@ -11944,7 +12094,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "meeting*"
           }
         ]
       },
@@ -11956,7 +12106,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "meeting"
           }
         ]
       },
@@ -12196,7 +12346,9 @@
     "resources": [
       {
         "arn": "arn:${Partition}:chime::${AccountId}:meeting/${MeetingId}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "meeting"
       }
     ],
@@ -16539,6 +16691,14 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "report-group*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -16934,6 +17094,14 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "report-group*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -16965,7 +17133,9 @@
       },
       {
         "arn": "arn:${Partition}:codebuild:${Region}:${Account}:report-group/${ReportGroupName}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "report-group"
       },
       {
@@ -18317,6 +18487,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Create CloudFormation deployment to cooperate ochestration for a CloudFormation stack update.",
+        "privilege": "CreateCloudFormationDeployment",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Create a deployment for an application associated with the IAM user.",
         "privilege": "CreateDeployment",
         "resource_types": [
@@ -18399,6 +18581,18 @@
         "access_level": "Write",
         "description": "Deletes a GitHub account connection.",
         "privilege": "DeleteGitHubAccountToken",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Delete resources associated with the given external Id.",
+        "privilege": "DeleteResourcesByExternalId",
         "resource_types": [
           {
             "condition_keys": [],
@@ -18922,6 +19116,18 @@
         "access_level": "Read",
         "description": "Grants permission to get aggregated profiles for a specific profiling group",
         "privilege": "GetProfile",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "ProfilingGroup*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to get recommendations",
+        "privilege": "GetRecommendations",
         "resource_types": [
           {
             "condition_keys": [],
@@ -20036,6 +20242,315 @@
       }
     ],
     "service_name": "AWS CodeStar"
+  },
+  {
+    "conditions": [
+      {
+        "condition": "aws:RequestTag/${TagKey}",
+        "description": "Filters actions based on the tags that are passed in the request",
+        "type": "String"
+      },
+      {
+        "condition": "aws:ResourceTag/${TagKey}",
+        "description": "Filters actions based on the tags associated with the resource",
+        "type": "String"
+      },
+      {
+        "condition": "aws:TagKeys",
+        "description": "Filters actions based on the tag keys that are passed in the request",
+        "type": "String"
+      },
+      {
+        "condition": "codestar-connections:BranchName",
+        "description": "Filters access by the branch name that is passed in the request. Applies only to UseConnection requests for access to a specific repository branch",
+        "type": "String"
+      },
+      {
+        "condition": "codestar-connections:FullRepositoryId",
+        "description": "Filters access by the repository that is passed in the request. Applies only to UseConnection requests for access to a specific repository",
+        "type": "String"
+      },
+      {
+        "condition": "codestar-connections:InstallationId",
+        "description": "Filters access by the third-party ID (such as the Bitbucket App installation ID for CodeStar Connections) that is used to update a Connection. Allows you to restrict which third-party App installations can be used to make a Connection",
+        "type": "String"
+      },
+      {
+        "condition": "codestar-connections:OwnerId",
+        "description": "Filters access by the owner of the third-party repository. Applies only to UseConnection requests for access to repositories owned by a specific user",
+        "type": "String"
+      },
+      {
+        "condition": "codestar-connections:PassedToService",
+        "description": "Filters access by the service to which the principal is allowed to pass a Connection",
+        "type": "String"
+      },
+      {
+        "condition": "codestar-connections:ProviderAction",
+        "description": "Filters access by the provider action in a UseConnection request such as ListRepositories. See documentation for all valid values",
+        "type": "String"
+      },
+      {
+        "condition": "codestar-connections:ProviderPermissionsRequired",
+        "description": "Filters access by the write permissions of a provider action in a UseConnection request. Valid types include read_only and read_write",
+        "type": "String"
+      },
+      {
+        "condition": "codestar-connections:ProviderType",
+        "description": "Filters access by the type of third-party provider passed in the request",
+        "type": "String"
+      },
+      {
+        "condition": "codestar-connections:ProviderTypeFilter",
+        "description": "Filters access by the type of third-party provider used to filter results",
+        "type": "String"
+      },
+      {
+        "condition": "codestar-connections:RepositoryName",
+        "description": "Filters access by the repository name that is passed in the request. Applies only to UseConnection requests for creating new repositories",
+        "type": "String"
+      }
+    ],
+    "prefix": "codestar-connections",
+    "privileges": [
+      {
+        "access_level": "Write",
+        "description": "Grants permission to create a Connection resource",
+        "privilege": "CreateConnection",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys",
+              "codestar-connections:ProviderType"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to delete a Connection resource",
+        "privilege": "DeleteConnection",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Connection*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to get details about a Connection resource",
+        "privilege": "GetConnection",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Connection*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to associate a third party, such as a Bitbucket App installation, with a Connection",
+        "privilege": "GetIndividualAccessToken",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "codestar-connections:ProviderType"
+            ],
+            "dependent_actions": [
+              "codestar-connections:StartOAuthHandshake"
+            ],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to associate a third party, such as a Bitbucket App installation, with a Connection",
+        "privilege": "GetInstallationUrl",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "codestar-connections:ProviderType"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to list Connection resources",
+        "privilege": "ListConnections",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "codestar-connections:ProviderTypeFilter"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to associate a third party, such as a Bitbucket App installation, with a Connection",
+        "privilege": "ListInstallationTargets",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [
+              "codestar-connections:GetIndividualAccessToken",
+              "codestar-connections:StartOAuthHandshake"
+            ],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Gets the set of key-value pairs that are used to manage the resource",
+        "privilege": "ListTagsForResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Connection*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to pass a Connection resource to an AWS service that accepts a Connection ARN as input, such as codepipeline:CreatePipeline",
+        "privilege": "PassConnection",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Connection*"
+          },
+          {
+            "condition_keys": [
+              "codestar-connections:PassedToService"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to associate a third party, such as a Bitbucket App installation, with a Connection",
+        "privilege": "StartOAuthHandshake",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "codestar-connections:ProviderType"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Tagging",
+        "description": "Adds to or modifies the tags of the given resource",
+        "privilege": "TagResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Connection*"
+          },
+          {
+            "condition_keys": [
+              "aws:TagKeys",
+              "aws:RequestTag/${TagKey}"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Tagging",
+        "description": "Removes tags from an AWS resource",
+        "privilege": "UntagResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Connection*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to update a Connection resource with an installation of the CodeStar Connections App",
+        "privilege": "UpdateConnectionInstallation",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [
+              "codestar-connections:GetIndividualAccessToken",
+              "codestar-connections:GetInstallationUrl",
+              "codestar-connections:ListInstallationTargets",
+              "codestar-connections:StartOAuthHandshake"
+            ],
+            "resource_type": "Connection*"
+          },
+          {
+            "condition_keys": [
+              "codestar-connections:InstallationId"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to use a Connection resource to call provider actions",
+        "privilege": "UseConnection",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Connection*"
+          },
+          {
+            "condition_keys": [
+              "codestar-connections:FullRepositoryId",
+              "codestar-connections:ProviderAction",
+              "codestar-connections:ProviderPermissionsRequired"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      }
+    ],
+    "resources": [
+      {
+        "arn": "arn:${Partition}:codestar-connections:${Region}:${Account}:connection/${ConnectionId}",
+        "condition_keys": [],
+        "resource": "Connection"
+      }
+    ],
+    "service_name": "AWS CodeStar Connections"
   },
   {
     "conditions": [
@@ -23846,6 +24361,18 @@
         "access_level": "Write",
         "description": "Creates and updates the retention configuration with details about retention period (number of days) that AWS Config stores your historical information",
         "privilege": "PutRetentionConfiguration",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Accepts a structured query language (SQL) SELECT command and an aggregator to query configuration state of AWS resources across multiple accounts and regions, performs the corresponding search, and returns resource configurations matching the properties.",
+        "privilege": "SelectAggregateResourceConfig",
         "resource_types": [
           {
             "condition_keys": [],
@@ -29567,6 +30094,42 @@
         ]
       },
       {
+        "access_level": "List",
+        "description": "Lists the virtual interface failover test history.",
+        "privilege": "ListVirtualInterfaceTestHistory",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "dxvif*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Starts the virtual interface failover test that verifies your configuration meets your resiliency requirements by placing the BGP peering session in the DOWN state. You can then send traffic to verify that there are no outages.",
+        "privilege": "StartBgpFailoverTest",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "dxvif*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Stops the virtual interface failover test.",
+        "privilege": "StopBgpFailoverTest",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "dxvif*"
+          }
+        ]
+      },
+      {
         "access_level": "Tagging",
         "description": "Adds the specified tags to the specified AWS Direct Connect resource. Each resource can have a maximum of 50 tags.",
         "privilege": "TagResource",
@@ -32375,7 +32938,6 @@
           {
             "condition_keys": [
               "dynamodb:Attributes",
-              "dynamodb:LeadingKeys",
               "dynamodb:ReturnConsumedCapacity",
               "dynamodb:ReturnValues",
               "dynamodb:Select"
@@ -35941,6 +36503,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Grants permission to remove tags from the set of tags to include in notifications about scheduled events for your instances",
+        "privilege": "DeregisterInstanceEventNotificationAttributes",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Grants permission to deregister one or more network interface members from a group IP address in a transit gateway multicast domain",
         "privilege": "DeregisterTransitGatewayMulticastGroupMembers",
         "resource_types": [
@@ -36133,6 +36707,18 @@
         "access_level": "List",
         "description": "Grants permission to describe the target networks that are associated with a Client VPN endpoint",
         "privilege": "DescribeClientVpnTargetNetworks",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to describe the specified customer-owned address pools or all of your customer-owned address pools",
+        "privilege": "DescribeCoipPools",
         "resource_types": [
           {
             "condition_keys": [],
@@ -36455,6 +37041,18 @@
       },
       {
         "access_level": "List",
+        "description": "Grants permission to describe the set of tags to include in notifications about scheduled events for your instances",
+        "privilege": "DescribeInstanceEventNotificationAttributes",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
         "description": "Grants permission to describe the status of one or more instances",
         "privilege": "DescribeInstanceStatus",
         "resource_types": [
@@ -36467,7 +37065,19 @@
       },
       {
         "access_level": "List",
-        "description": "Grants permission to describe all instance types that are offered in an AWS Region",
+        "description": "Grants permission to describe the set of instance types that are offered in a location",
+        "privilege": "DescribeInstanceTypeOfferings",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to describe the details of instance types that are offered in a location",
         "privilege": "DescribeInstanceTypes",
         "resource_types": [
           {
@@ -37801,6 +38411,18 @@
       },
       {
         "access_level": "Read",
+        "description": "Grants permission to describe the allocations from the specified customer-owned address pool",
+        "privilege": "GetCoipPoolUsage",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
         "description": "Grants permission to get the console output for an instance",
         "privilege": "GetConsoleOutput",
         "resource_types": [
@@ -38722,6 +39344,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Grants permission to add tags to the set of tags to include in notifications about scheduled events for your instances",
+        "privilege": "RegisterInstanceEventNotificationAttributes",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Grants permission to register one or more network interfaces as a member of a group IP address in a transit gateway multicast domain",
         "privilege": "RegisterTransitGatewayMulticastGroupMembers",
         "resource_types": [
@@ -39214,6 +39848,16 @@
           },
           {
             "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys",
+              "ec2:Region",
+              "ec2:ResourceTag/${TagKey}"
+            ],
+            "dependent_actions": [],
+            "resource_type": "capacity-reservation"
+          },
+          {
+            "condition_keys": [
               "ec2:ElasticGpuType"
             ],
             "dependent_actions": [],
@@ -39565,7 +40209,9 @@
       },
       {
         "arn": "arn:${Partition}:ec2:${Region}:${Account}:elasticGpu/${ElasticGpuId}",
-        "condition_keys": [],
+        "condition_keys": [
+          "ec2:ElasticGpuType"
+        ],
         "resource": "elastic-gpu"
       },
       {
@@ -39781,7 +40427,7 @@
         "resource": "snapshot"
       },
       {
-        "arn": "arn:${Partition}:ec2:${Region}::spot-instances-request/${SpotInstanceRequestId}",
+        "arn": "arn:${Partition}:ec2:${Region}:${Account}:spot-instances-request/${SpotInstanceRequestId}",
         "condition_keys": [
           "aws:RequestTag/${TagKey}",
           "aws:TagKeys",
@@ -39987,6 +40633,16 @@
   {
     "conditions": [
       {
+        "condition": "aws:ResourceTag/${TagKey}",
+        "description": "Filters actions based on the tags associated with the resource",
+        "type": "String"
+      },
+      {
+        "condition": "ec2:ResourceTag/${TagKey}",
+        "description": "Filters actions based on the tags associated with the resource",
+        "type": "String"
+      },
+      {
         "condition": "ec2:osuser",
         "description": "Filters access by specifying the default user name for the AMI that you used to launch your instance",
         "type": "String"
@@ -40017,7 +40673,10 @@
     "resources": [
       {
         "arn": "arn:${Partition}:ec2:${Region}:${Account}:instance/${InstanceId}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}",
+          "ec2:ResourceTag/${TagKey}"
+        ],
         "resource": "instance"
       }
     ],
@@ -45430,6 +46089,18 @@
     "prefix": "es",
     "privileges": [
       {
+        "access_level": "Write",
+        "description": "Allows the destination domain owner to accept an inbound cross-cluster search connection request",
+        "privilege": "AcceptInboundCrossClusterSearchConnection",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
         "access_level": "Tagging",
         "description": "Grants permission to attach resource tags to an Amazon ES domain.",
         "privilege": "AddTags",
@@ -45467,6 +46138,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Creates a new cross-cluster search connection from a source domain to a destination domain",
+        "privilege": "CreateOutboundCrossClusterSearchConnection",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "domain*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Grants permission to delete an Amazon ES domain and all of its data.",
         "privilege": "DeleteElasticsearchDomain",
         "resource_types": [
@@ -45481,6 +46164,30 @@
         "access_level": "Write",
         "description": "Grants permission to delete the service-linked role required for Amazon ES domains that use VPC access.",
         "privilege": "DeleteElasticsearchServiceRole",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Allows the destination domain owner to delete an existing inbound cross-cluster search connection",
+        "privilege": "DeleteInboundCrossClusterSearchConnection",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Allows the source domain owner to delete an existing outbound cross-cluster search connection",
+        "privilege": "DeleteOutboundCrossClusterSearchConnection",
         "resource_types": [
           {
             "condition_keys": [],
@@ -45539,6 +46246,30 @@
       },
       {
         "access_level": "List",
+        "description": "Lists all the inbound cross-cluster search connections for a destination domain",
+        "privilege": "DescribeInboundCrossClusterSearchConnections",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Lists all the outbound cross-cluster search connections for a source domain",
+        "privilege": "DescribeOutboundCrossClusterSearchConnections",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
         "description": "Grants permission to fetch reserved instance offerings for ES",
         "privilege": "DescribeReservedElasticsearchInstanceOfferings",
         "resource_types": [
@@ -45558,6 +46289,18 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to send cross-cluster requests to a destination domain.",
+        "privilege": "ESCrossClusterGet",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "domain"
           }
         ]
       },
@@ -45733,6 +46476,18 @@
         "access_level": "Write",
         "description": "Grants permission to purchase ES reserved instances",
         "privilege": "PurchaseReservedElasticsearchInstanceOffering",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Allows the destination domain owner to reject an inbound cross-cluster search connection request",
+        "privilege": "RejectInboundCrossClusterSearchConnection",
         "resource_types": [
           {
             "condition_keys": [],
@@ -46110,7 +46865,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "event-bus*"
           }
         ]
       },
@@ -51890,7 +52645,7 @@
     ],
     "resources": [
       {
-        "arn": "arn:${Partition}:glue:${Region}:${Account}:catalog/${CatalogName}",
+        "arn": "arn:${Partition}:glue:${Region}:${Account}:catalog",
         "condition_keys": [],
         "resource": "catalog"
       },
@@ -54253,6 +55008,18 @@
       },
       {
         "access_level": "Read",
+        "description": "Grants permission to retrieve details about the delegated administrator associated with a GuardDuty detector.",
+        "privilege": "DescribeOrganizationConfiguration",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "detector*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
         "description": "Grants permission to retrieve details about a publishing destination.",
         "privilege": "DescribePublishingDestination",
         "resource_types": [
@@ -54265,6 +55032,18 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "publishingdestination*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to disable the organization delegated administrator for GuardDuty.",
+        "privilege": "DisableOrganizationAdminAccount",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -54289,6 +55068,18 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "detector*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to enable an organization delegated administrator for GuardDuty.",
+        "privilege": "EnableOrganizationAdminAccount",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -54484,6 +55275,18 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "detector*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to list details about the organization delegated administrator for GuardDuty.",
+        "privilege": "ListOrganizationAdminAccounts",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -54698,6 +55501,18 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "ipset*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to update the delegated administrator configuration associated with a GuardDuty detector.",
+        "privilege": "UpdateOrganizationConfiguration",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "detector*"
           }
         ]
       },
@@ -58328,7 +59143,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "thinggroup"
+            "resource_type": "dimension"
           }
         ]
       },
@@ -58336,6 +59151,18 @@
         "access_level": "Write",
         "description": "Attaches the specified principal to the specified thing.",
         "privilege": "AttachThingPrincipal",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Cancels a mitigation action task that is in progress.",
+        "privilege": "CancelAuditMitigationActionsTask",
         "resource_types": [
           {
             "condition_keys": [],
@@ -58485,6 +59312,26 @@
         ]
       },
       {
+        "access_level": "Write",
+        "description": "Defines a dimension that can be used to to limit the scope of a metric used in a security profile.",
+        "privilege": "CreateDimension",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "dimension*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
         "access_level": "Tagging",
         "description": "Creates a Dynamic Thing Group",
         "privilege": "CreateDynamicThingGroup",
@@ -58541,6 +59388,26 @@
         "resource_types": [
           {
             "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Defines an action that can be applied to audit findings by using StartAuditMitigationActionsTask.",
+        "privilege": "CreateMitigationAction",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "mitigationaction*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
             "dependent_actions": [],
             "resource_type": ""
           }
@@ -58644,7 +59511,7 @@
         ]
       },
       {
-        "access_level": "Tagging",
+        "access_level": "Write",
         "description": "Creates a scheduled audit that is run at a specified time interval.",
         "privilege": "CreateScheduledAudit",
         "resource_types": [
@@ -58664,7 +59531,7 @@
         ]
       },
       {
-        "access_level": "Tagging",
+        "access_level": "Write",
         "description": "Creates a Device Defender security profile.",
         "privilege": "CreateSecurityProfile",
         "resource_types": [
@@ -58672,6 +59539,11 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "securityprofile*"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "dimension"
           },
           {
             "condition_keys": [
@@ -58841,6 +59713,18 @@
         ]
       },
       {
+        "access_level": "Write",
+        "description": "Removes the specified dimension from your AWS account.",
+        "privilege": "DeleteDimension",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "dimension*"
+          }
+        ]
+      },
+      {
         "access_level": "Tagging",
         "description": "Deletes the specified Dynamic Thing Group",
         "privilege": "DeleteDynamicThingGroup",
@@ -58878,6 +59762,18 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "thing*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Deletes a defined mitigation action from your AWS account.",
+        "privilege": "DeleteMitigationAction",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "mitigationaction*"
           }
         ]
       },
@@ -58986,6 +59882,11 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "securityprofile*"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "dimension"
           }
         ]
       },
@@ -59099,6 +60000,18 @@
       },
       {
         "access_level": "Read",
+        "description": "Gets information about an audit mitigation task that is used to apply mitigation actions to a set of audit findings.",
+        "privilege": "DescribeAuditMitigationActionsTask",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
         "description": "Gets information about a Device Defender audit.",
         "privilege": "DescribeAuditTask",
         "resource_types": [
@@ -59171,6 +60084,18 @@
       },
       {
         "access_level": "Read",
+        "description": "Provides details about a dimension that is defined in your AWS account.",
+        "privilege": "DescribeDimension",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "dimension*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
         "description": "Returns a unique endpoint specific to the AWS account making the call.",
         "privilege": "DescribeEndpoint",
         "resource_types": [
@@ -59231,6 +60156,18 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "thing"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Gets information about a mitigation action.",
+        "privilege": "DescribeMitigationAction",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "mitigationaction*"
           }
         ]
       },
@@ -59408,7 +60345,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "thinggroup"
+            "resource_type": "dimension"
           }
         ]
       },
@@ -59671,6 +60608,30 @@
       },
       {
         "access_level": "List",
+        "description": "Gets the status of audit mitigation action tasks that were executed.",
+        "privilege": "ListAuditMitigationActionsExecutions",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Gets a list of audit mitigation action tasks that match the specified filters.",
+        "privilege": "ListAuditMitigationActionsTasks",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
         "description": "Lists the Device Defender audits that have been performed during a given time period.",
         "privilege": "ListAuditTasks",
         "resource_types": [
@@ -59743,6 +60704,18 @@
       },
       {
         "access_level": "List",
+        "description": "Lists the dimensions that are defined for your AWS account.",
+        "privilege": "ListDimensions",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
         "description": "Lists all indices for fleet index",
         "privilege": "ListIndices",
         "resource_types": [
@@ -59781,6 +60754,18 @@
         "access_level": "List",
         "description": "Lists jobs.",
         "privilege": "ListJobs",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Gets a list of all mitigation actions that match the specified filter criteria.",
+        "privilege": "ListMitigationActions",
         "resource_types": [
           {
             "condition_keys": [],
@@ -59929,7 +60914,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "dimension"
           }
         ]
       },
@@ -59970,12 +60955,22 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
+            "resource_type": "dimension"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
             "resource_type": "dynamicthinggroup"
           },
           {
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "job"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "mitigationaction"
           },
           {
             "condition_keys": [],
@@ -60420,6 +61415,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Starts a task that applies a set of mitigation actions to the specified target.",
+        "privilege": "StartAuditMitigationActionsTask",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Gets and starts the next pending job execution for a thing.",
         "privilege": "StartNextPendingJobExecution",
         "resource_types": [
@@ -60491,12 +61498,22 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
+            "resource_type": "dimension"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
             "resource_type": "dynamicthinggroup"
           },
           {
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "job"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "mitigationaction"
           },
           {
             "condition_keys": [],
@@ -60592,12 +61609,22 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
+            "resource_type": "dimension"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
             "resource_type": "dynamicthinggroup"
           },
           {
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "job"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "mitigationaction"
           },
           {
             "condition_keys": [],
@@ -60705,6 +61732,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Updates the definition for a dimension.",
+        "privilege": "UpdateDimension",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "dimension*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Updates a Dynamic Thing Group",
         "privilege": "UpdateDynamicThingGroup",
         "resource_types": [
@@ -60765,6 +61804,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Updates the definition for the specified mitigation action.",
+        "privilege": "UpdateMitigationAction",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "mitigationaction*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Updates a fleet provisioning template.",
         "privilege": "UpdateProvisioningTemplate",
         "resource_types": [
@@ -60813,6 +61864,11 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "securityprofile*"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "dimension"
           }
         ]
       },
@@ -61014,11 +62070,25 @@
         "resource": "scheduledaudit"
       },
       {
+        "arn": "arn:${Partition}:iot:${Region}:${Account}:mitigationaction/${MitigationActionName}",
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
+        "resource": "mitigationaction"
+      },
+      {
         "arn": "arn:${Partition}:iot:${Region}:${Account}:securityprofile/${SecurityProfileName}",
         "condition_keys": [
           "aws:ResourceTag/${TagKey}"
         ],
         "resource": "securityprofile"
+      },
+      {
+        "arn": "arn:${Partition}:iot:${Region}:${Account}:dimension/${DimensionName}",
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
+        "resource": "dimension"
       },
       {
         "arn": "arn:${Partition}:iot:${Region}:${Account}:rule/${ruleName}",
@@ -63967,6 +65037,18 @@
         ]
       },
       {
+        "access_level": "List",
+        "description": "Returns a list of the Apache Kafka versions to which you can update this cluster.",
+        "privilege": "GetCompatibleKafkaVersions",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
         "access_level": "Read",
         "description": "Returns a list of all the operations that have been performed on the specified MSK cluster.",
         "privilege": "ListClusterOperations",
@@ -64103,6 +65185,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Updates the cluster to the specified Apache Kafka version.",
+        "privilege": "UpdateClusterKafkaVersion",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Updates the monitoring settings for the cluster.",
         "privilege": "UpdateMonitoring",
         "resource_types": [
@@ -64126,7 +65220,23 @@
     "service_name": "Amazon Managed Streaming for Kafka"
   },
   {
-    "conditions": [],
+    "conditions": [
+      {
+        "condition": "aws:RequestTag/${TagKey}",
+        "description": "Filters create requests based on the allowed set of values for each of the mandatory tags.",
+        "type": "String"
+      },
+      {
+        "condition": "aws:ResourceTag/${TagKey}",
+        "description": "Filters actions based on the tag value associated with the resource.",
+        "type": "String"
+      },
+      {
+        "condition": "aws:TagKeys",
+        "description": "Filters create requests based on the presence of mandatory tags in the request.",
+        "type": "String"
+      }
+    ],
     "prefix": "kendra",
     "privileges": [
       {
@@ -64162,6 +65272,14 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "index*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -64174,6 +65292,14 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "index*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -64183,9 +65309,29 @@
         "privilege": "CreateIndex",
         "resource_types": [
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
             "dependent_actions": [],
             "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Delete a data source",
+        "privilege": "DeleteDataSource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "data-source*"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "index*"
           }
         ]
       },
@@ -64318,6 +65464,28 @@
         ]
       },
       {
+        "access_level": "List",
+        "description": "Lists tags for a resource",
+        "privilege": "ListTagsForResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "data-source"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "faq"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "index"
+          }
+        ]
+      },
+      {
         "access_level": "Read",
         "description": "Query documents and Faqs",
         "privilege": "Query",
@@ -64376,6 +65544,65 @@
         ]
       },
       {
+        "access_level": "Tagging",
+        "description": "Tags a resource with given key value pairs",
+        "privilege": "TagResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "data-source"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "faq"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "index"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Tagging",
+        "description": "Removes the tag with the given key from a resource",
+        "privilege": "UntagResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "data-source"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "faq"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "index"
+          },
+          {
+            "condition_keys": [
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
         "access_level": "Write",
         "description": "Update a data source",
         "privilege": "UpdateDataSource",
@@ -64408,17 +65635,23 @@
     "resources": [
       {
         "arn": "arn:${Partition}:kendra:${Region}:${Account}:index/${IndexId}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "index"
       },
       {
         "arn": "arn:${Partition}:kendra:${Region}:${Account}:index/${IndexId}/data-source/${DataSourceId}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "data-source"
       },
       {
         "arn": "arn:${Partition}:kendra:${Region}:${Account}:index/${IndexId}/faq/${FaqId}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "faq"
       }
     ],
@@ -71477,6 +72710,748 @@
       }
     ],
     "resources": [],
+    "service_name": "Amazon Macie Classic"
+  },
+  {
+    "conditions": [
+      {
+        "condition": "aws:RequestTag/${TagKey}",
+        "description": "Filters access based on the presence of tag key-value pairs in the request",
+        "type": "String"
+      },
+      {
+        "condition": "aws:ResourceTag/${TagKey}",
+        "description": "Filters access based on tag key-value pairs that are associated with the resource",
+        "type": "String"
+      },
+      {
+        "condition": "aws:TagKeys",
+        "description": "Filters access based on the presence of tag keys in the request",
+        "type": "String"
+      }
+    ],
+    "prefix": "macie2",
+    "privileges": [
+      {
+        "access_level": "Write",
+        "description": "Grants permission to accept an Amazon Macie membership invitation",
+        "privilege": "AcceptInvitation",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to archive one or more findings",
+        "privilege": "ArchiveFindings",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to retrieve information about one or more custom data identifiers",
+        "privilege": "BatchGetCustomDataIdentifiers",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "CustomDataIdentifier*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to create and define the settings for a classification job",
+        "privilege": "CreateClassificationJob",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "ClassificationJob*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to create and define the settings for a custom data identifier",
+        "privilege": "CreateCustomDataIdentifier",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "CustomDataIdentifier*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to create and define the settings for a findings filter",
+        "privilege": "CreateFindingsFilter",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "FindingsFilter*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to send an Amazon Macie membership invitation",
+        "privilege": "CreateInvitations",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to associate an account with an Amazon Macie master account",
+        "privilege": "CreateMember",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Member*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to create sample findings",
+        "privilege": "CreateSampleFindings",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to decline Amazon Macie membership invitations",
+        "privilege": "DeclineInvitations",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to delete a custom data identifier",
+        "privilege": "DeleteCustomDataIdentifier",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "CustomDataIdentifier*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to delete a findings filter",
+        "privilege": "DeleteFindingsFilter",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "FindingsFilter*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to delete Amazon Macie membership invitations",
+        "privilege": "DeleteInvitations",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to delete the association between an Amazon Macie master account and an account",
+        "privilege": "DeleteMember",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Member*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to retrieve statistical and other data about S3 buckets that Amazon Macie monitors and analyzes",
+        "privilege": "DescribeBuckets",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to retrieve information about the status and settings for a classification job",
+        "privilege": "DescribeClassificationJob",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "ClassificationJob*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to retrieve information about the Amazon Macie configuration settings for an AWS organization",
+        "privilege": "DescribeOrganizationConfiguration",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to disable an Amazon Macie account, which also deletes Macie resources for the account",
+        "privilege": "DisableMacie",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to disable an account as a delegated administrator of Amazon Macie for an AWS organization",
+        "privilege": "DisableOrganizationAdminAccount",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants an Amazon Macie member account with permission to disassociate from its master account",
+        "privilege": "DisassociateFromMasterAccount",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants an Amazon Macie master account with permission to disassociate from a member account",
+        "privilege": "DisassociateMember",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Member*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to enable and specify the configuration settings for a new Amazon Macie account",
+        "privilege": "EnableMacie",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to enable an account as a delegated administrator of Amazon Macie for an AWS organization",
+        "privilege": "EnableOrganizationAdminAccount",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to retrieve aggregated statistical data for all the S3 buckets that Amazon Macie monitors and analyzes",
+        "privilege": "GetBucketStatistics",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to retrieve the settings for exporting data classification results",
+        "privilege": "GetClassificationExportConfiguration",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to retrieve information about the settings for a custom data identifier",
+        "privilege": "GetCustomDataIdentifier",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "CustomDataIdentifier*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to retrieve aggregated statistical data about findings",
+        "privilege": "GetFindingStatistics",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to retrieve information about one or more findings",
+        "privilege": "GetFindings",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to retrieve information about the settings for a findings filter",
+        "privilege": "GetFindingsFilter",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "FindingsFilter*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to retrieve the count of Amazon Macie membership invitations that were received by an account",
+        "privilege": "GetInvitationsCount",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to retrieve information about the status and configuration settings for an Amazon Macie account",
+        "privilege": "GetMacieSession",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to retrieve information about the Amazon Macie master account for an account",
+        "privilege": "GetMasterAccount",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to retrieve information about an account that's associated with an Amazon Macie master account",
+        "privilege": "GetMember",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Member*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to retrieve quotas and aggregated usage data for one or more accounts",
+        "privilege": "GetUsageStatistics",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to retrieve aggregated usage data for an account",
+        "privilege": "GetUsageTotals",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to retrieve information about the status and settings for one or more classification jobs",
+        "privilege": "ListClassificationJobs",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to retrieve information about all custom data identifiers",
+        "privilege": "ListCustomDataIdentifiers",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to retrieve a subset of information about one or more findings",
+        "privilege": "ListFindings",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to retrieve information about all findings filters",
+        "privilege": "ListFindingsFilters",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to retrieve information about all the Amazon Macie membership invitations that were received by an account",
+        "privilege": "ListInvitations",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to retrieve information about all the accounts that are associated with an Amazon Macie master account",
+        "privilege": "ListMembers",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to retrieve information about the delegated, Amazon Macie administrator account for an AWS organization",
+        "privilege": "ListOrganizationAdminAccounts",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to retrieve the tags for an Amazon Macie resource or member account",
+        "privilege": "ListTagsForResources",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to create or update the settings for exporting data classification results",
+        "privilege": "PutClassificationExportConfiguration",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Tagging",
+        "description": "Grants permission to add or update the tags for an Amazon Macie resource or member account",
+        "privilege": "TagResource",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to test a custom data identifier",
+        "privilege": "TestCustomDataIdentifier",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to reactivate (unarchive) one or more findings",
+        "privilege": "UnarchiveFindings",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Tagging",
+        "description": "Grants permission to remove tags from an Amazon Macie resource or member account",
+        "privilege": "UntagResource",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to cancel a classification job",
+        "privilege": "UpdateClassificationJob",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "ClassificationJob*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to update the settings for a findings filter",
+        "privilege": "UpdateFindingsFilter",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "FindingsFilter*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to suspend or re-enable an Amazon Macie account, or update the configuration settings for a Macie account",
+        "privilege": "UpdateMacieSession",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants an Amazon Macie master account with permission to suspend or re-enable a member account",
+        "privilege": "UpdateMemberSession",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to update Amazon Macie configuration settings for an AWS organization",
+        "privilege": "UpdateOrganizationConfiguration",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      }
+    ],
+    "resources": [
+      {
+        "arn": "arn:${Partition}:macie2::${Account}:classification-job/${ResourceId}",
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
+        "resource": "ClassificationJob"
+      },
+      {
+        "arn": "arn:${Partition}:macie2::${Account}:custom-data-identifier/${ResourceId}",
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
+        "resource": "CustomDataIdentifier"
+      },
+      {
+        "arn": "arn:${Partition}:macie2::${Account}:member/${ResourceId}",
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
+        "resource": "Member"
+      },
+      {
+        "arn": "arn:${Partition}:macie2::${Account}:findings-filter/${ResourceId}",
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
+        "resource": "FindingsFilter"
+      }
+    ],
     "service_name": "Amazon Macie"
   },
   {
@@ -73157,6 +75132,18 @@
       },
       {
         "access_level": "Read",
+        "description": "Grants permission to describe an input device",
+        "privilege": "DescribeInputDevice",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "input-device*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
         "description": "Grants permission to describe an input security group",
         "privilege": "DescribeInputSecurityGroup",
         "resource_types": [
@@ -73219,6 +75206,18 @@
         "access_level": "List",
         "description": "Grants permission to list channels",
         "privilege": "ListChannels",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to list input devices",
+        "privilege": "ListInputDevices",
         "resource_types": [
           {
             "condition_keys": [],
@@ -73430,6 +75429,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Grants permission to update an input device",
+        "privilege": "UpdateInputDevice",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "input-device*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Grants permission to update an input security group",
         "privilege": "UpdateInputSecurityGroup",
         "resource_types": [
@@ -73479,6 +75490,11 @@
           "aws:ResourceTag/${TagKey}"
         ],
         "resource": "input"
+      },
+      {
+        "arn": "arn:${Partition}:medialive:${Region}:${Account}:inputDevice:*",
+        "condition_keys": [],
+        "resource": "input-device"
       },
       {
         "arn": "arn:${Partition}:medialive:${Region}:${Account}:inputSecurityGroup:*",
@@ -78913,6 +80929,20 @@
         ]
       },
       {
+        "access_level": "Write",
+        "description": "Grants permission to deregister the specified member AWS account as a delegated administrator for the AWS service that is specified by ServicePrincipal.",
+        "privilege": "DeregisterDelegatedAdministrator",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "organizations:ServicePrincipal"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
         "access_level": "Read",
         "description": "Grants permission to retrieve Organizations-related details about the specified account.",
         "privilege": "DescribeAccount",
@@ -79218,6 +81248,32 @@
       },
       {
         "access_level": "List",
+        "description": "Grants permission to list the AWS accounts that are designated as delegated administrators in this organization.",
+        "privilege": "ListDelegatedAdministrators",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "organizations:ServicePrincipal"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to list the AWS services for which the specified account is a delegated administrator in this organization.",
+        "privilege": "ListDelegatedServicesForAccount",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
         "description": "Grants permission to list all of the handshakes that are associated with an account.",
         "privilege": "ListHandshakesForAccount",
         "resource_types": [
@@ -79379,6 +81435,20 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "root"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to register the specified member account to administer the Organizations features of the AWS service that is specified by ServicePrincipal.",
+        "privilege": "RegisterDelegatedAdministrator",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "organizations:ServicePrincipal"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -80360,6 +82430,18 @@
     "privileges": [
       {
         "access_level": "Write",
+        "description": "Grants permission to cancel a journal kinesis stream",
+        "privilege": "CancelJournalKinesisStream",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "stream*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Grants permission to create a ledger",
         "privilege": "CreateLedger",
         "resource_types": [
@@ -80387,6 +82469,18 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "ledger*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to describe information about a journal kinesis stream",
+        "privilege": "DescribeJournalKinesisStream",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "stream*"
           }
         ]
       },
@@ -80488,6 +82582,18 @@
       },
       {
         "access_level": "List",
+        "description": "Grants permission to list journal kinesis streams for a specified ledger",
+        "privilege": "ListJournalKinesisStreamsForLedger",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "stream*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
         "description": "Grants permission to list journal export jobs for all ledgers",
         "privilege": "ListJournalS3Exports",
         "resource_types": [
@@ -80559,6 +82665,18 @@
         ]
       },
       {
+        "access_level": "Write",
+        "description": "Grants permission to stream journal contents to a Kinesis Data Stream",
+        "privilege": "StreamJournalToKinesis",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "stream*"
+          }
+        ]
+      },
+      {
         "access_level": "Tagging",
         "description": "Grants permission to add one or more tags to a resource",
         "privilege": "TagResource",
@@ -80617,6 +82735,13 @@
           "aws:ResourceTag/${TagKey}"
         ],
         "resource": "ledger"
+      },
+      {
+        "arn": "arn:${Partition}:qldb:${Region}:${Account}:stream/${LedgerName}/${StreamId}",
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
+        "resource": "stream"
       }
     ],
     "service_name": "Amazon QLDB"
@@ -86257,6 +88382,52 @@
     "service_name": "Amazon Rekognition"
   },
   {
+    "conditions": [],
+    "prefix": "resource-explorer",
+    "privileges": [
+      {
+        "access_level": "List",
+        "description": "Grants permission to retrieve the resource types currently supported by Tag Editor",
+        "privilege": "ListResourceTypes",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to retrieve the identifiers of the resources in the AWS account",
+        "privilege": "ListResources",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to retrieve the tags attached to the specified resource identifiers",
+        "privilege": "ListTags",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [
+              "tag:GetResources"
+            ],
+            "resource_type": ""
+          }
+        ]
+      }
+    ],
+    "resources": [],
+    "service_name": "AWS Tag Editor"
+  },
+  {
     "conditions": [
       {
         "condition": "aws:RequestTag/${TagKey}",
@@ -90988,6 +93159,11 @@
         "type": "String"
       },
       {
+        "condition": "sagemaker:TargetModel",
+        "description": "The target model associated with the Multi-Model Endpoint in the request.",
+        "type": "String"
+      },
+      {
         "condition": "sagemaker:VolumeKmsKey",
         "description": "The volume kms key associated with the resource in the request.",
         "type": "ARN"
@@ -91607,7 +93783,8 @@
               "sagemaker:OutputKmsKey",
               "sagemaker:VolumeKmsKey",
               "sagemaker:VpcSecurityGroupIds",
-              "sagemaker:VpcSubnets"
+              "sagemaker:VpcSubnets",
+              "sagemaker:InterContainerTrafficEncryption"
             ],
             "dependent_actions": [],
             "resource_type": ""
@@ -92471,6 +94648,13 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "endpoint*"
+          },
+          {
+            "condition_keys": [
+              "sagemaker:TargetModel"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -94371,7 +96555,7 @@
         ]
       },
       {
-        "access_level": "Tagging",
+        "access_level": "Write",
         "description": "Enables the user to create a secret that stores encrypted data that can be queried and rotated.",
         "privilege": "CreateSecret",
         "resource_types": [
@@ -103652,11 +105836,6 @@
         "privilege": "CreateActivity",
         "resource_types": [
           {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": "activity*"
-          },
-          {
             "condition_keys": [
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys"
@@ -103671,11 +105850,6 @@
         "description": "Creates a state machine.",
         "privilege": "CreateStateMachine",
         "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": "statemachine*"
-          },
           {
             "condition_keys": [
               "aws:RequestTag/${TagKey}",
@@ -107012,6 +109186,20 @@
     "privileges": [
       {
         "access_level": "Write",
+        "description": "Creates a new custom vocabulary that you can use to change the way Amazon Transcribe Medical handles transcription of an audio file.",
+        "privilege": "CreateMedicalVocabulary",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [
+              "s3:GetObject"
+            ],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Creates a new custom vocabulary that you can use to change the way Amazon Transcribe handles transcription of an audio file.",
         "privilege": "CreateVocabulary",
         "resource_types": [
@@ -107042,6 +109230,18 @@
         "access_level": "Write",
         "description": "Deletes a previously submitted medical transcription job.",
         "privilege": "DeleteMedicalTranscriptionJob",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Deletes medical a vocabulary from Amazon Transcribe.",
+        "privilege": "DeleteMedicalVocabulary",
         "resource_types": [
           {
             "condition_keys": [],
@@ -107100,6 +109300,18 @@
       },
       {
         "access_level": "Read",
+        "description": "Gets information about a medical vocabulary.",
+        "privilege": "GetMedicalVocabulary",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
         "description": "Returns information about a transcription job.",
         "privilege": "GetTranscriptionJob",
         "resource_types": [
@@ -107138,6 +109350,18 @@
         "access_level": "List",
         "description": "Lists medical transcription jobs with the specified status.",
         "privilege": "ListMedicalTranscriptionJobs",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Returns a list of medical vocabularies that match the specified criteria. If no criteria are specified, returns the entire list of vocabularies.",
+        "privilege": "ListMedicalVocabularies",
         "resource_types": [
           {
             "condition_keys": [],
@@ -107196,6 +109420,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Starts a WebSocket where audio is streamed to Transcribe Medical and the transcription results are streamed to your application.",
+        "privilege": "StartMedicalStreamTranscriptionWebSocket",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Starts an asynchronous job to transcribe medical speech to text.",
         "privilege": "StartMedicalTranscriptionJob",
         "resource_types": [
@@ -107222,8 +109458,34 @@
       },
       {
         "access_level": "Write",
+        "description": "Starts a websocket stream to transcribe speech to text in real time.",
+        "privilege": "StartStreamTranscriptionWebSocket",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Starts an asynchronous job to transcribe speech to text.",
         "privilege": "StartTranscriptionJob",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [
+              "s3:GetObject"
+            ],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Updates an existing medical vocabulary with new values. The UpdateMedicalVocabulary operation overwrites all of the existing information with the values that you provide in the request.",
+        "privilege": "UpdateMedicalVocabulary",
         "resource_types": [
           {
             "condition_keys": [],
@@ -108024,6 +110286,20 @@
             ],
             "dependent_actions": [],
             "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Create and store a CloudFormation tempalte that creates an equivalent WAF v2 WebACL from the given WAF Classic WebACL in the given S3 bucket.",
+        "privilege": "CreateWebACLMigrationStack",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [
+              "s3:PutObject"
+            ],
+            "resource_type": "webacl*"
           }
         ]
       },
@@ -108906,7 +111182,7 @@
         "resource": "sizeconstraintset"
       },
       {
-        "arn": "arn:${Partition}:waf::${Account}:sqlinjectionmatchset/${Id}",
+        "arn": "arn:${Partition}:waf::${Account}:sqlinjectionset/${Id}",
         "condition_keys": [],
         "resource": "sqlinjectionmatchset"
       },
@@ -109145,6 +111421,20 @@
             ],
             "dependent_actions": [],
             "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Create and store a CloudFormation tempalte that creates an equivalent WAF v2 WebACL from the given WAF Classic WebACL in the given S3 bucket.",
+        "privilege": "CreateWebACLMigrationStack",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [
+              "s3:PutObject"
+            ],
+            "resource_type": "webacl*"
           }
         ]
       },
@@ -110068,7 +112358,7 @@
         "resource": "sizeconstraintset"
       },
       {
-        "arn": "arn:${Partition}:waf-regional:${Region}:${Account}:sqlinjectionmatchset/${Id}",
+        "arn": "arn:${Partition}:waf-regional:${Region}:${Account}:sqlinjectionset/${Id}",
         "condition_keys": [],
         "resource": "sqlinjectionmatchset"
       },
@@ -111511,7 +113801,23 @@
     "service_name": "Amazon WorkDocs"
   },
   {
-    "conditions": [],
+    "conditions": [
+      {
+        "condition": "aws:RequestTag/${TagKey}",
+        "description": "Filters actions based on the presence of tag key-value pairs in the request",
+        "type": "String"
+      },
+      {
+        "condition": "aws:ResourceTag/${TagKey}",
+        "description": "Filters actions based on tag key-value pairs attached to the resource",
+        "type": "String"
+      },
+      {
+        "condition": "aws:TagKeys",
+        "description": "Filters actions based on the presence of tag keys in the request",
+        "type": "String"
+      }
+    ],
     "prefix": "worklink",
     "privileges": [
       {
@@ -111556,7 +113862,10 @@
         "privilege": "CreateFleet",
         "resource_types": [
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
             "dependent_actions": [],
             "resource_type": ""
           }
@@ -111571,6 +113880,14 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "fleet*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -111643,6 +113960,14 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "fleet*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -111743,6 +114068,18 @@
         ]
       },
       {
+        "access_level": "Read",
+        "description": "Grants permission to list tags for a resource",
+        "privilege": "ListTagsForResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "fleet*"
+          }
+        ]
+      },
+      {
         "access_level": "List",
         "description": "Grants permission to list the website authorization providers for an Amazon WorkLink fleet",
         "privilege": "ListWebsiteAuthorizationProviders",
@@ -111803,6 +114140,45 @@
         ]
       },
       {
+        "access_level": "Tagging",
+        "description": "Grants permission to add one or more tags to a resource",
+        "privilege": "TagResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "fleet*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Tagging",
+        "description": "Grants permission to remove one or more tags from a resource",
+        "privilege": "UntagResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "fleet*"
+          },
+          {
+            "condition_keys": [
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
         "access_level": "Write",
         "description": "Grants permission to update the audit stream configuration for an Amazon WorkLink fleet",
         "privilege": "UpdateAuditStreamConfiguration",
@@ -111816,7 +114192,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Grants permission to update\u00a0the company network configuration for an Amazon WorkLink fleet",
+        "description": "Grants permission to update the company network configuration for an Amazon WorkLink fleet",
         "privilege": "UpdateCompanyNetworkConfiguration",
         "resource_types": [
           {
@@ -111878,7 +114254,9 @@
     "resources": [
       {
         "arn": "arn:${Partition}:worklink::${Account}:fleet/${fleetName}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "fleet"
       }
     ],
@@ -112182,6 +114560,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Deletes the retention policy based on the supplied organization and policy identifiers.",
+        "privilege": "DeleteRetentionPolicy",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "organization*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Remove an SMTP device from an organization",
         "privilege": "DeleteSmtpGateway",
         "resource_types": [
@@ -112470,6 +114860,18 @@
       },
       {
         "access_level": "Read",
+        "description": "Retrieves the retention policy associated at an organizational level.",
+        "privilege": "GetDefaultRetentionPolicy",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "organization*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
         "description": "Returns journaling and fallback email addresses configured for email journaling",
         "privilege": "GetJournalingRules",
         "resource_types": [
@@ -112748,6 +115150,18 @@
         "access_level": "Write",
         "description": "Sets permissions for a user, group, or resource. This replaces any pre-existing permissions.",
         "privilege": "PutMailboxPermissions",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "organization*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Adds or updates the retention policy for the specified organization.",
+        "privilege": "PutRetentionPolicy",
         "resource_types": [
           {
             "condition_keys": [],

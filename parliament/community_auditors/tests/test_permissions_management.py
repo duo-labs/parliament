@@ -1,5 +1,6 @@
 import unittest
-from nose.tools import raises, assert_equal
+
+from nose.tools import assert_equal
 
 # import parliament
 from parliament import analyze_policy_string
@@ -35,7 +36,7 @@ class TestPermissionsManagement(unittest.TestCase):
                 [
                     "PERMISSIONS_MANAGEMENT_ACTIONS",
                     "RESOURCE_POLICY_PRIVILEGE_ESCALATION",
-                    "RESOURCE_STAR"
+                    "RESOURCE_STAR",
                 ]
             ),
         )

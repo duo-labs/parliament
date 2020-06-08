@@ -13,6 +13,7 @@ from parliament import (
     analyze_policy_string,
     enhance_finding,
     override_config,
+    config,
     __version__,
 )
 from parliament.misc import make_list
@@ -214,6 +215,16 @@ def main():
     exit_status = 0
     findings = []
 
+    if args.include_community_auditors:
+        community_auditors_directory = "community_auditors"
+        community_auditors_override_file = (
+            Path(abspath(__file__)).parent
+            / community_auditors_directory
+            / "config_override.yaml"
+        )
+        override_config(community_auditors_override_file)
+    override_config(args.config)
+
     if args.aws_managed_policies:
         file_paths = find_files(directory=args.aws_managed_policies)
         for file_path in file_paths:
@@ -228,6 +239,7 @@ def main():
                     file_path,
                     private_auditors_custom_path=args.private_auditors,
                     include_community_auditors=args.include_community_auditors,
+                    config=config,
                 )
                 findings.extend(policy.findings)
 
@@ -266,6 +278,7 @@ def main():
                         user["Arn"],
                         private_auditors_custom_path=args.private_auditors,
                         include_community_auditors=args.include_community_auditors,
+                        config=config,
                     )
                     findings.extend(policy.findings)
             for role in auth_details_json["RoleDetailList"]:
@@ -275,6 +288,7 @@ def main():
                         role["Arn"],
                         private_auditors_custom_path=args.private_auditors,
                         include_community_auditors=args.include_community_auditors,
+                        config=config,
                     )
                     findings.extend(policy.findings)
             for group in auth_details_json["GroupDetailList"]:
@@ -284,6 +298,7 @@ def main():
                         group["Arn"],
                         private_auditors_custom_path=args.private_auditors,
                         include_community_auditors=args.include_community_auditors,
+                        config=config,
                     )
                     findings.extend(policy.findings)
     elif args.string:
@@ -291,6 +306,7 @@ def main():
             args.string,
             private_auditors_custom_path=args.private_auditors,
             include_community_auditors=args.include_community_auditors,
+            config=config,
         )
         findings.extend(policy.findings)
     elif args.file:
@@ -301,6 +317,7 @@ def main():
                 args.file,
                 private_auditors_custom_path=args.private_auditors,
                 include_community_auditors=args.include_community_auditors,
+                config=config,
             )
             findings.extend(policy.findings)
     elif args.directory:
@@ -317,6 +334,7 @@ def main():
                     file_path,
                     private_auditors_custom_path=args.private_auditors,
                     include_community_auditors=args.include_community_auditors,
+                    config=config,
                 )
                 findings.extend(policy.findings)
     else:
@@ -324,15 +342,6 @@ def main():
         exit(-1)
 
     filtered_findings = []
-    override_config(args.config)
-    if args.include_community_auditors:
-        community_auditors_directory = "community_auditors"
-        community_auditors_override_file = (
-            Path(abspath(__file__)).parent
-            / community_auditors_directory
-            / "config_override.yaml"
-        )
-        override_config(community_auditors_override_file)
     for finding in findings:
         finding = enhance_finding(finding)
         if not is_finding_filtered(finding, args.minimum_severity):

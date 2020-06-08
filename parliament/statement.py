@@ -1,6 +1,4 @@
-import os
 import json
-import fnmatch
 import re
 
 from . import (
@@ -11,7 +9,7 @@ from . import (
     UnknownPrefixException,
 )
 from .finding import Finding
-from .misc import make_list, ACCESS_DECISION
+from .misc import make_list
 
 
 def is_condition_key_match(document_key, str):

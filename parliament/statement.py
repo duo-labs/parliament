@@ -752,7 +752,20 @@ class Statement:
         for resource in resources:
             if resource == "*":
                 continue
-            parts = resource.split(":")
+            try:
+                parts = resource.split(":")
+            except AttributeError:
+                has_malformed_resource = True
+                self.add_finding(
+                    "INVALID_ARN",
+                    detail=(
+                        "Must be a string. Maybe you're trying to analyze a "
+                        "CloudFormation template which is outside of Parliament's "
+                        "scope."
+                    ),
+                    location={"string": resource},
+                )
+                continue
             if len(parts) < 6:
                 has_malformed_resource = True
                 self.add_finding(

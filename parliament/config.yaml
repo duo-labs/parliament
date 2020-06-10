@@ -16,6 +16,12 @@ MALFORMED:
   severity: HIGH
   group: MALFORMED
 
+DUPLICATE_SID:
+  title: Duplicate Statement Ids
+  description: The Statement Ids in the policy are not unique
+  severity: HIGH
+  group: MALFORMED
+
 RESOURCE_POLICY_PRIVILEGE_ESCALATION:
   title: Possible resource policy privilege escalation
   description: One example of this is an S3 bucket where s3:Delete is not allowed, but s3:PutBucketPolicy is, which could be abused to grant anonymous object deletion.

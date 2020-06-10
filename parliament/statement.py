@@ -261,6 +261,7 @@ class Statement:
     findings = []
     effect_allow = True
     stmt = None
+    sid = None
     policy_id = None
 
     _is_valid = True
@@ -380,6 +381,8 @@ class Statement:
         location: Dictionary with information about where this problem is. Often set to:
             {"location": "string"}
         """
+        if self.sid is not None:
+            location['sid'] = self.sid
         self.findings.append(Finding(finding, detail, location))
 
     def _check_principal(self, principal_element):
@@ -619,6 +622,10 @@ class Statement:
                     location={"string": element},
                 )
                 return False
+
+        # Track Sid for better location reporting
+        if "Sid" in self.stmt:
+            self.sid = self.stmt['Sid']
 
         # Check Principal if it exists. This only applicable to resource policies. Also applicable to
         # IAM role trust policies, but those don't have Resource elements, so that would break other things

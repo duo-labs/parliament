@@ -235,10 +235,24 @@ class Policy:
                 "MALFORMED", detail="Policy does not contain a Statement element"
             )
             return False
+
+        sids = {}
         stmts_json = make_list(self.policy_json["Statement"])
         for stmt_json in stmts_json:
             stmt = Statement(stmt_json)
             self.statements.append(stmt)
+
+            # Report duplicate Statement Ids
+            if stmt.sid is not None:
+                sid = stmt.sid
+                sids.setdefault(sid, 0)
+                sids[sid] += 1
+
+                # Only report the finding once, when encountering the first duplicate
+                if sids[sid] == 2:
+                    self.add_finding(
+                        "DUPLICATE_SID", detail="Duplicate Statement Id '{}' in policy".format(sid)
+                    )
 
         if not self.is_valid:
             # Do not continue. Further checks will not work with invalid statements.

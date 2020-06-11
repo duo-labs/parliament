@@ -490,3 +490,34 @@ class TestFormatting(unittest.TestCase):
         assert_equal(
             policy.finding_ids, set(["RESOURCE_STAR", "MISMATCHED_TYPE_BUT_USABLE"]),
         )
+    
+    def test_duplicate_sids(self):
+        policy = analyze_policy_string(
+            """{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "stmt",
+            "Action": [
+                "s3:ListAllMyBuckets"
+            ],
+            "Effect": "Allow",
+            "Resource": "*"
+        },
+        {
+            "Sid": "stmt",
+            "Action": [
+                "s3:ListAllMyBuckets"
+            ],
+            "Effect": "Allow",
+            "Resource": "*"
+        }
+
+    ]
+}""",
+            ignore_private_auditors=True,
+        )
+
+        assert_equal(
+            policy.finding_ids, set(["DUPLICATE_SID"]),
+        )

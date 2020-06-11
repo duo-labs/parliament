@@ -260,6 +260,7 @@ def translate_documentation_types(str):
 class Statement:
     findings = []
     effect_allow = True
+    resource_star = False
     stmt = None
     policy_id = None
 
@@ -862,7 +863,8 @@ class Statement:
                     # At least one resource has to match the action's required resources
                     match_found = False
                     for resource in resources:
-                        if resource == "*":
+                        if resource == "*" and not self.resource_star:
+                            self.resource_star = True
                             self.add_finding(
                                 "RESOURCE_STAR", location={"actions": actions},
                             )

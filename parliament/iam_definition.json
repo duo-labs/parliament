@@ -16559,6 +16559,450 @@
     "service_name": "Amazon CloudWatch"
   },
   {
+    "conditions": [],
+    "prefix": "codeartifact",
+    "privileges": [
+      {
+        "access_level": "Write",
+        "description": "Grants permission to add an external connection to a repository",
+        "privilege": "AssociateExternalConnection",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "domain*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to associate an existing repository as an upstream repository to another repository",
+        "privilege": "AssociateWithDownstreamRepository",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "repository*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to copy package versions from one repository to another repository in the same domain.",
+        "privilege": "CopyPackageVersions",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "repository*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to create a new domain",
+        "privilege": "CreateDomain",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "domain*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to create a new repository",
+        "privilege": "CreateRepository",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "repository*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to delete a domain",
+        "privilege": "DeleteDomain",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "domain*"
+          }
+        ]
+      },
+      {
+        "access_level": "Permissions management",
+        "description": "Grants permission to delete the resource policy set on a domain",
+        "privilege": "DeleteDomainPermissionsPolicy",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "domain*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to delete package versions",
+        "privilege": "DeletePackageVersions",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "package*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to delete a repository",
+        "privilege": "DeleteRepository",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "repository*"
+          }
+        ]
+      },
+      {
+        "access_level": "Permissions management",
+        "description": "Grants permission to delete the resource policy set on a repository",
+        "privilege": "DeleteRepositoryPermissionsPolicy",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "repository*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to return information about a domain",
+        "privilege": "DescribeDomain",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "domain*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to return information about a package version",
+        "privilege": "DescribePackageVersion",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "package*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to return detailed information about a repository",
+        "privilege": "DescribeRepository",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "repository*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to disassociate an external connection from a repository",
+        "privilege": "DisassociateExternalConnection",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "domain*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to set the status of package versions to Disposed and delete their assets",
+        "privilege": "DisposePackageVersions",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "package*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to generate a temporary authentication token for accessing repositories in a domain",
+        "privilege": "GetAuthorizationToken",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "domain*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to return a domain's resource policy",
+        "privilege": "GetDomainPermissionsPolicy",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "domain*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to return an asset (or file) that is part of a package version",
+        "privilege": "GetPackageVersionAsset",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "package*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to return a package version's readme file",
+        "privilege": "GetPackageVersionReadme",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "package*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to return an endpoint for a repository",
+        "privilege": "GetRepositoryEndpoint",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "repository*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to return a repository's resource policy",
+        "privilege": "GetRepositoryPermissionsPolicy",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "repository*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to list the domains in the current user's AWS account",
+        "privilege": "ListDomains",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to list a package version's assets",
+        "privilege": "ListPackageVersionAssets",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "package*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to list the direct dependencies of a package version",
+        "privilege": "ListPackageVersionDependencies",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "package*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to list a package's versions",
+        "privilege": "ListPackageVersions",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "package*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to list the packages in a repository",
+        "privilege": "ListPackages",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "repository*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to list the repositories administered by the calling account",
+        "privilege": "ListRepositories",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to list the repositories in a domain",
+        "privilege": "ListRepositoriesInDomain",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "domain*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to publish assets and metadata to a repository endpoint",
+        "privilege": "PublishPackageVersion",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "package*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to attach a resource policy to a domain",
+        "privilege": "PutDomainPermissionsPolicy",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "domain*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to add, modify or remove package metadata using a repository endpoint",
+        "privilege": "PutPackageMetadata",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "package*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to attach a resource policy to a repository",
+        "privilege": "PutRepositoryPermissionsPolicy",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "repository*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to return package assets and metadata from a repository endpoint",
+        "privilege": "ReadFromRepository",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "repository*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to modify the status of one or more versions of a package",
+        "privilege": "UpdatePackageVersionsStatus",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "package*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to modify the properties of a repository",
+        "privilege": "UpdateRepository",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "repository*"
+          }
+        ]
+      }
+    ],
+    "resources": [
+      {
+        "arn": "arn:${Partition}:codeartifact:${Region}:${Account}:domain/${DomainName}",
+        "condition_keys": [],
+        "resource": "domain"
+      },
+      {
+        "arn": "arn:${Partition}:codeartifact:${Region}:${Account}:repository/${DomainName}/${RepositoryName}",
+        "condition_keys": [],
+        "resource": "repository"
+      },
+      {
+        "arn": "arn:${Partition}:codeartifact:${Region}:${Account}:package/${DomainName}/${RepositoryName}/${PackageFormat}/${PackageNamespace}/${PackageName}",
+        "condition_keys": [],
+        "resource": "package"
+      }
+    ],
+    "service_name": "AWS CodeArtifact"
+  },
+  {
     "conditions": [
       {
         "condition": "aws:RequestTag/${TagKey}",
@@ -19272,13 +19716,37 @@
       },
       {
         "access_level": "Read",
+        "description": "Grants permission to describe a code review.",
+        "privilege": "DescribeCodeReview",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "codereview*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to describe a recommendation feedback on a code review.",
+        "privilege": "DescribeRecommendationFeedback",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "codereview*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
         "description": "Grants permission to describe a repository association.",
         "privilege": "DescribeRepositoryAssociation",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "association*"
           }
         ]
       },
@@ -19312,6 +19780,42 @@
       },
       {
         "access_level": "List",
+        "description": "Grants permission to list summary of code reviews.",
+        "privilege": "ListCodeReviews",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to list summary of recommendation feedback on a code review.",
+        "privilege": "ListRecommendationFeedback",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "codereview*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to list summary of recommendations on a code review",
+        "privilege": "ListRecommendations",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "codereview*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
         "description": "Grants permission to list summary of repository associations.",
         "privilege": "ListRepositoryAssociations",
         "resource_types": [
@@ -19333,6 +19837,18 @@
             "resource_type": ""
           }
         ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to put feedback for a recommendation on a code review.",
+        "privilege": "PutRecommendationFeedback",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "codereview*"
+          }
+        ]
       }
     ],
     "resources": [
@@ -19340,6 +19856,11 @@
         "arn": "arn:${Partition}:codeguru-reviewer::${Account}:association:${ResourceId}",
         "condition_keys": [],
         "resource": "association"
+      },
+      {
+        "arn": "arn:${Partition}:codeguru-reviewer::${Account}:.+:.+",
+        "condition_keys": [],
+        "resource": "codereview"
       },
       {
         "arn": "arn:${Partition}:codecommit:${Region}:${Account}:${RepositoryName}",
@@ -23411,6 +23932,42 @@
     "conditions": [],
     "prefix": "compute-optimizer",
     "privileges": [
+      {
+        "access_level": "List",
+        "description": "Grants permission to view the status of recommendation export jobs.",
+        "privilege": "DescribeRecommendationExportJobs",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to export autoscaling group recommendations to S3 for the provided accounts.",
+        "privilege": "ExportAutoScalingGroupRecommendations",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to export EC2 instance recommendations to S3 for the provided accounts.",
+        "privilege": "ExportEC2InstanceRecommendations",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
       {
         "access_level": "List",
         "description": "Grants permission to get recommendations for the provided autoscaling groups.",
@@ -44930,7 +45487,7 @@
   {
     "conditions": [
       {
-        "condition": "aws:RequestTag/tag-key",
+        "condition": "aws:RequestTag/${TagKey}",
         "description": "A key that is present in the request the user makes to the ELB service.",
         "type": "String"
       },
@@ -44945,7 +45502,7 @@
         "type": "String"
       },
       {
-        "condition": "elasticloadbalancing:ResourceTag/tag-key",
+        "condition": "elasticloadbalancing:ResourceTag/${TagKey}",
         "description": "A tag key and value pair.",
         "type": "String"
       }
@@ -45298,9 +45855,9 @@
       {
         "arn": "arn:${Partition}:elasticloadbalancing:${Region}:${Account}:loadbalancer/${LoadBalancerName}",
         "condition_keys": [
-          "aws:RequestTag/tag-key",
+          "aws:RequestTag/${TagKey}",
           "aws:TagKeys",
-          "elasticloadbalancing:ResourceTag/tag-key"
+          "elasticloadbalancing:ResourceTag/${TagKey}"
         ],
         "resource": "loadbalancer"
       }
@@ -46764,7 +47321,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "event-bus*"
+            "resource_type": ""
           }
         ]
       },
@@ -46776,7 +47333,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "event-source*"
+            "resource_type": ""
           }
         ]
       },
@@ -46800,7 +47357,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "event-source*"
+            "resource_type": ""
           }
         ]
       },
@@ -46812,7 +47369,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "rule*"
+            "resource_type": ""
           }
         ]
       },
@@ -46824,7 +47381,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "rule*"
+            "resource_type": ""
           }
         ]
       },
@@ -57797,6 +58354,16 @@
         "condition": "aws:TagKeys",
         "description": "Filters actions by the presence of tag keys in the request",
         "type": "String"
+      },
+      {
+        "condition": "imagebuilder:CreatedResourceTag/<key>",
+        "description": "Filters access by the tag key-value pairs attached to the resource created by Image Builder",
+        "type": "String"
+      },
+      {
+        "condition": "imagebuilder:CreatedResourceTagKeys",
+        "description": "Filters access by the presence of tag keys in the request",
+        "type": "String"
       }
     ],
     "prefix": "imagebuilder",
@@ -57940,7 +58507,9 @@
           {
             "condition_keys": [
               "aws:RequestTag/${TagKey}",
-              "aws:TagKeys"
+              "aws:TagKeys",
+              "imagebuilder:CreatedResourceTagKeys",
+              "imagebuilder:CreatedResourceTag/<key>"
             ],
             "dependent_actions": [],
             "resource_type": ""
@@ -58453,7 +59022,9 @@
           },
           {
             "condition_keys": [
-              "aws:ResourceTag/${TagKey}"
+              "aws:ResourceTag/${TagKey}",
+              "imagebuilder:CreatedResourceTagKeys",
+              "imagebuilder:CreatedResourceTag/<key>"
             ],
             "dependent_actions": [],
             "resource_type": ""
@@ -60771,6 +61342,18 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Lists all named shadows for a given thing.",
+        "privilege": "ListNamedShadowsForThing",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "thing*"
           }
         ]
       },
@@ -84209,6 +84792,11 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
+            "resource_type": "proxy"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
             "resource_type": "ri"
           },
           {
@@ -84225,6 +84813,11 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "subgrp"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "target-group"
           },
           {
             "condition_keys": [
@@ -84562,7 +85155,10 @@
         "privilege": "CreateDBProxy",
         "resource_types": [
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
             "dependent_actions": [
               "iam:PassRole"
             ],
@@ -85425,6 +86021,11 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
+            "resource_type": "proxy"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
             "resource_type": "ri"
           },
           {
@@ -85441,6 +86042,11 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "subgrp"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "target-group"
           }
         ]
       },
@@ -85810,6 +86416,11 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
+            "resource_type": "proxy"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
             "resource_type": "ri"
           },
           {
@@ -85826,6 +86437,11 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "subgrp"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "target-group"
           },
           {
             "condition_keys": [
@@ -86231,7 +86847,9 @@
       },
       {
         "arn": "arn:${Partition}:rds:${Region}:${Account}:db-proxy:${DbProxyId}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "proxy"
       },
       {
@@ -86273,7 +86891,9 @@
       },
       {
         "arn": "arn:${Partition}:rds:${Region}:${Account}:target-group:${TargetGroupId}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "target-group"
       }
     ],
@@ -96950,7 +97570,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "hub"
           }
         ]
       },
@@ -96962,7 +97582,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "standards-subscription*"
+            "resource_type": "hub"
           }
         ]
       },
@@ -96974,7 +97594,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "standard*"
+            "resource_type": "hub"
           }
         ]
       },
@@ -96983,6 +97603,11 @@
         "description": "Grants permission to import findings into Security Hub from an integrated product",
         "privilege": "BatchImportFindings",
         "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "product*"
+          },
           {
             "condition_keys": [
               "securityhub:TargetAccount"
@@ -97000,7 +97625,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "hub"
           }
         ]
       },
@@ -97012,7 +97637,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "hub"
           }
         ]
       },
@@ -97024,7 +97649,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "hub"
           }
         ]
       },
@@ -97036,7 +97661,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "hub"
           }
         ]
       },
@@ -97048,7 +97673,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "hub"
           }
         ]
       },
@@ -97060,7 +97685,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "action-target*"
+            "resource_type": "hub"
           }
         ]
       },
@@ -97072,7 +97697,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "insight*"
+            "resource_type": "hub"
           }
         ]
       },
@@ -97084,7 +97709,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "hub"
           }
         ]
       },
@@ -97096,7 +97721,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "hub"
           }
         ]
       },
@@ -97108,7 +97733,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "hub"
           }
         ]
       },
@@ -97120,7 +97745,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "hub"
           }
         ]
       },
@@ -97132,7 +97757,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "hub"
           }
         ]
       },
@@ -97144,7 +97769,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "hub*"
+            "resource_type": "hub"
           }
         ]
       },
@@ -97156,7 +97781,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "hub*"
+            "resource_type": "hub"
           }
         ]
       },
@@ -97168,7 +97793,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "product*"
+            "resource_type": "hub"
           }
         ]
       },
@@ -97180,7 +97805,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "hub"
           }
         ]
       },
@@ -97192,7 +97817,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "hub"
           }
         ]
       },
@@ -97204,7 +97829,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "hub"
           }
         ]
       },
@@ -97216,7 +97841,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "product*"
+            "resource_type": "hub"
           }
         ]
       },
@@ -97225,6 +97850,11 @@
         "description": "Grants permission to enable Security Hub",
         "privilege": "EnableSecurityHub",
         "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "hub"
+          },
           {
             "condition_keys": [
               "aws:RequestTag/${TagKey}",
@@ -97243,7 +97873,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "hub"
           }
         ]
       },
@@ -97255,7 +97885,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "hub"
           }
         ]
       },
@@ -97267,7 +97897,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "insight*"
+            "resource_type": "hub"
           }
         ]
       },
@@ -97279,7 +97909,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "insight*"
+            "resource_type": "hub"
           }
         ]
       },
@@ -97291,7 +97921,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "hub"
           }
         ]
       },
@@ -97303,7 +97933,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "hub"
           }
         ]
       },
@@ -97315,7 +97945,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "hub"
           }
         ]
       },
@@ -97327,7 +97957,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "hub"
           }
         ]
       },
@@ -97339,7 +97969,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "hub"
           }
         ]
       },
@@ -97351,7 +97981,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "hub"
           }
         ]
       },
@@ -97363,7 +97993,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "hub"
           }
         ]
       },
@@ -97411,7 +98041,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "action-target*"
+            "resource_type": "hub"
           }
         ]
       },
@@ -97423,7 +98053,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "hub"
           }
         ]
       },
@@ -97435,7 +98065,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "insight*"
+            "resource_type": "hub"
           }
         ]
       },
@@ -97447,32 +98077,12 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "hub*"
+            "resource_type": "hub"
           }
         ]
       }
     ],
     "resources": [
-      {
-        "arn": "arn:${Partition}:securityhub:${Region}:${Account}:insight/${CompanyId}/${ProductId}/${UniqueId}",
-        "condition_keys": [],
-        "resource": "insight"
-      },
-      {
-        "arn": "arn:${Partition}:securityhub:::ruleset/${StandardsName}/v/${StandardsVersion}",
-        "condition_keys": [],
-        "resource": "standard"
-      },
-      {
-        "arn": "arn:${Partition}:securityhub:${Region}:${Account}:subscription/${StandardsName}/v/${StandardsVersion}",
-        "condition_keys": [],
-        "resource": "standards-subscription"
-      },
-      {
-        "arn": "arn:${Partition}:securityhub:${Region}:${Account}:product-subscription/${Company}/${ProductId}",
-        "condition_keys": [],
-        "resource": "product-subscription"
-      },
       {
         "arn": "arn:${Partition}:securityhub:${Region}:${Account}:product/${Company}/${ProductId}",
         "condition_keys": [],
@@ -97484,11 +98094,6 @@
           "aws:ResourceTag/${TagKey}"
         ],
         "resource": "hub"
-      },
-      {
-        "arn": "arn:${Partition}:securityhub:${Region}:${Account}:action/custom/${Id}",
-        "condition_keys": [],
-        "resource": "action-target"
       }
     ],
     "service_name": "AWS Security Hub"
@@ -98849,6 +99454,21 @@
   {
     "conditions": [
       {
+        "condition": "aws:RequestTag/${TagKey}",
+        "description": "Filters actions based on the tags that are passed in the request",
+        "type": "String"
+      },
+      {
+        "condition": "aws:ResourceTag/${TagKey}",
+        "description": "Filters actions based on the tags associated with the resource",
+        "type": "String"
+      },
+      {
+        "condition": "aws:TagKeys",
+        "description": "Filters actions based on the tag keys that are passed in the request",
+        "type": "String"
+      },
+      {
         "condition": "servicediscovery:NamespaceArn",
         "description": "A filter that lets you get objects by specifying the Amazon Resource Name (ARN) for the related namespace.",
         "type": "String"
@@ -98877,7 +99497,10 @@
         "privilege": "CreateHttpNamespace",
         "resource_types": [
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "aws:TagKeys",
+              "aws:RequestTag/${TagKey}"
+            ],
             "dependent_actions": [],
             "resource_type": ""
           }
@@ -98889,7 +99512,10 @@
         "privilege": "CreatePrivateDnsNamespace",
         "resource_types": [
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "aws:TagKeys",
+              "aws:RequestTag/${TagKey}"
+            ],
             "dependent_actions": [],
             "resource_type": ""
           }
@@ -98901,7 +99527,10 @@
         "privilege": "CreatePublicDnsNamespace",
         "resource_types": [
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "aws:TagKeys",
+              "aws:RequestTag/${TagKey}"
+            ],
             "dependent_actions": [],
             "resource_type": ""
           }
@@ -98913,8 +99542,15 @@
         "privilege": "CreateService",
         "resource_types": [
           {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "namespace*"
+          },
+          {
             "condition_keys": [
-              "servicediscovery:NamespaceArn"
+              "servicediscovery:NamespaceArn",
+              "aws:TagKeys",
+              "aws:RequestTag/${TagKey}"
             ],
             "dependent_actions": [],
             "resource_type": ""
@@ -98950,6 +99586,11 @@
         "description": "Deletes the records and the health check, if any, that Amazon Route 53 created for the specified instance.",
         "privilege": "DeregisterInstance",
         "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "service*"
+          },
           {
             "condition_keys": [
               "servicediscovery:ServiceArn"
@@ -99089,13 +99730,60 @@
         ]
       },
       {
+        "access_level": "List",
+        "description": "Lists tags for the specified resource.",
+        "privilege": "ListTagsForResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
         "access_level": "Write",
         "description": "Registers an instance based on the settings in a specified service.",
         "privilege": "RegisterInstance",
         "resource_types": [
           {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "service*"
+          },
+          {
             "condition_keys": [
               "servicediscovery:ServiceArn"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Tagging",
+        "description": "Adds one or more tags to the specified resource.",
+        "privilege": "TagResource",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "aws:TagKeys",
+              "aws:RequestTag/${TagKey}"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Tagging",
+        "description": "Removes one or more tags from the specified resource.",
+        "privilege": "UntagResource",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "aws:TagKeys",
+              "aws:RequestTag/${TagKey}"
             ],
             "dependent_actions": [],
             "resource_type": ""
@@ -99132,12 +99820,16 @@
     "resources": [
       {
         "arn": "arn:${Partition}:servicediscovery:${Region}:${Account}:namespace/${NamespaceId}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "namespace"
       },
       {
         "arn": "arn:${Partition}:servicediscovery:${Region}:${Account}:service/${ServiceId}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "service"
       }
     ],
@@ -107647,6 +108339,18 @@
       },
       {
         "access_level": "Read",
+        "description": "Returns a STS bearer token for an AWS root user, IAM role, or an IAM user",
+        "privilege": "GetServiceBearerToken",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
         "description": "Returns a set of temporary security credentials (consisting of an access key ID, a secret access key, and a security token) for an AWS account or IAM user",
         "privilege": "GetSessionToken",
         "resource_types": [
@@ -109694,7 +110398,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "user*"
+            "resource_type": "server*"
           }
         ]
       },
@@ -109755,7 +110459,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "server*"
+            "resource_type": "user*"
           }
         ]
       },
@@ -109800,11 +110504,6 @@
         "description": "Enables the caller to update the configuration of a user",
         "privilege": "UpdateUser",
         "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": "server*"
-          },
           {
             "condition_keys": [],
             "dependent_actions": [],
@@ -112535,6 +113234,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Grants permission to delete specified FirewallManagedRulesGroups from the specified WebACL if not managed by Firewall Manager anymore.",
+        "privilege": "DeleteFirewallManagerRuleGroups",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "webacl*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Grants permission to delete the specified IPSet.",
         "privilege": "DeleteIPSet",
         "resource_types": [
@@ -112554,6 +113265,18 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "webacl*"
+          }
+        ]
+      },
+      {
+        "access_level": "Permissions management",
+        "description": "Grants permission to delete the PermissionPolicy on the specified RuleGroup.",
+        "privilege": "DeletePermissionPolicy",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "rulegroup*"
           }
         ]
       },
@@ -112657,6 +113380,18 @@
             ],
             "dependent_actions": [],
             "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to view PermissionPolicy on the specified RuleGroup.",
+        "privilege": "GetPermissionPolicy",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "rulegroup*"
           }
         ]
       },
@@ -112894,6 +113629,18 @@
               "iam:CreateServiceLinkedRole"
             ],
             "resource_type": "webacl*"
+          }
+        ]
+      },
+      {
+        "access_level": "Permissions management",
+        "description": "Grants permission to attach the specified IAM policy to the specified resource. The only supported use for this action is to share a RuleGroup across accounts.",
+        "privilege": "PutPermissionPolicy",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "rulegroup*"
           }
         ]
       },

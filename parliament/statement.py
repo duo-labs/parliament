@@ -259,8 +259,8 @@ def translate_documentation_types(str):
 
 class Statement:
     findings = []
+    resource_star = {}
     effect_allow = True
-    resource_star = False
     stmt = None
     sid = None
     policy_id = None
@@ -272,6 +272,7 @@ class Statement:
 
     def __init__(self, stmt, analyze=True):
         self.findings = []
+        self.resource_star = {}
         self.stmt = stmt
         if analyze:
             if not self.analyze_statement():
@@ -870,11 +871,11 @@ class Statement:
                     # At least one resource has to match the action's required resources
                     match_found = False
                     for resource in resources:
-                        if resource == "*" and not self.resource_star:
-                            self.resource_star = True
-                            self.add_finding(
-                                "RESOURCE_STAR", location={"actions": actions},
-                            )
+                        if resource == "*":
+                            # expansion leads to duplication actions
+                            action_key = "{}:{}".format(action_struct["service"], action_struct["action"])
+                            self.resource_star.setdefault(action_key, 0)
+                            self.resource_star[action_key] += 1
                             match_found = True
                             continue
                         if is_arn_match(resource_type, arn_format, resource):
@@ -906,5 +907,12 @@ class Statement:
             # The condition in the first element is StringLike and the condition_block follows it
             for condition, condition_block in conditions[0].items():
                 self._check_condition(condition, condition_block, expanded_actions)
+
+        # add the resource_star finding last
+        # after all offending actions from the expanded list have been identified
+        if self.resource_star:
+            self.add_finding(
+               "RESOURCE_STAR", location={"actions": sorted(self.resource_star) }
+            )
 
         return True

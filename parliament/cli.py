@@ -249,7 +249,7 @@ def main():
             auth_details_json = json.loads(contents)
             for policy in auth_details_json["Policies"]:
                 # Ignore AWS defined policies
-                if "arn:aws:iam::aws:" not in policy["Arn"]:
+                if "arn:aws:iam::aws:" in policy["Arn"]:
                     continue
 
                 # Ignore AWS Service-linked roles

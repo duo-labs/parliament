@@ -1,4 +1,4 @@
-import json
+import jsoncfg
 import re
 
 from . import (

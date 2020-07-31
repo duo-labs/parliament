@@ -1,5 +1,5 @@
 import unittest
-import json
+import jsoncfg
 from parliament import analyze_policy_string
 
 

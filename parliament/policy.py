@@ -3,6 +3,7 @@ import logging
 import os
 import pkgutil
 import sys
+import jsoncfg
 from pathlib import Path
 
 from . import expand_action
@@ -26,6 +27,12 @@ class Policy:
         self.config = config if config else {}
 
     def add_finding(self, finding, detail="", location={}):
+        if type(location) == tuple and 'jsoncfg.config_classes' in str(type(location[1])):
+            location_data = {}
+            location_data['string'] = location[0]
+            location_data['lineno'] = jsoncfg.node_location(location[1])[0]
+            location_data['character'] = jsoncfg.node_location(location[1])[1]
+            location = location_data
         if "filepath" not in location:
             location["filepath"] = self.filepath
         self._findings.append(Finding(finding, detail, location))
@@ -208,11 +215,11 @@ class Policy:
 
         # Check no unknown elements exist
         for element in self.policy_json:
-            if element not in ["Version", "Statement", "Id"]:
+            if element[0] not in ["Version", "Statement", "Id"]:
                 self.add_finding(
                     "MALFORMED",
                     detail="Policy contains an unknown element",
-                    location={"string": element},
+                    location=element,
                 )
                 return False
 

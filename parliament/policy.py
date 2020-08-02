@@ -31,7 +31,13 @@ class Policy:
             location_data = {}
             location_data['string'] = location[0]
             location_data['lineno'] = jsoncfg.node_location(location[1])[0]
-            location_data['character'] = jsoncfg.node_location(location[1])[1]
+            location_data['column'] = jsoncfg.node_location(location[1])[1]
+            location = location_data
+        elif 'ConfigJSONScalar' in str(type(location)):
+            location_data = {}
+            location_data['string'] = location.value
+            location_data['lineno'] = jsoncfg.node_location(location).line
+            location_data['column'] = jsoncfg.node_location(location).column
             location = location_data
         if "filepath" not in location:
             location["filepath"] = self.filepath
@@ -224,17 +230,17 @@ class Policy:
                 return False
 
         # Check Version
-        if "Version" not in self.policy_json:
+        if not self.policy_json.node_exists("Version"):
             self.add_finding("NO_VERSION")
         else:
-            self.version = self.policy_json["Version"]
+            self.version = self.policy_json["Version"].value
 
             if self.version not in ["2012-10-17", "2008-10-17"]:
-                self.add_finding("INVALID_VERSION", location={"string": self.version})
+                self.add_finding("INVALID_VERSION", location=self.policy_json["Version"])
             elif self.version != "2012-10-17":
                 # TODO I should have a check so that if an older version is being used,
                 # and a variable is detected, it should be marked as higher severity.
-                self.add_finding("OLD_VERSION", location={"string": self.version})
+                self.add_finding("OLD_VERSION", location=self.policy_json["Version"])
 
         # Check Statements
         if "Statement" not in self.policy_json:

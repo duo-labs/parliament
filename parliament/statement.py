@@ -499,37 +499,37 @@ class Statement:
             self.add_finding(
                 "UNKNOWN_OPERATOR",
                 detail=operator,
-                location={"location": condition_block},
+                location=condition_block,
             )
 
         if operator_type_requirement == "Bool":
             value = "{}".format(list(condition_block.values())[0]).lower()
             if value != "true" and value != "false":
                 self.add_finding(
-                    "MISMATCHED_TYPE_OPERATION_TO_NULL", detail=condition_block
+                    "MISMATCHED_TYPE_OPERATION_TO_NULL", location=condition_block
                 )
                 return False
 
-        for key in condition_block:
+        for block in condition_block:
+            key = block[0]
+            values = []
+            for v in make_list(block[1]):
+                values.append(v.value)
 
             # Check for known bad pattern
             if operator.lower() == "bool":
-                if key.lower() == "aws:MultiFactorAuthPresent".lower() and "false" in make_list(
-                    condition_block[key]
-                ):
+                if key.lower() == "aws:MultiFactorAuthPresent".lower() and "false" in values:
                     self.add_finding(
                         "BAD_PATTERN_FOR_MFA",
                         detail='The condition {"Bool": {"aws:MultiFactorAuthPresent":"false"}} is bad because aws:MultiFactorAuthPresent may not exist so it does not enforce MFA. You likely want to use a Deny with BoolIfExists.',
-                        location={"location": condition_block},
+                        location=condition_block,
                     )
             elif operator.lower() == "null":
-                if key.lower == "aws:MultiFactorAuthPresent".lower() and "false" in make_list(
-                    condition_block[key]
-                ):
+                if key.lower == "aws:MultiFactorAuthPresent".lower() and "false" in values:
                     self.add_finding(
                         "BAD_PATTERN_FOR_MFA",
                         detail='The condition {"Null": {"aws:MultiFactorAuthPresent":"false"}} is bad because aws:MultiFactorAuthPresent it does not enforce MFA, and only checks if the value exists. You likely want to use an Allow with {"Bool": {"aws:MultiFactorAuthPresent":"true"}}.',
-                        location={"location": condition_block},
+                        location=condition_block,
                     )
 
             if operator.lower() in ["null"]:
@@ -545,14 +545,14 @@ class Statement:
                 # This is a global key, like aws:CurrentTime
                 # Check if the values match the type (ex. must all be Date values)
                 if not is_value_in_correct_format_for_type(
-                    condition_type, make_list(condition_block[key])
+                    condition_type, values
                 ):
                     self.add_finding(
                         "MISMATCHED_TYPE",
                         detail="Type mismatch: {} requires a value of type {} but given {}".format(
-                            key, condition_type, condition_block[key]
+                            key, condition_type, values
                         ),
-                        location={"location": condition_block},
+                        location=condition_block,
                     )
             else:
                 # See if this is a service specific key
@@ -859,7 +859,7 @@ class Statement:
         # resources.
         # https://github.com/SummitRoute/aws_managed_policies/blob/4b71905a9042e66b22bc3d2b9cb1378b1e1d239e/policies/AWSEC2SpotServiceRolePolicy#L21
 
-        if not has_malformed_resource and effect == "Allow":
+        if not has_malformed_resource and self.effect_allow:
             actions_without_matching_resources = []
             # Ensure the required resources for each action exist
             # Iterate through each action
@@ -875,7 +875,7 @@ class Statement:
                 ):
                     match_found = False
                     for resource in resources:
-                        if resource == "*":
+                        if resource.value == "*":
                             match_found = True
                     if not match_found:
                         actions_without_matching_resources.append(
@@ -902,7 +902,7 @@ class Statement:
                     # At least one resource has to match the action's required resources
                     match_found = False
                     for resource in resources:
-                        if resource == "*":
+                        if resource.value == "*":
                             # expansion leads to duplication actions
                             action_key = "{}:{}".format(
                                 action_struct["service"], action_struct["action"]
@@ -911,7 +911,7 @@ class Statement:
                             self.resource_star[action_key] += 1
                             match_found = True
                             continue
-                        if is_arn_match(resource_type, arn_format, resource):
+                        if is_arn_match(resource_type, arn_format, resource.value):
                             match_found = True
                             continue
 
@@ -925,10 +925,13 @@ class Statement:
                             }
                         )
             if actions_without_matching_resources:
+                # We have location info for each action via the variable `actions` which is a ConfigJSONArray, but
+                # because we can only list one location, we'll just use the location of the statement
+                # because `actions_without_matching_resources` contains the name of each action and the required format.
                 self.add_finding(
                     "RESOURCE_MISMATCH",
                     detail=actions_without_matching_resources,
-                    location={"actions": actions},
+                    location=self.stmt
                 )
 
         # If conditions exist, it will be an element, which was previously made into a list
@@ -937,15 +940,17 @@ class Statement:
             # - "StringLike": {"s3:prefix":["home/${aws:username}/*"]}
             # - "DateGreaterThan" :{"aws:CurrentTime":"2019-07-16T12:00:00Z"}
 
-            # The condition in the first element is StringLike and the condition_block follows it
-            for condition, condition_block in conditions[0].items():
-                self._check_condition(condition, condition_block, expanded_actions)
+            for condition in conditions[0]:
+                # The operator is the first element (ex. `StringLike`) and the condition_block follows it
+                operator = condition[0]
+                condition_block = condition[1]
+                self._check_condition(operator, condition_block, expanded_actions)
 
         # add the resource_star finding last
         # after all offending actions from the expanded list have been identified
         if self.resource_star:
             self.add_finding(
-                "RESOURCE_STAR", location={"actions": sorted(self.resource_star)}
+                "RESOURCE_STAR", detail=sorted(self.resource_star), location=self.stmt
             )
 
         return True

@@ -114,3 +114,8 @@ RESOURCE_STAR:
   title: Unnecessary use of Resource *
   severity: LOW
   group: MALFORMED
+
+UNKNOWN_OPERATOR:
+  title: The condition operator is unknown.
+  severity: MEDIUM
+  group: INVALID

@@ -504,12 +504,14 @@ class Statement:
             )
 
         if operator_type_requirement == "Bool":
-            value = "{}".format(list(condition_block.values())[0]).lower()
-            if value != "true" and value != "false":
-                self.add_finding(
-                    "MISMATCHED_TYPE_OPERATION_TO_NULL", location=condition_block
-                )
-                return False
+            # Get the value that is being compared against
+            for c in condition_block:
+                value = c[1].value.lower()
+                if value != "true" and value != "false":
+                    self.add_finding(
+                        "MISMATCHED_TYPE_OPERATION_TO_NULL", location=condition_block
+                    )
+                    return False
 
         for block in condition_block:
             key = block[0]

@@ -448,7 +448,8 @@ class Statement:
                                 "UNKNOWN_PRINCIPAL", location=principal, detail=text
                             )
                 elif key == "Federated":
-                    for federation in make_list(principal[key]):
+                    for federation in make_list(json_object[1]):
+                        federation = federation.value
                         saml_regex = re.compile(
                             "^arn:[-a-z\*]*:iam::\d{12}:saml-provider/.*$"
                         )

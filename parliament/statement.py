@@ -297,10 +297,10 @@ class Statement:
 
         if "Action" in self.stmt:
             for action in make_list(self.stmt["Action"]):
-                if action == "*" or action == "*:*":
+                if action.value == "*" or action.value == "*:*":
                     return True
 
-                expanded_actions = expand_action(action, raise_exceptions=False)
+                expanded_actions = expand_action(action.value, raise_exceptions=False)
 
                 for action_struct in expanded_actions:
                     if (
@@ -363,14 +363,14 @@ class Statement:
 
             # At least one resource has to match the action's required resources
             for resource in make_list(self.stmt["Resource"]):
-                if is_arn_match(resource_type, arn_format, resource):
+                if is_arn_match(resource_type, arn_format, resource.value):
                     affected_resources.append(resource)
-                elif resource == "*":
+                elif resource.value == "*":
                     affected_resources.append(resource)
 
         # Ensure we match on "*"
         for resource in make_list(self.stmt["Resource"]):
-            if resource == "*":
+            if resource.value == "*":
                 affected_resources.append(resource)
 
         return affected_resources

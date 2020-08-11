@@ -94,7 +94,7 @@ class Policy:
         for stmt in self.statements:
             actions = make_list(stmt.stmt["Action"])
             for action in actions:
-                expanded_actions = expand_action(action)
+                expanded_actions = expand_action(action.value)
                 for expanded_action in expanded_actions:
                     actions_referenced.add(
                         "{}:{}".format(

@@ -364,14 +364,14 @@ class Statement:
             # At least one resource has to match the action's required resources
             for resource in make_list(self.stmt["Resource"]):
                 if is_arn_match(resource_type, arn_format, resource.value):
-                    affected_resources.append(resource)
+                    affected_resources.append(resource.value)
                 elif resource.value == "*":
-                    affected_resources.append(resource)
+                    affected_resources.append(resource.value)
 
         # Ensure we match on "*"
         for resource in make_list(self.stmt["Resource"]):
             if resource.value == "*":
-                affected_resources.append(resource)
+                affected_resources.append(resource.value)
 
         return affected_resources
 

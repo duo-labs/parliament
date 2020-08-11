@@ -693,9 +693,9 @@ class Statement:
             self.effect_allow = False
 
         # Check Sid
-        if "Sid" in self.stmt and not re.fullmatch("[0-9A-Za-z]*", self.stmt["Sid"]):
+        if "Sid" in self.stmt and not re.fullmatch("[0-9A-Za-z]*", self.stmt["Sid"].value):
             # The grammar is defined at https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_grammar.html
-            self.add_finding("INVALID_SID", detail=self.stmt)
+            self.add_finding("INVALID_SID", location={"string": self.stmt["Sid"]})
             return False
 
         # Check Action

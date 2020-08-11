@@ -387,9 +387,7 @@ class Statement:
         if "jsoncfg.config_classes.ConfigJSONObject" in str(type(location)):
             node_location = jsoncfg.node_location(location)
             location = {"line": node_location.line, "column": node_location.column}
-        elif "jsoncfg.config_classes.ConfigJSONScalar" in str(
-            type(location)
-        ):
+        elif "jsoncfg.config_classes.ConfigJSONScalar" in str(type(location)):
             node_location = jsoncfg.node_location(location)
             location = {"string": location.value}
             location["line"] = node_location.line
@@ -774,7 +772,7 @@ class Statement:
         # Expand the actions from s3:Get* to s3:GetObject and others
         expanded_actions = []
         for action in actions:
-            
+
             # Handle special case where all actions are allowed
             if action.value == "*" or action.value == "*:*":
                 # TODO Should ensure the resource is "*" with this action
@@ -785,29 +783,23 @@ class Statement:
                 expanded_actions.extend(expand_action(action.value))
             except UnknownActionException as e:
                 self.add_finding(
-                    "UNKNOWN_ACTION",
-                    detail=str(e),
-                    location=action,
+                    "UNKNOWN_ACTION", detail=str(e), location=action,
                 )
                 return False
             except UnknownPrefixException as e:
-                self.add_finding(
-                    "UNKNOWN_PREFIX", detail=str(e), location=action
-                )
+                self.add_finding("UNKNOWN_PREFIX", detail=str(e), location=action)
                 return False
             except Exception as e:
-                self.add_finding(
-                    "EXCEPTION", detail=str(e), location=action
-                )
+                self.add_finding("EXCEPTION", detail=str(e), location=action)
                 return False
 
         # Check the resources are correct formatted correctly
         has_malformed_resource = False
         for resource in resources:
-            if resource == "*":
+            if resource.value == "*":
                 continue
             try:
-                parts = resource.split(":")
+                parts = resource.value.split(":")
             except AttributeError:
                 has_malformed_resource = True
                 self.add_finding(
@@ -817,31 +809,25 @@ class Statement:
                         "CloudFormation template which is outside of Parliament's "
                         "scope."
                     ),
-                    location={"string": resource},
+                    location=resource,
                 )
                 continue
             if len(parts) < 6:
                 has_malformed_resource = True
                 self.add_finding(
-                    "INVALID_ARN",
-                    detail="Does not have 6 parts",
-                    location={"string": resource},
+                    "INVALID_ARN", detail="Does not have 6 parts", location=resource,
                 )
                 continue
             elif parts[0] != "arn":
                 has_malformed_resource = True
                 self.add_finding(
-                    "INVALID_ARN",
-                    detail="Does not start with arn:",
-                    location={"string": resource},
+                    "INVALID_ARN", detail="Does not start with arn:", location=resource,
                 )
                 continue
             elif parts[1] not in ["aws", "aws-cn", "aws-us-gov", "aws-iso", "*", ""]:
                 has_malformed_resource = True
                 self.add_finding(
-                    "INVALID_ARN",
-                    detail="Unexpected partition",
-                    location={"string": resource},
+                    "INVALID_ARN", detail="Unexpected partition", location=resource,
                 )
                 continue
 
@@ -852,14 +838,14 @@ class Statement:
                 self.add_finding(
                     "INVALID_ARN",
                     detail="Region expected to be of form like us-east-1",
-                    location={"string": resource},
+                    location=resource,
                 )
             elif not is_valid_account_id(parts[4]):
                 has_malformed_resource = True
                 self.add_finding(
                     "INVALID_ARN",
                     detail="Account expected to be of form like 123456789012",
-                    location={"string": resource},
+                    location=resource,
                 )
             # TODO I should check for the use of valid variables in the resource, such as ${aws:username}
             # See https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_variables.html

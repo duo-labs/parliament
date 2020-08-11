@@ -506,7 +506,7 @@ class Statement:
         if operator_type_requirement == "Bool":
             # Get the value that is being compared against
             for c in condition_block:
-                value = c[1].value.lower()
+                value = str(c[1].value).lower()
                 if value != "true" and value != "false":
                     self.add_finding(
                         "MISMATCHED_TYPE_OPERATION_TO_NULL", location=condition_block
@@ -594,12 +594,12 @@ class Statement:
                         )
 
                     if not is_value_in_correct_format_for_type(
-                        condition_type, make_list(condition_block[key])
+                        condition_type, values
                     ):
                         self.add_finding(
                             "MISMATCHED_TYPE",
                             detail="Type mismatch: {} requires a value of type {} but given {}".format(
-                                key, condition_type, condition_block[key]
+                                key, condition_type, values
                             ),
                             location={"location": condition_block},
                         )

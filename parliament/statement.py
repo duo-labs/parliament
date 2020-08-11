@@ -388,6 +388,18 @@ class Statement:
             node_location = jsoncfg.node_location(location)
             location = {"line": node_location.line, "column": node_location.column}
         elif "jsoncfg.config_classes.ConfigJSONScalar" in str(
+            type(location)
+        ):
+            node_location = jsoncfg.node_location(location)
+            location = {"string": location.value}
+            location["line"] = node_location.line
+            location["column"] = node_location.column
+        elif "tuple" in str(type(location)):
+            node_location = jsoncfg.node_location(location[1])
+            location = {"string": location[0]}
+            location["line"] = node_location.line
+            location["column"] = node_location.column
+        elif "jsoncfg.config_classes.ConfigJSONScalar" in str(
             type(location.get("string", ""))
         ):
             node_location = jsoncfg.node_location(location["string"])
@@ -651,7 +663,7 @@ class Statement:
                 self.add_finding(
                     "MALFORMED",
                     detail="Statement contains an unknown element",
-                    location={"string": element},
+                    location=element,
                 )
                 return False
 
@@ -689,7 +701,7 @@ class Statement:
             self.add_finding(
                 "MALFORMED",
                 detail="Unknown Effect used. Effect must be either Allow or Deny",
-                location={"string": effect},
+                location=effect,
             )
             return False
 
@@ -732,7 +744,7 @@ class Statement:
             self.add_finding(
                 "MALFORMED",
                 detail="Statement contains both Resource and NotResource",
-                location={"string": self.stmt},
+                location=self.stmt,
             )
             return False
 
@@ -744,7 +756,7 @@ class Statement:
             self.add_finding(
                 "MALFORMED",
                 detail="Statement contains neither Resource nor NotResource",
-                location={"string": self.stmt},
+                location=self.stmt,
             )
             return False
 
@@ -755,36 +767,37 @@ class Statement:
                 self.add_finding(
                     "MALFORMED",
                     detail="Condition formatted incorrectly",
-                    location={"string": self.stmt},
+                    location=self.stmt,
                 )
                 return False
 
         # Expand the actions from s3:Get* to s3:GetObject and others
         expanded_actions = []
         for action in actions:
+            
             # Handle special case where all actions are allowed
-            if action == "*" or action == "*:*":
+            if action.value == "*" or action.value == "*:*":
                 # TODO Should ensure the resource is "*" with this action
                 continue
 
             try:
                 # Given an action such as "s3:List*", return all the possible values it could have
-                expanded_actions.extend(expand_action(action))
+                expanded_actions.extend(expand_action(action.value))
             except UnknownActionException as e:
                 self.add_finding(
                     "UNKNOWN_ACTION",
                     detail=str(e),
-                    location={"unknown_action": action, "statement": self.stmt},
+                    location=action,
                 )
                 return False
             except UnknownPrefixException as e:
                 self.add_finding(
-                    "UNKNOWN_PREFIX", detail=str(e), location={"statement": self.stmt}
+                    "UNKNOWN_PREFIX", detail=str(e), location=action
                 )
                 return False
             except Exception as e:
                 self.add_finding(
-                    "EXCEPTION", detail=str(e), location={"statement": self.stmt}
+                    "EXCEPTION", detail=str(e), location=action
                 )
                 return False
 

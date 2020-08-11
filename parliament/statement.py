@@ -390,6 +390,9 @@ class Statement:
         elif "jsoncfg.config_classes.ConfigJSONScalar" in str(
             type(location.get("string", ""))
         ):
+            node_location = jsoncfg.node_location(location["string"])
+            location["line"] = node_location.line
+            location ["column"] = node_location.column
             location["string"] = location["string"].value
         elif "jsoncfg.config_classes" in str(type(location.get("string", ""))):
             location["string"] = location["string"][0]
@@ -671,20 +674,20 @@ class Statement:
             self.add_finding(
                 "MALFORMED",
                 detail="Statement does not contain an Effect element",
-                location={"string": self.stmt},
+                location=self.stmt,
             )
             return False
         effect = self.stmt["Effect"]
 
-        if effect not in ["Allow", "Deny"]:
+        if effect.value not in ["Allow", "Deny"]:
             self.add_finding(
                 "MALFORMED",
                 detail="Unknown Effect used. Effect must be either Allow or Deny",
-                location={"string": self.stmt},
+                location={'string': effect},
             )
             return False
 
-        if effect == "Allow":
+        if effect.value == "Allow":
             self.effect_allow = True
         else:
             self.effect_allow = False

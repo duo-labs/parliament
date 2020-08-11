@@ -383,8 +383,17 @@ class Statement:
         location: Dictionary with information about where this problem is. Often set to:
             {"location": "string"}
         """
-        if self.sid is not None:
-            location['sid'] = self.sid
+
+        if "jsoncfg.config_classes.ConfigJSONObject" in str(type(location)):
+            node_location = jsoncfg.node_location(location)
+            location = {"line": node_location.line, "column": node_location.column}
+        elif "jsoncfg.config_classes.ConfigJSONScalar" in str(
+            type(location.get("string", ""))
+        ):
+            location["string"] = location["string"].value
+        elif "jsoncfg.config_classes" in str(type(location.get("string", ""))):
+            location["string"] = location["string"][0]
+
         self.findings.append(Finding(finding, detail, location))
 
     def _check_principal(self, principal_element):
@@ -393,22 +402,32 @@ class Statement:
         """
 
         for principal in make_list(principal_element):
-            if principal == "*":
-                continue
-            for key in principal:
+            if jsoncfg.node_is_scalar(principal):
+                if principal.value == "*":
+                    continue
+                else:
+                    self.add_finding("UNKNOWN_PRINCIPAL", location=principal)
+                    continue
+
+            # We have a ConfigJSONObject
+            for json_object in principal:
+                key = json_object[0]
                 if key == "AWS":
-                    for aws_principal in make_list(principal[key]):
+                    for aws_principal in make_list(json_object[1]):
+                        text = aws_principal.value
                         account_id_regex = re.compile("^\d{12}$")
                         arn_regex = re.compile("^arn:[-a-z\*]*:iam::(\d{12}|):.*$")
 
-                        if aws_principal == "*":
+                        if text == "*":
                             pass
-                        elif account_id_regex.match(aws_principal):
+                        elif account_id_regex.match(text):
                             pass
-                        elif arn_regex.match(aws_principal):
+                        elif arn_regex.match(text):
                             pass
                         else:
-                            self.add_finding("UNKNOWN_PRINCIPAL", detail=aws_principal)
+                            self.add_finding(
+                                "UNKNOWN_PRINCIPAL", location=principal, detail=text
+                            )
                 elif key == "Federated":
                     for federation in make_list(principal[key]):
                         saml_regex = re.compile(
@@ -425,14 +444,16 @@ class Statement:
                             pass
                         else:
                             self.add_finding(
-                                "UNKNOWN_FEDERATION_SOURCE", detail=federation
+                                "UNKNOWN_FEDERATION_SOURCE",
+                                location=principal,
+                                detail=federation,
                             )
                 elif key == "Service":
                     # This should be something like apigateway.amazonaws.com
                     # I don't know what all the restrictions could be though.
                     pass
                 else:
-                    self.add_finding("UNKNOWN_PRINCIPAL", detail=principal_element)
+                    self.add_finding("UNKNOWN_PRINCIPAL", location=principal)
         return True
 
     def _check_condition(self, operator, condition_block, expanded_actions):
@@ -607,7 +628,7 @@ class Statement:
 
         # Check no unknown elements exist
         for element in self.stmt:
-            if element not in [
+            if element[0] not in [
                 "Effect",
                 "Sid",
                 "Principal",
@@ -627,7 +648,7 @@ class Statement:
 
         # Track Sid for better location reporting
         if "Sid" in self.stmt:
-            self.sid = self.stmt['Sid']
+            self.sid = self.stmt["Sid"].value
 
         # Check Principal if it exists. This only applicable to resource policies. Also applicable to
         # IAM role trust policies, but those don't have Resource elements, so that would break other things
@@ -636,7 +657,7 @@ class Statement:
             self.add_finding(
                 "MALFORMED",
                 detail="Statement contains both Principal and NotPrincipal",
-                location={"string": self.stmt},
+                location=self.stmt,
             )
             return False
 
@@ -873,7 +894,9 @@ class Statement:
                     for resource in resources:
                         if resource == "*":
                             # expansion leads to duplication actions
-                            action_key = "{}:{}".format(action_struct["service"], action_struct["action"])
+                            action_key = "{}:{}".format(
+                                action_struct["service"], action_struct["action"]
+                            )
                             self.resource_star.setdefault(action_key, 0)
                             self.resource_star[action_key] += 1
                             match_found = True
@@ -912,7 +935,7 @@ class Statement:
         # after all offending actions from the expanded list have been identified
         if self.resource_star:
             self.add_finding(
-               "RESOURCE_STAR", location={"actions": sorted(self.resource_star) }
+                "RESOURCE_STAR", location={"actions": sorted(self.resource_star)}
             )
 
         return True

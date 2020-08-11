@@ -71,10 +71,6 @@ def print_finding(finding, minimal_output=False, json_output=False):
     if minimal_output:
         print("{}".format(finding.issue))
     elif json_output:
-        if 'jsoncfg.config_classes.ConfigJSONScalar' in str(type(finding.location.get('string', ''))):
-            finding.location['string'] = finding.location['string'].value
-        elif 'jsoncfg.config_classes' in str(type(finding.location.get('string', ''))):
-            finding.location['string'] = finding.location['string'][0]
         print(
             json.dumps(
                 {

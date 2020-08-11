@@ -392,8 +392,14 @@ class Statement:
         ):
             node_location = jsoncfg.node_location(location["string"])
             location["line"] = node_location.line
-            location ["column"] = node_location.column
+            location["column"] = node_location.column
             location["string"] = location["string"].value
+        elif "tuple" in str(type(location.get("string", ""))):
+            node_location = jsoncfg.node_location(location["string"][1])
+            location["line"] = node_location.line
+            location["column"] = node_location.column
+            location["string"] = location["string"][0]
+
         elif "jsoncfg.config_classes" in str(type(location.get("string", ""))):
             location["string"] = location["string"][0]
 
@@ -683,7 +689,7 @@ class Statement:
             self.add_finding(
                 "MALFORMED",
                 detail="Unknown Effect used. Effect must be either Allow or Deny",
-                location={'string': effect},
+                location={"string": effect},
             )
             return False
 
@@ -693,7 +699,9 @@ class Statement:
             self.effect_allow = False
 
         # Check Sid
-        if "Sid" in self.stmt and not re.fullmatch("[0-9A-Za-z]*", self.stmt["Sid"].value):
+        if "Sid" in self.stmt and not re.fullmatch(
+            "[0-9A-Za-z]*", self.stmt["Sid"].value
+        ):
             # The grammar is defined at https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_grammar.html
             self.add_finding("INVALID_SID", location={"string": self.stmt["Sid"]})
             return False
@@ -703,7 +711,7 @@ class Statement:
             self.add_finding(
                 "MALFORMED",
                 detail="Statement contains both Action and NotAction",
-                location={"string": self.stmt},
+                location=self.stmt,
             )
             return False
 
@@ -715,7 +723,7 @@ class Statement:
             self.add_finding(
                 "MALFORMED",
                 detail="Statement contains neither Action nor NotAction",
-                location={"string": self.stmt},
+                location=self.stmt,
             )
             return False
 

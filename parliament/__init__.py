@@ -60,7 +60,7 @@ def analyze_policy_string(
     try:
         # TODO Need to write my own json parser so I can track line numbers. See https://stackoverflow.com/questions/7225056/python-json-decoding-library-which-can-associate-decoded-items-with-original-li
         policy_json = jsoncfg.loads_config(policy_str)
-    except ValueError as e:
+    except jsoncfg.parser.JSONConfigParserException as e:
         policy = Policy(None)
         policy.add_finding("MALFORMED_JSON", detail="json parsing error: {}".format(e))
         return policy

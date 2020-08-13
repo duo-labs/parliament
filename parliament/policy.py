@@ -232,7 +232,7 @@ class Policy:
                 return False
 
         # Check Version
-        if not self.policy_json.node_exists("Version"):
+        if "Version" not in self.policy_json:
             self.add_finding("NO_VERSION")
         else:
             self.version = self.policy_json["Version"].value
@@ -247,7 +247,7 @@ class Policy:
                 self.add_finding("OLD_VERSION", location=self.policy_json["Version"])
 
         # Check Statements
-        if not self.policy_json.node_exists("Statement"):
+        if "Statement" not in self.policy_json:
             self.add_finding(
                 "MALFORMED", detail="Policy does not contain a Statement element"
             )

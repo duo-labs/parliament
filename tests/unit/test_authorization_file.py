@@ -1,4 +1,5 @@
 import unittest
+import jsoncfg
 import json
 from parliament import analyze_policy_string
 
@@ -181,6 +182,7 @@ class TestAuthDetailsFile(unittest.TestCase):
             for version in policy["PolicyVersionList"]:
                 if not version["IsDefaultVersion"]:
                     continue
+                print(version["Document"])
                 policy = analyze_policy_string(
                     json.dumps(version["Document"]), policy["Arn"],
                 )

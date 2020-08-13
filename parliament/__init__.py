@@ -6,6 +6,7 @@ __version__ = "0.6.0"
 import fnmatch
 import functools
 import json
+import jsoncfg
 import re
 
 import pkg_resources
@@ -58,7 +59,7 @@ def analyze_policy_string(
 
     try:
         # TODO Need to write my own json parser so I can track line numbers. See https://stackoverflow.com/questions/7225056/python-json-decoding-library-which-can-associate-decoded-items-with-original-li
-        policy_json = json.loads(policy_str)
+        policy_json = jsoncfg.loads_config(policy_str)
     except ValueError as e:
         policy = Policy(None)
         policy.add_finding("MALFORMED_JSON", detail="json parsing error: {}".format(e))

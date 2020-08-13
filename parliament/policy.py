@@ -3,6 +3,7 @@ import logging
 import os
 import pkgutil
 import sys
+import jsoncfg
 from pathlib import Path
 
 from . import expand_action
@@ -26,6 +27,20 @@ class Policy:
         self.config = config if config else {}
 
     def add_finding(self, finding, detail="", location={}):
+        if type(location) == tuple and "jsoncfg.config_classes" in str(
+            type(location[1])
+        ):
+            location_data = {}
+            location_data["string"] = location[0]
+            location_data["lineno"] = jsoncfg.node_location(location[1])[0]
+            location_data["column"] = jsoncfg.node_location(location[1])[1]
+            location = location_data
+        elif "ConfigJSONScalar" in str(type(location)):
+            location_data = {}
+            location_data["string"] = location.value
+            location_data["lineno"] = jsoncfg.node_location(location).line
+            location_data["column"] = jsoncfg.node_location(location).column
+            location = location_data
         if "filepath" not in location:
             location["filepath"] = self.filepath
         self._findings.append(Finding(finding, detail, location))
@@ -79,7 +94,7 @@ class Policy:
         for stmt in self.statements:
             actions = make_list(stmt.stmt["Action"])
             for action in actions:
-                expanded_actions = expand_action(action)
+                expanded_actions = expand_action(action.value)
                 for expanded_action in expanded_actions:
                     actions_referenced.add(
                         "{}:{}".format(
@@ -208,29 +223,31 @@ class Policy:
 
         # Check no unknown elements exist
         for element in self.policy_json:
-            if element not in ["Version", "Statement", "Id"]:
+            if element[0] not in ["Version", "Statement", "Id"]:
                 self.add_finding(
                     "MALFORMED",
                     detail="Policy contains an unknown element",
-                    location={"string": element},
+                    location=element,
                 )
                 return False
 
         # Check Version
-        if "Version" not in self.policy_json:
+        if not self.policy_json.node_exists("Version"):
             self.add_finding("NO_VERSION")
         else:
-            self.version = self.policy_json["Version"]
+            self.version = self.policy_json["Version"].value
 
             if self.version not in ["2012-10-17", "2008-10-17"]:
-                self.add_finding("INVALID_VERSION", location={"string": self.version})
+                self.add_finding(
+                    "INVALID_VERSION", location=self.policy_json["Version"]
+                )
             elif self.version != "2012-10-17":
                 # TODO I should have a check so that if an older version is being used,
                 # and a variable is detected, it should be marked as higher severity.
-                self.add_finding("OLD_VERSION", location={"string": self.version})
+                self.add_finding("OLD_VERSION", location=self.policy_json["Version"])
 
         # Check Statements
-        if "Statement" not in self.policy_json:
+        if not self.policy_json.node_exists("Statement"):
             self.add_finding(
                 "MALFORMED", detail="Policy does not contain a Statement element"
             )
@@ -251,7 +268,8 @@ class Policy:
                 # Only report the finding once, when encountering the first duplicate
                 if sids[sid] == 2:
                     self.add_finding(
-                        "DUPLICATE_SID", detail="Duplicate Statement Id '{}' in policy".format(sid)
+                        "DUPLICATE_SID",
+                        detail="Duplicate Statement Id '{}' in policy".format(sid),
                     )
 
         if not self.is_valid:

@@ -15,3 +15,4 @@ s3transfer==0.3.2
 six==1.14.0
 soupsieve==1.9.5
 urllib3==1.25.8
+json-cfg==0.4.2

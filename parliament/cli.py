@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import argparse
 import json
+import jsoncfg
 import logging
 import re
 import sys
@@ -230,7 +231,7 @@ def main():
         for file_path in file_paths:
             with open(file_path) as f:
                 contents = f.read()
-                policy_file_json = json.loads(contents)
+                policy_file_json = jsoncfg.loads_config(contents)
                 policy_string = json.dumps(
                     policy_file_json["PolicyVersion"]["Document"]
                 )
@@ -246,7 +247,7 @@ def main():
     elif args.auth_details_file:
         with open(args.auth_details_file) as f:
             contents = f.read()
-            auth_details_json = json.loads(contents)
+            auth_details_json = jsoncfg.loads_config(contents)
             for policy in auth_details_json["Policies"]:
                 # Ignore AWS defined policies
                 if "arn:aws:iam::aws:" in policy["Arn"]:

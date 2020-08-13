@@ -1,4 +1,4 @@
-import json
+import jsoncfg
 import re
 
 from . import (
@@ -297,10 +297,10 @@ class Statement:
 
         if "Action" in self.stmt:
             for action in make_list(self.stmt["Action"]):
-                if action == "*" or action == "*:*":
+                if action.value == "*" or action.value == "*:*":
                     return True
 
-                expanded_actions = expand_action(action, raise_exceptions=False)
+                expanded_actions = expand_action(action.value, raise_exceptions=False)
 
                 for action_struct in expanded_actions:
                     if (
@@ -363,15 +363,15 @@ class Statement:
 
             # At least one resource has to match the action's required resources
             for resource in make_list(self.stmt["Resource"]):
-                if is_arn_match(resource_type, arn_format, resource):
-                    affected_resources.append(resource)
-                elif resource == "*":
-                    affected_resources.append(resource)
+                if is_arn_match(resource_type, arn_format, resource.value):
+                    affected_resources.append(resource.value)
+                elif resource.value == "*":
+                    affected_resources.append(resource.value)
 
         # Ensure we match on "*"
         for resource in make_list(self.stmt["Resource"]):
-            if resource == "*":
-                affected_resources.append(resource)
+            if resource.value == "*":
+                affected_resources.append(resource.value)
 
         return affected_resources
 
@@ -383,8 +383,36 @@ class Statement:
         location: Dictionary with information about where this problem is. Often set to:
             {"location": "string"}
         """
-        if self.sid is not None:
-            location['sid'] = self.sid
+
+        if "jsoncfg.config_classes.ConfigJSONObject" in str(type(location)):
+            node_location = jsoncfg.node_location(location)
+            location = {"line": node_location.line, "column": node_location.column}
+        elif "jsoncfg.config_classes.ConfigJSONScalar" in str(type(location)):
+            node_location = jsoncfg.node_location(location)
+            location = {"string": location.value}
+            location["line"] = node_location.line
+            location["column"] = node_location.column
+        elif "tuple" in str(type(location)):
+            node_location = jsoncfg.node_location(location[1])
+            location = {"string": location[0]}
+            location["line"] = node_location.line
+            location["column"] = node_location.column
+        elif "jsoncfg.config_classes.ConfigJSONScalar" in str(
+            type(location.get("string", ""))
+        ):
+            node_location = jsoncfg.node_location(location["string"])
+            location["line"] = node_location.line
+            location["column"] = node_location.column
+            location["string"] = location["string"].value
+        elif "tuple" in str(type(location.get("string", ""))):
+            node_location = jsoncfg.node_location(location["string"][1])
+            location["line"] = node_location.line
+            location["column"] = node_location.column
+            location["string"] = location["string"][0]
+
+        elif "jsoncfg.config_classes" in str(type(location.get("string", ""))):
+            location["string"] = location["string"][0]
+
         self.findings.append(Finding(finding, detail, location))
 
     def _check_principal(self, principal_element):
@@ -393,24 +421,35 @@ class Statement:
         """
 
         for principal in make_list(principal_element):
-            if principal == "*":
-                continue
-            for key in principal:
+            if jsoncfg.node_is_scalar(principal):
+                if principal.value == "*":
+                    continue
+                else:
+                    self.add_finding("UNKNOWN_PRINCIPAL", location=principal)
+                    continue
+
+            # We have a ConfigJSONObject
+            for json_object in principal:
+                key = json_object[0]
                 if key == "AWS":
-                    for aws_principal in make_list(principal[key]):
+                    for aws_principal in make_list(json_object[1]):
+                        text = aws_principal.value
                         account_id_regex = re.compile("^\d{12}$")
                         arn_regex = re.compile("^arn:[-a-z\*]*:iam::(\d{12}|):.*$")
 
-                        if aws_principal == "*":
+                        if text == "*":
                             pass
-                        elif account_id_regex.match(aws_principal):
+                        elif account_id_regex.match(text):
                             pass
-                        elif arn_regex.match(aws_principal):
+                        elif arn_regex.match(text):
                             pass
                         else:
-                            self.add_finding("UNKNOWN_PRINCIPAL", detail=aws_principal)
+                            self.add_finding(
+                                "UNKNOWN_PRINCIPAL", location=principal, detail=text
+                            )
                 elif key == "Federated":
-                    for federation in make_list(principal[key]):
+                    for federation in make_list(json_object[1]):
+                        federation = federation.value
                         saml_regex = re.compile(
                             "^arn:[-a-z\*]*:iam::\d{12}:saml-provider/.*$"
                         )
@@ -425,14 +464,16 @@ class Statement:
                             pass
                         else:
                             self.add_finding(
-                                "UNKNOWN_FEDERATION_SOURCE", detail=federation
+                                "UNKNOWN_FEDERATION_SOURCE",
+                                location=principal,
+                                detail=federation,
                             )
                 elif key == "Service":
                     # This should be something like apigateway.amazonaws.com
                     # I don't know what all the restrictions could be though.
                     pass
                 else:
-                    self.add_finding("UNKNOWN_PRINCIPAL", detail=principal_element)
+                    self.add_finding("UNKNOWN_PRINCIPAL", location=principal)
         return True
 
     def _check_condition(self, operator, condition_block, expanded_actions):
@@ -459,37 +500,39 @@ class Statement:
             self.add_finding(
                 "UNKNOWN_OPERATOR",
                 detail=operator,
-                location={"location": condition_block},
+                location=condition_block,
             )
 
         if operator_type_requirement == "Bool":
-            value = "{}".format(list(condition_block.values())[0]).lower()
-            if value != "true" and value != "false":
-                self.add_finding(
-                    "MISMATCHED_TYPE_OPERATION_TO_NULL", detail=condition_block
-                )
-                return False
+            # Get the value that is being compared against
+            for c in condition_block:
+                value = str(c[1].value).lower()
+                if value != "true" and value != "false":
+                    self.add_finding(
+                        "MISMATCHED_TYPE_OPERATION_TO_NULL", location=condition_block
+                    )
+                    return False
 
-        for key in condition_block:
+        for block in condition_block:
+            key = block[0]
+            values = []
+            for v in make_list(block[1]):
+                values.append(v.value)
 
             # Check for known bad pattern
             if operator.lower() == "bool":
-                if key.lower() == "aws:MultiFactorAuthPresent".lower() and "false" in make_list(
-                    condition_block[key]
-                ):
+                if key.lower() == "aws:MultiFactorAuthPresent".lower() and "false" in values:
                     self.add_finding(
                         "BAD_PATTERN_FOR_MFA",
                         detail='The condition {"Bool": {"aws:MultiFactorAuthPresent":"false"}} is bad because aws:MultiFactorAuthPresent may not exist so it does not enforce MFA. You likely want to use a Deny with BoolIfExists.',
-                        location={"location": condition_block},
+                        location=condition_block,
                     )
             elif operator.lower() == "null":
-                if key.lower == "aws:MultiFactorAuthPresent".lower() and "false" in make_list(
-                    condition_block[key]
-                ):
+                if key.lower == "aws:MultiFactorAuthPresent".lower() and "false" in values:
                     self.add_finding(
                         "BAD_PATTERN_FOR_MFA",
                         detail='The condition {"Null": {"aws:MultiFactorAuthPresent":"false"}} is bad because aws:MultiFactorAuthPresent it does not enforce MFA, and only checks if the value exists. You likely want to use an Allow with {"Bool": {"aws:MultiFactorAuthPresent":"true"}}.',
-                        location={"location": condition_block},
+                        location=condition_block,
                     )
 
             if operator.lower() in ["null"]:
@@ -505,14 +548,14 @@ class Statement:
                 # This is a global key, like aws:CurrentTime
                 # Check if the values match the type (ex. must all be Date values)
                 if not is_value_in_correct_format_for_type(
-                    condition_type, make_list(condition_block[key])
+                    condition_type, values
                 ):
                     self.add_finding(
                         "MISMATCHED_TYPE",
                         detail="Type mismatch: {} requires a value of type {} but given {}".format(
-                            key, condition_type, condition_block[key]
+                            key, condition_type, values
                         ),
-                        location={"location": condition_block},
+                        location=condition_block,
                     )
             else:
                 # See if this is a service specific key
@@ -551,12 +594,12 @@ class Statement:
                         )
 
                     if not is_value_in_correct_format_for_type(
-                        condition_type, make_list(condition_block[key])
+                        condition_type, values
                     ):
                         self.add_finding(
                             "MISMATCHED_TYPE",
                             detail="Type mismatch: {} requires a value of type {} but given {}".format(
-                                key, condition_type, condition_block[key]
+                                key, condition_type, values
                             ),
                             location={"location": condition_block},
                         )
@@ -607,7 +650,7 @@ class Statement:
 
         # Check no unknown elements exist
         for element in self.stmt:
-            if element not in [
+            if element[0] not in [
                 "Effect",
                 "Sid",
                 "Principal",
@@ -621,13 +664,13 @@ class Statement:
                 self.add_finding(
                     "MALFORMED",
                     detail="Statement contains an unknown element",
-                    location={"string": element},
+                    location=element,
                 )
                 return False
 
         # Track Sid for better location reporting
         if "Sid" in self.stmt:
-            self.sid = self.stmt['Sid']
+            self.sid = self.stmt["Sid"].value
 
         # Check Principal if it exists. This only applicable to resource policies. Also applicable to
         # IAM role trust policies, but those don't have Resource elements, so that would break other things
@@ -636,7 +679,7 @@ class Statement:
             self.add_finding(
                 "MALFORMED",
                 detail="Statement contains both Principal and NotPrincipal",
-                location={"string": self.stmt},
+                location=self.stmt,
             )
             return False
 
@@ -650,28 +693,30 @@ class Statement:
             self.add_finding(
                 "MALFORMED",
                 detail="Statement does not contain an Effect element",
-                location={"string": self.stmt},
+                location=self.stmt,
             )
             return False
         effect = self.stmt["Effect"]
 
-        if effect not in ["Allow", "Deny"]:
+        if effect.value not in ["Allow", "Deny"]:
             self.add_finding(
                 "MALFORMED",
                 detail="Unknown Effect used. Effect must be either Allow or Deny",
-                location={"string": self.stmt},
+                location=effect,
             )
             return False
 
-        if effect == "Allow":
+        if effect.value == "Allow":
             self.effect_allow = True
         else:
             self.effect_allow = False
 
         # Check Sid
-        if "Sid" in self.stmt and not re.fullmatch("[0-9A-Za-z]*", self.stmt["Sid"]):
+        if "Sid" in self.stmt and not re.fullmatch(
+            "[0-9A-Za-z]*", self.stmt["Sid"].value
+        ):
             # The grammar is defined at https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_grammar.html
-            self.add_finding("INVALID_SID", detail=self.stmt)
+            self.add_finding("INVALID_SID", location={"string": self.stmt["Sid"]})
             return False
 
         # Check Action
@@ -679,7 +724,7 @@ class Statement:
             self.add_finding(
                 "MALFORMED",
                 detail="Statement contains both Action and NotAction",
-                location={"string": self.stmt},
+                location=self.stmt,
             )
             return False
 
@@ -691,7 +736,7 @@ class Statement:
             self.add_finding(
                 "MALFORMED",
                 detail="Statement contains neither Action nor NotAction",
-                location={"string": self.stmt},
+                location=self.stmt,
             )
             return False
 
@@ -700,7 +745,7 @@ class Statement:
             self.add_finding(
                 "MALFORMED",
                 detail="Statement contains both Resource and NotResource",
-                location={"string": self.stmt},
+                location=self.stmt,
             )
             return False
 
@@ -712,7 +757,7 @@ class Statement:
             self.add_finding(
                 "MALFORMED",
                 detail="Statement contains neither Resource nor NotResource",
-                location={"string": self.stmt},
+                location=self.stmt,
             )
             return False
 
@@ -723,46 +768,41 @@ class Statement:
                 self.add_finding(
                     "MALFORMED",
                     detail="Condition formatted incorrectly",
-                    location={"string": self.stmt},
+                    location=self.stmt,
                 )
                 return False
 
         # Expand the actions from s3:Get* to s3:GetObject and others
         expanded_actions = []
         for action in actions:
+
             # Handle special case where all actions are allowed
-            if action == "*" or action == "*:*":
+            if action.value == "*" or action.value == "*:*":
                 # TODO Should ensure the resource is "*" with this action
                 continue
 
             try:
                 # Given an action such as "s3:List*", return all the possible values it could have
-                expanded_actions.extend(expand_action(action))
+                expanded_actions.extend(expand_action(action.value))
             except UnknownActionException as e:
                 self.add_finding(
-                    "UNKNOWN_ACTION",
-                    detail=str(e),
-                    location={"unknown_action": action, "statement": self.stmt},
+                    "UNKNOWN_ACTION", detail=str(e), location=action,
                 )
                 return False
             except UnknownPrefixException as e:
-                self.add_finding(
-                    "UNKNOWN_PREFIX", detail=str(e), location={"statement": self.stmt}
-                )
+                self.add_finding("UNKNOWN_PREFIX", detail=str(e), location=action)
                 return False
             except Exception as e:
-                self.add_finding(
-                    "EXCEPTION", detail=str(e), location={"statement": self.stmt}
-                )
+                self.add_finding("EXCEPTION", detail=str(e), location=action)
                 return False
 
         # Check the resources are correct formatted correctly
         has_malformed_resource = False
         for resource in resources:
-            if resource == "*":
+            if resource.value == "*":
                 continue
             try:
-                parts = resource.split(":")
+                parts = resource.value.split(":")
             except AttributeError:
                 has_malformed_resource = True
                 self.add_finding(
@@ -772,31 +812,25 @@ class Statement:
                         "CloudFormation template which is outside of Parliament's "
                         "scope."
                     ),
-                    location={"string": resource},
+                    location=resource,
                 )
                 continue
             if len(parts) < 6:
                 has_malformed_resource = True
                 self.add_finding(
-                    "INVALID_ARN",
-                    detail="Does not have 6 parts",
-                    location={"string": resource},
+                    "INVALID_ARN", detail="Does not have 6 parts", location=resource,
                 )
                 continue
             elif parts[0] != "arn":
                 has_malformed_resource = True
                 self.add_finding(
-                    "INVALID_ARN",
-                    detail="Does not start with arn:",
-                    location={"string": resource},
+                    "INVALID_ARN", detail="Does not start with arn:", location=resource,
                 )
                 continue
             elif parts[1] not in ["aws", "aws-cn", "aws-us-gov", "aws-iso", "*", ""]:
                 has_malformed_resource = True
                 self.add_finding(
-                    "INVALID_ARN",
-                    detail="Unexpected partition",
-                    location={"string": resource},
+                    "INVALID_ARN", detail="Unexpected partition", location=resource,
                 )
                 continue
 
@@ -807,14 +841,14 @@ class Statement:
                 self.add_finding(
                     "INVALID_ARN",
                     detail="Region expected to be of form like us-east-1",
-                    location={"string": resource},
+                    location=resource,
                 )
             elif not is_valid_account_id(parts[4]):
                 has_malformed_resource = True
                 self.add_finding(
                     "INVALID_ARN",
                     detail="Account expected to be of form like 123456789012",
-                    location={"string": resource},
+                    location=resource,
                 )
             # TODO I should check for the use of valid variables in the resource, such as ${aws:username}
             # See https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_variables.html
@@ -828,7 +862,7 @@ class Statement:
         # resources.
         # https://github.com/SummitRoute/aws_managed_policies/blob/4b71905a9042e66b22bc3d2b9cb1378b1e1d239e/policies/AWSEC2SpotServiceRolePolicy#L21
 
-        if not has_malformed_resource and effect == "Allow":
+        if not has_malformed_resource and self.effect_allow:
             actions_without_matching_resources = []
             # Ensure the required resources for each action exist
             # Iterate through each action
@@ -844,7 +878,7 @@ class Statement:
                 ):
                     match_found = False
                     for resource in resources:
-                        if resource == "*":
+                        if resource.value == "*":
                             match_found = True
                     if not match_found:
                         actions_without_matching_resources.append(
@@ -871,14 +905,16 @@ class Statement:
                     # At least one resource has to match the action's required resources
                     match_found = False
                     for resource in resources:
-                        if resource == "*":
+                        if resource.value == "*":
                             # expansion leads to duplication actions
-                            action_key = "{}:{}".format(action_struct["service"], action_struct["action"])
+                            action_key = "{}:{}".format(
+                                action_struct["service"], action_struct["action"]
+                            )
                             self.resource_star.setdefault(action_key, 0)
                             self.resource_star[action_key] += 1
                             match_found = True
                             continue
-                        if is_arn_match(resource_type, arn_format, resource):
+                        if is_arn_match(resource_type, arn_format, resource.value):
                             match_found = True
                             continue
 
@@ -892,10 +928,13 @@ class Statement:
                             }
                         )
             if actions_without_matching_resources:
+                # We have location info for each action via the variable `actions` which is a ConfigJSONArray, but
+                # because we can only list one location, we'll just use the location of the statement
+                # because `actions_without_matching_resources` contains the name of each action and the required format.
                 self.add_finding(
                     "RESOURCE_MISMATCH",
                     detail=actions_without_matching_resources,
-                    location={"actions": actions},
+                    location=self.stmt
                 )
 
         # If conditions exist, it will be an element, which was previously made into a list
@@ -904,15 +943,17 @@ class Statement:
             # - "StringLike": {"s3:prefix":["home/${aws:username}/*"]}
             # - "DateGreaterThan" :{"aws:CurrentTime":"2019-07-16T12:00:00Z"}
 
-            # The condition in the first element is StringLike and the condition_block follows it
-            for condition, condition_block in conditions[0].items():
-                self._check_condition(condition, condition_block, expanded_actions)
+            for condition in conditions[0]:
+                # The operator is the first element (ex. `StringLike`) and the condition_block follows it
+                operator = condition[0]
+                condition_block = condition[1]
+                self._check_condition(operator, condition_block, expanded_actions)
 
         # add the resource_star finding last
         # after all offending actions from the expanded list have been identified
         if self.resource_star:
             self.add_finding(
-               "RESOURCE_STAR", location={"actions": sorted(self.resource_star) }
+                "RESOURCE_STAR", detail=sorted(self.resource_star), location=self.stmt
             )
 
         return True

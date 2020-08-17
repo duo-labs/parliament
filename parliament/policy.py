@@ -222,7 +222,9 @@ class Policy:
         """
 
         # Check no unknown elements exist
+        element_strings = []
         for element in self.policy_json:
+            element_strings.append(element[0])
             if element[0] not in ["Version", "Statement", "Id"]:
                 self.add_finding(
                     "MALFORMED",
@@ -230,6 +232,13 @@ class Policy:
                     location=element,
                 )
                 return False
+
+        if "Statement" not in element_strings:
+            self.add_finding(
+                "MALFORMED",
+                detail="Policy does not contain a required element Statement",
+            )
+            return False
 
         # Check Version
         if not self.policy_json.node_exists("Version"):

@@ -521,3 +521,20 @@ class TestFormatting(unittest.TestCase):
         assert_equal(
             policy.finding_ids, set(["DUPLICATE_SID"]),
         )
+
+    def test_analyze_policy_string_MFA_formatting(self):
+        policy = analyze_policy_string(
+            """{
+    "Version": "2012-10-17",
+    "Statement": {
+            "Sid": "AllowManageOwnVirtualMFADevice",
+            "Effect": "Allow",
+            "Action": [
+                "iam:CreateVirtualMFADevice",
+                "iam:DeleteVirtualMFADevice"
+            ],
+            "Resource": "arn:aws:iam::*:mfa/${aws:username}"
+        }
+        }"""
+        )
+        assert_equal(policy.finding_ids, set([]), "Policy is valid")

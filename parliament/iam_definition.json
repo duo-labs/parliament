@@ -10257,6 +10257,86 @@
   },
   {
     "conditions": [],
+    "prefix": "braket",
+    "privileges": [
+      {
+        "access_level": "Write",
+        "description": "Grants permission to cancel a quantum task.",
+        "privilege": "CancelQuantumTask",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to create a quantum task.",
+        "privilege": "CreateQuantumTask",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to retrieve information about the devices available in Amazon Braket.",
+        "privilege": "GetDevice",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to retrieve quantum tasks.",
+        "privilege": "GetQuantumTask",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to search for devices available in Amazon Braket.",
+        "privilege": "SearchDevices",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to search for quantum tasks.",
+        "privilege": "SearchQuantumTasks",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      }
+    ],
+    "resources": [],
+    "service_name": "Amazon Braket"
+  },
+  {
+    "conditions": [],
     "prefix": "budgets",
     "privileges": [
       {
@@ -17665,6 +17745,18 @@
       },
       {
         "access_level": "Read",
+        "description": "Gets information about one or more build batches.",
+        "privilege": "BatchGetBuildBatches",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "project*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
         "description": "Gets information about one or more builds.",
         "privilege": "BatchGetBuilds",
         "resource_types": [
@@ -17703,6 +17795,18 @@
         "access_level": "Read",
         "description": "Returns an array of the Report objects specified by the input reportArns parameter.",
         "privilege": "BatchGetReports",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "report-group*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Adds or updates information about a report.",
+        "privilege": "BatchPutCodeCoverages",
         "resource_types": [
           {
             "condition_keys": [],
@@ -17779,6 +17883,18 @@
         "access_level": "Write",
         "description": "For an existing AWS CodeBuild build project that has its source code stored in a GitHub or Bitbucket repository, enables AWS CodeBuild to start rebuilding the source code every time a code change is pushed to the repository.",
         "privilege": "CreateWebhook",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "project*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Deletes a build batch.",
+        "privilege": "DeleteBuildBatch",
         "resource_types": [
           {
             "condition_keys": [],
@@ -17878,6 +17994,18 @@
       },
       {
         "access_level": "Read",
+        "description": "Returns an array of CodeCoverage objects.",
+        "privilege": "DescribeCodeCoverages",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "report-group*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
         "description": "Returns an array of TestCase objects.",
         "privilege": "DescribeTestCases",
         "resource_types": [
@@ -17921,6 +18049,30 @@
         "access_level": "Write",
         "description": "Resets the cache for a project.",
         "privilege": "InvalidateProjectCache",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "project*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Gets a list of build batch IDs, with each build batch ID representing a single build batch.",
+        "privilege": "ListBuildBatches",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Gets a list of build batch IDs for the specified build project, with each build batch ID representing a single build batch.",
+        "privilege": "ListBuildBatchesForProject",
         "resource_types": [
           {
             "condition_keys": [],
@@ -18104,6 +18256,30 @@
       },
       {
         "access_level": "Write",
+        "description": "Retries a build.",
+        "privilege": "RetryBuild",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "project*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Retries a build batch.",
+        "privilege": "RetryBuildBatch",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "project*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Starts running a build.",
         "privilege": "StartBuild",
         "resource_types": [
@@ -18116,8 +18292,32 @@
       },
       {
         "access_level": "Write",
+        "description": "Starts running a build batch.",
+        "privilege": "StartBuildBatch",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "project*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Attempts to stop running a build.",
         "privilege": "StopBuild",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "project*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Attempts to stop running a build batch.",
+        "privilege": "StopBuildBatch",
         "resource_types": [
           {
             "condition_keys": [],
@@ -18196,6 +18396,11 @@
         "arn": "arn:${Partition}:codebuild:${Region}:${Account}:build/${BuildId}",
         "condition_keys": [],
         "resource": "build"
+      },
+      {
+        "arn": "arn:${Partition}:codebuild:${Region}:${Account}:build-batch/${BuildBatchId}",
+        "condition_keys": [],
+        "resource": "build-batch"
       },
       {
         "arn": "arn:${Partition}:codebuild:${Region}:${Account}:project/${ProjectName}",
@@ -27445,6 +27650,21 @@
       },
       {
         "access_level": "Write",
+        "description": "Creates an endpoint for an Amazon FSx Windows File Server file system.",
+        "privilege": "CreateLocationFsxWindows",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Creates an endpoint for a NFS file system.",
         "privilege": "CreateLocationNfs",
         "resource_types": [
@@ -27555,6 +27775,18 @@
         "access_level": "Read",
         "description": "Returns metadata, such as the path information about an Amazon EFS sync location.",
         "privilege": "DescribeLocationEfs",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "location*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Returns metadata, such as the path information about an Amazon FSx Windows sync location.",
+        "privilege": "DescribeLocationFsxWindows",
         "resource_types": [
           {
             "condition_keys": [],
@@ -34726,6 +34958,16 @@
         "type": "String"
       },
       {
+        "condition": "aws:ResourceTag/",
+        "description": "Filters access by the preface string for a tag key and value pair that are attached to a resource",
+        "type": "String"
+      },
+      {
+        "condition": "aws:ResourceTag/${TagKey}",
+        "description": "Filters access by a tag key and value pair of a resource",
+        "type": "String"
+      },
+      {
         "condition": "aws:TagKeys",
         "description": "Filters access by a list of tag keys that are allowed in the request",
         "type": "String"
@@ -35072,6 +35314,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -35087,6 +35330,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -35102,6 +35346,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -35117,6 +35362,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}",
               "ec2:Tenancy"
@@ -35126,6 +35372,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:AccepterVpc",
               "ec2:Region",
               "ec2:RequesterVpc",
@@ -35179,6 +35426,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -35187,6 +35435,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -35195,6 +35444,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -35246,6 +35496,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -35254,6 +35505,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -35281,6 +35533,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:AvailabilityZone",
               "ec2:EbsOptimized",
               "ec2:InstanceProfile",
@@ -35329,6 +35582,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -35337,6 +35591,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -35345,6 +35600,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -35360,6 +35616,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -35368,6 +35625,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -35395,6 +35653,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:AvailabilityZone",
               "ec2:EbsOptimized",
               "ec2:InstanceProfile",
@@ -35410,6 +35669,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}",
               "ec2:Vpc"
@@ -35419,6 +35679,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}",
               "ec2:Tenancy"
@@ -35459,6 +35720,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:AvailabilityZone",
               "ec2:EbsOptimized",
               "ec2:InstanceProfile",
@@ -35474,6 +35736,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:AvailabilityZone",
               "ec2:Encrypted",
               "ec2:ParentSnapshot",
@@ -35507,6 +35770,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -35522,6 +35786,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}",
               "ec2:Vpc"
@@ -35538,6 +35803,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}",
               "ec2:Vpc"
@@ -35578,6 +35844,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -35716,9 +35983,13 @@
         "privilege": "CreateCapacityReservation",
         "resource_types": [
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys",
+              "ec2:Region"
+            ],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "capacity-reservation*"
           }
         ]
       },
@@ -35745,6 +36016,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -35753,6 +36025,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -35803,9 +36076,13 @@
         "privilege": "CreateDhcpOptions",
         "resource_types": [
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys",
+              "ec2:Region"
+            ],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "dhcp-options*"
           }
         ]
       },
@@ -35815,9 +36092,13 @@
         "privilege": "CreateEgressOnlyInternetGateway",
         "resource_types": [
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys",
+              "ec2:Region"
+            ],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "egress-only-internet-gateway*"
           }
         ]
       },
@@ -35827,9 +36108,13 @@
         "privilege": "CreateFleet",
         "resource_types": [
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys",
+              "ec2:Region"
+            ],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "fleet*"
           }
         ]
       },
@@ -35851,7 +36136,10 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
+              "ec2:AvailabilityZone",
               "ec2:Region",
+              "ec2:ResourceTag/${TagKey}",
               "ec2:Subnet",
               "ec2:Vpc"
             ],
@@ -35860,7 +36148,10 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
+              "ec2:AvailabilityZone",
               "ec2:Region",
+              "ec2:ResourceTag/${TagKey}",
               "ec2:Vpc"
             ],
             "dependent_actions": [],
@@ -35868,7 +36159,10 @@
           },
           {
             "condition_keys": [
-              "ec2:Region"
+              "aws:ResourceTag/${TagKey}",
+              "ec2:Region",
+              "ec2:ResourceTag/${TagKey}",
+              "ec2:Tenancy"
             ],
             "dependent_actions": [],
             "resource_type": "vpc"
@@ -35881,9 +36175,13 @@
         "privilege": "CreateFpgaImage",
         "resource_types": [
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys",
+              "ec2:Region"
+            ],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "fpga-image*"
           }
         ]
       },
@@ -35905,9 +36203,13 @@
         "privilege": "CreateInstanceExportTask",
         "resource_types": [
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys",
+              "ec2:Region"
+            ],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "export-instance-task*"
           }
         ]
       },
@@ -35917,9 +36219,13 @@
         "privilege": "CreateInternetGateway",
         "resource_types": [
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys",
+              "ec2:Region"
+            ],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "internet-gateway*"
           }
         ]
       },
@@ -35929,9 +36235,13 @@
         "privilege": "CreateKeyPair",
         "resource_types": [
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys",
+              "ec2:Region"
+            ],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "key-pair*"
           }
         ]
       },
@@ -35941,9 +36251,13 @@
         "privilege": "CreateLaunchTemplate",
         "resource_types": [
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys",
+              "ec2:Region"
+            ],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "launch-template*"
           }
         ]
       },
@@ -35954,6 +36268,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -35969,6 +36284,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -35977,6 +36293,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -35992,6 +36309,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -36000,6 +36318,16 @@
           },
           {
             "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys",
+              "ec2:Region"
+            ],
+            "dependent_actions": [],
+            "resource_type": "local-gateway-route-table-vpc-association*"
+          },
+          {
+            "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}",
               "ec2:Tenancy"
@@ -36011,13 +36339,33 @@
       },
       {
         "access_level": "Write",
+        "description": "Grants permission to create a managed prefix list",
+        "privilege": "CreateManagedPrefixList",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys",
+              "ec2:Region"
+            ],
+            "dependent_actions": [],
+            "resource_type": "prefix-list*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Grants permission to create a NAT gateway in a subnet",
         "privilege": "CreateNatGateway",
         "resource_types": [
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys",
+              "ec2:Region"
+            ],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "natgateway*"
           }
         ]
       },
@@ -36027,9 +36375,13 @@
         "privilege": "CreateNetworkAcl",
         "resource_types": [
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys",
+              "ec2:Region"
+            ],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "network-acl*"
           }
         ]
       },
@@ -36051,9 +36403,13 @@
         "privilege": "CreateNetworkInterface",
         "resource_types": [
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys",
+              "ec2:Region"
+            ],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "network-interface*"
           }
         ]
       },
@@ -36064,6 +36420,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:AuthorizedUser",
               "ec2:AvailabilityZone",
               "ec2:Permission",
@@ -36084,9 +36441,13 @@
         "privilege": "CreatePlacementGroup",
         "resource_types": [
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys",
+              "ec2:Region"
+            ],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "placement-group*"
           }
         ]
       },
@@ -36109,6 +36470,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}",
               "ec2:Vpc"
@@ -36136,9 +36498,13 @@
         "privilege": "CreateSecurityGroup",
         "resource_types": [
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys",
+              "ec2:Region"
+            ],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "security-group*"
           }
         ]
       },
@@ -36159,6 +36525,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Encrypted",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}",
@@ -36178,6 +36545,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:AvailabilityZone",
               "ec2:EbsOptimized",
               "ec2:InstanceProfile",
@@ -36203,6 +36571,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Encrypted",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}",
@@ -36233,9 +36602,13 @@
         "privilege": "CreateSubnet",
         "resource_types": [
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys",
+              "ec2:Region"
+            ],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "subnet*"
           }
         ]
       },
@@ -36246,6 +36619,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Region",
@@ -36256,6 +36630,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Region",
@@ -36271,6 +36646,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Region",
@@ -36280,7 +36656,23 @@
             "resource_type": "dhcp-options"
           },
           {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "egress-only-internet-gateway"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "export-instance-task"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "fleet"
+          },
+          {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Owner",
@@ -36293,6 +36685,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:ImageType",
@@ -36307,6 +36700,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:AvailabilityZone",
@@ -36324,6 +36718,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Region",
@@ -36363,7 +36758,13 @@
             "resource_type": "local-gateway-virtual-interface-group"
           },
           {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "natgateway"
+          },
+          {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Region",
@@ -36375,6 +36776,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:AvailabilityZone",
@@ -36389,6 +36791,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:AvailabilityZone",
@@ -36403,6 +36806,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Region",
@@ -36414,6 +36818,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Region",
@@ -36425,6 +36830,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Owner",
@@ -36439,6 +36845,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Region",
@@ -36449,6 +36856,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:AvailabilityZone",
@@ -36461,6 +36869,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Region",
@@ -36471,6 +36880,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Region",
@@ -36481,6 +36891,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Region",
@@ -36491,6 +36902,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Region",
@@ -36501,6 +36913,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Region",
@@ -36511,6 +36924,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Region",
@@ -36521,6 +36935,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Region",
@@ -36531,6 +36946,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:AvailabilityZone",
@@ -36547,6 +36963,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Region",
@@ -36558,6 +36975,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Region",
@@ -36568,6 +36986,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Region",
@@ -36577,12 +36996,19 @@
             "resource_type": "vpc-endpoint-service"
           },
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys",
+              "ec2:Region",
+              "ec2:ResourceTag/${TagKey}"
+            ],
             "dependent_actions": [],
             "resource_type": "vpc-flow-log"
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Region",
@@ -36593,6 +37019,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Region",
@@ -36633,6 +37060,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -36655,6 +37083,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -36663,6 +37092,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -36680,6 +37110,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -36704,6 +37135,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -36735,6 +37167,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -36759,6 +37192,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -36783,6 +37217,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -36791,6 +37226,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -36806,6 +37242,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -36830,6 +37267,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -36847,6 +37285,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -36855,6 +37294,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -36891,9 +37331,13 @@
         "privilege": "CreateVpc",
         "resource_types": [
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys",
+              "ec2:Region"
+            ],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "vpc*"
           }
         ]
       },
@@ -36904,6 +37348,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -36925,6 +37370,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -36933,6 +37379,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -36941,6 +37388,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -36985,6 +37433,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}",
               "ec2:Tenancy"
@@ -37065,6 +37514,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -37080,6 +37530,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -37088,6 +37539,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -37103,6 +37555,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -37118,6 +37571,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -37156,9 +37610,13 @@
         "privilege": "DeleteFlowLogs",
         "resource_types": [
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
+              "ec2:Region",
+              "ec2:ResourceTag/${TagKey}"
+            ],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "vpc-flow-log*"
           }
         ]
       },
@@ -37181,6 +37639,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -37208,6 +37667,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -37223,6 +37683,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -37238,6 +37699,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -37253,11 +37715,28 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
             "dependent_actions": [],
             "resource_type": "local-gateway-route-table-vpc-association*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to delete a managed prefix list",
+        "privilege": "DeleteManagedPrefixList",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
+              "ec2:Region",
+              "ec2:ResourceTag/${TagKey}"
+            ],
+            "dependent_actions": [],
+            "resource_type": "prefix-list*"
           }
         ]
       },
@@ -37280,6 +37759,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}",
               "ec2:Vpc"
@@ -37296,6 +37776,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}",
               "ec2:Vpc"
@@ -37348,6 +37829,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}",
               "ec2:Vpc"
@@ -37364,6 +37846,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}",
               "ec2:Vpc"
@@ -37380,6 +37863,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}",
               "ec2:Vpc"
@@ -37396,6 +37880,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Owner",
               "ec2:ParentVolume",
               "ec2:Region",
@@ -37439,6 +37924,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Region",
@@ -37449,6 +37935,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Region",
@@ -37464,6 +37951,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Region",
@@ -37473,7 +37961,23 @@
             "resource_type": "dhcp-options"
           },
           {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "egress-only-internet-gateway"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "export-instance-task"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "fleet"
+          },
+          {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Region",
@@ -37484,6 +37988,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Region",
@@ -37494,6 +37999,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Region",
@@ -37504,6 +38010,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Region",
@@ -37543,7 +38050,13 @@
             "resource_type": "local-gateway-virtual-interface-group"
           },
           {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "natgateway"
+          },
+          {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Region",
@@ -37554,6 +38067,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Region",
@@ -37564,6 +38078,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Region",
@@ -37574,6 +38089,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Region",
@@ -37584,6 +38100,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Region",
@@ -37594,6 +38111,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Region",
@@ -37604,6 +38122,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Region",
@@ -37614,6 +38133,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Region",
@@ -37624,6 +38144,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Region",
@@ -37634,6 +38155,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Region",
@@ -37644,6 +38166,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Region",
@@ -37654,6 +38177,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Region",
@@ -37664,6 +38188,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Region",
@@ -37674,6 +38199,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Region",
@@ -37684,6 +38210,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Region",
@@ -37694,6 +38221,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Region",
@@ -37703,12 +38231,19 @@
             "resource_type": "vpc-endpoint-service"
           },
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys",
+              "ec2:Region",
+              "ec2:ResourceTag/${TagKey}"
+            ],
             "dependent_actions": [],
             "resource_type": "vpc-flow-log"
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Region",
@@ -37719,6 +38254,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Region",
@@ -37736,6 +38272,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -37751,6 +38288,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -37773,6 +38311,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -37788,6 +38327,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -37803,6 +38343,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -37818,6 +38359,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -37833,6 +38375,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -37848,6 +38391,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -37863,6 +38407,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -37878,6 +38423,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -37893,6 +38439,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:AvailabilityZone",
               "ec2:Encrypted",
               "ec2:ParentSnapshot",
@@ -37938,6 +38485,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -37953,6 +38501,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -37968,6 +38517,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:AccepterVpc",
               "ec2:Region",
               "ec2:RequesterVpc",
@@ -38057,6 +38607,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -38065,6 +38616,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -38080,6 +38632,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -38088,6 +38641,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -38748,6 +39302,18 @@
         "access_level": "List",
         "description": "Grants permission to describe one or more local gateways",
         "privilege": "DescribeLocalGateways",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to describe your managed prefix lists and any AWS-managed prefix lists",
+        "privilege": "DescribeManagedPrefixLists",
         "resource_types": [
           {
             "condition_keys": [],
@@ -39447,6 +40013,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:AvailabilityZone",
               "ec2:EbsOptimized",
               "ec2:InstanceProfile",
@@ -39462,6 +40029,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}",
               "ec2:Tenancy"
@@ -39502,6 +40070,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:AvailabilityZone",
               "ec2:EbsOptimized",
               "ec2:InstanceProfile",
@@ -39517,6 +40086,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:AvailabilityZone",
               "ec2:Encrypted",
               "ec2:ParentSnapshot",
@@ -39562,6 +40132,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Owner",
               "ec2:ParentVolume",
               "ec2:Region",
@@ -39583,6 +40154,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -39591,6 +40163,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -39618,6 +40191,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}",
               "ec2:Tenancy"
@@ -39658,6 +40232,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -39673,6 +40248,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:AvailabilityZone",
               "ec2:EbsOptimized",
               "ec2:InstanceProfile",
@@ -39719,6 +40295,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -39727,6 +40304,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -39735,6 +40313,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -39750,6 +40329,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -39758,6 +40338,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -39797,6 +40378,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Owner",
               "ec2:ParentVolume",
               "ec2:Region",
@@ -39818,6 +40400,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -39826,6 +40409,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -39865,6 +40449,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}",
               "ec2:Tenancy"
@@ -39977,6 +40562,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:AvailabilityZone",
               "ec2:EbsOptimized",
               "ec2:InstanceProfile",
@@ -40044,6 +40630,30 @@
         "access_level": "Read",
         "description": "Grants permission to get the configuration data of the specified instance for use with a new launch template or launch template version",
         "privilege": "GetLaunchTemplateData",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to get information about the resources that are associated with the specified managed prefix list",
+        "privilege": "GetManagedPrefixListAssociations",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to get information about the entries for a specified managed prefix list",
+        "privilege": "GetManagedPrefixListEntries",
         "resource_types": [
           {
             "condition_keys": [],
@@ -40131,6 +40741,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -40206,6 +40817,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -40221,6 +40833,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -40406,11 +41019,28 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
             "dependent_actions": [],
             "resource_type": "launch-template*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to modify a managed prefix list",
+        "privilege": "ModifyManagedPrefixList",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
+              "ec2:Region",
+              "ec2:ResourceTag/${TagKey}"
+            ],
+            "dependent_actions": [],
+            "resource_type": "prefix-list*"
           }
         ]
       },
@@ -40445,6 +41075,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Owner",
               "ec2:ParentVolume",
               "ec2:Region",
@@ -40488,6 +41119,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -40503,6 +41135,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -40525,6 +41158,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -40533,6 +41167,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -40541,6 +41176,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -40556,6 +41192,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -40564,6 +41201,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -40615,6 +41253,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -40623,6 +41262,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -40631,6 +41271,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -40639,6 +41280,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -40666,6 +41308,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:VpceServicePrivateDnsName",
               "ec2:ResourceTag/${TagKey}"
@@ -40682,6 +41325,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -40721,6 +41365,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}",
               "ec2:GatewayType"
@@ -40749,6 +41394,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}",
               "ec2:AuthenticationType",
@@ -40852,6 +41498,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:AvailabilityZone",
               "ec2:EbsOptimized",
               "ec2:InstanceProfile",
@@ -40898,6 +41545,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -40906,6 +41554,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -40921,6 +41570,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -40929,6 +41579,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -40944,6 +41595,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -40959,6 +41611,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -40974,6 +41627,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -40989,6 +41643,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:AccepterVpc",
               "ec2:Region",
               "ec2:RequesterVpc",
@@ -41030,6 +41685,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:AvailabilityZone",
               "ec2:EbsOptimized",
               "ec2:InstanceProfile",
@@ -41078,6 +41734,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}",
               "ec2:Vpc"
@@ -41106,6 +41763,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -41114,6 +41772,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -41244,11 +41903,28 @@
       },
       {
         "access_level": "Write",
+        "description": "Grants permission to restore the entries from a previous version of a managed prefix list to a new version of the prefix list",
+        "privilege": "RestoreManagedPrefixListVersion",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
+              "ec2:Region",
+              "ec2:ResourceTag/${TagKey}"
+            ],
+            "dependent_actions": [],
+            "resource_type": "prefix-list*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Grants permission to remove an inbound authorization rule from a Client VPN endpoint",
         "privilege": "RevokeClientVpnIngress",
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -41264,6 +41940,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}",
               "ec2:Vpc"
@@ -41280,6 +41957,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}",
               "ec2:Vpc"
@@ -41296,6 +41974,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:ImageType",
               "ec2:IsLaunchTemplateResource",
               "ec2:LaunchTemplate",
@@ -41331,6 +42010,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/",
               "ec2:AvailabilityZone",
               "ec2:IsLaunchTemplateResource",
               "ec2:LaunchTemplate",
@@ -41345,6 +42025,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:IsLaunchTemplateResource",
               "ec2:LaunchTemplate",
               "ec2:Region",
@@ -41356,6 +42037,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:AvailabilityZone",
               "ec2:IsLaunchTemplateResource",
               "ec2:LaunchTemplate",
@@ -41385,6 +42067,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
               "ec2:Region",
@@ -41435,6 +42118,7 @@
           },
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:IsLaunchTemplateResource",
               "ec2:LaunchTemplate",
               "ec2:Owner",
@@ -41504,6 +42188,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:AvailabilityZone",
               "ec2:EbsOptimized",
               "ec2:InstanceProfile",
@@ -41526,6 +42211,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:AvailabilityZone",
               "ec2:EbsOptimized",
               "ec2:InstanceProfile",
@@ -41548,6 +42234,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -41563,6 +42250,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:AvailabilityZone",
               "ec2:EbsOptimized",
               "ec2:InstanceProfile",
@@ -41585,6 +42273,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}"
             ],
@@ -41600,6 +42289,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:AvailabilityZone",
               "ec2:EbsOptimized",
               "ec2:InstanceProfile",
@@ -41658,6 +42348,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}",
               "ec2:Vpc"
@@ -41674,6 +42365,7 @@
         "resource_types": [
           {
             "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
               "ec2:Region",
               "ec2:ResourceTag/${TagKey}",
               "ec2:Vpc"
@@ -41701,6 +42393,7 @@
         "arn": "arn:${Partition}:ec2:${Region}:${Account}:capacity-reservation/${CapacityReservationId}",
         "condition_keys": [
           "aws:RequestTag/${TagKey}",
+          "aws:ResourceTag/${TagKey}",
           "aws:TagKeys",
           "ec2:Region",
           "ec2:ResourceTag/${TagKey}"
@@ -41711,6 +42404,7 @@
         "arn": "arn:${Partition}:ec2:${Region}:${Account}:client-vpn-endpoint/${ClientVpnEndpointId}",
         "condition_keys": [
           "aws:RequestTag/${TagKey}",
+          "aws:ResourceTag/${TagKey}",
           "aws:TagKeys",
           "ec2:Region",
           "ec2:ResourceTag/${TagKey}"
@@ -41720,6 +42414,7 @@
       {
         "arn": "arn:${Partition}:ec2:${Region}:${Account}:customer-gateway/${CustomerGatewayId}",
         "condition_keys": [
+          "aws:ResourceTag/${TagKey}",
           "ec2:Region",
           "ec2:ResourceTag/${TagKey}"
         ],
@@ -41729,6 +42424,7 @@
         "arn": "arn:${Partition}:ec2:${Region}:${Account}:dedicated-host/${HostId}",
         "condition_keys": [
           "aws:RequestTag/${TagKey}",
+          "aws:ResourceTag/${TagKey}",
           "aws:TagKeys",
           "ec2:AutoPlacement",
           "ec2:AvailabilityZone",
@@ -41743,11 +42439,23 @@
         "arn": "arn:${Partition}:ec2:${Region}:${Account}:dhcp-options/${DhcpOptionsId}",
         "condition_keys": [
           "aws:RequestTag/${TagKey}",
+          "aws:ResourceTag/${TagKey}",
           "aws:TagKeys",
           "ec2:Region",
           "ec2:ResourceTag/${TagKey}"
         ],
         "resource": "dhcp-options"
+      },
+      {
+        "arn": "arn:${Partition}:ec2:${Region}:${Account}:egress-only-internet-gateway/${EgressOnlyInternetGatewayId}",
+        "condition_keys": [
+          "aws:RequestTag/${TagKey}",
+          "aws:ResourceTag/${TagKey}",
+          "aws:TagKeys",
+          "ec2:Region",
+          "ec2:ResourceTag/${TagKey}"
+        ],
+        "resource": "egress-only-internet-gateway"
       },
       {
         "arn": "arn:${Partition}:ec2:${Region}:${Account}:elastic-gpu/${ElasticGpuId}",
@@ -41762,9 +42470,32 @@
         "resource": "elastic-inference"
       },
       {
+        "arn": "arn:${Partition}:ec2:${Region}:${Account}:export-instance-task/${ExportTaskId}",
+        "condition_keys": [
+          "aws:RequestTag/${TagKey}",
+          "aws:ResourceTag/${TagKey}",
+          "aws:TagKeys",
+          "ec2:Region",
+          "ec2:ResourceTag/${TagKey}"
+        ],
+        "resource": "export-instance-task"
+      },
+      {
+        "arn": "arn:${Partition}:ec2:${Region}:${Account}:fleet/${FleetId}",
+        "condition_keys": [
+          "aws:RequestTag/${TagKey}",
+          "aws:ResourceTag/${TagKey}",
+          "aws:TagKeys",
+          "ec2:Region",
+          "ec2:ResourceTag/${TagKey}"
+        ],
+        "resource": "fleet"
+      },
+      {
         "arn": "arn:${Partition}:ec2:${Region}::fpga-image/${FpgaImageId}",
         "condition_keys": [
           "aws:RequestTag/${TagKey}",
+          "aws:ResourceTag/${TagKey}",
           "aws:TagKeys",
           "ec2:Owner",
           "ec2:Public",
@@ -41777,6 +42508,7 @@
         "arn": "arn:${Partition}:ec2:${Region}::image/${ImageId}",
         "condition_keys": [
           "aws:RequestTag/${TagKey}",
+          "aws:ResourceTag/${TagKey}",
           "aws:TagKeys",
           "ec2:ImageType",
           "ec2:Owner",
@@ -41791,6 +42523,7 @@
         "arn": "arn:${Partition}:ec2:${Region}:${Account}:instance/${InstanceId}",
         "condition_keys": [
           "aws:RequestTag/${TagKey}",
+          "aws:ResourceTag/${TagKey}",
           "aws:TagKeys",
           "ec2:AvailabilityZone",
           "ec2:EbsOptimized",
@@ -41808,6 +42541,7 @@
         "arn": "arn:${Partition}:ec2:${Region}:${Account}:internet-gateway/${InternetGatewayId}",
         "condition_keys": [
           "aws:RequestTag/${TagKey}",
+          "aws:ResourceTag/${TagKey}",
           "aws:TagKeys",
           "ec2:Region",
           "ec2:ResourceTag/${TagKey}"
@@ -41817,13 +42551,20 @@
       {
         "arn": "arn:${Partition}:ec2:${Region}:${Account}:key-pair/${KeyPairName}",
         "condition_keys": [
-          "ec2:Region"
+          "aws:RequestTag/${TagKey}",
+          "aws:ResourceTag/${TagKey}",
+          "aws:TagKeys",
+          "ec2:Region",
+          "ec2:ResourceTag/${TagKey}"
         ],
         "resource": "key-pair"
       },
       {
         "arn": "arn:${Partition}:ec2:${Region}:${Account}:launch-template/${LaunchTemplateId}",
         "condition_keys": [
+          "aws:RequestTag/${TagKey}",
+          "aws:ResourceTag/${TagKey}",
+          "aws:TagKeys",
           "ec2:Region",
           "ec2:ResourceTag/${TagKey}"
         ],
@@ -41833,6 +42574,7 @@
         "arn": "arn:${Partition}:ec2:${Region}:${Account}:local-gateway/${LocalGatewayId}",
         "condition_keys": [
           "aws:RequestTag/${TagKey}",
+          "aws:ResourceTag/${TagKey}",
           "aws:TagKeys",
           "ec2:Region",
           "ec2:ResourceTag/${TagKey}"
@@ -41843,6 +42585,7 @@
         "arn": "arn:${Partition}:ec2:${Region}:${Account}:local-gateway-route-table/${LocalGatewayRouteTableId}",
         "condition_keys": [
           "aws:RequestTag/${TagKey}",
+          "aws:ResourceTag/${TagKey}",
           "aws:TagKeys",
           "ec2:Region",
           "ec2:ResourceTag/${TagKey}"
@@ -41853,6 +42596,7 @@
         "arn": "arn:${Partition}:ec2:${Region}:${Account}:local-gateway-route-table-virtual-interface-group-association/${LocalGatewayRouteTableVirtualInterfaceGroupAssociationId}",
         "condition_keys": [
           "aws:RequestTag/${TagKey}",
+          "aws:ResourceTag/${TagKey}",
           "aws:TagKeys",
           "ec2:Region",
           "ec2:ResourceTag/${TagKey}"
@@ -41863,6 +42607,7 @@
         "arn": "arn:${Partition}:ec2:${Region}:${Account}:local-gateway-route-table-vpc-association/${LocalGatewayRouteTableVpcAssociationId}",
         "condition_keys": [
           "aws:RequestTag/${TagKey}",
+          "aws:ResourceTag/${TagKey}",
           "aws:TagKeys",
           "ec2:Region",
           "ec2:ResourceTag/${TagKey}"
@@ -41873,6 +42618,7 @@
         "arn": "arn:${Partition}:ec2:${Region}:${Account}:local-gateway-virtual-interface/${LocalGatewayVirtualInterfaceId}",
         "condition_keys": [
           "aws:RequestTag/${TagKey}",
+          "aws:ResourceTag/${TagKey}",
           "aws:TagKeys",
           "ec2:Region",
           "ec2:ResourceTag/${TagKey}"
@@ -41883,6 +42629,7 @@
         "arn": "arn:${Partition}:ec2:${Region}:${Account}:local-gateway-virtual-interface-group/${LocalGatewayVirtualInterfaceGroupId}",
         "condition_keys": [
           "aws:RequestTag/${TagKey}",
+          "aws:ResourceTag/${TagKey}",
           "aws:TagKeys",
           "ec2:Region",
           "ec2:ResourceTag/${TagKey}"
@@ -41890,9 +42637,21 @@
         "resource": "local-gateway-virtual-interface-group"
       },
       {
+        "arn": "arn:${Partition}:ec2:${Region}:${Account}:natgateway/${NatGatewayId}",
+        "condition_keys": [
+          "aws:RequestTag/${TagKey}",
+          "aws:ResourceTag/${TagKey}",
+          "aws:TagKeys",
+          "ec2:Region",
+          "ec2:ResourceTag/${TagKey}"
+        ],
+        "resource": "natgateway"
+      },
+      {
         "arn": "arn:${Partition}:ec2:${Region}:${Account}:network-acl/${NaclId}",
         "condition_keys": [
           "aws:RequestTag/${TagKey}",
+          "aws:ResourceTag/${TagKey}",
           "aws:TagKeys",
           "ec2:Region",
           "ec2:ResourceTag/${TagKey}",
@@ -41904,6 +42663,7 @@
         "arn": "arn:${Partition}:ec2:${Region}:${Account}:network-interface/${NetworkInterfaceId}",
         "condition_keys": [
           "aws:RequestTag/${TagKey}",
+          "aws:ResourceTag/${TagKey}",
           "aws:TagKeys",
           "ec2:AssociatePublicIpAddress",
           "ec2:AuthorizedService",
@@ -41918,15 +42678,31 @@
       {
         "arn": "arn:${Partition}:ec2:${Region}:${Account}:placement-group/${PlacementGroupName}",
         "condition_keys": [
+          "aws:RequestTag/${TagKey}",
+          "aws:ResourceTag/${TagKey}",
+          "aws:TagKeys",
           "ec2:PlacementGroupStrategy",
-          "ec2:Region"
+          "ec2:Region",
+          "ec2:ResourceTag/${TagKey}"
         ],
         "resource": "placement-group"
+      },
+      {
+        "arn": "arn:${Partition}:ec2:${Region}:${Account}:prefix-list/${PrefixListId}",
+        "condition_keys": [
+          "aws:RequestTag/${TagKey}",
+          "aws:ResourceTag/${TagKey}",
+          "aws:TagKeys",
+          "ec2:Region",
+          "ec2:ResourceTag/${TagKey}"
+        ],
+        "resource": "prefix-list"
       },
       {
         "arn": "arn:${Partition}:ec2:${Region}:${Account}:reserved-instances/${ReservationId}",
         "condition_keys": [
           "aws:RequestTag/${TagKey}",
+          "aws:ResourceTag/${TagKey}",
           "aws:TagKeys",
           "ec2:AvailabilityZone",
           "ec2:InstanceType",
@@ -41941,6 +42717,7 @@
         "arn": "arn:${Partition}:ec2:${Region}:${Account}:route-table/${RouteTableId}",
         "condition_keys": [
           "aws:RequestTag/${TagKey}",
+          "aws:ResourceTag/${TagKey}",
           "aws:TagKeys",
           "ec2:Region",
           "ec2:ResourceTag/${TagKey}",
@@ -41952,6 +42729,7 @@
         "arn": "arn:${Partition}:ec2:${Region}:${Account}:security-group/${SecurityGroupId}",
         "condition_keys": [
           "aws:RequestTag/${TagKey}",
+          "aws:ResourceTag/${TagKey}",
           "aws:TagKeys",
           "ec2:Region",
           "ec2:ResourceTag/${TagKey}",
@@ -41963,6 +42741,7 @@
         "arn": "arn:${Partition}:ec2:${Region}::snapshot/${SnapshotId}",
         "condition_keys": [
           "aws:RequestTag/${TagKey}",
+          "aws:ResourceTag/${TagKey}",
           "aws:TagKeys",
           "ec2:Owner",
           "ec2:ParentVolume",
@@ -41977,6 +42756,7 @@
         "arn": "arn:${Partition}:ec2:${Region}:${Account}:spot-instances-request/${SpotInstanceRequestId}",
         "condition_keys": [
           "aws:RequestTag/${TagKey}",
+          "aws:ResourceTag/${TagKey}",
           "aws:TagKeys",
           "ec2:Region",
           "ec2:ResourceTag/${TagKey}"
@@ -41987,6 +42767,7 @@
         "arn": "arn:${Partition}:ec2:${Region}:${Account}:subnet/${SubnetId}",
         "condition_keys": [
           "aws:RequestTag/${TagKey}",
+          "aws:ResourceTag/${TagKey}",
           "aws:TagKeys",
           "ec2:AvailabilityZone",
           "ec2:Region",
@@ -41999,6 +42780,7 @@
         "arn": "arn:${Partition}:ec2:${Region}:${Account}:traffic-mirror-session/${TrafficMirrorSessionId}",
         "condition_keys": [
           "aws:RequestTag/${TagKey}",
+          "aws:ResourceTag/${TagKey}",
           "aws:TagKeys",
           "ec2:Region",
           "ec2:ResourceTag/${TagKey}"
@@ -42009,6 +42791,7 @@
         "arn": "arn:${Partition}:ec2:${Region}:${Account}:traffic-mirror-target/${TrafficMirrorTargetId}",
         "condition_keys": [
           "aws:RequestTag/${TagKey}",
+          "aws:ResourceTag/${TagKey}",
           "aws:TagKeys",
           "ec2:Region",
           "ec2:ResourceTag/${TagKey}"
@@ -42019,6 +42802,7 @@
         "arn": "arn:${Partition}:ec2:${Region}:${Account}:traffic-mirror-filter/${TrafficMirrorFilterId}",
         "condition_keys": [
           "aws:RequestTag/${TagKey}",
+          "aws:ResourceTag/${TagKey}",
           "aws:TagKeys",
           "ec2:Region",
           "ec2:ResourceTag/${TagKey}"
@@ -42036,6 +42820,7 @@
         "arn": "arn:${Partition}:ec2:${Region}:${Account}:transit-gateway-attachment/${TransitGatewayAttachmentId}",
         "condition_keys": [
           "aws:RequestTag/${TagKey}",
+          "aws:ResourceTag/${TagKey}",
           "aws:TagKeys",
           "ec2:Region",
           "ec2:ResourceTag/${TagKey}"
@@ -42046,6 +42831,7 @@
         "arn": "arn:${Partition}:ec2:${Region}:${Account}:transit-gateway-multicast-domain/${TransitGatewayMulticastDomainId}",
         "condition_keys": [
           "aws:RequestTag/${TagKey}",
+          "aws:ResourceTag/${TagKey}",
           "aws:TagKeys",
           "ec2:Region",
           "ec2:ResourceTag/${TagKey}"
@@ -42056,6 +42842,7 @@
         "arn": "arn:${Partition}:ec2:${Region}:${Account}:transit-gateway-route-table/${TransitGatewayRouteTableId}",
         "condition_keys": [
           "aws:RequestTag/${TagKey}",
+          "aws:ResourceTag/${TagKey}",
           "aws:TagKeys",
           "ec2:Region",
           "ec2:ResourceTag/${TagKey}"
@@ -42066,6 +42853,7 @@
         "arn": "arn:${Partition}:ec2:${Region}:${Account}:transit-gateway/${TransitGatewayId}",
         "condition_keys": [
           "aws:RequestTag/${TagKey}",
+          "aws:ResourceTag/${TagKey}",
           "aws:TagKeys",
           "ec2:Region",
           "ec2:ResourceTag/${TagKey}"
@@ -42076,6 +42864,7 @@
         "arn": "arn:${Partition}:ec2:${Region}:${Account}:volume/${VolumeId}",
         "condition_keys": [
           "aws:RequestTag/${TagKey}",
+          "aws:ResourceTag/${TagKey}",
           "aws:TagKeys",
           "ec2:AvailabilityZone",
           "ec2:Encrypted",
@@ -42092,6 +42881,7 @@
         "arn": "arn:${Partition}:ec2:${Region}:${Account}:vpc/${VpcId}",
         "condition_keys": [
           "aws:RequestTag/${TagKey}",
+          "aws:ResourceTag/${TagKey}",
           "aws:TagKeys",
           "ec2:Region",
           "ec2:ResourceTag/${TagKey}",
@@ -42103,6 +42893,7 @@
         "arn": "arn:${Partition}:ec2:${Region}:${Account}:vpc-endpoint/${VpceId}",
         "condition_keys": [
           "aws:RequestTag/${TagKey}",
+          "aws:ResourceTag/${TagKey}",
           "aws:TagKeys",
           "ec2:Region",
           "ec2:ResourceTag/${TagKey}",
@@ -42115,6 +42906,7 @@
         "arn": "arn:${Partition}:ec2:${Region}:${Account}:vpc-endpoint-service/${VpceServiceId}",
         "condition_keys": [
           "aws:RequestTag/${TagKey}",
+          "aws:ResourceTag/${TagKey}",
           "aws:TagKeys",
           "ec2:Region",
           "ec2:ResourceTag/${TagKey}",
@@ -42126,6 +42918,7 @@
         "arn": "arn:${Partition}:ec2:${Region}:${Account}:vpc-flow-log/${VpcFlowLogId}",
         "condition_keys": [
           "aws:RequestTag/${TagKey}",
+          "aws:ResourceTag/${TagKey}",
           "aws:TagKeys",
           "ec2:Region",
           "ec2:ResourceTag/${TagKey}"
@@ -42135,6 +42928,7 @@
       {
         "arn": "arn:${Partition}:ec2:${Region}:${Account}:vpc-peering-connection/${VpcPeeringConnectionId}",
         "condition_keys": [
+          "aws:ResourceTag/${TagKey}",
           "ec2:AccepterVpc",
           "ec2:Region",
           "ec2:RequesterVpc",
@@ -42146,6 +42940,7 @@
         "arn": "arn:${Partition}:ec2:${Region}:${Account}:vpn-connection/${VpnConnectionId}",
         "condition_keys": [
           "aws:RequestTag/${TagKey}",
+          "aws:ResourceTag/${TagKey}",
           "aws:TagKeys",
           "ec2:AuthenticationType",
           "ec2:DPDTimeoutSeconds",
@@ -44100,7 +44895,12 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "cluster"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "snapshot"
           }
         ]
       },
@@ -44114,7 +44914,65 @@
             "dependent_actions": [
               "ec2:AuthorizeSecurityGroupIngress"
             ],
-            "resource_type": ""
+            "resource_type": "securitygroup*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Apply the service update.",
+        "privilege": "BatchApplyUpdateAction",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [
+              "ec2:CreateNetworkInterface",
+              "ec2:DeleteNetworkInterface",
+              "ec2:DescribeNetworkInterfaces",
+              "ec2:DescribeSubnets",
+              "ec2:DescribeVpcs",
+              "s3:GetObject"
+            ],
+            "resource_type": "cluster"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "replicationgroup"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Stop the service update.",
+        "privilege": "BatchStopUpdateAction",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "cluster"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "replicationgroup"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Stop the service update.",
+        "privilege": "CompleteMigration",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "cluster"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "replicationgroup"
           }
         ]
       },
@@ -44126,11 +44984,12 @@
           {
             "condition_keys": [],
             "dependent_actions": [
+              "elasticache:AddTagsToResource",
               "s3:DeleteObject",
               "s3:GetBucketAcl",
               "s3:PutObject"
             ],
-            "resource_type": ""
+            "resource_type": "snapshot*"
           }
         ]
       },
@@ -44147,9 +45006,35 @@
               "ec2:DescribeNetworkInterfaces",
               "ec2:DescribeSubnets",
               "ec2:DescribeVpcs",
+              "elasticache:AddTagsToResource",
               "s3:GetObject"
             ],
-            "resource_type": ""
+            "resource_type": "parametergroup*"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "cluster"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "replicationgroup"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "securitygroup"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "snapshot"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "subnetgroup"
           }
         ]
       },
@@ -44160,8 +45045,10 @@
         "resource_types": [
           {
             "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": ""
+            "dependent_actions": [
+              "elasticache:AddTagsToResource"
+            ],
+            "resource_type": "parametergroup*"
           }
         ]
       },
@@ -44172,8 +45059,10 @@
         "resource_types": [
           {
             "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": ""
+            "dependent_actions": [
+              "elasticache:AddTagsToResource"
+            ],
+            "resource_type": "securitygroup*"
           }
         ]
       },
@@ -44184,8 +45073,27 @@
         "resource_types": [
           {
             "condition_keys": [],
+            "dependent_actions": [
+              "elasticache:AddTagsToResource"
+            ],
+            "resource_type": "subnetgroup*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "The CreateGlobalReplicationGroup action creates a global datastore.",
+        "privilege": "CreateGlobalReplicationGroup",
+        "resource_types": [
+          {
+            "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "globalreplicationgroup*"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "replicationgroup*"
           }
         ]
       },
@@ -44202,9 +45110,40 @@
               "ec2:DescribeNetworkInterfaces",
               "ec2:DescribeSubnets",
               "ec2:DescribeVpcs",
+              "elasticache:AddTagsToResource",
               "s3:GetObject"
             ],
-            "resource_type": ""
+            "resource_type": "parametergroup*"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "cluster"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "globalreplicationgroup"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "replicationgroup"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "securitygroup"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "snapshot"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "subnetgroup"
           }
         ]
       },
@@ -44215,8 +45154,35 @@
         "resource_types": [
           {
             "condition_keys": [],
+            "dependent_actions": [
+              "elasticache:AddTagsToResource",
+              "s3:DeleteObject",
+              "s3:GetBucketAcl",
+              "s3:PutObject"
+            ],
+            "resource_type": "snapshot*"
+          },
+          {
+            "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "cluster"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "replicationgroup"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "The DecreaseNodeGroupsInGlobalReplicationGroup action dec a global datastore.",
+        "privilege": "DecreaseNodeGroupsInGlobalReplicationGroup",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "globalreplicationgroup*"
           }
         ]
       },
@@ -44234,7 +45200,7 @@
               "ec2:DescribeSubnets",
               "ec2:DescribeVpcs"
             ],
-            "resource_type": ""
+            "resource_type": "replicationgroup*"
           }
         ]
       },
@@ -44245,8 +45211,19 @@
         "resource_types": [
           {
             "condition_keys": [],
+            "dependent_actions": [
+              "ec2:CreateNetworkInterface",
+              "ec2:DeleteNetworkInterface",
+              "ec2:DescribeNetworkInterfaces",
+              "ec2:DescribeSubnets",
+              "ec2:DescribeVpcs"
+            ],
+            "resource_type": "cluster*"
+          },
+          {
+            "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "snapshot"
           }
         ]
       },
@@ -44258,7 +45235,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "parametergroup*"
           }
         ]
       },
@@ -44270,7 +45247,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "securitygroup*"
           }
         ]
       },
@@ -44281,8 +45258,26 @@
         "resource_types": [
           {
             "condition_keys": [],
+            "dependent_actions": [
+              "ec2:CreateNetworkInterface",
+              "ec2:DeleteNetworkInterface",
+              "ec2:DescribeNetworkInterfaces",
+              "ec2:DescribeSubnets",
+              "ec2:DescribeVpcs"
+            ],
+            "resource_type": "subnetgroup*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "The DeleteGlobalReplicationGroup action deletes a global datastore.",
+        "privilege": "DeleteGlobalReplicationGroup",
+        "resource_types": [
+          {
+            "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "globalreplicationgroup*"
           }
         ]
       },
@@ -44293,8 +45288,19 @@
         "resource_types": [
           {
             "condition_keys": [],
+            "dependent_actions": [
+              "ec2:CreateNetworkInterface",
+              "ec2:DeleteNetworkInterface",
+              "ec2:DescribeNetworkInterfaces",
+              "ec2:DescribeSubnets",
+              "ec2:DescribeVpcs"
+            ],
+            "resource_type": "replicationgroup*"
+          },
+          {
+            "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "snapshot"
           }
         ]
       },
@@ -44306,7 +45312,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "snapshot*"
           }
         ]
       },
@@ -44318,7 +45324,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "cluster*"
           }
         ]
       },
@@ -44336,13 +45342,13 @@
       },
       {
         "access_level": "List",
-        "description": "The DescribeCacheParameterGroups action returns a list of cache parameter group descriptions.",
+        "description": "The DescribeCacheParameterGroups action returns information about parameter groups for this account, or a particular parameter group.",
         "privilege": "DescribeCacheParameterGroups",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "parametergroup*"
           }
         ]
       },
@@ -44354,31 +45360,31 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "parametergroup*"
           }
         ]
       },
       {
         "access_level": "List",
-        "description": "The DescribeCacheSecurityGroups action returns a list of cache security group descriptions.",
+        "description": "The DescribeCacheSecurityGroups action returns a list of cache security group descriptions, or the description of the specified security group.",
         "privilege": "DescribeCacheSecurityGroups",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "securitygroup*"
           }
         ]
       },
       {
         "access_level": "List",
-        "description": "The DescribeCacheSubnetGroups action returns a list of cache subnet group descriptions.",
+        "description": "The DescribeCacheSubnetGroups action returns a list of cache subnet group descriptions, or the description of the specified subnet group.",
         "privilege": "DescribeCacheSubnetGroups",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "subnetgroup*"
           }
         ]
       },
@@ -44408,25 +45414,37 @@
       },
       {
         "access_level": "List",
-        "description": "The DescribeReplicationGroups action returns information about a particular replication group.",
-        "privilege": "DescribeReplicationGroups",
+        "description": "The DescribeGlobalReplicationGroups action returns information about global datastores for this account, or a particular global datastore.",
+        "privilege": "DescribeGlobalReplicationGroups",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "globalreplicationgroup*"
           }
         ]
       },
       {
         "access_level": "List",
-        "description": "The DescribeReservedCacheNodes action returns information about reserved cache nodes for this account, or about a specified reserved cache node.",
+        "description": "The DescribeReplicationGroups action returns information about replication groups for this account, or a particular replication group.",
+        "privilege": "DescribeReplicationGroups",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "replicationgroup*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "The DescribeReservedCacheNodes action returns information about reserved cache nodes for this account, or a particular reserved cache node.",
         "privilege": "DescribeReservedCacheNodes",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "reserved-instance*"
           }
         ]
       },
@@ -44444,13 +45462,78 @@
       },
       {
         "access_level": "List",
+        "description": "Returns details of the service updates",
+        "privilege": "DescribeServiceUpdates",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
         "description": "The DescribeSnapshots action returns information about cache cluster snapshots.",
         "privilege": "DescribeSnapshots",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "snapshot*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Returns details of the update actions.",
+        "privilege": "DescribeUpdateActions",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "cluster"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "replicationgroup"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "The DisassociateGlobalReplicationGroup action removes a secondary Replication Group from the Global Datastore.",
+        "privilege": "DisassociateGlobalReplicationGroup",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "globalreplicationgroup*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "The FailoverGlobalReplicationGroup action removes a secondary Replication Group from the Global Datastore.",
+        "privilege": "FailoverGlobalReplicationGroup",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "globalreplicationgroup*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "The IncreaseNodeGroupsInGlobalReplicationGroup action increases the number of node groups in the Global Datastore.",
+        "privilege": "IncreaseNodeGroupsInGlobalReplicationGroup",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "globalreplicationgroup*"
           }
         ]
       },
@@ -44468,7 +45551,7 @@
               "ec2:DescribeSubnets",
               "ec2:DescribeVpcs"
             ],
-            "resource_type": ""
+            "resource_type": "replicationgroup*"
           }
         ]
       },
@@ -44480,7 +45563,12 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "cluster"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "replicationgroup"
           }
         ]
       },
@@ -44492,7 +45580,12 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "cluster"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "snapshot"
           }
         ]
       },
@@ -44504,7 +45597,17 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "cluster*"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "parametergroup"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "securitygroup"
           }
         ]
       },
@@ -44516,7 +45619,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "parametergroup*"
           }
         ]
       },
@@ -44528,7 +45631,19 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "subnetgroup*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "The ModifyGlobalReplicationGroup action modifies the settings for a Global Datastore.",
+        "privilege": "ModifyGlobalReplicationGroup",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "globalreplicationgroup*"
           }
         ]
       },
@@ -44539,8 +45654,24 @@
         "resource_types": [
           {
             "condition_keys": [],
+            "dependent_actions": [
+              "ec2:CreateNetworkInterface",
+              "ec2:DeleteNetworkInterface",
+              "ec2:DescribeNetworkInterfaces",
+              "ec2:DescribeSubnets",
+              "ec2:DescribeVpcs"
+            ],
+            "resource_type": "replicationgroup*"
+          },
+          {
+            "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "parametergroup"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "securitygroup"
           }
         ]
       },
@@ -44558,7 +45689,7 @@
               "ec2:DescribeSubnets",
               "ec2:DescribeVpcs"
             ],
-            "resource_type": ""
+            "resource_type": "replicationgroup*"
           }
         ]
       },
@@ -44569,8 +45700,22 @@
         "resource_types": [
           {
             "condition_keys": [],
+            "dependent_actions": [
+              "elasticache:AddTagsToResource"
+            ],
+            "resource_type": "reserved-instance*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "The RebalanceSlotsInGlobalReplicationGroup action redistributes slots to ensure uniform distribution across existing shards in the cluster.",
+        "privilege": "RebalanceSlotsInGlobalReplicationGroup",
+        "resource_types": [
+          {
+            "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "globalreplicationgroup*"
           }
         ]
       },
@@ -44582,7 +45727,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "cluster*"
           }
         ]
       },
@@ -44594,7 +45739,12 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "cluster"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "snapshot"
           }
         ]
       },
@@ -44606,7 +45756,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "parametergroup*"
           }
         ]
       },
@@ -44618,7 +45768,19 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "securitygroup*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Start the migration of data.",
+        "privilege": "StartMigration",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "replicationgroup*"
           }
         ]
       },
@@ -44636,12 +45798,53 @@
               "ec2:DescribeSubnets",
               "ec2:DescribeVpcs"
             ],
-            "resource_type": ""
+            "resource_type": "replicationgroup*"
           }
         ]
       }
     ],
-    "resources": [],
+    "resources": [
+      {
+        "arn": "arn:${Partition}:elasticache:${Region}:${Account}:parametergroup:${CacheParameterGroupName}",
+        "condition_keys": [],
+        "resource": "parametergroup"
+      },
+      {
+        "arn": "arn:${Partition}:elasticache:${Region}:${Account}:securitygroup:${CacheSecurityGroupName}",
+        "condition_keys": [],
+        "resource": "securitygroup"
+      },
+      {
+        "arn": "arn:${Partition}:elasticache:${Region}:${Account}:subnetgroup:${CacheSubnetGroupName}",
+        "condition_keys": [],
+        "resource": "subnetgroup"
+      },
+      {
+        "arn": "arn:${Partition}:elasticache:${Region}:${Account}:replicationgroup:${ReplicationGroupId}",
+        "condition_keys": [],
+        "resource": "replicationgroup"
+      },
+      {
+        "arn": "arn:${Partition}:elasticache:${Region}:${Account}:cluster:${CacheClusterId}",
+        "condition_keys": [],
+        "resource": "cluster"
+      },
+      {
+        "arn": "arn:${Partition}:elasticache:${Region}:${Account}:reserved-instance:${ReservedCacheNodeId}",
+        "condition_keys": [],
+        "resource": "reserved-instance"
+      },
+      {
+        "arn": "arn:${Partition}:elasticache:${Region}:${Account}:snapshot:${SnapshotName}",
+        "condition_keys": [],
+        "resource": "snapshot"
+      },
+      {
+        "arn": "arn:${Partition}:elasticache::${Account}:globalreplicationgroup:${GlobalReplicationGroupId}",
+        "condition_keys": [],
+        "resource": "globalreplicationgroup"
+      }
+    ],
     "service_name": "Amazon ElastiCache"
   },
   {
@@ -47224,6 +48427,18 @@
       },
       {
         "access_level": "Read",
+        "description": "Grants permission to retrieve the managed scaling policy associated with a cluster.",
+        "privilege": "GetManagedScalingPolicy",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "cluster*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
         "description": "Grants permission to get details about the bootstrap actions associated with a cluster.",
         "privilege": "ListBootstrapActions",
         "resource_types": [
@@ -47350,7 +48565,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "cluster*"
+            "resource_type": "cluster"
           }
         ]
       },
@@ -47397,8 +48612,32 @@
       },
       {
         "access_level": "Write",
+        "description": "Grants permission to create or update the managed scaling policy associated with a cluster.",
+        "privilege": "PutManagedScalingPolicy",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "cluster*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Grants permission to remove an automatic scaling policy from an instance group.",
         "privilege": "RemoveAutoScalingPolicy",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "cluster*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to remove the managed scaling policy associated with a cluster.",
+        "privilege": "RemoveManagedScalingPolicy",
         "resource_types": [
           {
             "condition_keys": [],
@@ -47765,6 +49004,125 @@
       }
     ],
     "service_name": "Amazon Elastic Transcoder"
+  },
+  {
+    "conditions": [
+      {
+        "condition": "aws:RequestTag/${TagKey}",
+        "description": "Filters actions based on the tags that are passed in the request",
+        "type": "Arn"
+      },
+      {
+        "condition": "aws:ResourceTag/${TagKey}",
+        "description": "Filters actions based on the tags associated with the resource",
+        "type": "String"
+      },
+      {
+        "condition": "aws:TagKeys",
+        "description": "Filters actions based on the tag keys that are passed in the request",
+        "type": "String"
+      }
+    ],
+    "prefix": "elemental-activations",
+    "privileges": [
+      {
+        "access_level": "List",
+        "description": "Download the Software files for AWS Elemental Appliances and Software Purchases",
+        "privilege": "DownloadSoftware",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Generate Software Licenses for AWS Elemental Appliances and Software Purchases",
+        "privilege": "GenerateLicenses",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Describe an activation",
+        "privilege": "GetActivation",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "activation*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "This action lists tags for an AWS Elemental Activations resource",
+        "privilege": "ListTagsForResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "activation"
+          }
+        ]
+      },
+      {
+        "access_level": "Tagging",
+        "description": "This action adds a tag for an AWS Elemental Activations resource",
+        "privilege": "TagResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "activation"
+          },
+          {
+            "condition_keys": [
+              "aws:TagKeys",
+              "aws:RequestTag/${TagKey}"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Tagging",
+        "description": "This action removes a tag from an AWS Elemental Activations resource",
+        "privilege": "UntagResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "activation"
+          },
+          {
+            "condition_keys": [
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      }
+    ],
+    "resources": [
+      {
+        "arn": "arn:${Partition}:elemental-activations:${Region}:${Account}:activation/${ResourceId}",
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
+        "resource": "activation"
+      }
+    ],
+    "service_name": "Elemental Activations"
   },
   {
     "conditions": [
@@ -49150,6 +50508,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Grants permission to permanently deletes an AWS Firewall Manager applications list.",
+        "privilege": "DeleteAppsList",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "applications-list*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Deletes an AWS Firewall Manager association with the IAM role and the Amazon Simple Notification Service (SNS) topic that is used to notify the FM administrator about major FM events and errors across the organization.",
         "privilege": "DeleteNotificationChannel",
         "resource_types": [
@@ -49181,6 +50551,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Grants permission to permanently deletes an AWS Firewall Manager protocols list.",
+        "privilege": "DeleteProtocolsList",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "protocols-list*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Disassociates the account that has been set as the AWS Firewall Manager administrator account and and disables the service in all organization accounts",
         "privilege": "DisassociateAdminAccount",
         "resource_types": [
@@ -49200,6 +50582,18 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to return information about the specified AWS Firewall Manager applications list.",
+        "privilege": "GetAppsList",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "applications-list*"
           }
         ]
       },
@@ -49252,6 +50646,30 @@
         ]
       },
       {
+        "access_level": "Read",
+        "description": "Grants permission to return information about the specified AWS Firewall Manager protocols list.",
+        "privilege": "GetProtocolsList",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "protocols-list*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to return an array of AppsListDataSummary objects.",
+        "privilege": "ListAppsLists",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
         "access_level": "List",
         "description": "Returns an array of PolicyComplianceStatus objects in the response. Use PolicyComplianceStatus to get a summary of which member accounts are protected by the specified policy.",
         "privilege": "ListComplianceStatus",
@@ -49288,6 +50706,18 @@
         ]
       },
       {
+        "access_level": "List",
+        "description": "Grants permission to return an array of ProtocolsListDataSummary objects.",
+        "privilege": "ListProtocolsLists",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
         "access_level": "Read",
         "description": "Lists the Tags for a given resource.",
         "privilege": "ListTagsForResource",
@@ -49296,6 +50726,26 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "policy*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to create an AWS Firewall Manager applications list.",
+        "privilege": "PutAppsList",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "applications-list*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -49320,6 +50770,26 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "policy*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to creates an AWS Firewall Manager protocols list.",
+        "privilege": "PutProtocolsList",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "protocols-list*"
           },
           {
             "condition_keys": [
@@ -49378,6 +50848,20 @@
           "aws:ResourceTag/${TagKey}"
         ],
         "resource": "policy"
+      },
+      {
+        "arn": "arn:${Partition}:fms:${Region}:${Account}:applications-list/${Id}",
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
+        "resource": "applications-list"
+      },
+      {
+        "arn": "arn:${Partition}:fms:${Region}:${Account}:protocols-list/${Id}",
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
+        "resource": "protocols-list"
       }
     ],
     "service_name": "AWS Firewall Manager"
@@ -60355,7 +61839,7 @@
         "resource": "instance-profile"
       },
       {
-        "arn": "arn:${Partition}:iam::${Account}:mfa/${Path}/${MfaTokenId}",
+        "arn": "arn:${Partition}:iam::${Account}:mfa/${MfaTokenIdWithPath}",
         "condition_keys": [],
         "resource": "mfa"
       },
@@ -67568,15 +69052,6 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "Channel*"
-          },
-          {
-            "condition_keys": [
-              "aws:TagKeys",
-              "aws:RequestTag/${TagKey}",
-              "aws:ResourceTag/${TagKey}"
-            ],
-            "dependent_actions": [],
-            "resource_type": ""
           }
         ]
       },
@@ -67589,15 +69064,6 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "Stream-Key*"
-          },
-          {
-            "condition_keys": [
-              "aws:TagKeys",
-              "aws:RequestTag/${TagKey}",
-              "aws:ResourceTag/${TagKey}"
-            ],
-            "dependent_actions": [],
-            "resource_type": ""
           }
         ]
       },
@@ -67619,8 +69085,7 @@
           {
             "condition_keys": [
               "aws:TagKeys",
-              "aws:RequestTag/${TagKey}",
-              "aws:ResourceTag/${TagKey}"
+              "aws:RequestTag/${TagKey}"
             ],
             "dependent_actions": [],
             "resource_type": ""
@@ -67633,10 +69098,14 @@
         "privilege": "CreateStreamKey",
         "resource_types": [
           {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Stream-Key*"
+          },
+          {
             "condition_keys": [
               "aws:TagKeys",
-              "aws:RequestTag/${TagKey}",
-              "aws:ResourceTag/${TagKey}"
+              "aws:RequestTag/${TagKey}"
             ],
             "dependent_actions": [],
             "resource_type": ""
@@ -67657,15 +69126,6 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "Stream-Key*"
-          },
-          {
-            "condition_keys": [
-              "aws:TagKeys",
-              "aws:RequestTag/${TagKey}",
-              "aws:ResourceTag/${TagKey}"
-            ],
-            "dependent_actions": [],
-            "resource_type": ""
           }
         ]
       },
@@ -67678,15 +69138,6 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "Stream-Key*"
-          },
-          {
-            "condition_keys": [
-              "aws:TagKeys",
-              "aws:RequestTag/${TagKey}",
-              "aws:ResourceTag/${TagKey}"
-            ],
-            "dependent_actions": [],
-            "resource_type": ""
           }
         ]
       },
@@ -67699,15 +69150,6 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "Channel*"
-          },
-          {
-            "condition_keys": [
-              "aws:TagKeys",
-              "aws:RequestTag/${TagKey}",
-              "aws:ResourceTag/${TagKey}"
-            ],
-            "dependent_actions": [],
-            "resource_type": ""
           }
         ]
       },
@@ -67720,15 +69162,6 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "Channel*"
-          },
-          {
-            "condition_keys": [
-              "aws:TagKeys",
-              "aws:RequestTag/${TagKey}",
-              "aws:ResourceTag/${TagKey}"
-            ],
-            "dependent_actions": [],
-            "resource_type": ""
           }
         ]
       },
@@ -67741,15 +69174,6 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "Stream-Key*"
-          },
-          {
-            "condition_keys": [
-              "aws:TagKeys",
-              "aws:RequestTag/${TagKey}",
-              "aws:ResourceTag/${TagKey}"
-            ],
-            "dependent_actions": [],
-            "resource_type": ""
           }
         ]
       },
@@ -67762,15 +69186,6 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "Channel*"
-          },
-          {
-            "condition_keys": [
-              "aws:TagKeys",
-              "aws:RequestTag/${TagKey}",
-              "aws:ResourceTag/${TagKey}"
-            ],
-            "dependent_actions": [],
-            "resource_type": ""
           }
         ]
       },
@@ -67788,15 +69203,6 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "Stream-Key*"
-          },
-          {
-            "condition_keys": [
-              "aws:TagKeys",
-              "aws:RequestTag/${TagKey}",
-              "aws:ResourceTag/${TagKey}"
-            ],
-            "dependent_actions": [],
-            "resource_type": ""
           }
         ]
       },
@@ -67809,15 +69215,6 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "Channel*"
-          },
-          {
-            "condition_keys": [
-              "aws:TagKeys",
-              "aws:RequestTag/${TagKey}",
-              "aws:ResourceTag/${TagKey}"
-            ],
-            "dependent_actions": [],
-            "resource_type": ""
           }
         ]
       },
@@ -67839,8 +69236,7 @@
           {
             "condition_keys": [
               "aws:TagKeys",
-              "aws:RequestTag/${TagKey}",
-              "aws:ResourceTag/${TagKey}"
+              "aws:RequestTag/${TagKey}"
             ],
             "dependent_actions": [],
             "resource_type": ""
@@ -67856,15 +69252,6 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "Channel*"
-          },
-          {
-            "condition_keys": [
-              "aws:TagKeys",
-              "aws:RequestTag/${TagKey}",
-              "aws:ResourceTag/${TagKey}"
-            ],
-            "dependent_actions": [],
-            "resource_type": ""
           }
         ]
       },
@@ -67877,15 +69264,6 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "Channel*"
-          },
-          {
-            "condition_keys": [
-              "aws:TagKeys",
-              "aws:RequestTag/${TagKey}",
-              "aws:ResourceTag/${TagKey}"
-            ],
-            "dependent_actions": [],
-            "resource_type": ""
           }
         ]
       },
@@ -67907,8 +69285,7 @@
           {
             "condition_keys": [
               "aws:TagKeys",
-              "aws:RequestTag/${TagKey}",
-              "aws:ResourceTag/${TagKey}"
+              "aws:RequestTag/${TagKey}"
             ],
             "dependent_actions": [],
             "resource_type": ""
@@ -67932,9 +69309,7 @@
           },
           {
             "condition_keys": [
-              "aws:TagKeys",
-              "aws:RequestTag/${TagKey}",
-              "aws:ResourceTag/${TagKey}"
+              "aws:TagKeys"
             ],
             "dependent_actions": [],
             "resource_type": ""
@@ -67950,15 +69325,6 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "Channel*"
-          },
-          {
-            "condition_keys": [
-              "aws:TagKeys",
-              "aws:RequestTag/${TagKey}",
-              "aws:ResourceTag/${TagKey}"
-            ],
-            "dependent_actions": [],
-            "resource_type": ""
           }
         ]
       }
@@ -67966,12 +69332,16 @@
     "resources": [
       {
         "arn": "arn:${Partition}:ivs::${Account}:channel/${ResourceId}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "Channel"
       },
       {
         "arn": "arn:${Partition}:ivs::${Account}:stream-key/${ResourceId}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "Stream-Key"
       }
     ],
@@ -68287,317 +69657,6 @@
       }
     ],
     "service_name": "Amazon Managed Streaming for Apache Kafka"
-  },
-  {
-    "conditions": [
-      {
-        "condition": "aws:RequestTag/${TagKey}",
-        "description": "Filter requests based on the allowed set of values for each of the tags",
-        "type": "String"
-      },
-      {
-        "condition": "aws:ResourceTag/${TagKey}",
-        "description": "Filter actions based on tag-value associated with a MSK resource.",
-        "type": "String"
-      },
-      {
-        "condition": "aws:TagKeys",
-        "description": "Filter requests based on the presence of mandatory tag keys in the request",
-        "type": "String"
-      }
-    ],
-    "prefix": "kafka",
-    "privileges": [
-      {
-        "access_level": "Write",
-        "description": "Grants permission to create a cluster.",
-        "privilege": "CreateCluster",
-        "resource_types": [
-          {
-            "condition_keys": [
-              "aws:RequestTag/${TagKey}",
-              "aws:TagKeys"
-            ],
-            "dependent_actions": [
-              "ec2:DescribeSecurityGroups",
-              "ec2:DescribeSubnets",
-              "ec2:DescribeVpcs",
-              "iam:AttachRolePolicy",
-              "iam:CreateServiceLinkedRole",
-              "iam:PutRolePolicy",
-              "kms:CreateGrant",
-              "kms:DescribeKey"
-            ],
-            "resource_type": ""
-          }
-        ]
-      },
-      {
-        "access_level": "Write",
-        "description": "Grants permission to create a configuration.",
-        "privilege": "CreateConfiguration",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": ""
-          }
-        ]
-      },
-      {
-        "access_level": "Write",
-        "description": "Grants permission to delete a cluster.",
-        "privilege": "DeleteCluster",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": ""
-          }
-        ]
-      },
-      {
-        "access_level": "Read",
-        "description": "Grants permission to describe a cluster.",
-        "privilege": "DescribeCluster",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": ""
-          }
-        ]
-      },
-      {
-        "access_level": "Read",
-        "description": "Returns a description of the cluster operation specified by the ARN.",
-        "privilege": "DescribeClusterOperation",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": ""
-          }
-        ]
-      },
-      {
-        "access_level": "Read",
-        "description": "Grants permission to describe a configuration.",
-        "privilege": "DescribeConfiguration",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": ""
-          }
-        ]
-      },
-      {
-        "access_level": "Read",
-        "description": "Grants permission to describe a configuration revision.",
-        "privilege": "DescribeConfigurationRevision",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": ""
-          }
-        ]
-      },
-      {
-        "access_level": "Read",
-        "description": "Grants permission to get connection details for the broker nodes in a cluster.",
-        "privilege": "GetBootstrapBrokers",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": ""
-          }
-        ]
-      },
-      {
-        "access_level": "List",
-        "description": "Returns a list of the Apache Kafka versions to which you can update this cluster.",
-        "privilege": "GetCompatibleKafkaVersions",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": ""
-          }
-        ]
-      },
-      {
-        "access_level": "Read",
-        "description": "Returns a list of all the operations that have been performed on the specified MSK cluster.",
-        "privilege": "ListClusterOperations",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": ""
-          }
-        ]
-      },
-      {
-        "access_level": "List",
-        "description": "Grants permission to return a list of all clusters in the current account.",
-        "privilege": "ListClusters",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": ""
-          }
-        ]
-      },
-      {
-        "access_level": "List",
-        "description": "Grants permission to return a list of all configurations in the current account.",
-        "privilege": "ListConfigurations",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": ""
-          }
-        ]
-      },
-      {
-        "access_level": "List",
-        "description": "Grants permission to return a list of nodes in a cluster.",
-        "privilege": "ListNodes",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": ""
-          }
-        ]
-      },
-      {
-        "access_level": "Read",
-        "description": "Grants permission to list tags of a MSK resource.",
-        "privilege": "ListTagsForResource",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": "cluster"
-          }
-        ]
-      },
-      {
-        "access_level": "Tagging",
-        "description": "Grants permission to tag a MSK resource.",
-        "privilege": "TagResource",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": "cluster"
-          },
-          {
-            "condition_keys": [
-              "aws:RequestTag/${TagKey}",
-              "aws:TagKeys"
-            ],
-            "dependent_actions": [],
-            "resource_type": ""
-          }
-        ]
-      },
-      {
-        "access_level": "Tagging",
-        "description": "Grants permission to remove tags from a MSK resource.",
-        "privilege": "UntagResource",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": "cluster"
-          },
-          {
-            "condition_keys": [
-              "aws:TagKeys"
-            ],
-            "dependent_actions": [],
-            "resource_type": ""
-          }
-        ]
-      },
-      {
-        "access_level": "Write",
-        "description": "Updates the number of broker nodes of the cluster.",
-        "privilege": "UpdateBrokerCount",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": ""
-          }
-        ]
-      },
-      {
-        "access_level": "Write",
-        "description": "Updates the storage size of the broker nodes of the cluster",
-        "privilege": "UpdateBrokerStorage",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": ""
-          }
-        ]
-      },
-      {
-        "access_level": "Write",
-        "description": "Update Kafka configuration running on a cluster.",
-        "privilege": "UpdateClusterConfiguration",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": ""
-          }
-        ]
-      },
-      {
-        "access_level": "Write",
-        "description": "Updates the cluster to the specified Apache Kafka version.",
-        "privilege": "UpdateClusterKafkaVersion",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": ""
-          }
-        ]
-      },
-      {
-        "access_level": "Write",
-        "description": "Updates the monitoring settings for the cluster.",
-        "privilege": "UpdateMonitoring",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": ""
-          }
-        ]
-      }
-    ],
-    "resources": [
-      {
-        "arn": "arn:${Partition}:kafka:${Region}:${Account}:cluster/${ClusterName}/${UUID}",
-        "condition_keys": [
-          "aws:ResourceTag/${TagKey}"
-        ],
-        "resource": "cluster"
-      }
-    ],
-    "service_name": "Amazon Managed Streaming for Kafka"
   },
   {
     "conditions": [
@@ -69345,6 +70404,40 @@
         ]
       },
       {
+        "access_level": "Write",
+        "description": "Grants permission to enable or update server-side encryption using an AWS KMS key for a specified stream.",
+        "privilege": "StartStreamEncryption",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "kmsKey*"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "stream*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to disable server-side encryption for a specified stream.",
+        "privilege": "StopStreamEncryption",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "kmsKey*"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "stream*"
+          }
+        ]
+      },
+      {
         "access_level": "Read",
         "description": "Listening to a specific shard with enhanced fan-out.",
         "privilege": "SubscribeToShard",
@@ -69384,6 +70477,11 @@
         "arn": "arn:${Partition}:kinesis:${Region}:${Account}:${StreamType}/${StreamName}/consumer/${ConsumerName}:${ConsumerCreationTimpstamp}",
         "condition_keys": [],
         "resource": "consumer"
+      },
+      {
+        "arn": "arn:${Partition}:kms:${Region}:${Account}:key/${KeyId}",
+        "condition_keys": [],
+        "resource": "kmsKey"
       }
     ],
     "service_name": "Amazon Kinesis"
@@ -71680,6 +72778,21 @@
         "condition": "lambda:Principal",
         "description": "Filters access by restricting the AWS service or account that can invoke a function",
         "type": "String"
+      },
+      {
+        "condition": "lambda:SecurityGroupIds",
+        "description": "Filters access by the ID of security groups configured for the AWS Lambda function",
+        "type": "String"
+      },
+      {
+        "condition": "lambda:SubnetIds",
+        "description": "Filters access by the ID of subnets configured for the AWS Lambda function",
+        "type": "String"
+      },
+      {
+        "condition": "lambda:VpcIds",
+        "description": "Filters access by the ID of the VPC configured for the AWS Lambda function",
+        "type": "String"
       }
     ],
     "prefix": "lambda",
@@ -71753,7 +72866,10 @@
           },
           {
             "condition_keys": [
-              "lambda:Layer"
+              "lambda:Layer",
+              "lambda:VpcIds",
+              "lambda:SubnetIds",
+              "lambda:SecurityGroupIds"
             ],
             "dependent_actions": [],
             "resource_type": ""
@@ -71973,20 +73089,8 @@
       },
       {
         "access_level": "Read",
-        "description": "Grants permission to view details about a version of an AWS Lambda layer",
+        "description": "Grants permission to view details about a version of an AWS Lambda layer. Note this action also supports GetLayerVersionByArn API",
         "privilege": "GetLayerVersion",
-        "resource_types": [
-          {
-            "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": "layerVersion*"
-          }
-        ]
-      },
-      {
-        "access_level": "Read",
-        "description": "Grants permission to view details about a version of an AWS Lambda layer",
-        "privilege": "GetLayerVersionByArn",
         "resource_types": [
           {
             "condition_keys": [],
@@ -72343,7 +73447,10 @@
           },
           {
             "condition_keys": [
-              "lambda:Layer"
+              "lambda:Layer",
+              "lambda:VpcIds",
+              "lambda:SubnetIds",
+              "lambda:SecurityGroupIds"
             ],
             "dependent_actions": [],
             "resource_type": ""
@@ -100663,6 +101770,11 @@
         "type": "String"
       },
       {
+        "condition": "secretsmanager:BlockPublicPolicy",
+        "description": "Filters access by whether the resource policy blocks broad AWS account access.",
+        "type": "Boolean"
+      },
+      {
         "condition": "secretsmanager:Description",
         "description": "Filters access by the description text in the request.",
         "type": "String"
@@ -100746,6 +101858,11 @@
         "description": "Enables the user to create a secret that stores encrypted data that can be queried and rotated.",
         "privilege": "CreateSecret",
         "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Secret*"
+          },
           {
             "condition_keys": [
               "secretsmanager:Name",
@@ -100928,7 +102045,8 @@
             "condition_keys": [
               "secretsmanager:SecretId",
               "secretsmanager:resource/AllowRotationLambdaArn",
-              "secretsmanager:ResourceTag/tag-key"
+              "secretsmanager:ResourceTag/tag-key",
+              "secretsmanager:BlockPublicPolicy"
             ],
             "dependent_actions": [],
             "resource_type": ""
@@ -101081,6 +102199,27 @@
             "condition_keys": [
               "secretsmanager:SecretId",
               "secretsmanager:VersionStage",
+              "secretsmanager:resource/AllowRotationLambdaArn",
+              "secretsmanager:ResourceTag/tag-key"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Permissions management",
+        "description": "Enables the user to validate a resource policy before attaching policy.",
+        "privilege": "ValidateResourcePolicy",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Secret*"
+          },
+          {
+            "condition_keys": [
+              "secretsmanager:SecretId",
               "secretsmanager:resource/AllowRotationLambdaArn",
               "secretsmanager:ResourceTag/tag-key"
             ],
@@ -101628,6 +102767,18 @@
         "access_level": "Write",
         "description": "Grants permission to update insights in Security Hub",
         "privilege": "UpdateInsight",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "hub"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to update Security Hub configuration",
+        "privilege": "UpdateSecurityHubConfiguration",
         "resource_types": [
           {
             "condition_keys": [],
@@ -105954,6 +107105,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Grants permission to import application catalog from AWS Application Discovery Service",
+        "privilege": "ImportAppCatalog",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Grants permission to gather a complete list of on-premise servers",
         "privilege": "ImportServerCatalog",
         "resource_types": [
@@ -110179,10 +111342,15 @@
     "prefix": "states",
     "privileges": [
       {
-        "access_level": "Tagging",
+        "access_level": "Write",
         "description": "Creates an activity. Activities must poll Step Functions using the GetActivityTask and respond using SendTask* API calls.",
         "privilege": "CreateActivity",
         "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "activity*"
+          },
           {
             "condition_keys": [
               "aws:RequestTag/${TagKey}",
@@ -110194,10 +111362,15 @@
         ]
       },
       {
-        "access_level": "Tagging",
+        "access_level": "Write",
         "description": "Creates a state machine.",
         "privilege": "CreateStateMachine",
         "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "statemachine*"
+          },
           {
             "condition_keys": [
               "aws:RequestTag/${TagKey}",
@@ -110413,7 +111586,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "execution*"
           }
         ]
       },
@@ -113557,6 +114730,21 @@
     "privileges": [
       {
         "access_level": "Write",
+        "description": "Grants permission to create a new custom language model.",
+        "privilege": "CreateLanguageModel",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [
+              "s3:GetObject",
+              "s3:ListBucket"
+            ],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Grants permission to create a new custom vocabulary that you can use to change the way Amazon Transcribe Medical handles transcription of an audio file.",
         "privilege": "CreateMedicalVocabulary",
         "resource_types": [
@@ -113593,6 +114781,18 @@
             "dependent_actions": [
               "s3:GetObject"
             ],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to delete a previously created custom language model.",
+        "privilege": "DeleteLanguageModel",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
             "resource_type": ""
           }
         ]
@@ -113659,6 +114859,18 @@
       },
       {
         "access_level": "Read",
+        "description": "Grants permission to return information about a custom language model.",
+        "privilege": "DescribeLanguageModel",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
         "description": "Grants permission to return information about a medical transcription job.",
         "privilege": "GetMedicalTranscriptionJob",
         "resource_types": [
@@ -113709,6 +114921,18 @@
         "access_level": "Read",
         "description": "Grants permission to get information about a vocabulary filter.",
         "privilege": "GetVocabularyFilter",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to list custom language models.",
+        "privilege": "ListLanguageModels",
         "resource_types": [
           {
             "condition_keys": [],
@@ -117072,6 +118296,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Grants permission to disassociate Firewall Manager from the specified WebACL.",
+        "privilege": "DisassociateFirewallManager",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "webacl*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Grants permission disassociate a WebACL from an application resource.",
         "privilege": "DisassociateWebACL",
         "resource_types": [
@@ -117357,6 +118593,18 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to create FirewallManagedRulesGroups in the specified WebACL.",
+        "privilege": "PutFirewallManagerRuleGroups",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "webacl*"
           }
         ]
       },

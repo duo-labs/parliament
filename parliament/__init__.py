@@ -1,7 +1,7 @@
 """
 This library is a linter for AWS IAM policies.
 """
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 
 import fnmatch
 import functools

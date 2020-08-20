@@ -383,7 +383,6 @@ class Statement:
         location: Dictionary with information about where this problem is. Often set to:
             {"location": "string"}
         """
-
         if "jsoncfg.config_classes.ConfigJSONObject" in str(type(location)):
             node_location = jsoncfg.node_location(location)
             location = {"line": node_location.line, "column": node_location.column}
@@ -577,7 +576,7 @@ class Statement:
                             detail="Unknown condition {} for action {}:{}".format(
                                 key, action_struct["service"], action_struct["action"]
                             ),
-                            location={"location": condition_block},
+                            location=condition_block,
                         )
                         continue
 
@@ -601,7 +600,7 @@ class Statement:
                             detail="Type mismatch: {} requires a value of type {} but given {}".format(
                                 key, condition_type, values
                             ),
-                            location={"location": condition_block},
+                            location=condition_block,
                         )
 
                 if condition_type is not None:
@@ -623,7 +622,7 @@ class Statement:
                                     operator_type_requirement,
                                     translate_documentation_types(condition_type),
                                 ),
-                                location={"location": condition_block},
+                                location=condition_block,
                             )
                         else:
                             self.add_finding(
@@ -633,7 +632,7 @@ class Statement:
                                     operator_type_requirement,
                                     translate_documentation_types(condition_type),
                                 ),
-                                location={"location": condition_block},
+                                location=condition_block,
                             )
 
         return

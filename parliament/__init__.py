@@ -1,7 +1,7 @@
 """
 This library is a linter for AWS IAM policies.
 """
-__version__ = "1.1.0"
+__version__ = "1.2.0"
 
 import fnmatch
 import functools
@@ -62,7 +62,7 @@ def analyze_policy_string(
         policy_json = jsoncfg.loads_config(policy_str)
     except jsoncfg.parser.JSONConfigParserException as e:
         policy = Policy(None)
-        policy.add_finding("MALFORMED_JSON", detail="json parsing error: {}".format(e))
+        policy.add_finding("MALFORMED_JSON", detail="json parsing error: {}".format(e), location={'line': e.line, 'column': e.column})
         return policy
 
     policy = Policy(policy_json, filepath, config)

@@ -17,6 +17,6 @@ python3 -m "nose" tests/unit $PRIVATE_TESTS $COMMUNITY_TESTS \
 --with-coverage \
 --cover-package=parliament \
 --cover-html \
---cover-min-percentage=75 \
+--cover-min-percentage=70 \
 --cover-html-dir=htmlcov
 

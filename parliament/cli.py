@@ -22,13 +22,16 @@ from parliament.misc import make_list
 logger = logging.getLogger(__name__)
 
 
-def is_finding_filtered(finding, minimum_severity="LOW"):
+def is_finding_filtered(finding, minimum_severity="LOW", exclude_tags=set()):
     # Return True if the finding should be filtered (ie. return False if it should be displayed)
     minimum_severity = minimum_severity.upper()
     severity_choices = ["MUTE", "INFO", "LOW", "MEDIUM", "HIGH", "CRITICAL"]
     if severity_choices.index(finding.severity) < severity_choices.index(
         minimum_severity
     ):
+        return True
+
+    if any(tag.upper() in exclude_tags for tag in finding.tags):
         return True
 
     if finding.ignore_locations:
@@ -150,6 +153,13 @@ def main():
     parser.add_argument(
         "--exclude_pattern",
         help='File name regex pattern to exclude (ex. ".*venv.*")',
+        type=str,
+    )
+    parser.add_argument(
+        "--exclude",
+        help="Exclude findings with any tags in a comma-separated list."
+        "e.g. informational,community,sometag",
+        default="",
         type=str,
     )
     parser.add_argument(
@@ -343,9 +353,13 @@ def main():
         exit(-1)
 
     filtered_findings = []
+
+    # Remove empty and blank tags
+    exclude_tags = {tag.upper() for tag in args.exclude.split(",") if tag}
+
     for finding in findings:
         finding = enhance_finding(finding)
-        if not is_finding_filtered(finding, args.minimum_severity):
+        if not is_finding_filtered(finding, args.minimum_severity, exclude_tags):
             filtered_findings.append(finding)
 
     if len(filtered_findings) == 0:

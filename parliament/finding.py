@@ -8,6 +8,7 @@ class Finding:
     title = ""
     description = ""
     ignore_locations = {}
+    tags = set()
 
     def __init__(self, issue, detail, location):
         self.issue = issue

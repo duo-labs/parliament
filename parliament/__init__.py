@@ -42,6 +42,7 @@ def enhance_finding(finding):
     config_settings = config[finding.issue]
     finding.severity = config_settings["severity"]
     finding.title = config_settings["title"]
+    finding.tags = config_settings["tags"]
     finding.description = config_settings.get("description", "")
     finding.ignore_locations = config_settings.get("ignore_locations", None)
     return finding

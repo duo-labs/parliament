@@ -97,15 +97,25 @@ def no_white_space(string):
     return response
 
 
+def header_matches(string, table):
+    headers = [chomp(str(x)).lower() for x in table.find_all("th")]
+    match_found = False
+    for header in headers:
+        if string in header:
+            match_found = True
+    if not match_found:
+        return False
+    return True
+
 # Create the docs directory
 Path("docs").mkdir(parents=True, exist_ok=True)
 
-update_html_docs_directory("docs/")
+# update_html_docs_directory("docs/")
 
 mypath = "./docs/"
 schema = []
 
-# for filename in ['list_awsx-ray.html']:
+#for filename in ['list_amazons3.html']:
 for filename in [f for f in listdir(mypath) if isfile(join(mypath, f))]:
     if not filename.startswith("list_"):
         continue
@@ -118,7 +128,7 @@ for filename in [f for f in listdir(mypath) if isfile(join(mypath, f))]:
 
         # Get service name
         title = main_content.find("h1", class_="topictitle").text
-        title = re.sub(".*Actions, Resources, and Condition Keys for *", "", str(title))
+        title = re.sub(".*Actions, resources, and condition keys for *", "", str(title))
         title = title.replace("</h1>", "")
         service_name = chomp(title)
 
@@ -143,9 +153,7 @@ for filename in [f for f in listdir(mypath) if isfile(join(mypath, f))]:
         for table in tables:
             # There can be 3 tables, the actions table, an ARN table, and a condition key table
             # Example: https://docs.aws.amazon.com/IAM/latest/UserGuide/list_awssecuritytokenservice.html
-            if "<th> Actions </th>" not in [
-                chomp(str(x)) for x in table.find_all("th")
-            ]:
+            if not header_matches("actions", table) or not header_matches("description", table):
                 continue
 
             rows = table.find_all("tr")
@@ -160,10 +168,9 @@ for filename in [f for f in listdir(mypath) if isfile(join(mypath, f))]:
                     continue
 
                 if len(cells) != 6:
-                    # Sometimes the privilege might span multiple rows.
-                    # Example: amazonroute53-DisassociateVPCFromHostedZone
-                    # We should be handling this, but if we are not, then bail
-                    raise Exception("Unexpected format in {}: {}".format(prefix, row))
+                    # Sometimes the privilege contains Scenarios, and I don't know how to handle this
+                    break
+                    #raise Exception("Unexpected format in {}: {}".format(prefix, row))
 
                 # See if this cell spans multiple rows
                 rowspan = 1
@@ -195,7 +202,6 @@ for filename in [f for f in listdir(mypath) if isfile(join(mypath, f))]:
                         # "EC2-VPC-InstanceStore-Subnet"
 
                         resource_type = chomp(cells[resource_cell].text)
-
                         condition_keys_element = cells[resource_cell + 1]
                         condition_keys = []
                         if condition_keys_element.text != "":
@@ -238,15 +244,12 @@ for filename in [f for f in listdir(mypath) if isfile(join(mypath, f))]:
 
         # Get resource table
         for table in tables:
-            if "<th> Resource Types </th>" not in [
-                chomp(str(x)) for x in table.find_all("th")
-            ]:
+            if not header_matches("resource types", table) or not header_matches("arn", table):
                 continue
 
             rows = table.find_all("tr")
             for row in rows:
                 cells = row.find_all("td")
-
                 if len(cells) == 0:
                     # Skip the header row, which has th, not td cells
                     continue
@@ -271,9 +274,7 @@ for filename in [f for f in listdir(mypath) if isfile(join(mypath, f))]:
 
         # Get condition keys table
         for table in tables:
-            if "<th> Condition Keys </th>" not in [
-                chomp(str(x)) for x in table.find_all("th")
-            ] or "<th> Type </th>" not in [chomp(str(x)) for x in table.find_all("th")]:
+            if not (header_matches("<th> condition keys </th>", table) and header_matches("<th> type </th>", table)):
                 continue
 
             rows = table.find_all("tr")

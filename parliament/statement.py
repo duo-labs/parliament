@@ -588,7 +588,7 @@ class Statement:
                     if condition_type is None:
                         raise Exception(
                             "Action condition not found in service definition for {}".format(
-                                condition
+                                match
                             )
                         )
 

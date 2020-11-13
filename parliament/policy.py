@@ -32,13 +32,13 @@ class Policy:
         ):
             location_data = {}
             location_data["string"] = location[0]
-            location_data["lineno"] = jsoncfg.node_location(location[1])[0]
+            location_data["line"] = jsoncfg.node_location(location[1])[0]
             location_data["column"] = jsoncfg.node_location(location[1])[1]
             location = location_data
         elif "ConfigJSONScalar" in str(type(location)):
             location_data = {}
             location_data["string"] = location.value
-            location_data["lineno"] = jsoncfg.node_location(location).line
+            location_data["line"] = jsoncfg.node_location(location).line
             location_data["column"] = jsoncfg.node_location(location).column
             location = location_data
         if "filepath" not in location:

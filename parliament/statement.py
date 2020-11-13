@@ -316,7 +316,7 @@ class Statement:
                 # I don't think it makes sense to have a "NotAction" of "*", but I'm including this check anyway.
                 return False
 
-            for action_struct in expand_action(action, raise_exceptions=False):
+            for action_struct in expand_action(action.value, raise_exceptions=False):
                 if (
                     action_struct["service"] == privilege_prefix
                     and action_struct["action"] == privilege_name

@@ -1127,6 +1127,23 @@
     "privileges": [
       {
         "access_level": "Write",
+        "description": "Grants permission to apply an archive rule.",
+        "privilege": "ApplyArchiveRule",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Analyzer*"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "ArchiveRule*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Grants permission to create an analyzer.",
         "privilege": "CreateAnalyzer",
         "resource_types": [
@@ -10569,7 +10586,23 @@
     "service_name": "AWS Batch"
   },
   {
-    "conditions": [],
+    "conditions": [
+      {
+        "condition": "aws:RequestTag/${TagKey}",
+        "description": "Filters actions based on the presence of tag key-value pairs in the request",
+        "type": "String"
+      },
+      {
+        "condition": "aws:ResourceTag/${TagKey}",
+        "description": "Filters actions based on tag key-value pairs attached to the resource",
+        "type": "String"
+      },
+      {
+        "condition": "aws:TagKeys",
+        "description": "Filters actions based on the presence of tag keys in the request",
+        "type": "String"
+      }
+    ],
     "prefix": "braket",
     "privileges": [
       {
@@ -10580,7 +10613,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "quantum-task*"
           }
         ]
       },
@@ -10591,6 +10624,14 @@
         "resource_types": [
           {
             "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "quantum-task*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
             "dependent_actions": [],
             "resource_type": ""
           }
@@ -10616,7 +10657,19 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "quantum-task*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Lists the tags that have been applied to the quantum task resource.",
+        "privilege": "ListTagsForResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "quantum-task"
           }
         ]
       },
@@ -10643,15 +10696,148 @@
             "resource_type": ""
           }
         ]
+      },
+      {
+        "access_level": "Tagging",
+        "description": "Adds one or more tags to a quantum task.",
+        "privilege": "TagResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "quantum-task"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Tagging",
+        "description": "Remove one or more tags from a quantum task resource. A tag consists of a key-value pair",
+        "privilege": "UntagResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "quantum-task"
+          },
+          {
+            "condition_keys": [
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
       }
     ],
-    "resources": [],
+    "resources": [
+      {
+        "arn": "arn:${Partition}:braket:${Region}:${Account}:quantum-task/${RandomId}",
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
+        "resource": "quantum-task"
+      }
+    ],
     "service_name": "Amazon Braket"
   },
   {
     "conditions": [],
     "prefix": "budgets",
     "privileges": [
+      {
+        "access_level": "Write",
+        "description": "Grants permissions to create and define a response that you can configure to execute once your budget has exceeded a specific budget threshold.",
+        "privilege": "CreateBudgetAction",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [
+              "iam:PassRole"
+            ],
+            "resource_type": "budgetAction*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permissions to delete an action that is associated with a specific budget.",
+        "privilege": "DeleteBudgetAction",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "budgetAction*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permissions to retrieve the details of specific budget action associated with a budget.",
+        "privilege": "DescribeBudgetAction",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "budgetAction*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permissions to retrieve a historical view of the budget actions statuses associated with a particular budget action. These status include statues such as 'Standby', 'Pending' and 'Executed'.",
+        "privilege": "DescribeBudgetActionHistories",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "budgetAction*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permissions to retrieve the details of all of the budget actions associated with your account.",
+        "privilege": "DescribeBudgetActionsForAccount",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permissions to retrieve the details of all of the budget actions associated with a budget.",
+        "privilege": "DescribeBudgetActionsForBudget",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "budget*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permissions to initiate a pending budget action as well as reverse a previously executed budget action.",
+        "privilege": "ExecuteBudgetAction",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "budgetAction*"
+          }
+        ]
+      },
       {
         "access_level": "Write",
         "description": "Grants permissions to modify budgets and budget details",
@@ -10661,6 +10847,20 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "budget*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permissions to update the details of a specific budget action associated with a budget.",
+        "privilege": "UpdateBudgetAction",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [
+              "iam:PassRole"
+            ],
+            "resource_type": "budgetAction*"
           }
         ]
       },
@@ -10682,6 +10882,11 @@
         "arn": "arn:${Partition}:budgets::${Account}:budget/${BudgetName}",
         "condition_keys": [],
         "resource": "budget"
+      },
+      {
+        "arn": "arn:${Partition}:budgets::${Account}:budget/${BudgetName}/action/${ActionId}",
+        "condition_keys": [],
+        "resource": "budgetAction"
       }
     ],
     "service_name": "AWS Budget Service"
@@ -15654,7 +15859,7 @@
         "resource": "stackset"
       },
       {
-        "arn": "arn:${Partition}:cloudformation:${Region}:${Account}:changeSet/${ChangeSetName}:${Id}",
+        "arn": "arn:${Partition}:cloudformation:${Region}:${Account}:changeSet/${ChangeSetName}/${Id}",
         "condition_keys": [],
         "resource": "changeset"
       }
@@ -17593,7 +17798,7 @@
     "privileges": [
       {
         "access_level": "Write",
-        "description": "Deletes all specified alarms. In the event of an error, no alarms are deleted",
+        "description": "Grants permission to delete a collection of alarms",
         "privilege": "DeleteAlarms",
         "resource_types": [
           {
@@ -17605,7 +17810,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes the specified anomaly detection model from your account.",
+        "description": "Grants permission to delete the specified anomaly detection model from your account.",
         "privilege": "DeleteAnomalyDetector",
         "resource_types": [
           {
@@ -17617,7 +17822,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes all CloudWatch dashboards that you specify",
+        "description": "Grants permission to delete all CloudWatch dashboards that you specify",
         "privilege": "DeleteDashboards",
         "resource_types": [
           {
@@ -17629,7 +17834,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Grants permission to delete a collection of insight rules.",
+        "description": "Grants permission to delete a collection of insight rules",
         "privilege": "DeleteInsightRules",
         "resource_types": [
           {
@@ -17641,7 +17846,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Retrieves history for the specified alarm",
+        "description": "Grants permission to retrieve the history for the specified alarm",
         "privilege": "DescribeAlarmHistory",
         "resource_types": [
           {
@@ -17653,7 +17858,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Retrieves alarms with the specified names",
+        "description": "Grants permission to describe all alarms, currently owned by the user's account",
         "privilege": "DescribeAlarms",
         "resource_types": [
           {
@@ -17665,7 +17870,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Retrieves all alarms for a single metric",
+        "description": "Grants permission to describe all alarms configured on the specified metric, currently owned by the user's account",
         "privilege": "DescribeAlarmsForMetric",
         "resource_types": [
           {
@@ -17677,7 +17882,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Lists the anomaly detection models that you have created in your account.",
+        "description": "Grants permission to lists the anomaly detection models that you have created in your account.",
         "privilege": "DescribeAnomalyDetectors",
         "resource_types": [
           {
@@ -17689,7 +17894,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Grants permission to describe all insight rules, currently owned by the user's account.",
+        "description": "Grants permission to describe all insight rules, currently owned by the user's account",
         "privilege": "DescribeInsightRules",
         "resource_types": [
           {
@@ -17701,7 +17906,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Disables actions for the specified alarms",
+        "description": "Grants permission to disable actions for a collection of alarms",
         "privilege": "DisableAlarmActions",
         "resource_types": [
           {
@@ -17713,7 +17918,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Grants permission to disable a collection of insight rules.",
+        "description": "Grants permission to disable a collection of insight rules",
         "privilege": "DisableInsightRules",
         "resource_types": [
           {
@@ -17725,7 +17930,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Enables actions for the specified alarms",
+        "description": "Grants permission to enable actions for a collection of alarms",
         "privilege": "EnableAlarmActions",
         "resource_types": [
           {
@@ -17737,7 +17942,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Grants permission to enable a collection of insight rules.",
+        "description": "Grants permission to enable a collection of insight rules",
         "privilege": "EnableInsightRules",
         "resource_types": [
           {
@@ -17749,7 +17954,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Displays the details of the CloudWatch dashboard you specify",
+        "description": "Grants permission to display the details of the CloudWatch dashboard you specify",
         "privilege": "GetDashboard",
         "resource_types": [
           {
@@ -17761,7 +17966,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Grants permission to return the top-N report of unique contributors over a time range for a given insight rule.",
+        "description": "Grants permission to return the top-N report of unique contributors over a time range for a given insight rule",
         "privilege": "GetInsightRuleReport",
         "resource_types": [
           {
@@ -17773,7 +17978,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Required to retrieve batch amounts of CloudWatch metric data and perform metric math on retrieved data",
+        "description": "Grants permission to retrieve batch amounts of CloudWatch metric data and perform metric math on retrieved data",
         "privilege": "GetMetricData",
         "resource_types": [
           {
@@ -17785,7 +17990,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Gets statistics for the specified metric",
+        "description": "Grants permission to retrieve statistics for the specified metric",
         "privilege": "GetMetricStatistics",
         "resource_types": [
           {
@@ -17797,7 +18002,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Required to retrieve snapshots of metric widgets",
+        "description": "Grants permission to retrieve snapshots of metric widgets",
         "privilege": "GetMetricWidgetImage",
         "resource_types": [
           {
@@ -17809,7 +18014,7 @@
       },
       {
         "access_level": "List",
-        "description": "Returns a list of all CloudWatch dashboards in your account",
+        "description": "Grants permission to return a list of all CloudWatch dashboards in your account",
         "privilege": "ListDashboards",
         "resource_types": [
           {
@@ -17821,7 +18026,7 @@
       },
       {
         "access_level": "List",
-        "description": "Returns a list of valid metrics stored for the AWS account owner",
+        "description": "Grants permission to retrieve a list of valid metrics stored for the AWS account owner",
         "privilege": "ListMetrics",
         "resource_types": [
           {
@@ -17833,7 +18038,7 @@
       },
       {
         "access_level": "List",
-        "description": "This action lists tags for an Amazon CloudWatch resource.",
+        "description": "Grants permission to list tags for an Amazon CloudWatch resource",
         "privilege": "ListTagsForResource",
         "resource_types": [
           {
@@ -17850,7 +18055,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Creates or updates an anomaly detection model for a CloudWatch metric.",
+        "description": "Grants permission to create or update an anomaly detection model for a CloudWatch metric.",
         "privilege": "PutAnomalyDetector",
         "resource_types": [
           {
@@ -17862,7 +18067,27 @@
       },
       {
         "access_level": "Write",
-        "description": "Creates a CloudWatch dashboard, or updates an existing dashboard if it already exists",
+        "description": "Grants permission to create or update a composite alarm",
+        "privilege": "PutCompositeAlarm",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "alarm*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to create a CloudWatch dashboard, or update an existing dashboard if it already exists",
         "privilege": "PutDashboard",
         "resource_types": [
           {
@@ -17874,7 +18099,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Grants permission to create a new insight rule or replace an existing insight rule.",
+        "description": "Grants permission to create a new insight rule or replace an existing insight rule",
         "privilege": "PutInsightRule",
         "resource_types": [
           {
@@ -17894,7 +18119,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Creates or updates an alarm and associates it with the specified Amazon CloudWatch metric",
+        "description": "Grants permission to create or update an alarm and associates it with the specified Amazon CloudWatch metric",
         "privilege": "PutMetricAlarm",
         "resource_types": [
           {
@@ -17914,7 +18139,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Publishes metric data points to Amazon CloudWatch",
+        "description": "Grants permission to publish metric data points to Amazon CloudWatch",
         "privilege": "PutMetricData",
         "resource_types": [
           {
@@ -17928,7 +18153,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Temporarily sets the state of an alarm for testing purposes",
+        "description": "Grants permission to temporarily set the state of an alarm for testing purposes",
         "privilege": "SetAlarmState",
         "resource_types": [
           {
@@ -17940,7 +18165,7 @@
       },
       {
         "access_level": "Tagging",
-        "description": "This action tags an Amazon CloudWatch resource.",
+        "description": "Grants permission to add tags to an Amazon CloudWatch resource",
         "privilege": "TagResource",
         "resource_types": [
           {
@@ -17965,7 +18190,7 @@
       },
       {
         "access_level": "Tagging",
-        "description": "This action removes a tag from an Amazon CloudWatch resource.",
+        "description": "Grants permission to remove a tag from an Amazon CloudWatch resource",
         "privilege": "UntagResource",
         "resource_types": [
           {
@@ -22515,6 +22740,11 @@
         "type": "String"
       },
       {
+        "condition": "codestar-connections:HostArn",
+        "description": "Filters access by the host resource associated with the connection used in the request",
+        "type": "String"
+      },
+      {
         "condition": "codestar-connections:InstallationId",
         "description": "Filters access by the third-party ID (such as the Bitbucket App installation ID for CodeStar Connections) that is used to update a Connection. Allows you to restrict which third-party App installations can be used to make a Connection",
         "type": "String"
@@ -22575,6 +22805,20 @@
       },
       {
         "access_level": "Write",
+        "description": "Grants permission to create a host resource",
+        "privilege": "CreateHost",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "codestar-connections:ProviderType"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Grants permission to delete a Connection resource",
         "privilege": "DeleteConnection",
         "resource_types": [
@@ -22582,6 +22826,18 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "Connection*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to delete a host resource",
+        "privilege": "DeleteHost",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Host*"
           }
         ]
       },
@@ -22594,6 +22850,18 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "Connection*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to get details about a host resource",
+        "privilege": "GetHost",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Host*"
           }
         ]
       },
@@ -22631,6 +22899,20 @@
         "access_level": "List",
         "description": "Grants permission to list Connection resources",
         "privilege": "ListConnections",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "codestar-connections:ProviderTypeFilter"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to list host resources",
+        "privilege": "ListHosts",
         "resource_types": [
           {
             "condition_keys": [
@@ -22681,6 +22963,34 @@
           {
             "condition_keys": [
               "codestar-connections:PassedToService"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to associate a third party server, such as a GitHub Enterprise Server instance, with a Host",
+        "privilege": "RegisterAppCode",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "codestar-connections:HostArn"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to associate a third party server, such as a GitHub Enterprise Server instance, with a Host",
+        "privilege": "StartAppRegistrationHandshake",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "codestar-connections:HostArn"
             ],
             "dependent_actions": [],
             "resource_type": ""
@@ -22792,6 +23102,11 @@
         "arn": "arn:${Partition}:codestar-connections:${Region}:${Account}:connection/${ConnectionId}",
         "condition_keys": [],
         "resource": "Connection"
+      },
+      {
+        "arn": "arn:${Partition}:codestar-connections:${Region}:${Account}:host/${HostId}",
+        "condition_keys": [],
+        "resource": "Host"
       }
     ],
     "service_name": "AWS CodeStar Connections"
@@ -24918,6 +25233,26 @@
         "condition": "aws:TagKeys",
         "description": "Filters access to create requests based on the presence of mandatory tags in the request",
         "type": "String"
+      },
+      {
+        "condition": "comprehend:OutputKmsKey",
+        "description": "The output KMS key associated with the resource in the request.",
+        "type": "ARN"
+      },
+      {
+        "condition": "comprehend:VolumeKmsKey",
+        "description": "The volume KMS key associated with the resource in the request.",
+        "type": "ARN"
+      },
+      {
+        "condition": "comprehend:VpcSecurityGroupIds",
+        "description": "The list of all VPC security group ids associated with the resource in the request.",
+        "type": "ArrayOfString"
+      },
+      {
+        "condition": "comprehend:VpcSubnets",
+        "description": "The list of all VPC subnets associated with the resource in the request.",
+        "type": "ArrayOfString"
       }
     ],
     "prefix": "comprehend",
@@ -25002,7 +25337,11 @@
           {
             "condition_keys": [
               "aws:RequestTag/${TagKey}",
-              "aws:TagKeys"
+              "aws:TagKeys",
+              "comprehend:VolumeKmsKey",
+              "comprehend:OutputKmsKey",
+              "comprehend:VpcSecurityGroupIds",
+              "comprehend:VpcSubnets"
             ],
             "dependent_actions": [],
             "resource_type": ""
@@ -25042,7 +25381,10 @@
           {
             "condition_keys": [
               "aws:RequestTag/${TagKey}",
-              "aws:TagKeys"
+              "aws:TagKeys",
+              "comprehend:VolumeKmsKey",
+              "comprehend:VpcSecurityGroupIds",
+              "comprehend:VpcSubnets"
             ],
             "dependent_actions": [],
             "resource_type": ""
@@ -25443,6 +25785,16 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "document-classifier*"
+          },
+          {
+            "condition_keys": [
+              "comprehend:VolumeKmsKey",
+              "comprehend:OutputKmsKey",
+              "comprehend:VpcSecurityGroupIds",
+              "comprehend:VpcSubnets"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -25452,7 +25804,12 @@
         "privilege": "StartDominantLanguageDetectionJob",
         "resource_types": [
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "comprehend:VolumeKmsKey",
+              "comprehend:OutputKmsKey",
+              "comprehend:VpcSecurityGroupIds",
+              "comprehend:VpcSubnets"
+            ],
             "dependent_actions": [],
             "resource_type": ""
           }
@@ -25467,6 +25824,16 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "entity-recognizer"
+          },
+          {
+            "condition_keys": [
+              "comprehend:VolumeKmsKey",
+              "comprehend:OutputKmsKey",
+              "comprehend:VpcSecurityGroupIds",
+              "comprehend:VpcSubnets"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -25476,7 +25843,12 @@
         "privilege": "StartKeyPhrasesDetectionJob",
         "resource_types": [
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "comprehend:VolumeKmsKey",
+              "comprehend:OutputKmsKey",
+              "comprehend:VpcSecurityGroupIds",
+              "comprehend:VpcSubnets"
+            ],
             "dependent_actions": [],
             "resource_type": ""
           }
@@ -25488,7 +25860,9 @@
         "privilege": "StartPiiEntitiesDetectionJob",
         "resource_types": [
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "comprehend:OutputKmsKey"
+            ],
             "dependent_actions": [],
             "resource_type": ""
           }
@@ -25500,7 +25874,12 @@
         "privilege": "StartSentimentDetectionJob",
         "resource_types": [
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "comprehend:VolumeKmsKey",
+              "comprehend:OutputKmsKey",
+              "comprehend:VpcSecurityGroupIds",
+              "comprehend:VpcSubnets"
+            ],
             "dependent_actions": [],
             "resource_type": ""
           }
@@ -25512,7 +25891,12 @@
         "privilege": "StartTopicsDetectionJob",
         "resource_types": [
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "comprehend:VolumeKmsKey",
+              "comprehend:OutputKmsKey",
+              "comprehend:VpcSecurityGroupIds",
+              "comprehend:VpcSubnets"
+            ],
             "dependent_actions": [],
             "resource_type": ""
           }
@@ -28031,6 +28415,615 @@
       }
     ],
     "service_name": "AWS Cost and Usage Report"
+  },
+  {
+    "conditions": [
+      {
+        "condition": "aws:RequestTag/${TagKey}",
+        "description": "Filters actions based on the tags that are passed in the request",
+        "type": "String"
+      },
+      {
+        "condition": "aws:ResourceTag/${TagKey}",
+        "description": "Filters actions based on the tags associated with the resource",
+        "type": "String"
+      },
+      {
+        "condition": "aws:TagKeys",
+        "description": "Filters actions based on the tag keys that are passed in the request",
+        "type": "String"
+      }
+    ],
+    "prefix": "databrew",
+    "privileges": [
+      {
+        "access_level": "Write",
+        "description": "Grants permission to delete one or more recipe versions",
+        "privilege": "BatchDeleteRecipeVersion",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Recipe*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to create a dataset",
+        "privilege": "CreateDataset",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to create a profile job",
+        "privilege": "CreateProfileJob",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to create a project",
+        "privilege": "CreateProject",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to create a recipe",
+        "privilege": "CreateRecipe",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to create a recipe job",
+        "privilege": "CreateRecipeJob",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to create a schedule",
+        "privilege": "CreateSchedule",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to delete a dataset",
+        "privilege": "DeleteDataset",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Dataset*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to delete a job",
+        "privilege": "DeleteJob",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Job*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to delete a project",
+        "privilege": "DeleteProject",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Project*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to delete a recipe version",
+        "privilege": "DeleteRecipeVersion",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Recipe*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to delete a schedule",
+        "privilege": "DeleteSchedule",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Schedule*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to view details about a dataset",
+        "privilege": "DescribeDataset",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Dataset*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to view details about a job",
+        "privilege": "DescribeJob",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Job*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to view details about a project",
+        "privilege": "DescribeProject",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Project*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to view details about a recipe",
+        "privilege": "DescribeRecipe",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Recipe*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to view details about a schedule",
+        "privilege": "DescribeSchedule",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Schedule*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to list datasets in your account",
+        "privilege": "ListDatasets",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Dataset*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to list job runs for a given job",
+        "privilege": "ListJobRuns",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Job*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to list jobs in your account",
+        "privilege": "ListJobs",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to list projects in your account",
+        "privilege": "ListProjects",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to list versions in your recipe",
+        "privilege": "ListRecipeVersions",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Recipe*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to list recipes in your account",
+        "privilege": "ListRecipes",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to list schedules in your account",
+        "privilege": "ListSchedules",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Schedule*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to retrieve tags associated with a resource",
+        "privilege": "ListTagsForResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Dataset"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Job"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Project"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Recipe"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Schedule"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to publish a major verison of a recipe",
+        "privilege": "PublishRecipe",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Recipe*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to submit an action to the interactive session for a project",
+        "privilege": "SendProjectSessionAction",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Project*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to start running a job",
+        "privilege": "StartJobRun",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Job*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to start an interactive session for a project",
+        "privilege": "StartProjectSession",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Project*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to stop a job run for a job",
+        "privilege": "StopJobRun",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Job*"
+          }
+        ]
+      },
+      {
+        "access_level": "Tagging",
+        "description": "Grants permission to add tags to a resource",
+        "privilege": "TagResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Dataset"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Job"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Project"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Recipe"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Schedule"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Tagging",
+        "description": "Grants permission to remove tags associated with a resource",
+        "privilege": "UntagResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Dataset"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Job"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Project"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Recipe"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Schedule"
+          },
+          {
+            "condition_keys": [
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to modify a dataset",
+        "privilege": "UpdateDataset",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Dataset*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to modify a profile job",
+        "privilege": "UpdateProfileJob",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Job*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to modify a project",
+        "privilege": "UpdateProject",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Project*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to modify a recipe",
+        "privilege": "UpdateRecipe",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Recipe*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to modify a recipe job",
+        "privilege": "UpdateRecipeJob",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Job*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to modify a schedule",
+        "privilege": "UpdateSchedule",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Schedule*"
+          }
+        ]
+      }
+    ],
+    "resources": [
+      {
+        "arn": "arn:${Partition}:databrew::${Account}:project/${ResourceId}",
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
+        "resource": "Project"
+      },
+      {
+        "arn": "arn:${Partition}:databrew::${Account}:dataset/${ResourceId}",
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
+        "resource": "Dataset"
+      },
+      {
+        "arn": "arn:${Partition}:databrew::${Account}:recipe/${ResourceId}",
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
+        "resource": "Recipe"
+      },
+      {
+        "arn": "arn:${Partition}:databrew::${Account}:job/${ResourceId}",
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
+        "resource": "Job"
+      },
+      {
+        "arn": "arn:${Partition}:databrew::${Account}:schedule/${ResourceId}",
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
+        "resource": "Schedule"
+      }
+    ],
+    "service_name": "AWS Glue DataBrew"
   },
   {
     "conditions": [
@@ -44516,22 +45509,22 @@
     "conditions": [
       {
         "condition": "aws:RequestTag/${TagKey}",
-        "description": "Filters create requests based on the allowed set of values for each of the tags.",
+        "description": "Filters create requests based on the allowed set of values for each of the tags",
         "type": "String"
       },
       {
         "condition": "aws:ResourceTag/${TagKey}",
-        "description": "Filters actions based on tag-value associated with the resource.",
+        "description": "Filters actions based on tag-value associated with the resource",
         "type": "String"
       },
       {
         "condition": "aws:TagKeys",
-        "description": "Filters create requests based on the presence of mandatory tags in the request.",
+        "description": "Filters create requests based on the presence of mandatory tags in the request",
         "type": "String"
       },
       {
         "condition": "ecr:ResourceTag/${TagKey}",
-        "description": "Filters actions based on tag-value associated with the resource.",
+        "description": "Filters actions based on tag-value associated with the resource",
         "type": "String"
       }
     ],
@@ -44762,7 +45755,7 @@
         ]
       },
       {
-        "access_level": "Read",
+        "access_level": "List",
         "description": "Grants permission to list the tags for an Amazon ECR resource",
         "privilege": "ListTagsForResource",
         "resource_types": [
@@ -48386,6 +49379,11 @@
         "privilege": "ClientMount",
         "resource_types": [
           {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "file-system*"
+          },
+          {
             "condition_keys": [
               "elasticfilesystem:AccessPointArn"
             ],
@@ -51476,6 +52474,11 @@
         "type": "String"
       },
       {
+        "condition": "events:ManagedBy",
+        "description": "Used internally by AWS services. If a rule is created by an AWS service on your behalf, the value is the principal name of the service that created the rule.",
+        "type": "String"
+      },
+      {
         "condition": "events:TargetArn",
         "description": "The ARN of a target that can be put to a rule.",
         "type": "ARN"
@@ -51510,7 +52513,7 @@
     "privileges": [
       {
         "access_level": "Write",
-        "description": "Activates a partner event source that has been deactivated. Once activated, your matching event bus will start receiving events from the event source.",
+        "description": "Grants permission to activate partner event sources",
         "privilege": "ActivateEventSource",
         "resource_types": [
           {
@@ -51522,7 +52525,31 @@
       },
       {
         "access_level": "Write",
-        "description": "Creates a new event bus within your account. This can be a custom event bus which you can use to receive events from your own custom applications and services, or it can be a partner event bus which can be matched to a partner event source.",
+        "description": "Grants permission to cancel a replay",
+        "privilege": "CancelReplay",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "replay*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to create a new archive",
+        "privilege": "CreateArchive",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "archive*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to create event buses",
         "privilege": "CreateEventBus",
         "resource_types": [
           {
@@ -51542,7 +52569,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Called by an AWS partner to create a partner event source.",
+        "description": "Grants permission to create partner event sources",
         "privilege": "CreatePartnerEventSource",
         "resource_types": [
           {
@@ -51554,7 +52581,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Called by an AWS partner to create a partner event source.",
+        "description": "Grants permission to deactivate event sources",
         "privilege": "DeactivateEventSource",
         "resource_types": [
           {
@@ -51566,7 +52593,19 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes the specified custom event bus or partner event bus. All rules associated with this event bus are also deleted. You can't delete your account's default event bus.",
+        "description": "Grants permission to delete an archive",
+        "privilege": "DeleteArchive",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "archive*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to delete event buses",
         "privilege": "DeleteEventBus",
         "resource_types": [
           {
@@ -51578,7 +52617,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Called by an AWS partner to delete a partner event source.",
+        "description": "Grants permission to delete partner event sources",
         "privilege": "DeletePartnerEventSource",
         "resource_types": [
           {
@@ -51590,7 +52629,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes a rule. You must remove all targets from a rule using RemoveTargets before you can delete the rule.",
+        "description": "Grants permission to delete rules",
         "privilege": "DeleteRule",
         "resource_types": [
           {
@@ -51602,7 +52641,19 @@
       },
       {
         "access_level": "Read",
-        "description": "Displays the external AWS accounts that are permitted to write events to your account using your account's event bus, and the associated policy.",
+        "description": "Grants permission to retrieve details about an archive",
+        "privilege": "DescribeArchive",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "archive*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to retrieve details about event buses",
         "privilege": "DescribeEventBus",
         "resource_types": [
           {
@@ -51614,7 +52665,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Describes the details of the specified partner event source that is shared with your account.",
+        "description": "Grants permission to retrieve details about event sources",
         "privilege": "DescribeEventSource",
         "resource_types": [
           {
@@ -51626,7 +52677,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Called by an AWS partner describe the details of the specified partner event source that they have created.",
+        "description": "Grants permission to retrieve details about partner event sources",
         "privilege": "DescribePartnerEventSource",
         "resource_types": [
           {
@@ -51638,7 +52689,19 @@
       },
       {
         "access_level": "Read",
-        "description": "Describes the details of the specified rule.",
+        "description": "Grants permission to retrieve the details of a replay",
+        "privilege": "DescribeReplay",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "replay*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to retrieve details about rules",
         "privilege": "DescribeRule",
         "resource_types": [
           {
@@ -51650,7 +52713,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Disables a rule. A disabled rule won't match any events, and won't self-trigger if it has a schedule expression.",
+        "description": "Grants permission to disable rules",
         "privilege": "DisableRule",
         "resource_types": [
           {
@@ -51662,7 +52725,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Enables a rule. If the rule does not exist, the operation fails.",
+        "description": "Grants permissions to enable rules",
         "privilege": "EnableRule",
         "resource_types": [
           {
@@ -51674,7 +52737,19 @@
       },
       {
         "access_level": "List",
-        "description": "Lists all the event buses in your account, including the default event bus, custom event buses, and partner event buses.",
+        "description": "Grants permission to retrieve a list of archives",
+        "privilege": "ListArchives",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to to retrieve a list of the event buses in your account",
         "privilege": "ListEventBuses",
         "resource_types": [
           {
@@ -51686,7 +52761,7 @@
       },
       {
         "access_level": "List",
-        "description": "Lists the event sources shared with this account.",
+        "description": "Grants permission to to retrieve a list of event sources shared with this account",
         "privilege": "ListEventSources",
         "resource_types": [
           {
@@ -51698,7 +52773,7 @@
       },
       {
         "access_level": "List",
-        "description": "Called by an AWS partner to display the AWS account ID that the specified partner event source is associated with.",
+        "description": "Grants permission to retrieve a list of AWS account IDs associated with an event source",
         "privilege": "ListPartnerEventSourceAccounts",
         "resource_types": [
           {
@@ -51710,7 +52785,7 @@
       },
       {
         "access_level": "List",
-        "description": "Called by an AWS partner to list all the partner event sources that they have created.",
+        "description": "Grants permission to retrieve a list partner event sources",
         "privilege": "ListPartnerEventSources",
         "resource_types": [
           {
@@ -51722,7 +52797,19 @@
       },
       {
         "access_level": "List",
-        "description": "Lists the names of the rules that the given target is put to.",
+        "description": "Grants permission to retrieve a list of replays",
+        "privilege": "ListReplays",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to retrieve a list of the names of the rules associated with a target",
         "privilege": "ListRuleNamesByTarget",
         "resource_types": [
           {
@@ -51734,7 +52821,7 @@
       },
       {
         "access_level": "List",
-        "description": "Lists the Amazon EventBridge rules in your account.",
+        "description": "Grants permission to retrieve a list of the Amazon EventBridge rules in the account",
         "privilege": "ListRules",
         "resource_types": [
           {
@@ -51746,7 +52833,7 @@
       },
       {
         "access_level": "List",
-        "description": "This action lists tags for an Amazon EventBridge resource.",
+        "description": "Grants permission to retrieve a list of tags associated with an Amazon EventBridge resource",
         "privilege": "ListTagsForResource",
         "resource_types": [
           {
@@ -51763,7 +52850,7 @@
       },
       {
         "access_level": "List",
-        "description": "Lists of targets assigned to the rule.",
+        "description": "Grants permission to retrieve a list of targets defined for a rule",
         "privilege": "ListTargetsByRule",
         "resource_types": [
           {
@@ -51775,7 +52862,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Sends custom events to Amazon EventBridge so that they can be matched to rules.",
+        "description": "Grants permission to send custom events to Amazon EventBridge",
         "privilege": "PutEvents",
         "resource_types": [
           {
@@ -51787,7 +52874,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Sends custom events to Amazon EventBridge so that they can be matched to rules.",
+        "description": "Grants permission to sends custom events to Amazon EventBridge",
         "privilege": "PutPartnerEvents",
         "resource_types": [
           {
@@ -51799,7 +52886,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Running PutPermission permits the specified AWS account to put events to your account's default event bus.",
+        "description": "Grants permission to use the PutPermission action to grants permission to another AWS account to put events to your default event bus",
         "privilege": "PutPermission",
         "resource_types": [
           {
@@ -51811,7 +52898,7 @@
       },
       {
         "access_level": "Tagging",
-        "description": "Creates or updates a rule. Rules are enabled by default, or based on value of the State parameter.",
+        "description": "Grants permission to create or updates rules",
         "privilege": "PutRule",
         "resource_types": [
           {
@@ -51836,7 +52923,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Adds target(s) to a rule. Targets are the resources that can be invoked when a rule is triggered.",
+        "description": "Grants permission to add targets to a rule",
         "privilege": "PutTargets",
         "resource_types": [
           {
@@ -51855,7 +52942,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Revokes the permission of another AWS account to be able to put events to your default event bus.",
+        "description": "Grants permission to revoke the permission of another AWS account to put events to your default event bus",
         "privilege": "RemovePermission",
         "resource_types": [
           {
@@ -51867,7 +52954,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Removes target(s) from a rule so that when the rule is triggered, those targets will no longer be invoked.",
+        "description": "Grants permission to removes targets from a rule",
         "privilege": "RemoveTargets",
         "resource_types": [
           {
@@ -51878,8 +52965,20 @@
         ]
       },
       {
+        "access_level": "Write",
+        "description": "Grants permission to start a replay of an archive",
+        "privilege": "StartReplay",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "archive*"
+          }
+        ]
+      },
+      {
         "access_level": "Tagging",
-        "description": "This action tags an Amazon EventBridge resource.",
+        "description": "Grants permission to add a tag to an Amazon EventBridge resource",
         "privilege": "TagResource",
         "resource_types": [
           {
@@ -51904,7 +53003,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Tests whether an event pattern matches the provided event.",
+        "description": "Grants permissions to test whether an event pattern matches the provided event",
         "privilege": "TestEventPattern",
         "resource_types": [
           {
@@ -51916,7 +53015,7 @@
       },
       {
         "access_level": "Tagging",
-        "description": "This action removes a tag from an Amazon EventBridge resource.",
+        "description": "Grants permission to remove a tag from an Amazon EventBridge resource",
         "privilege": "UntagResource",
         "resource_types": [
           {
@@ -51935,6 +53034,18 @@
             ],
             "dependent_actions": [],
             "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to update an archive",
+        "privilege": "UpdateArchive",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "archive*"
           }
         ]
       }
@@ -51958,6 +53069,16 @@
           "aws:ResourceTag/${TagKey}"
         ],
         "resource": "rule"
+      },
+      {
+        "arn": "arn:${Partition}:events:${Region}:${Account}:archive/${ArchiveName}",
+        "condition_keys": [],
+        "resource": "archive"
+      },
+      {
+        "arn": "arn:${Partition}:events:${Region}:${Account}:replay/${ReplayName}",
+        "condition_keys": [],
+        "resource": "replay"
       }
     ],
     "service_name": "Amazon EventBridge"
@@ -53346,6 +54467,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Deletes an entity type. You cannot delete an entity type that is included in an event type.",
+        "privilege": "DeleteEntityType",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "entity-type*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Deletes the specified event.",
         "privilege": "DeleteEvent",
         "resource_types": [
@@ -53358,6 +54491,78 @@
       },
       {
         "access_level": "Write",
+        "description": "Deletes an event type. You cannot delete an event type that is used in a detector or a model.",
+        "privilege": "DeleteEventType",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "event-type*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Removes a SageMaker model from Amazon Fraud Detector. You can remove an Amazon SageMaker model if it is not associated with a detector version.",
+        "privilege": "DeleteExternalModel",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "external-model*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Deletes a label. You cannot delete labels that are included in an event type in Amazon Fraud Detector. You cannot delete a label assigned to an event ID. You must first delete the relevant event ID.",
+        "privilege": "DeleteLabel",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "label*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Deletes a model. You can delete models and model versions in Amazon Fraud Detector, provided that they are not associated with a detector version.",
+        "privilege": "DeleteModel",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "model*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Deletes a model version. You can delete models and model versions in Amazon Fraud Detector, provided that they are not associated with a detector version.",
+        "privilege": "DeleteModelVersion",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "model-version*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Deletes an outcome. You cannot delete an outcome that is used in a rule version.",
+        "privilege": "DeleteOutcome",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "outcome*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Deletes the rule. You cannot delete a rule if it is used by an ACTIVE or INACTIVE detector version.",
         "privilege": "DeleteRule",
         "resource_types": [
@@ -53365,6 +54570,18 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "rule*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Deletes a variable. You cannot delete variables that are included in an event type in Amazon Fraud Detector.",
+        "privilege": "DeleteVariable",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "variable*"
           }
         ]
       },
@@ -64315,6 +65532,18 @@
       },
       {
         "access_level": "List",
+        "description": "Returns a list of images created by the specified pipeline",
+        "privilege": "ListImagePipelineImages",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "imagePipeline*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
         "description": "List the image pipelines in your account",
         "privilege": "ListImagePipelines",
         "resource_types": [
@@ -65154,6 +66383,11 @@
         "type": "Bool"
       },
       {
+        "condition": "iot:DomainName",
+        "description": "Filters actions based on the domain name of an IoT DomainConfiguration",
+        "type": "String"
+      },
+      {
         "condition": "iot:ThingGroupArn",
         "description": "The list of all IoT Thing Group ARNs that the destination IoT Thing belongs to for an IoT Tunnel",
         "type": "String"
@@ -65174,7 +66408,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "cert*"
           }
         ]
       },
@@ -65329,7 +66563,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "cert*"
           }
         ]
       },
@@ -65426,6 +66660,14 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "authorizer*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -65487,9 +66729,15 @@
         "privilege": "CreateDomainConfiguration",
         "resource_types": [
           {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "domainconfiguration*"
+          },
+          {
             "condition_keys": [
               "aws:RequestTag/${TagKey}",
-              "aws:TagKeys"
+              "aws:TagKeys",
+              "iot:DomainName"
             ],
             "dependent_actions": [],
             "resource_type": ""
@@ -65606,6 +66854,14 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
+            "resource_type": "policy*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
             "resource_type": ""
           }
         ]
@@ -65643,6 +66899,14 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "provisioningtemplate*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -65667,6 +66931,14 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "rolealias*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -67091,7 +68363,7 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "policy*"
           }
         ]
       },
@@ -67211,12 +68483,27 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
+            "resource_type": "authorizer"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
             "resource_type": "billinggroup"
           },
           {
             "condition_keys": [],
             "dependent_actions": [],
+            "resource_type": "cacert"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
             "resource_type": "dimension"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "domainconfiguration"
           },
           {
             "condition_keys": [],
@@ -67237,6 +68524,21 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "otaupdate"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "policy"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "provisioningtemplate"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "rolealias"
           },
           {
             "condition_keys": [],
@@ -67502,7 +68804,10 @@
         "privilege": "RegisterCACertificate",
         "resource_types": [
           {
-            "condition_keys": [],
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
             "dependent_actions": [],
             "resource_type": ""
           }
@@ -67754,12 +69059,27 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
+            "resource_type": "authorizer"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
             "resource_type": "billinggroup"
           },
           {
             "condition_keys": [],
             "dependent_actions": [],
+            "resource_type": "cacert"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
             "resource_type": "dimension"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "domainconfiguration"
           },
           {
             "condition_keys": [],
@@ -67780,6 +69100,21 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "otaupdate"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "policy"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "provisioningtemplate"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "rolealias"
           },
           {
             "condition_keys": [],
@@ -67865,12 +69200,27 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
+            "resource_type": "authorizer"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
             "resource_type": "billinggroup"
           },
           {
             "condition_keys": [],
             "dependent_actions": [],
+            "resource_type": "cacert"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
             "resource_type": "dimension"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "domainconfiguration"
           },
           {
             "condition_keys": [],
@@ -67891,6 +69241,21 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "otaupdate"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "policy"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "provisioningtemplate"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "rolealias"
           },
           {
             "condition_keys": [],
@@ -68300,17 +69665,23 @@
       },
       {
         "arn": "arn:${Partition}:iot:${Region}:${Account}:rolealias/${RoleAlias}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "rolealias"
       },
       {
         "arn": "arn:${Partition}:iot:${Region}:${Account}:authorizer/${AuthorizerName}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "authorizer"
       },
       {
         "arn": "arn:${Partition}:iot:${Region}:${Account}:policy/${PolicyName}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "policy"
       },
       {
@@ -68320,7 +69691,9 @@
       },
       {
         "arn": "arn:${Partition}:iot:${Region}:${Account}:cacert/${CACertificate}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "cacert"
       },
       {
@@ -68374,12 +69747,16 @@
       },
       {
         "arn": "arn:${Partition}:iot:${Region}:${Account}:provisioningtemplate/${provisioningTemplate}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "provisioningtemplate"
       },
       {
         "arn": "arn:${Partition}:iot:${Region}:${Account}:domainconfiguration/${domainConfigurationName}",
-        "condition_keys": [],
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
         "resource": "domainconfiguration"
       }
     ],
@@ -76699,6 +78076,18 @@
       },
       {
         "access_level": "List",
+        "description": "Lists the license configuration operations that failed",
+        "privilege": "ListFailuresForLicenseConfigurationOperations",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "license-configuration*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
         "description": "Lists license configurations",
         "privilege": "ListLicenseConfigurations",
         "resource_types": [
@@ -81738,7 +83127,7 @@
         ]
       },
       {
-        "access_level": "Tagging",
+        "access_level": "Write",
         "description": "Grants permission to create a channel",
         "privilege": "CreateChannel",
         "resource_types": [
@@ -81763,7 +83152,7 @@
         ]
       },
       {
-        "access_level": "Tagging",
+        "access_level": "Write",
         "description": "Grants permission to create an input",
         "privilege": "CreateInput",
         "resource_types": [
@@ -81788,7 +83177,7 @@
         ]
       },
       {
-        "access_level": "Tagging",
+        "access_level": "Write",
         "description": "Grants permission to create an input security group",
         "privilege": "CreateInputSecurityGroup",
         "resource_types": [
@@ -81808,7 +83197,7 @@
         ]
       },
       {
-        "access_level": "Tagging",
+        "access_level": "Write",
         "description": "Grants permission to create a multiplex",
         "privilege": "CreateMultiplex",
         "resource_types": [
@@ -81824,6 +83213,18 @@
             ],
             "dependent_actions": [],
             "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to create a multiplex program",
+        "privilege": "CreateMultiplexProgram",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "multiplex*"
           }
         ]
       },
@@ -81907,6 +83308,18 @@
         "access_level": "Write",
         "description": "Grants permission to delete a multiplex",
         "privilege": "DeleteMultiplex",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "multiplex*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to delete a multiplex program",
+        "privilege": "DeleteMultiplexProgram",
         "resource_types": [
           {
             "condition_keys": [],
@@ -82040,6 +83453,18 @@
       },
       {
         "access_level": "Read",
+        "description": "Grants permission to describe a multiplex program",
+        "privilege": "DescribeMultiplexProgram",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "multiplex*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
         "description": "Grants permission to get details about a reservation offering",
         "privilege": "DescribeOffering",
         "resource_types": [
@@ -82124,6 +83549,18 @@
       },
       {
         "access_level": "List",
+        "description": "Grants permission to list multiplex programs",
+        "privilege": "ListMultiplexPrograms",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
         "description": "Grants permission to list multiplexes",
         "privilege": "ListMultiplexes",
         "resource_types": [
@@ -82191,7 +83628,7 @@
         ]
       },
       {
-        "access_level": "Tagging",
+        "access_level": "Write",
         "description": "Grants permission to purchase a reservation offering",
         "privilege": "PurchaseOffering",
         "resource_types": [
@@ -82337,6 +83774,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Grants permission to update a multiplex program",
+        "privilege": "UpdateMultiplexProgram",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "multiplex*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Grants permission to update a reservation",
         "privilege": "UpdateReservation",
         "resource_types": [
@@ -82434,6 +83883,21 @@
       },
       {
         "access_level": "Write",
+        "description": "Grants permission to create a harvest job in AWS Elemental MediaPackage.",
+        "privilege": "CreateHarvestJob",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Grants permission to create an endpoint in AWS Elemental MediaPackage.",
         "privilege": "CreateOriginEndpoint",
         "resource_types": [
@@ -82485,6 +83949,18 @@
       },
       {
         "access_level": "Read",
+        "description": "Grants permission to view the details of a harvest job in AWS Elemental MediaPackage.",
+        "privilege": "DescribeHarvestJob",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "harvest_jobs*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
         "description": "Grants permission to view the details of an endpoint in AWS Elemental MediaPackage.",
         "privilege": "DescribeOriginEndpoint",
         "resource_types": [
@@ -82499,6 +83975,18 @@
         "access_level": "Read",
         "description": "Grants permission to view a list of channels in AWS Elemental MediaPackage.",
         "privilege": "ListChannels",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to view a list of harvest jobs in AWS Elemental MediaPackage.",
+        "privilege": "ListHarvestJobs",
         "resource_types": [
           {
             "condition_keys": [],
@@ -82532,6 +84020,11 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
+            "resource_type": "harvest_jobs"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
             "resource_type": "origin_endpoints"
           }
         ]
@@ -82550,13 +84043,18 @@
       },
       {
         "access_level": "Write",
-        "description": "Grants permission to assign tags to a Channel or OriginEndpoint.",
+        "description": "",
         "privilege": "TagResource",
         "resource_types": [
           {
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "channels"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "harvest_jobs"
           },
           {
             "condition_keys": [],
@@ -82582,6 +84080,11 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "channels"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "harvest_jobs"
           },
           {
             "condition_keys": [],
@@ -82636,6 +84139,13 @@
           "aws:ResourceTag/${TagKey}"
         ],
         "resource": "origin_endpoints"
+      },
+      {
+        "arn": "arn:${Partition}:mediapackage:${Region}:${Account}:harvest_jobs/${HarvestJobIdentifier}",
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
+        "resource": "harvest_jobs"
       }
     ],
     "service_name": "AWS Elemental MediaPackage"
@@ -85578,7 +87088,22 @@
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys"
             ],
-            "dependent_actions": [],
+            "dependent_actions": [
+              "ec2:CreateNetworkInterface",
+              "ec2:CreateNetworkInterfacePermission",
+              "ec2:CreateSecurityGroup",
+              "ec2:CreateVpcEndpoint",
+              "ec2:DescribeInternetGateways",
+              "ec2:DescribeNetworkInterfacePermissions",
+              "ec2:DescribeNetworkInterfaces",
+              "ec2:DescribeSecurityGroups",
+              "ec2:DescribeSubnets",
+              "ec2:DescribeVpcEndpoints",
+              "ec2:DescribeVpcs",
+              "ec2:ModifyNetworkInterfaceAttribute",
+              "iam:CreateServiceLinkedRole",
+              "route53:AssociateVPCWithHostedZone"
+            ],
             "resource_type": ""
           }
         ]
@@ -85642,7 +87167,12 @@
         "resource_types": [
           {
             "condition_keys": [],
-            "dependent_actions": [],
+            "dependent_actions": [
+              "ec2:DeleteNetworkInterface",
+              "ec2:DeleteNetworkInterfacePermission",
+              "ec2:DeleteVpcEndpoints",
+              "ec2:DetachNetworkInterface"
+            ],
             "resource_type": "brokers*"
           }
         ]
@@ -87554,6 +89084,18 @@
         ]
       },
       {
+        "access_level": "List",
+        "description": "List the tags that are applied to the specified server or backup.",
+        "privilege": "ListTagsForResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
         "access_level": "Write",
         "description": "Applies a backup to specified server. Possibly swaps out the ec2-instance if specified.",
         "privilege": "RestoreServer",
@@ -87569,6 +89111,30 @@
         "access_level": "Write",
         "description": "Start the server maintenance immediately.",
         "privilege": "StartMaintenance",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Tagging",
+        "description": "Applies tags to the specified server or backup.",
+        "privilege": "TagResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Tagging",
+        "description": "Removes tags from the specified server or backup.",
+        "privilege": "UntagResource",
         "resource_types": [
           {
             "condition_keys": [],
@@ -88997,7 +90563,7 @@
         ]
       },
       {
-        "access_level": "Write",
+        "access_level": "Read",
         "description": "Gets a re-ranked list of recommendations",
         "privilege": "GetPersonalizedRanking",
         "resource_types": [
@@ -89173,6 +90739,30 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "eventTracker*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Ingest Items data",
+        "privilege": "PutItems",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "dataset*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Ingest Users data",
+        "privilege": "PutUsers",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "dataset*"
           }
         ]
       },
@@ -89866,6 +91456,21 @@
     "privileges": [
       {
         "access_level": "Write",
+        "description": "Grants permission to create an account customization for QuickSight account or namespace",
+        "privilege": "CreateAccountCustomization",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "CreateAdmin enables the user to provision Amazon QuickSight administrators, authors, and readers.",
         "privilege": "CreateAdmin",
         "resource_types": [
@@ -89873,6 +91478,18 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "user*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to create a custom permissions resource for restricting user access",
+        "privilege": "CreateCustomPermissions",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -89931,6 +91548,18 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "assignment*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to create an QuickSight namespace",
+        "privilege": "CreateNamespace",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "namespace*"
           }
         ]
       },
@@ -90024,6 +91653,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Grants permission to delete an account customization for QuickSight account or namespace",
+        "privilege": "DeleteAccountCustomization",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "customization*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Deletes a dashboard",
         "privilege": "DeleteDashboard",
         "resource_types": [
@@ -90069,6 +91710,18 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "assignment*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to delete a QuickSight namespace",
+        "privilege": "DeleteNamespace",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "namespace*"
           }
         ]
       },
@@ -90146,6 +91799,42 @@
       },
       {
         "access_level": "Read",
+        "description": "Grants permission to describe an account customization for QuickSight account or namespace",
+        "privilege": "DescribeAccountCustomization",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "customization*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to describe the administrative account settings for QuickSight account",
+        "privilege": "DescribeAccountSettings",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to describe a custom permissions resource in a QuickSight account",
+        "privilege": "DescribeCustomPermissions",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
         "description": "Provides a summary for a dashboard",
         "privilege": "DescribeDashboard",
         "resource_types": [
@@ -90189,6 +91878,18 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "assignment*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to describe a QuickSight namespace",
+        "privilege": "DescribeNamespace",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "namespace*"
           }
         ]
       },
@@ -90313,6 +92014,30 @@
         ]
       },
       {
+        "access_level": "Read",
+        "description": "Grants permission to get a URL to embed QuickSight console experience.",
+        "privilege": "GetSessionEmbedUrl",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to list custom permissions resources in QuickSight account",
+        "privilege": "ListCustomPermissions",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
         "access_level": "List",
         "description": "Lists all the versions of the dashboards in the QuickSight subscription",
         "privilege": "ListDashboardVersions",
@@ -90385,10 +92110,27 @@
         ]
       },
       {
+        "access_level": "Write",
+        "description": "Grants permission to lists all namespaces in a QuickSight account",
+        "privilege": "ListNamespaces",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
         "access_level": "List",
         "description": "List tags of a QuickSight resource.",
         "privilege": "ListTagsForResource",
         "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "customization"
+          },
           {
             "condition_keys": [],
             "dependent_actions": [],
@@ -90561,6 +92303,11 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
+            "resource_type": "customization"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
             "resource_type": "dashboard"
           },
           {
@@ -90603,6 +92350,11 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
+            "resource_type": "customization"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
             "resource_type": "dashboard"
           },
           {
@@ -90619,6 +92371,42 @@
             "condition_keys": [
               "aws:TagKeys"
             ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to update an account customization for QuickSight account or namespace",
+        "privilege": "UpdateAccountCustomization",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "customization*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to update the administrative account settings for QuickSight account",
+        "privilege": "UpdateAccountSettings",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to update a custom permissions resource",
+        "privilege": "UpdateCustomPermissions",
+        "resource_types": [
+          {
+            "condition_keys": [],
             "dependent_actions": [],
             "resource_type": ""
           }
@@ -90805,6 +92593,18 @@
         "arn": "arn:${Partition}:quicksight::${Account}:assignment/${ResourceId}",
         "condition_keys": [],
         "resource": "assignment"
+      },
+      {
+        "arn": "arn:${Partition}:quicksight::${Account}:customization/${ResourceId}",
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
+        "resource": "customization"
+      },
+      {
+        "arn": "arn:${Partition}:quicksight::${Account}:namespace/${ResourceId}",
+        "condition_keys": [],
+        "resource": "namespace"
       }
     ],
     "service_name": "Amazon QuickSight"
@@ -91168,6 +92968,18 @@
       },
       {
         "access_level": "List",
+        "description": "Lists the shareable resource types supported by AWS RAM",
+        "privilege": "ListResourceTypes",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
         "description": "Lists the resources that you added to a resource shares or the resources that are shared with you",
         "privilege": "ListResources",
         "resource_types": [
@@ -91175,6 +92987,22 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Use this API action to promote the resource share",
+        "privilege": "PromoteResourceShareCreatedFromPolicy",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "aws:ResourceTag/${TagKey}",
+              "ram:ResourceShareName",
+              "ram:AllowsExternalPrincipals"
+            ],
+            "dependent_actions": [],
+            "resource_type": "resource-share*"
           }
         ]
       },
@@ -92026,6 +93854,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Grants permission to access a resource in the remote Region when executing cross-Region operations, such as cross-Region snapshot copy or cross-Region read replica creation",
+        "privilege": "CrossRegionCommunication",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Grants permission to delete a previously provisioned DB cluster",
         "privilege": "DeleteDBCluster",
         "resource_types": [
@@ -92127,7 +93967,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Grants permission to delete a DB security group.",
+        "description": "Grants permission to delete a DB security group",
         "privilege": "DeleteDBSecurityGroup",
         "resource_types": [
           {
@@ -93119,7 +94959,7 @@
       },
       {
         "access_level": "Tagging",
-        "description": "Grants permission to remove metadata tags from an Amazon RDS resource.",
+        "description": "Grants permission to remove metadata tags from an Amazon RDS resource",
         "privilege": "RemoveTagsFromResource",
         "resource_types": [
           {
@@ -95849,6 +97689,18 @@
       },
       {
         "access_level": "Read",
+        "description": "Detects Protective Equipment in the input image.",
+        "privilege": "DetectProtectiveEquipment",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
         "description": "Detects text in the input image and converts it into machine-readable text.",
         "privilege": "DetectText",
         "resource_types": [
@@ -97491,8 +99343,15 @@
         "resource_types": [
           {
             "condition_keys": [],
+            "dependent_actions": [
+              "ec2:DescribeVpcs"
+            ],
+            "resource_type": "vpc*"
+          },
+          {
+            "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "hostedzone*"
+            "resource_type": "hostedzone"
           }
         ]
       },
@@ -97544,8 +99403,10 @@
         "resource_types": [
           {
             "condition_keys": [],
-            "dependent_actions": [],
-            "resource_type": ""
+            "dependent_actions": [
+              "ec2:DescribeVpcs"
+            ],
+            "resource_type": "vpc"
           }
         ]
       },
@@ -97717,8 +99578,15 @@
         "resource_types": [
           {
             "condition_keys": [],
+            "dependent_actions": [
+              "ec2:DescribeVpcs"
+            ],
+            "resource_type": "hostedzone"
+          },
+          {
+            "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": ""
+            "resource_type": "vpc"
           }
         ]
       },
@@ -97976,6 +99844,20 @@
       },
       {
         "access_level": "List",
+        "description": "Grants permission to get a list of all the private hosted zones that a specified VPC is associated with",
+        "privilege": "ListHostedZonesByVPC",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [
+              "ec2:DescribeVpcs"
+            ],
+            "resource_type": "vpc*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
         "description": "Grants permission to list the configurations for DNS query logging that are associated with the current AWS account or the configuration that is associated with a specified hosted zone.",
         "privilege": "ListQueryLoggingConfigs",
         "resource_types": [
@@ -98011,7 +99893,7 @@
         ]
       },
       {
-        "access_level": "Read",
+        "access_level": "List",
         "description": "Grants permission to list tags for one health check or hosted zone",
         "privilege": "ListTagsForResource",
         "resource_types": [
@@ -98028,7 +99910,7 @@
         ]
       },
       {
-        "access_level": "Read",
+        "access_level": "List",
         "description": "Grants permission to list tags for up to 10 health checks or hosted zones",
         "privilege": "ListTagsForResources",
         "resource_types": [
@@ -98045,7 +99927,7 @@
         ]
       },
       {
-        "access_level": "Read",
+        "access_level": "List",
         "description": "Grants permission to get information about the latest version for every traffic policy that is associated with the current AWS account. Policies are listed in the order in which they were created.",
         "privilege": "ListTrafficPolicies",
         "resource_types": [
@@ -98057,7 +99939,7 @@
         ]
       },
       {
-        "access_level": "Read",
+        "access_level": "List",
         "description": "Grants permission to get information about the traffic policy instances that you created by using the current AWS account",
         "privilege": "ListTrafficPolicyInstances",
         "resource_types": [
@@ -98069,7 +99951,7 @@
         ]
       },
       {
-        "access_level": "Read",
+        "access_level": "List",
         "description": "Grants permission to get information about the traffic policy instances that you created in a specified hosted zone",
         "privilege": "ListTrafficPolicyInstancesByHostedZone",
         "resource_types": [
@@ -98081,7 +99963,7 @@
         ]
       },
       {
-        "access_level": "Read",
+        "access_level": "List",
         "description": "Grants permission to get information about the traffic policy instances that you created using a specified traffic policy version",
         "privilege": "ListTrafficPolicyInstancesByPolicy",
         "resource_types": [
@@ -98093,7 +99975,7 @@
         ]
       },
       {
-        "access_level": "Read",
+        "access_level": "List",
         "description": "Grants permission to get information about all the versions for a specified traffic policy",
         "privilege": "ListTrafficPolicyVersions",
         "resource_types": [
@@ -98105,7 +99987,7 @@
         ]
       },
       {
-        "access_level": "Read",
+        "access_level": "List",
         "description": "Grants permission to get a list of the VPCs that were created by other accounts and that can be associated with a specified hosted zone",
         "privilege": "ListVPCAssociationAuthorizations",
         "resource_types": [
@@ -98212,6 +100094,11 @@
         "arn": "arn:${Partition}:route53:::queryloggingconfig/${Id}",
         "condition_keys": [],
         "resource": "queryloggingconfig"
+      },
+      {
+        "arn": "arn:${Partition}:ec2:${Region}:${Account}:vpc/${VpcId}",
+        "condition_keys": [],
+        "resource": "vpc"
       }
     ],
     "service_name": "Amazon Route 53"
@@ -99375,6 +101262,28 @@
         ]
       },
       {
+        "access_level": "Write",
+        "description": "Grants permission to delete ownership controls on a bucket",
+        "privilege": "DeleteBucketOwnershipControls",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "bucket*"
+          },
+          {
+            "condition_keys": [
+              "s3:authType",
+              "s3:signatureAge",
+              "s3:signatureversion",
+              "s3:x-amz-content-sha256"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
         "access_level": "Permissions management",
         "description": "Grants permission to delete the policy on a specified bucket",
         "privilege": "DeleteBucketPolicy",
@@ -99814,6 +101723,28 @@
               "s3:authType",
               "s3:signatureAge",
               "s3:signatureversion"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to retrieve ownership controls on a bucket",
+        "privilege": "GetBucketOwnershipControls",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "bucket*"
+          },
+          {
+            "condition_keys": [
+              "s3:authType",
+              "s3:signatureAge",
+              "s3:signatureversion",
+              "s3:x-amz-content-sha256"
             ],
             "dependent_actions": [],
             "resource_type": ""
@@ -100445,7 +102376,7 @@
         ]
       },
       {
-        "access_level": "Read",
+        "access_level": "List",
         "description": "Grants permission to list in-progress multipart uploads",
         "privilege": "ListBucketMultipartUploads",
         "resource_types": [
@@ -100470,7 +102401,7 @@
         ]
       },
       {
-        "access_level": "Read",
+        "access_level": "List",
         "description": "Grants permission to list metadata about all the versions of objects in an Amazon S3 bucket",
         "privilege": "ListBucketVersions",
         "resource_types": [
@@ -100498,7 +102429,7 @@
         ]
       },
       {
-        "access_level": "Read",
+        "access_level": "List",
         "description": "Grants permission to list current jobs and jobs that have ended recently",
         "privilege": "ListJobs",
         "resource_types": [
@@ -100515,7 +102446,7 @@
         ]
       },
       {
-        "access_level": "Read",
+        "access_level": "List",
         "description": "Grants permission to list the parts that have been uploaded for a specific multipart upload",
         "privilege": "ListMultipartUploadParts",
         "resource_types": [
@@ -100756,6 +102687,28 @@
               "s3:authType",
               "s3:signatureAge",
               "s3:signatureversion"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to add or replace ownership controls on a bucket",
+        "privilege": "PutBucketOwnershipControls",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "bucket*"
+          },
+          {
+            "condition_keys": [
+              "s3:authType",
+              "s3:signatureAge",
+              "s3:signatureversion",
+              "s3:x-amz-content-sha256"
             ],
             "dependent_actions": [],
             "resource_type": ""
@@ -101053,7 +103006,7 @@
       },
       {
         "access_level": "Permissions management",
-        "description": "Grants permission to set the access control list (ACL) permissions for an object that already exists in a bucket",
+        "description": "Grants permission to set the access control list (ACL) permissions for new or existing objects in an S3 bucket.",
         "privilege": "PutObjectAcl",
         "resource_types": [
           {
@@ -102303,8 +104256,8 @@
         "type": "ArrayOfString"
       },
       {
-        "condition": "sagemaker:AppNetworkAccess",
-        "description": "App network access associated with the resource in the request.",
+        "condition": "sagemaker:AppNetworkAccessType",
+        "description": "App network access type associated with the resource in the request.",
         "type": "String"
       },
       {
@@ -102341,6 +104294,16 @@
         "condition": "sagemaker:HomeEfsFileSystemKmsKey",
         "description": "The KMS Key Id of the EFS File System used for UserProfile home directories, which is associated with the resource in the request.",
         "type": "ARN"
+      },
+      {
+        "condition": "sagemaker:ImageArns",
+        "description": "Filters access by the list of all image arns associated with the resource in the request.",
+        "type": "ArrayOfString"
+      },
+      {
+        "condition": "sagemaker:ImageVersionArns",
+        "description": "Filters access by the list of all image version arns associated with the resource in the request.",
+        "type": "ArrayOfString"
       },
       {
         "condition": "sagemaker:InstanceTypes",
@@ -102433,6 +104396,11 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
+            "resource_type": "app-image-config"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
             "resource_type": "automl-job"
           },
           {
@@ -102479,6 +104447,11 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "hyper-parameter-tuning-job"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "image"
           },
           {
             "condition_keys": [],
@@ -102602,7 +104575,29 @@
             "condition_keys": [
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
-              "sagemaker:InstanceTypes"
+              "sagemaker:InstanceTypes",
+              "sagemaker:ImageArns",
+              "sagemaker:ImageVersionArns"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to create an AppImageConfig",
+        "privilege": "CreateAppImageConfig",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "app-image-config*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
             ],
             "dependent_actions": [],
             "resource_type": ""
@@ -102679,12 +104674,14 @@
             "condition_keys": [
               "aws:RequestTag/${TagKey}",
               "aws:TagKeys",
-              "sagemaker:AppNetworkAccess",
+              "sagemaker:AppNetworkAccessType",
               "sagemaker:InstanceTypes",
               "sagemaker:VpcSecurityGroupIds",
               "sagemaker:VpcSubnets",
               "sagemaker:DomainSharingOutputKmsKey",
-              "sagemaker:HomeEfsFileSystemKmsKey"
+              "sagemaker:HomeEfsFileSystemKmsKey",
+              "sagemaker:ImageArns",
+              "sagemaker:ImageVersionArns"
             ],
             "dependent_actions": [],
             "resource_type": ""
@@ -102830,6 +104827,40 @@
             ],
             "dependent_actions": [],
             "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permissions to create a SageMaker Image.",
+        "privilege": "CreateImage",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [
+              "iam:PassRole"
+            ],
+            "resource_type": "image*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permissions to create a SageMaker ImageVersion.",
+        "privilege": "CreateImageVersion",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "image*"
           }
         ]
       },
@@ -103136,7 +105167,9 @@
               "aws:TagKeys",
               "sagemaker:VpcSecurityGroupIds",
               "sagemaker:InstanceTypes",
-              "sagemaker:DomainSharingOutputKmsKey"
+              "sagemaker:DomainSharingOutputKmsKey",
+              "sagemaker:ImageArns",
+              "sagemaker:ImageVersionArns"
             ],
             "dependent_actions": [],
             "resource_type": ""
@@ -103204,6 +105237,18 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "app*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to delete an AppImageConfig",
+        "privilege": "DeleteAppImageConfig",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "app-image-config*"
           }
         ]
       },
@@ -103293,6 +105338,30 @@
       },
       {
         "access_level": "Write",
+        "description": "Grants permissions to delete a SageMaker Image.",
+        "privilege": "DeleteImage",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "image*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permissions to delete a SageMaker ImageVersion.",
+        "privilege": "DeleteImageVersion",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "image-version*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Deletes a model created using the CreateModel API. The DeleteModel API deletes only the model entry in Amazon SageMaker that you created by calling the CreateModel API. It does not delete model artifacts, inference code, or the IAM role that you specified when creating the model.",
         "privilege": "DeleteModel",
         "resource_types": [
@@ -103364,6 +105433,11 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
+            "resource_type": "app-image-config"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
             "resource_type": "automl-job"
           },
           {
@@ -103415,6 +105489,11 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "hyper-parameter-tuning-job"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "image"
           },
           {
             "condition_keys": [],
@@ -103556,6 +105635,18 @@
       },
       {
         "access_level": "Read",
+        "description": "Grants permission to describe an AppImageConfig",
+        "privilege": "DescribeAppImageConfig",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "app-image-config*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
         "description": "Describes an automl job that was created via CreateAutoMLJob API.",
         "privilege": "DescribeAutoMLJob",
         "resource_types": [
@@ -103683,6 +105774,30 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "hyper-parameter-tuning-job*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permissions to return information about a SageMaker Image.",
+        "privilege": "DescribeImage",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "image*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permissions to return information about a SageMaker ImageVersion.",
+        "privilege": "DescribeImageVersion",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "image-version*"
           }
         ]
       },
@@ -103933,6 +106048,18 @@
       },
       {
         "access_level": "List",
+        "description": "Grants permission to list the AppImageConfigs in your account",
+        "privilege": "ListAppImageConfigs",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
         "description": "Grants permission to list the Apps in your account",
         "privilege": "ListApps",
         "resource_types": [
@@ -104089,6 +106216,30 @@
       },
       {
         "access_level": "List",
+        "description": "Grants permissions to list ImageVersions that belong to a SageMaker Image.",
+        "privilege": "ListImageVersions",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "image*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permissions to list SageMaker Images in your account.",
+        "privilege": "ListImages",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
         "description": "Lists labeling jobs.",
         "privilege": "ListLabelingJobs",
         "resource_types": [
@@ -104220,6 +106371,11 @@
           {
             "condition_keys": [],
             "dependent_actions": [],
+            "resource_type": "app-image-config"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
             "resource_type": "automl-job"
           },
           {
@@ -104266,6 +106422,11 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "hyper-parameter-tuning-job"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "image"
           },
           {
             "condition_keys": [],
@@ -104589,6 +106750,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Grants permission to update an AppImageConfig",
+        "privilege": "UpdateAppImageConfig",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "app-image-config*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Updates a code repository.",
         "privilege": "UpdateCodeRepository",
         "resource_types": [
@@ -104613,7 +106786,9 @@
             "condition_keys": [
               "sagemaker:VpcSecurityGroupIds",
               "sagemaker:InstanceTypes",
-              "sagemaker:DomainSharingOutputKmsKey"
+              "sagemaker:DomainSharingOutputKmsKey",
+              "sagemaker:ImageArns",
+              "sagemaker:ImageVersionArns"
             ],
             "dependent_actions": [],
             "resource_type": ""
@@ -104653,6 +106828,20 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "experiment*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permissions to update the properties of a SageMaker Image.",
+        "privilege": "UpdateImage",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [
+              "iam:PassRole"
+            ],
+            "resource_type": "image*"
           }
         ]
       },
@@ -104757,7 +106946,9 @@
               "sagemaker:InstanceTypes",
               "sagemaker:VpcSecurityGroupIds",
               "sagemaker:InstanceTypes",
-              "sagemaker:DomainSharingOutputKmsKey"
+              "sagemaker:DomainSharingOutputKmsKey",
+              "sagemaker:ImageArns",
+              "sagemaker:ImageVersionArns"
             ],
             "dependent_actions": [],
             "resource_type": ""
@@ -104860,6 +107051,14 @@
         "resource": "app"
       },
       {
+        "arn": "arn:${Partition}:sagemaker:${Region}:${Account}:app-image-config/${AppImageConfigName}",
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}",
+          "sagemaker:ResourceTag/${TagKey}"
+        ],
+        "resource": "app-image-config"
+      },
+      {
         "arn": "arn:${Partition}:sagemaker:${Region}:${Account}:notebook-instance/${NotebookInstanceName}",
         "condition_keys": [
           "aws:ResourceTag/${TagKey}",
@@ -104876,6 +107075,19 @@
         "arn": "arn:${Partition}:sagemaker:${Region}:${Account}:code-repository/${CodeRepositoryName}",
         "condition_keys": [],
         "resource": "code-repository"
+      },
+      {
+        "arn": "arn:${Partition}:sagemaker:${Region}:${Account}:image/${ImageName}",
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}",
+          "sagemaker:ResourceTag/${TagKey}"
+        ],
+        "resource": "image"
+      },
+      {
+        "arn": "arn:${Partition}:sagemaker:${Region}:${Account}:image-version/${ImageName}/${Version}",
+        "condition_keys": [],
+        "resource": "image-version"
       },
       {
         "arn": "arn:${Partition}:sagemaker:${Region}:${Account}:algorithm/${AlgorithmName}",
@@ -114394,7 +116606,9 @@
         "resource_types": [
           {
             "condition_keys": [],
-            "dependent_actions": [],
+            "dependent_actions": [
+              "ds:AuthorizeApplication"
+            ],
             "resource_type": ""
           }
         ]
@@ -114739,7 +116953,9 @@
         "resource_types": [
           {
             "condition_keys": [],
-            "dependent_actions": [],
+            "dependent_actions": [
+              "ds:UnauthorizeApplication"
+            ],
             "resource_type": ""
           }
         ]
@@ -115223,13 +117439,44 @@
         ]
       },
       {
+        "access_level": "Read",
+        "description": "Search for groups within the associated directory",
+        "privilege": "SearchGroups",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [
+              "ds:DescribeDirectories"
+            ],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Search for users within the associated directory",
+        "privilege": "SearchUsers",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [
+              "ds:DescribeDirectories"
+            ],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
         "access_level": "Write",
         "description": "Initialize AWS Single Sign-On",
         "privilege": "StartSSO",
         "resource_types": [
           {
             "condition_keys": [],
-            "dependent_actions": [],
+            "dependent_actions": [
+              "organization:DescribeOrganization",
+              "organizations:EnableAWSServiceAccess"
+            ],
             "resource_type": ""
           }
         ]
@@ -115473,7 +117720,7 @@
     "privileges": [
       {
         "access_level": "Write",
-        "description": "Adds member to the group in the directory that AWS SSO provides by default",
+        "description": "Grants permission to add a member to a group in the directory that AWS SSO provides by default",
         "privilege": "AddMemberToGroup",
         "resource_types": [
           {
@@ -115485,7 +117732,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Completes the creation process of a virtual MFA device",
+        "description": "Grants permission to complete the creation process of a virtual MFA device",
         "privilege": "CompleteVirtualMfaDeviceRegistration",
         "resource_types": [
           {
@@ -115497,7 +117744,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Creates an alias for the directory that AWS SSO provides by default",
+        "description": "Grants permission to create an alias for the directory that AWS SSO provides by default",
         "privilege": "CreateAlias",
         "resource_types": [
           {
@@ -115509,7 +117756,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Creates a bearer token for a given provisioning tenant.",
+        "description": "Grants permission to create a bearer token for a given provisioning tenant",
         "privilege": "CreateBearerToken",
         "resource_types": [
           {
@@ -115521,7 +117768,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Create an External Identity Provider configuration for the directory",
+        "description": "Grants permission to create an External Identity Provider configuration for the directory",
         "privilege": "CreateExternalIdPConfigurationForDirectory",
         "resource_types": [
           {
@@ -115533,7 +117780,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Creates a group in the directory that AWS SSO provides by default",
+        "description": "Grants permission to create a group in the directory that AWS SSO provides by default",
         "privilege": "CreateGroup",
         "resource_types": [
           {
@@ -115545,7 +117792,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Creates a provisioning tenant for a given directory.",
+        "description": "Grants permission to create a provisioning tenant for a given directory",
         "privilege": "CreateProvisioningTenant",
         "resource_types": [
           {
@@ -115557,7 +117804,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Creates a user in the directory that AWS SSO provides by default",
+        "description": "Grants permission to create a user in the directory that AWS SSO provides by default",
         "privilege": "CreateUser",
         "resource_types": [
           {
@@ -115569,7 +117816,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes the bearer token.",
+        "description": "Grants permission to delete a bearer token",
         "privilege": "DeleteBearerToken",
         "resource_types": [
           {
@@ -115581,7 +117828,19 @@
       },
       {
         "access_level": "Write",
-        "description": "Delete an External Identity Provider configuration associated with the directory",
+        "description": "Grants permission to delete the given external IdP certificate",
+        "privilege": "DeleteExternalIdPCertificate",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to delete an External Identity Provider configuration associated with the directory",
         "privilege": "DeleteExternalIdPConfigurationForDirectory",
         "resource_types": [
           {
@@ -115593,7 +117852,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes a group from the directory that AWS SSO provides by default",
+        "description": "Grants permission to delete a group from the directory that AWS SSO provides by default",
         "privilege": "DeleteGroup",
         "resource_types": [
           {
@@ -115605,7 +117864,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes a MFA device by device name for a given user",
+        "description": "Grants permission to delete a MFA device by device name for a given user",
         "privilege": "DeleteMfaDeviceForUser",
         "resource_types": [
           {
@@ -115617,7 +117876,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes the provisioning tenant.",
+        "description": "Grants permission to delete the provisioning tenant",
         "privilege": "DeleteProvisioningTenant",
         "resource_types": [
           {
@@ -115629,7 +117888,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes a user from the directory that AWS SSO provides by default",
+        "description": "Grants permission to delete a user from the directory that AWS SSO provides by default",
         "privilege": "DeleteUser",
         "resource_types": [
           {
@@ -115641,7 +117900,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Retrieve information about the directory that AWS SSO provides by default",
+        "description": "Grants permission to retrieve information about the directory that AWS SSO provides by default",
         "privilege": "DescribeDirectory",
         "resource_types": [
           {
@@ -115653,7 +117912,7 @@
       },
       {
         "access_level": "List",
-        "description": "Retrieves information about group from the directory that AWS SSO provides by default",
+        "description": "Grants permission to retrieve information about a group from the directory that AWS SSO provides by default",
         "privilege": "DescribeGroups",
         "resource_types": [
           {
@@ -115664,8 +117923,20 @@
         ]
       },
       {
+        "access_level": "Read",
+        "description": "Grants permission to retrieve information about a user from the directory that AWS SSO provides by default",
+        "privilege": "DescribeUser",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
         "access_level": "List",
-        "description": "Retrieves information about user from the directory that AWS SSO provides by default",
+        "description": "Grants permission to retrieve information about user from the directory that AWS SSO provides by default",
         "privilege": "DescribeUsers",
         "resource_types": [
           {
@@ -115677,7 +117948,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Disable authentication of end users with an External Identity Provider",
+        "description": "Grants permission to disable authentication of end users with an External Identity Provider",
         "privilege": "DisableExternalIdPConfigurationForDirectory",
         "resource_types": [
           {
@@ -115689,7 +117960,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deactivates user in the directory that AWS SSO provides by default",
+        "description": "Grants permission to deactivate a user in the directory that AWS SSO provides by default",
         "privilege": "DisableUser",
         "resource_types": [
           {
@@ -115701,7 +117972,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Enable authentication of end users with an External Identity Provider",
+        "description": "Grants permission to enable authentication of end users with an External Identity Provider",
         "privilege": "EnableExternalIdPConfigurationForDirectory",
         "resource_types": [
           {
@@ -115713,7 +117984,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Activates user in the directory that AWS SSO provides by default",
+        "description": "Grants permission to activate user in the directory that AWS SSO provides by default",
         "privilege": "EnableUser",
         "resource_types": [
           {
@@ -115725,7 +117996,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Retrieve the AWS SSO Service Provider configurations for the directory",
+        "description": "Grants permission to retrieve the AWS SSO Service Provider configurations for the directory",
         "privilege": "GetAWSSPConfigurationForDirectory",
         "resource_types": [
           {
@@ -115736,8 +118007,32 @@
         ]
       },
       {
+        "access_level": "Write",
+        "description": "Grants permission to import the IdP certificate used for verifying external IdP responses",
+        "privilege": "ImportExternalIdPCertificate",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to check if a member is a part of the group in the directory that AWS SSO provides by default",
+        "privilege": "IsMemberInGroup",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
         "access_level": "List",
-        "description": "Lists bearer tokens for a given provisioning tenant.",
+        "description": "Grants permission to list bearer tokens for a given provisioning tenant",
         "privilege": "ListBearerTokens",
         "resource_types": [
           {
@@ -115749,7 +118044,19 @@
       },
       {
         "access_level": "List",
-        "description": "List all the External Identity Provider configurations created for the directory",
+        "description": "Grants permission to list the external IdP certificates of a given directory and IdP",
+        "privilege": "ListExternalIdPCertificates",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to list all the External Identity Provider configurations created for the directory",
         "privilege": "ListExternalIdPConfigurationsForDirectory",
         "resource_types": [
           {
@@ -115761,7 +118068,7 @@
       },
       {
         "access_level": "List",
-        "description": "Lists groups for a user from the directory that AWS SSO provides by default",
+        "description": "Grants permission to list groups for a user from the directory that AWS SSO provides by default",
         "privilege": "ListGroupsForUser",
         "resource_types": [
           {
@@ -115773,7 +118080,7 @@
       },
       {
         "access_level": "List",
-        "description": "Retrieves all members that are part of the group in the directory that AWS SSO provides by default",
+        "description": "Grants permission to retrieve all members that are part of a group in the directory that AWS SSO provides by default",
         "privilege": "ListMembersInGroup",
         "resource_types": [
           {
@@ -115785,7 +118092,7 @@
       },
       {
         "access_level": "List",
-        "description": "Lists all active MFA devices and their MFA device metadata for a user",
+        "description": "Grants permission to list all active MFA devices and their MFA device metadata for a user",
         "privilege": "ListMfaDevicesForUser",
         "resource_types": [
           {
@@ -115797,7 +118104,7 @@
       },
       {
         "access_level": "List",
-        "description": "Lists provisioning tenants for a given directory.",
+        "description": "Grants permission to list provisioning tenants for a given directory",
         "privilege": "ListProvisioningTenants",
         "resource_types": [
           {
@@ -115809,7 +118116,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Removes member that are part of the group in the directory that AWS SSO provides by default",
+        "description": "Grants permission to remove a member that is part of a group in the directory that AWS SSO provides by default",
         "privilege": "RemoveMemberFromGroup",
         "resource_types": [
           {
@@ -115821,7 +118128,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Search for groups within the associated directory",
+        "description": "Grants permission to search for groups within the associated directory",
         "privilege": "SearchGroups",
         "resource_types": [
           {
@@ -115833,7 +118140,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Search for users within the associated directory",
+        "description": "Grants permission to search for users within the associated directory",
         "privilege": "SearchUsers",
         "resource_types": [
           {
@@ -115845,7 +118152,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Begins the creation process of virtual mfa device",
+        "description": "Grants permission to begin the creation process of virtual mfa device",
         "privilege": "StartVirtualMfaDeviceRegistration",
         "resource_types": [
           {
@@ -115857,7 +118164,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Update an External Identity Provider configuration associated with the directory",
+        "description": "Grants permission to update an External Identity Provider configuration associated with the directory",
         "privilege": "UpdateExternalIdPConfigurationForDirectory",
         "resource_types": [
           {
@@ -115869,7 +118176,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Updates information about group in the directory that AWS SSO provides by default",
+        "description": "Grants permission to update information about a group in the directory that AWS SSO provides by default",
         "privilege": "UpdateGroup",
         "resource_types": [
           {
@@ -115881,7 +118188,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Updates password by sending password reset link via email or generating one time password for a user in the directory that AWS SSO provides by default",
+        "description": "Grants permission to update a password by sending password reset link via email or generating one time password for a user in the directory that AWS SSO provides by default",
         "privilege": "UpdatePassword",
         "resource_types": [
           {
@@ -115893,7 +118200,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Updates user information in the directory that AWS SSO provides by default",
+        "description": "Grants permission to update user information in the directory that AWS SSO provides by default",
         "privilege": "UpdateUser",
         "resource_types": [
           {
@@ -115905,7 +118212,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Verify email address of an User",
+        "description": "Grants permission to verify an email address of an User",
         "privilege": "VerifyEmail",
         "resource_types": [
           {
@@ -116285,17 +118592,17 @@
     "conditions": [
       {
         "condition": "aws:RequestTag/${TagKey}",
-        "description": "Filters create requests based on the allowed set of values for each of the tags.",
+        "description": "Filters acess based on the allowed set of values for each of the tags",
         "type": "String"
       },
       {
         "condition": "aws:ResourceTag/${TagKey}",
-        "description": "Filters actions based on tag-value associated with the resource.",
+        "description": "Filters acess based on tag-value associated with the resource",
         "type": "String"
       },
       {
         "condition": "aws:TagKeys",
-        "description": "Filters create requests based on the presence of mandatory tags in the request.",
+        "description": "Filters acess based on the presence of mandatory tags in the request",
         "type": "String"
       }
     ],
@@ -116303,7 +118610,7 @@
     "privileges": [
       {
         "access_level": "Write",
-        "description": "This operation activates the gateway you previously deployed on your host.",
+        "description": "Grants permission to activate the gateway you previously deployed on your host",
         "privilege": "ActivateGateway",
         "resource_types": [
           {
@@ -116318,7 +118625,7 @@
       },
       {
         "access_level": "Write",
-        "description": "This operation configures one or more gateway local disks as cache for a cached-volume gateway.",
+        "description": "Grants permission to configure one or more gateway local disks as cache for a cached-volume gateway",
         "privilege": "AddCache",
         "resource_types": [
           {
@@ -116330,7 +118637,7 @@
       },
       {
         "access_level": "Tagging",
-        "description": "This operation adds one or more tags to the specified resource.",
+        "description": "Grants permission to add one or more tags to the specified resource",
         "privilege": "AddTagsToResource",
         "resource_types": [
           {
@@ -116365,7 +118672,7 @@
       },
       {
         "access_level": "Write",
-        "description": "This operation configures one or more gateway local disks as upload buffer for a specified gateway.",
+        "description": "Grants permission to configure one or more gateway local disks as upload buffer for a specified gateway",
         "privilege": "AddUploadBuffer",
         "resource_types": [
           {
@@ -116377,7 +118684,7 @@
       },
       {
         "access_level": "Write",
-        "description": "This operation configures one or more gateway local disks as working storage for a gateway.",
+        "description": "Grants permission to configure one or more gateway local disks as working storage for a gateway",
         "privilege": "AddWorkingStorage",
         "resource_types": [
           {
@@ -116389,7 +118696,24 @@
       },
       {
         "access_level": "Write",
-        "description": "This operation connects a volume to an iSCSI connection and then attaches the volume to the specified gateway.",
+        "description": "Grants permission to move a tape to the target pool specified",
+        "privilege": "AssignTapePool",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "tape*"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "tapepool*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to connect a volume to an iSCSI connection and then attaches the volume to the specified gateway",
         "privilege": "AttachVolume",
         "resource_types": [
           {
@@ -116406,7 +118730,19 @@
       },
       {
         "access_level": "Write",
-        "description": "Cancels archiving of a virtual tape to the virtual tape shelf (VTS) after the archiving process is initiated.",
+        "description": "Grants permission to allow the governance retention lock on a pool to be bypassed",
+        "privilege": "BypassGovernanceRetention",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "tapepool*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to cancel archiving of a virtual tape to the virtual tape shelf (VTS) after the archiving process is initiated",
         "privilege": "CancelArchival",
         "resource_types": [
           {
@@ -116423,7 +118759,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Cancels retrieval of a virtual tape from the virtual tape shelf (VTS) to a gateway after the retrieval process is initiated.",
+        "description": "Grants permission to cancel retrieval of a virtual tape from the virtual tape shelf (VTS) to a gateway after the retrieval process is initiated",
         "privilege": "CancelRetrieval",
         "resource_types": [
           {
@@ -116440,7 +118776,7 @@
       },
       {
         "access_level": "Write",
-        "description": "This operation creates a cached volume on a specified cached gateway. This operation is supported only for the gateway-cached volume architecture.",
+        "description": "Grants permission to create a cached volume on a specified cached gateway. This operation is supported only for the gateway-cached volume architecture",
         "privilege": "CreateCachediSCSIVolume",
         "resource_types": [
           {
@@ -116465,7 +118801,7 @@
       },
       {
         "access_level": "Write",
-        "description": "This operation creates a NFS file share on an existing file gateway.",
+        "description": "Grants permission to create a NFS file share on an existing file gateway",
         "privilege": "CreateNFSFileShare",
         "resource_types": [
           {
@@ -116485,7 +118821,7 @@
       },
       {
         "access_level": "Write",
-        "description": "This operation creates a SMB file share on an existing file gateway.",
+        "description": "Grants permission to create a SMB file share on an existing file gateway",
         "privilege": "CreateSMBFileShare",
         "resource_types": [
           {
@@ -116505,7 +118841,7 @@
       },
       {
         "access_level": "Write",
-        "description": "This operation initiates a snapshot of a volume.",
+        "description": "Grants permission to initiate a snapshot of a volume",
         "privilege": "CreateSnapshot",
         "resource_types": [
           {
@@ -116517,7 +118853,7 @@
       },
       {
         "access_level": "Write",
-        "description": "This operation initiates a snapshot of a gateway from a volume recovery point.",
+        "description": "Grants permission to initiate a snapshot of a gateway from a volume recovery point",
         "privilege": "CreateSnapshotFromVolumeRecoveryPoint",
         "resource_types": [
           {
@@ -116529,7 +118865,7 @@
       },
       {
         "access_level": "Write",
-        "description": "This operation creates a volume on a specified gateway.",
+        "description": "Grants permission to create a volume on a specified gateway",
         "privilege": "CreateStorediSCSIVolume",
         "resource_types": [
           {
@@ -116549,7 +118885,22 @@
       },
       {
         "access_level": "Write",
-        "description": "Creates a virtual tape by using your own barcode.",
+        "description": "Grants permission to create a tape pool",
+        "privilege": "CreateTapePool",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to create a virtual tape by using your own barcode",
         "privilege": "CreateTapeWithBarcode",
         "resource_types": [
           {
@@ -116558,24 +118909,9 @@
             "resource_type": "gateway*"
           },
           {
-            "condition_keys": [
-              "aws:RequestTag/${TagKey}",
-              "aws:TagKeys"
-            ],
-            "dependent_actions": [],
-            "resource_type": ""
-          }
-        ]
-      },
-      {
-        "access_level": "Write",
-        "description": "Creates one or more virtual tapes. You write data to the virtual tapes and then archive the tapes.",
-        "privilege": "CreateTapes",
-        "resource_types": [
-          {
             "condition_keys": [],
             "dependent_actions": [],
-            "resource_type": "gateway*"
+            "resource_type": "tapepool*"
           },
           {
             "condition_keys": [
@@ -116589,7 +118925,44 @@
       },
       {
         "access_level": "Write",
-        "description": "This operation deletes the bandwidth rate limits of a gateway.",
+        "description": "Grants permission to create one or more virtual tapes. You write data to the virtual tapes and then archive the tapes",
+        "privilege": "CreateTapes",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "gateway*"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "tapepool*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to delete the automatic tape creation policy configured on a gateway-VTL",
+        "privilege": "DeleteAutomaticTapeCreationPolicy",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "gateway*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to delete the bandwidth rate limits of a gateway",
         "privilege": "DeleteBandwidthRateLimit",
         "resource_types": [
           {
@@ -116601,7 +118974,7 @@
       },
       {
         "access_level": "Write",
-        "description": "This operation deletes Challenge-Handshake Authentication Protocol (CHAP) credentials for a specified iSCSI target and initiator pair.",
+        "description": "Grants permission to delete Challenge-Handshake Authentication Protocol (CHAP) credentials for a specified iSCSI target and initiator pair",
         "privilege": "DeleteChapCredentials",
         "resource_types": [
           {
@@ -116613,7 +118986,7 @@
       },
       {
         "access_level": "Write",
-        "description": "This operation deletes a file share from a file gateway.",
+        "description": "Grants permission to delete a file share from a file gateway",
         "privilege": "DeleteFileShare",
         "resource_types": [
           {
@@ -116625,7 +118998,7 @@
       },
       {
         "access_level": "Write",
-        "description": "This operation deletes a gateway.",
+        "description": "Grants permission to delete a gateway",
         "privilege": "DeleteGateway",
         "resource_types": [
           {
@@ -116637,7 +119010,7 @@
       },
       {
         "access_level": "Write",
-        "description": "This operation deletes a snapshot of a volume.",
+        "description": "Grants permission to delete a snapshot of a volume",
         "privilege": "DeleteSnapshotSchedule",
         "resource_types": [
           {
@@ -116649,7 +119022,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes the specified virtual tape.",
+        "description": "Grants permission to delete the specified virtual tape",
         "privilege": "DeleteTape",
         "resource_types": [
           {
@@ -116666,7 +119039,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Deletes the specified virtual tape from the virtual tape shelf (VTS).",
+        "description": "Grants permission to delete the specified virtual tape from the virtual tape shelf (VTS)",
         "privilege": "DeleteTapeArchive",
         "resource_types": [
           {
@@ -116678,7 +119051,19 @@
       },
       {
         "access_level": "Write",
-        "description": "This operation deletes the specified gateway volume that you previously created using the CreateCachediSCSIVolume or CreateStorediSCSIVolume API.",
+        "description": "Grants permission to delete the specified tape pool",
+        "privilege": "DeleteTapePool",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "tapepool*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to delete the specified gateway volume that you previously created using the CreateCachediSCSIVolume or CreateStorediSCSIVolume API",
         "privilege": "DeleteVolume",
         "resource_types": [
           {
@@ -116690,7 +119075,7 @@
       },
       {
         "access_level": "Read",
-        "description": "This operation returns the bandwidth rate limits of a gateway.",
+        "description": "Grants permission to get the bandwidth rate limits of a gateway",
         "privilege": "DescribeBandwidthRateLimit",
         "resource_types": [
           {
@@ -116702,7 +119087,7 @@
       },
       {
         "access_level": "Read",
-        "description": "This operation returns information about the cache of a gateway. This operation is supported only for the gateway-cached volume architecture.",
+        "description": "Grants permission to get information about the cache of a gateway. This operation is supported only for the gateway-cached volume architecture",
         "privilege": "DescribeCache",
         "resource_types": [
           {
@@ -116714,7 +119099,7 @@
       },
       {
         "access_level": "Read",
-        "description": "This operation returns a description of the gateway volumes specified in the request. This operation is supported only for the gateway-cached volume architecture.",
+        "description": "Grants permission to get a description of the gateway volumes specified in the request. This operation is supported only for the gateway-cached volume architecture",
         "privilege": "DescribeCachediSCSIVolumes",
         "resource_types": [
           {
@@ -116726,7 +119111,7 @@
       },
       {
         "access_level": "Read",
-        "description": "This operation returns an array of Challenge-Handshake Authentication Protocol (CHAP) credentials information for a specified iSCSI target, one for each target-initiator pair.",
+        "description": "Grants permission to get an array of Challenge-Handshake Authentication Protocol (CHAP) credentials information for a specified iSCSI target, one for each target-initiator pair",
         "privilege": "DescribeChapCredentials",
         "resource_types": [
           {
@@ -116738,7 +119123,7 @@
       },
       {
         "access_level": "Read",
-        "description": "This operation returns metadata about a gateway such as its name, network interfaces, configured time zone, and the state (whether the gateway is running or not).",
+        "description": "Grants permission to get metadata about a gateway such as its name, network interfaces, configured time zone, and the state (whether the gateway is running or not)",
         "privilege": "DescribeGatewayInformation",
         "resource_types": [
           {
@@ -116750,7 +119135,7 @@
       },
       {
         "access_level": "Read",
-        "description": "This operation returns your gateway's weekly maintenance start time including the day and time of the week.",
+        "description": "Grants permission to get your gateway's weekly maintenance start time including the day and time of the week",
         "privilege": "DescribeMaintenanceStartTime",
         "resource_types": [
           {
@@ -116762,7 +119147,7 @@
       },
       {
         "access_level": "Read",
-        "description": "This operation gets a description for one or more file shares from a file gateway.",
+        "description": "Grants permission to get a description for one or more file shares from a file gateway",
         "privilege": "DescribeNFSFileShares",
         "resource_types": [
           {
@@ -116774,7 +119159,7 @@
       },
       {
         "access_level": "Read",
-        "description": "This operation gets a description for one or more file shares from a file gateway.",
+        "description": "Grants permission to get a description for one or more file shares from a file gateway",
         "privilege": "DescribeSMBFileShares",
         "resource_types": [
           {
@@ -116786,7 +119171,7 @@
       },
       {
         "access_level": "Read",
-        "description": "This operation gets a description of a Server Message Block (SMB) file share settings from a file gateway.",
+        "description": "Grants permission to get a description of a Server Message Block (SMB) file share settings from a file gateway",
         "privilege": "DescribeSMBSettings",
         "resource_types": [
           {
@@ -116798,7 +119183,7 @@
       },
       {
         "access_level": "Read",
-        "description": "This operation describes the snapshot schedule for the specified gateway volume.",
+        "description": "Grants permission to describe the snapshot schedule for the specified gateway volume",
         "privilege": "DescribeSnapshotSchedule",
         "resource_types": [
           {
@@ -116810,7 +119195,7 @@
       },
       {
         "access_level": "Read",
-        "description": "This operation returns the description of the gateway volumes specified in the request.",
+        "description": "Grants permission to get the description of the gateway volumes specified in the request",
         "privilege": "DescribeStorediSCSIVolumes",
         "resource_types": [
           {
@@ -116822,7 +119207,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns a description of specified virtual tapes in the virtual tape shelf (VTS).",
+        "description": "Grants permission to get a description of specified virtual tapes in the virtual tape shelf (VTS)",
         "privilege": "DescribeTapeArchives",
         "resource_types": [
           {
@@ -116834,7 +119219,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns a list of virtual tape recovery points that are available for the specified gateway-VTL.",
+        "description": "Grants permission to get a list of virtual tape recovery points that are available for the specified gateway-VTL",
         "privilege": "DescribeTapeRecoveryPoints",
         "resource_types": [
           {
@@ -116846,7 +119231,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns a description of the specified Amazon Resource Name (ARN) of virtual tapes.",
+        "description": "Grants permission to get a description of the specified Amazon Resource Name (ARN) of virtual tapes",
         "privilege": "DescribeTapes",
         "resource_types": [
           {
@@ -116858,7 +119243,7 @@
       },
       {
         "access_level": "Read",
-        "description": "This operation returns information about the upload buffer of a gateway.",
+        "description": "Grants permission to get information about the upload buffer of a gateway",
         "privilege": "DescribeUploadBuffer",
         "resource_types": [
           {
@@ -116870,7 +119255,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Returns a description of virtual tape library (VTL) devices for the specified gateway.",
+        "description": "Grants permission to get a description of virtual tape library (VTL) devices for the specified gateway",
         "privilege": "DescribeVTLDevices",
         "resource_types": [
           {
@@ -116882,7 +119267,7 @@
       },
       {
         "access_level": "Read",
-        "description": "This operation returns information about the working storage of a gateway.",
+        "description": "Grants permission to get information about the working storage of a gateway",
         "privilege": "DescribeWorkingStorage",
         "resource_types": [
           {
@@ -116894,7 +119279,7 @@
       },
       {
         "access_level": "Write",
-        "description": "This operation disconnects a volume from an iSCSI connection and then detaches the volume from the specified gateway.",
+        "description": "Grants permission to disconnect a volume from an iSCSI connection and then detaches the volume from the specified gateway",
         "privilege": "DetachVolume",
         "resource_types": [
           {
@@ -116906,7 +119291,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Disables a gateway when the gateway is no longer functioning.",
+        "description": "Grants permission to disable a gateway when the gateway is no longer functioning",
         "privilege": "DisableGateway",
         "resource_types": [
           {
@@ -116918,7 +119303,7 @@
       },
       {
         "access_level": "Write",
-        "description": "This operation enables you to join an Active Directory Domain.",
+        "description": "Grants permission to enable you to join an Active Directory Domain",
         "privilege": "JoinDomain",
         "resource_types": [
           {
@@ -116930,7 +119315,19 @@
       },
       {
         "access_level": "List",
-        "description": "This operation gets a list of the file shares for a specific file gateway, or the list of file shares that belong to the calling user account.",
+        "description": "Grants permission to list the automatic tape creation policies configured on the specified gateway-VTL or all gateway-VTLs owned by your account",
+        "privilege": "ListAutomaticTapeCreationPolicies",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "gateway*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to get a list of the file shares for a specific file gateway, or the list of file shares that belong to the calling user account",
         "privilege": "ListFileShares",
         "resource_types": [
           {
@@ -116942,7 +119339,7 @@
       },
       {
         "access_level": "List",
-        "description": "This operation lists gateways owned by an AWS account in a region specified in the request. The returned list is ordered by gateway Amazon Resource Name (ARN).",
+        "description": "Grants permission to list gateways owned by an AWS account in a region specified in the request. The returned list is ordered by gateway Amazon Resource Name (ARN)",
         "privilege": "ListGateways",
         "resource_types": [
           {
@@ -116954,7 +119351,7 @@
       },
       {
         "access_level": "List",
-        "description": "This operation returns a list of the gateway's local disks.",
+        "description": "Grants permission to get a list of the gateway's local disks",
         "privilege": "ListLocalDisks",
         "resource_types": [
           {
@@ -116965,8 +119362,8 @@
         ]
       },
       {
-        "access_level": "Read",
-        "description": "This operation lists the tags that have been added to the specified resource.",
+        "access_level": "List",
+        "description": "Grants permission to get the tags that have been added to the specified resource",
         "privilege": "ListTagsForResource",
         "resource_types": [
           {
@@ -116992,8 +119389,20 @@
         ]
       },
       {
-        "access_level": "Read",
-        "description": "Lists virtual tapes in your virtual tape library (VTL) and your virtual tape shelf (VTS).",
+        "access_level": "List",
+        "description": "Grants permission to list tape pools owned by your AWS account",
+        "privilege": "ListTapePools",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "tapepool*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to list virtual tapes in your virtual tape library (VTL) and your virtual tape shelf (VTS)",
         "privilege": "ListTapes",
         "resource_types": [
           {
@@ -117004,8 +119413,8 @@
         ]
       },
       {
-        "access_level": "Read",
-        "description": "This operation lists iSCSI initiators that are connected to a volume.",
+        "access_level": "List",
+        "description": "Grants permission to list iSCSI initiators that are connected to a volume",
         "privilege": "ListVolumeInitiators",
         "resource_types": [
           {
@@ -117017,7 +119426,7 @@
       },
       {
         "access_level": "List",
-        "description": "This operation lists the recovery points for a specified gateway.",
+        "description": "Grants permission to list the recovery points for a specified gateway",
         "privilege": "ListVolumeRecoveryPoints",
         "resource_types": [
           {
@@ -117029,7 +119438,7 @@
       },
       {
         "access_level": "List",
-        "description": "This operation lists the iSCSI stored volumes of a gateway.",
+        "description": "Grants permission to list the iSCSI stored volumes of a gateway",
         "privilege": "ListVolumes",
         "resource_types": [
           {
@@ -117041,7 +119450,7 @@
       },
       {
         "access_level": "Write",
-        "description": "This action sends you a notification through CloudWatch Events when all files written to your NFS file share have been uploaded to Amazon S3.",
+        "description": "Grants permission to send you a notification through CloudWatch Events when all files written to your NFS file share have been uploaded to Amazon S3",
         "privilege": "NotifyWhenUploaded",
         "resource_types": [
           {
@@ -117053,7 +119462,7 @@
       },
       {
         "access_level": "Write",
-        "description": "This operation refreshes the cache for the specified file share.",
+        "description": "Grants permission to refresh the cache for the specified file share",
         "privilege": "RefreshCache",
         "resource_types": [
           {
@@ -117065,7 +119474,7 @@
       },
       {
         "access_level": "Tagging",
-        "description": "This operation removes one or more tags from the specified resource.",
+        "description": "Grants permission to remove one or more tags from the specified resource",
         "privilege": "RemoveTagsFromResource",
         "resource_types": [
           {
@@ -117099,7 +119508,7 @@
       },
       {
         "access_level": "Write",
-        "description": "This operation resets all cache disks that have encountered a error and makes the disks available for reconfiguration as cache storage.",
+        "description": "Grants permission to reset all cache disks that have encountered a error and makes the disks available for reconfiguration as cache storage",
         "privilege": "ResetCache",
         "resource_types": [
           {
@@ -117111,7 +119520,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Retrieves an archived virtual tape from the virtual tape shelf (VTS) to a gateway-VTL.",
+        "description": "Grants permission to retrieve an archived virtual tape from the virtual tape shelf (VTS) to a gateway-VTL",
         "privilege": "RetrieveTapeArchive",
         "resource_types": [
           {
@@ -117128,7 +119537,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Retrieves the recovery point for the specified virtual tape.",
+        "description": "Grants permission to retrieve the recovery point for the specified virtual tape",
         "privilege": "RetrieveTapeRecoveryPoint",
         "resource_types": [
           {
@@ -117145,7 +119554,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Sets the password for your VM local console.",
+        "description": "Grants permission to set the password for your VM local console",
         "privilege": "SetLocalConsolePassword",
         "resource_types": [
           {
@@ -117157,7 +119566,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Sets the password for SMB Guest user.",
+        "description": "Grants permission to set the password for SMB Guest user",
         "privilege": "SetSMBGuestPassword",
         "resource_types": [
           {
@@ -117169,7 +119578,7 @@
       },
       {
         "access_level": "Write",
-        "description": "This operation shuts down a gateway.",
+        "description": "Grants permission to shut down a gateway",
         "privilege": "ShutdownGateway",
         "resource_types": [
           {
@@ -117181,7 +119590,7 @@
       },
       {
         "access_level": "Write",
-        "description": "This operation starts a gateway that you previously shut down.",
+        "description": "Grants permission to start a gateway that you previously shut down",
         "privilege": "StartGateway",
         "resource_types": [
           {
@@ -117193,7 +119602,24 @@
       },
       {
         "access_level": "Write",
-        "description": "This operation updates the bandwidth rate limits of a gateway.",
+        "description": "Grants permission to update the automatic tape creation policy configured on a gateway-VTL",
+        "privilege": "UpdateAutomaticTapeCreationPolicy",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "gateway*"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "tapepool*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to update the bandwidth rate limits of a gateway",
         "privilege": "UpdateBandwidthRateLimit",
         "resource_types": [
           {
@@ -117205,7 +119631,7 @@
       },
       {
         "access_level": "Write",
-        "description": "This operation updates the Challenge-Handshake Authentication Protocol (CHAP) credentials for a specified iSCSI target.",
+        "description": "Grants permission to update the Challenge-Handshake Authentication Protocol (CHAP) credentials for a specified iSCSI target",
         "privilege": "UpdateChapCredentials",
         "resource_types": [
           {
@@ -117217,7 +119643,7 @@
       },
       {
         "access_level": "Write",
-        "description": "This operation updates a gateway's metadata, which includes the gateway's name and time zone.",
+        "description": "Grants permission to update a gateway's metadata, which includes the gateway's name and time zone",
         "privilege": "UpdateGatewayInformation",
         "resource_types": [
           {
@@ -117229,7 +119655,7 @@
       },
       {
         "access_level": "Write",
-        "description": "This operation updates the gateway virtual machine (VM) software.",
+        "description": "Grants permission to update the gateway virtual machine (VM) software",
         "privilege": "UpdateGatewaySoftwareNow",
         "resource_types": [
           {
@@ -117241,7 +119667,7 @@
       },
       {
         "access_level": "Write",
-        "description": "This operation updates a gateway's weekly maintenance start time information, including day and time of the week. The maintenance time is the time in your gateway's time zone.",
+        "description": "Grants permission to update a gateway's weekly maintenance start time information, including day and time of the week. The maintenance time is the time in your gateway's time zone",
         "privilege": "UpdateMaintenanceStartTime",
         "resource_types": [
           {
@@ -117253,7 +119679,7 @@
       },
       {
         "access_level": "Write",
-        "description": "This operation updates a NFS file share.",
+        "description": "Grants permission to update a NFS file share",
         "privilege": "UpdateNFSFileShare",
         "resource_types": [
           {
@@ -117265,7 +119691,7 @@
       },
       {
         "access_level": "Write",
-        "description": "This operation updates a SMB file share.",
+        "description": "Grants permission to update a SMB file share",
         "privilege": "UpdateSMBFileShare",
         "resource_types": [
           {
@@ -117277,7 +119703,7 @@
       },
       {
         "access_level": "Write",
-        "description": "This operation updates a snapshot schedule configured for a gateway volume.",
+        "description": "Grants permission to update a snapshot schedule configured for a gateway volume",
         "privilege": "UpdateSnapshotSchedule",
         "resource_types": [
           {
@@ -117289,7 +119715,7 @@
       },
       {
         "access_level": "Write",
-        "description": "This operation updates the type of medium changer in a gateway-VTL.",
+        "description": "Grants permission to update the type of medium changer in a gateway-VTL",
         "privilege": "UpdateVTLDeviceType",
         "resource_types": [
           {
@@ -117326,6 +119752,13 @@
           "aws:ResourceTag/${TagKey}"
         ],
         "resource": "tape"
+      },
+      {
+        "arn": "arn:${Partition}:storagegateway:${Region}:${Account}:tapepool/${PoolId}",
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
+        "resource": "tapepool"
       },
       {
         "arn": "arn:${Partition}:storagegateway:${Region}:${Account}:gateway/${GatewayId}/target/${IscsiTarget}",
@@ -125000,6 +127433,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Cancels a currently running mailbox export job.",
+        "privilege": "CancelMailboxExportJob",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "organization*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Adds an alias to the set of a given member (user or group) of WorkMail.",
         "privilege": "CreateAlias",
         "resource_types": [
@@ -125371,6 +127816,18 @@
         ]
       },
       {
+        "access_level": "Read",
+        "description": "Retrieve details of a mailbox export job.",
+        "privilege": "DescribeMailboxExportJob",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "organization*"
+          }
+        ]
+      },
+      {
         "access_level": "List",
         "description": "Provides more information regarding a given organization based on its identifier.",
         "privilege": "DescribeOrganization",
@@ -125708,6 +128165,18 @@
       },
       {
         "access_level": "List",
+        "description": "List mailbox export jobs.",
+        "privilege": "ListMailboxExportJobs",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "organization*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
         "description": "Lists the mailbox permissions associated with a user, group, or resource mailbox.",
         "privilege": "ListMailboxPermissions",
         "resource_types": [
@@ -125974,6 +128443,18 @@
         "access_level": "Write",
         "description": "Set the details of a mobile policy associated with the organization",
         "privilege": "SetMobilePolicyDetails",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "organization*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Start a new mailbox export job.",
+        "privilege": "StartMailboxExportJob",
         "resource_types": [
           {
             "condition_keys": [],

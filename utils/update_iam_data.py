@@ -110,7 +110,7 @@ def header_matches(string, table):
 # Create the docs directory
 Path("docs").mkdir(parents=True, exist_ok=True)
 
-# update_html_docs_directory("docs/")
+update_html_docs_directory("docs/")
 
 mypath = "./docs/"
 schema = []

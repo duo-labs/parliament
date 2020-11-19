@@ -10,7 +10,7 @@ from pathlib import Path
 from bs4 import BeautifulSoup
 
 # Code for get_links_from_base_actions_resources_conditions_page and update_html_docs_directory borrowed from https://github.com/salesforce/policy_sentry/blob/1126f174f49050b95bddf7549aedaf11fa51a50b/policy_sentry/scraping/awsdocs.py#L31
-BASE_DOCUMENTATION_URL = "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_actions-resources-contextkeys.html"
+BASE_DOCUMENTATION_URL = "https://docs.aws.amazon.com/service-authorization/latest/reference/reference_policies_actions-resources-contextkeys.html"
 
 
 def get_links_from_base_actions_resources_conditions_page():
@@ -29,7 +29,7 @@ def update_html_docs_directory(html_docs_destination):
     (i.e., this repository, or (2) the config directory
     :return:
     """
-    link_url_prefix = "https://docs.aws.amazon.com/IAM/latest/UserGuide/"
+    link_url_prefix = "https://docs.aws.amazon.com/service-authorization/latest/reference/"
     initial_html_filenames_list = (
         get_links_from_base_actions_resources_conditions_page()
     )

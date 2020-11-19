@@ -36532,6 +36532,18 @@
       },
       {
         "access_level": "Read",
+        "description": "Describes an existing Export of a table",
+        "privilege": "DescribeExport",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "export*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
         "description": "Returns information about the specified global table",
         "privilege": "DescribeGlobalTable",
         "resource_types": [
@@ -36639,6 +36651,18 @@
         ]
       },
       {
+        "access_level": "Write",
+        "description": "Initiates an Export of a DynamoDB table to S3",
+        "privilege": "ExportTableToPointInTime",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "table*"
+          }
+        ]
+      },
+      {
         "access_level": "Read",
         "description": "The GetItem operation returns a set of attributes for the item with the given primary key",
         "privilege": "GetItem",
@@ -36701,6 +36725,18 @@
         "access_level": "List",
         "description": "Lists the ContributorInsightsSummary for all tables and global secondary indexes associated with the current account and endpoint",
         "privilege": "ListContributorInsights",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "List exports associated with the account and endpoint",
+        "privilege": "ListExports",
         "resource_types": [
           {
             "condition_keys": [],
@@ -37043,6 +37079,11 @@
         "arn": "arn:${Partition}:dynamodb:${Region}:${Account}:table/${TableName}/backup/${BackupName}",
         "condition_keys": [],
         "resource": "backup"
+      },
+      {
+        "arn": "arn:${Partition}:dynamodb:${Region}:${Account}:table/${TableName}/export/${exportName}",
+        "condition_keys": [],
+        "resource": "export"
       },
       {
         "arn": "arn:${Partition}:dynamodb::${Account}:global-table/${GlobalTableName}",
@@ -87447,6 +87488,583 @@
     "conditions": [
       {
         "condition": "aws:RequestTag/${TagKey}",
+        "description": "Filters actions based on the allowed set of values for each of the tags",
+        "type": "String"
+      },
+      {
+        "condition": "aws:ResourceTag/${TagKey}",
+        "description": "Filters actions based on the tag value associated with the resource",
+        "type": "String"
+      },
+      {
+        "condition": "aws:TagKeys",
+        "description": "Filters actions based on the presence of mandatory tags in the request",
+        "type": "String"
+      }
+    ],
+    "prefix": "network-firewall",
+    "privileges": [
+      {
+        "access_level": "Write",
+        "description": "Grants permission to create an association between a firewall policy and a firewall",
+        "privilege": "AssociateFirewallPolicy",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Firewall*"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "FirewallPolicy*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to associate VPC subnets to a firewall",
+        "privilege": "AssociateSubnets",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Firewall*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to create an AWS Network Firewall firewall",
+        "privilege": "CreateFirewall",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [
+              "iam:CreateServiceLinkedRole"
+            ],
+            "resource_type": "Firewall*"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "FirewallPolicy*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to create an AWS Network Firewall firewall policy",
+        "privilege": "CreateFirewallPolicy",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "FirewallPolicy*"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "StatefulRuleGroup"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "StatelessRuleGroup"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to create an AWS Network Firewall rule group",
+        "privilege": "CreateRuleGroup",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "StatefulRuleGroup"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "StatelessRuleGroup"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to delete a firewall",
+        "privilege": "DeleteFirewall",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Firewall*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to delete a firewall policy",
+        "privilege": "DeleteFirewallPolicy",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "FirewallPolicy*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to delete a resource policy for a firewall policy or rule group",
+        "privilege": "DeleteResourcePolicy",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "FirewallPolicy"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "StatefulRuleGroup"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "StatelessRuleGroup"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to delete a rule group",
+        "privilege": "DeleteRuleGroup",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "StatefulRuleGroup"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "StatelessRuleGroup"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to retrieve the data objects that define a firewall",
+        "privilege": "DescribeFirewall",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Firewall*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to retrieve the data objects that define a firewall policy",
+        "privilege": "DescribeFirewallPolicy",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "FirewallPolicy*"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "StatefulRuleGroup"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "StatelessRuleGroup"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to describe the logging configuration of a firewall",
+        "privilege": "DescribeLoggingConfiguration",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Firewall*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to describe a resource policy for a firewall policy or rule group",
+        "privilege": "DescribeResourcePolicy",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "FirewallPolicy"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "StatefulRuleGroup"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "StatelessRuleGroup"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to retrieve the data objects that define a rule group",
+        "privilege": "DescribeRuleGroup",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "StatefulRuleGroup"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "StatelessRuleGroup"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to disassociate VPC subnets from a firewall",
+        "privilege": "DisassociateSubnets",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Firewall*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to retrieve the metadata for firewall policies",
+        "privilege": "ListFirewallPolicies",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "FirewallPolicy*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to retrieve the metadata for firewalls",
+        "privilege": "ListFirewalls",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Firewall*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to retrieve the metadata for rule groups",
+        "privilege": "ListRuleGroups",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to retrieve the tags for a resource",
+        "privilege": "ListTagsForResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Firewall*"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "FirewallPolicy*"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "StatefulRuleGroup"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "StatelessRuleGroup"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to put a resource policy for a firewall policy or rule group",
+        "privilege": "PutResourcePolicy",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "FirewallPolicy"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "StatefulRuleGroup"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "StatelessRuleGroup"
+          }
+        ]
+      },
+      {
+        "access_level": "Tagging",
+        "description": "Grants permission to attach tags to a resource",
+        "privilege": "TagResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Firewall*"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "FirewallPolicy*"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "StatefulRuleGroup"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "StatelessRuleGroup"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Tagging",
+        "description": "Grants permission to remove tags from a resource",
+        "privilege": "UntagResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Firewall*"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "FirewallPolicy*"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "StatefulRuleGroup"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "StatelessRuleGroup"
+          },
+          {
+            "condition_keys": [
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to add or remove delete protection for a firewall",
+        "privilege": "UpdateFirewallDeleteProtection",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Firewall*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to modify the description for a firewall",
+        "privilege": "UpdateFirewallDescription",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Firewall*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to modify a firewall policy",
+        "privilege": "UpdateFirewallPolicy",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "FirewallPolicy*"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "StatefulRuleGroup"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "StatelessRuleGroup"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to add or remove firewall policy change protection for a firewall",
+        "privilege": "UpdateFirewallPolicyChangeProtection",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Firewall*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to modify the logging configuration of a firewall",
+        "privilege": "UpdateLoggingConfiguration",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Firewall*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to modify a rule group",
+        "privilege": "UpdateRuleGroup",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "StatefulRuleGroup"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "StatelessRuleGroup"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to add or remove subnet change protection for a firewall",
+        "privilege": "UpdateSubnetChangeProtection",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Firewall*"
+          }
+        ]
+      }
+    ],
+    "resources": [
+      {
+        "arn": "arn:${Partition}:network-firewall:${Region}:${Account}:firewall/${Name}",
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
+        "resource": "Firewall"
+      },
+      {
+        "arn": "arn:${Partition}:network-firewall:${Region}:${Account}:firewall-policy/${Name}",
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
+        "resource": "FirewallPolicy"
+      },
+      {
+        "arn": "arn:${Partition}:network-firewall:${Region}:${Account}:stateful-rulegroup/${Name}",
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
+        "resource": "StatefulRuleGroup"
+      },
+      {
+        "arn": "arn:${Partition}:network-firewall:${Region}:${Account}:stateless-rulegroup/${Name}",
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
+        "resource": "StatelessRuleGroup"
+      }
+    ],
+    "service_name": "Network Firewall"
+  },
+  {
+    "conditions": [
+      {
+        "condition": "aws:RequestTag/${TagKey}",
         "description": "Filters actions based on the presence of tag key-value pairs in the request",
         "type": "String"
       },
@@ -90120,7 +90738,7 @@
     "privileges": [
       {
         "access_level": "Write",
-        "description": "Creates an Outpost",
+        "description": "Grants permission to create an Outpost",
         "privilege": "CreateOutpost",
         "resource_types": [
           {
@@ -90131,8 +90749,32 @@
         ]
       },
       {
+        "access_level": "Write",
+        "description": "Grants permission to delete an outpost",
+        "privilege": "DeleteOutpost",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to delete an site",
+        "privilege": "DeleteSite",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
         "access_level": "Read",
-        "description": "Gets information about the specified Outpost",
+        "description": "Grants permission to get information about the specified Outpost",
         "privilege": "GetOutpost",
         "resource_types": [
           {
@@ -90144,7 +90786,7 @@
       },
       {
         "access_level": "Read",
-        "description": "Lists the instance types for the specified Outpost",
+        "description": "Grants permission to list the instance types for the specified Outpost",
         "privilege": "GetOutpostInstanceTypes",
         "resource_types": [
           {
@@ -90156,7 +90798,7 @@
       },
       {
         "access_level": "List",
-        "description": "List the Outposts for your AWS account",
+        "description": "Grants permission to list the Outposts for your AWS account",
         "privilege": "ListOutposts",
         "resource_types": [
           {
@@ -90168,7 +90810,7 @@
       },
       {
         "access_level": "List",
-        "description": "Lists the sites for the specified AWS account",
+        "description": "Grants permission to list the sites for your AWS account",
         "privilege": "ListSites",
         "resource_types": [
           {
@@ -90179,23 +90821,7 @@
         ]
       }
     ],
-    "resources": [
-      {
-        "arn": "arn:${Partition}:outposts:${Region}:${Account}:outpost/${OutpostId}",
-        "condition_keys": [],
-        "resource": "Outpost"
-      },
-      {
-        "arn": "arn:${Partition}:outposts:${Region}:${Account}:site/${SiteId}",
-        "condition_keys": [],
-        "resource": "Site"
-      },
-      {
-        "arn": "arn:${Partition}:outposts:${Region}:${Account}:order/${OrderId}",
-        "condition_keys": [],
-        "resource": "Order"
-      }
-    ],
+    "resources": [],
     "service_name": "AWS Outposts"
   },
   {
@@ -91456,6 +92082,26 @@
     "privileges": [
       {
         "access_level": "Write",
+        "description": "Grants permission to cancel a SPICE ingestions on a dataset",
+        "privilege": "CancelIngestion",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "ingestion*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Grants permission to create an account customization for QuickSight account or namespace",
         "privilege": "CreateAccountCustomization",
         "resource_types": [
@@ -91483,6 +92129,26 @@
       },
       {
         "access_level": "Write",
+        "description": "Creates an analysis from a template",
+        "privilege": "CreateAnalysis",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "analysis*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Grants permission to create a custom permissions resource for restricting user access",
         "privilege": "CreateCustomPermissions",
         "resource_types": [
@@ -91503,6 +92169,41 @@
             "dependent_actions": [],
             "resource_type": "dashboard*"
           },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to create a dataset",
+        "privilege": "CreateDataSet",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "datasource*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to create a data source",
+        "privilege": "CreateDataSource",
+        "resource_types": [
           {
             "condition_keys": [
               "aws:RequestTag/${TagKey}",
@@ -91548,6 +92249,26 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "assignment*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to start a SPICE ingestion on a dataset",
+        "privilege": "CreateIngestion",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "ingestion*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -91665,6 +92386,18 @@
       },
       {
         "access_level": "Write",
+        "description": "Deletes an analysis",
+        "privilege": "DeleteAnalysis",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "analysis*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Deletes a dashboard",
         "privilege": "DeleteDashboard",
         "resource_types": [
@@ -91672,6 +92405,46 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "dashboard*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to delete a dataset",
+        "privilege": "DeleteDataSet",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "dataset*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to delete a data source",
+        "privilege": "DeleteDataSource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "datasource*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -91822,6 +92595,30 @@
         ]
       },
       {
+        "access_level": "Read",
+        "description": "Provides a summary for an analysis",
+        "privilege": "DescribeAnalysis",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "analysis*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Describes read and write permissions for an analysis",
+        "privilege": "DescribeAnalysisPermissions",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "analysis*"
+          }
+        ]
+      },
+      {
         "access_level": "Write",
         "description": "Grants permission to describe a custom permissions resource in a QuickSight account",
         "privilege": "DescribeCustomPermissions",
@@ -91859,6 +92656,86 @@
       },
       {
         "access_level": "Read",
+        "description": "Grants permission to describe a dataset",
+        "privilege": "DescribeDataSet",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "dataset*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Permissions management",
+        "description": "Grants permission to describe the resource policy of a dataset",
+        "privilege": "DescribeDataSetPermissions",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "dataset*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to describe a data source",
+        "privilege": "DescribeDataSource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "datasource*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Permissions management",
+        "description": "Grants permission to describe the resource policy of a data source",
+        "privilege": "DescribeDataSourcePermissions",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "datasource*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
         "description": "Return a QuickSight group\u2019s description and ARN.",
         "privilege": "DescribeGroup",
         "resource_types": [
@@ -91878,6 +92755,26 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "assignment*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to describe a SPICE ingestion on a dataset",
+        "privilege": "DescribeIngestion",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "ingestion*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -92026,6 +92923,18 @@
         ]
       },
       {
+        "access_level": "List",
+        "description": "Lists analyses in an AWS account",
+        "privilege": "ListAnalyses",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "analysis*"
+          }
+        ]
+      },
+      {
         "access_level": "Write",
         "description": "Grants permission to list custom permissions resources in QuickSight account",
         "privilege": "ListCustomPermissions",
@@ -92058,6 +92967,36 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "dashboard*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to list all datasets",
+        "privilege": "ListDataSets",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to list all data sources",
+        "privilege": "ListDataSources",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -92106,6 +93045,21 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "assignment*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to list all SPICE ingestions on a dataset",
+        "privilege": "ListIngestions",
+        "resource_types": [
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -92245,6 +93199,46 @@
         ]
       },
       {
+        "access_level": "Read",
+        "description": "Grants permission to use a dataset for a template",
+        "privilege": "PassDataSet",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "dataset*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to use a data source for a data set",
+        "privilege": "PassDataSource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "datasource*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
         "access_level": "Write",
         "description": "Create a QuickSight user, whose identity is associated with the IAM identity/role specified in the request.",
         "privilege": "RegisterUser",
@@ -92256,6 +93250,42 @@
             ],
             "dependent_actions": [],
             "resource_type": "user*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Restores a deleted analysis",
+        "privilege": "RestoreAnalysis",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "analysis*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Searches for analyses that belong to the user specified in the filter",
+        "privilege": "SearchAnalyses",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "analysis*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Searches for dashboards that belong to a user",
+        "privilege": "SearchDashboards",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "dashboard*"
           }
         ]
       },
@@ -92402,6 +93432,30 @@
       },
       {
         "access_level": "Write",
+        "description": "Updates an analysis in an AWS account",
+        "privilege": "UpdateAnalysis",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "analysis*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Updates read and write permissions on an analysis",
+        "privilege": "UpdateAnalysisPermissions",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "analysis*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Grants permission to update a custom permissions resource",
         "privilege": "UpdateCustomPermissions",
         "resource_types": [
@@ -92445,6 +93499,91 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": "dashboard*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to update a dataset",
+        "privilege": "UpdateDataSet",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "dataset*"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "datasource"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Permissions management",
+        "description": "Grants permission to update the resource policy of a dataset",
+        "privilege": "UpdateDataSetPermissions",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "dataset*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to update a data source",
+        "privilege": "UpdateDataSource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "datasource*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Permissions management",
+        "description": "Grants permission to update the resource policy of a data source",
+        "privilege": "UpdateDataSourcePermissions",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "datasource*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
           }
         ]
       },
@@ -92569,6 +93708,13 @@
         "resource": "group"
       },
       {
+        "arn": "arn:${Partition}:quicksight:${Region}:${Account}:analysis/${ResourceId}",
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
+        "resource": "analysis"
+      },
+      {
         "arn": "arn:${Partition}:quicksight:${Region}:${Account}:dashboard/${ResourceId}",
         "condition_keys": [
           "aws:ResourceTag/${TagKey}"
@@ -92581,6 +93727,27 @@
           "aws:ResourceTag/${TagKey}"
         ],
         "resource": "template"
+      },
+      {
+        "arn": "arn:${Partition}:quicksight:${Region}:${Account}:datasource/${ResourceId}",
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
+        "resource": "datasource"
+      },
+      {
+        "arn": "arn:${Partition}:quicksight:${Region}:${Account}:dataset/${ResourceId}",
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
+        "resource": "dataset"
+      },
+      {
+        "arn": "arn:${Partition}:quicksight:${Region}:${Account}:dataset/${DatasetId}/ingestion/${ResourceId}",
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
+        "resource": "ingestion"
       },
       {
         "arn": "arn:${Partition}:quicksight:${Region}:${Account}:theme/${ResourceId}",
@@ -109324,6 +110491,23 @@
       },
       {
         "access_level": "Write",
+        "description": "Grants permission to associate an attribute group with an application.",
+        "privilege": "AssociateAttributeGroup",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Application*"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "AttributeGroup*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Grants permission to associate a budget with a resource",
         "privilege": "AssociateBudgetWithResource",
         "resource_types": [
@@ -109355,6 +110539,18 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to associate a resource with an application.",
+        "privilege": "AssociateResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Application*"
           }
         ]
       },
@@ -109418,6 +110614,46 @@
         "resource_types": [
           {
             "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to create an application.",
+        "privilege": "CreateApplication",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Application*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to create an attribute group.",
+        "privilege": "CreateAttributeGroup",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "AttributeGroup*"
+          },
+          {
+            "condition_keys": [
+              "aws:RequestTag/${TagKey}",
+              "aws:TagKeys"
+            ],
             "dependent_actions": [],
             "resource_type": ""
           }
@@ -109532,6 +110768,30 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to delete an application if all associations have been removed from the application.",
+        "privilege": "DeleteApplication",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Application*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to delete an attribute group if all associations have been removed from the attribute group.",
+        "privilege": "DeleteAttributeGroup",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "AttributeGroup*"
           }
         ]
       },
@@ -109829,6 +111089,23 @@
       },
       {
         "access_level": "Write",
+        "description": "Grants permission to disassociate an attribute group from an application.",
+        "privilege": "DisassociateAttributeGroup",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Application*"
+          },
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "AttributeGroup*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Grants permission to disassociate a budget from a resource",
         "privilege": "DisassociateBudgetFromResource",
         "resource_types": [
@@ -109860,6 +111137,18 @@
             "condition_keys": [],
             "dependent_actions": [],
             "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to disassociate a resource from an application.",
+        "privilege": "DisassociateResource",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Application*"
           }
         ]
       },
@@ -109941,9 +111230,93 @@
         ]
       },
       {
+        "access_level": "Read",
+        "description": "Grants permission to get an application.",
+        "privilege": "GetApplication",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Application*"
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to get an attribute group.",
+        "privilege": "GetAttributeGroup",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "AttributeGroup*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to import a resource into a provisioned product.",
+        "privilege": "ImportAsProvisionedProduct",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Product*"
+          }
+        ]
+      },
+      {
         "access_level": "List",
         "description": "Grants permission to list the portfolios that have been shared with you and you have accepted",
         "privilege": "ListAcceptedPortfolioShares",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to list the applications in your account.",
+        "privilege": "ListApplications",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to list the attribute groups associated with an application.",
+        "privilege": "ListAssociatedAttributeGroups",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Application*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to list the resources associated with an application.",
+        "privilege": "ListAssociatedResources",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Application*"
+          }
+        ]
+      },
+      {
+        "access_level": "List",
+        "description": "Grants permission to list the attribute groups in your account.",
+        "privilege": "ListAttributeGroups",
         "resource_types": [
           {
             "condition_keys": [],
@@ -110258,6 +111631,30 @@
       },
       {
         "access_level": "Write",
+        "description": "Grants permission to update the attributes of an existing application.",
+        "privilege": "UpdateApplication",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "Application*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
+        "description": "Grants permission to update the attributes of an existing attribute group.",
+        "privilege": "UpdateAttributeGroup",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": "AttributeGroup*"
+          }
+        ]
+      },
+      {
+        "access_level": "Write",
         "description": "Grants permission to update the metadata fields of an existing constraint",
         "privilege": "UpdateConstraint",
         "resource_types": [
@@ -110374,6 +111771,20 @@
       }
     ],
     "resources": [
+      {
+        "arn": "arn:${Partition}:servicecatalog:${Region}:${Account}:/applications/${ApplicationId}",
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
+        "resource": "Application"
+      },
+      {
+        "arn": "arn:${Partition}:servicecatalog:${Region}:${Account}:/attribute-groups/${AttributeGroupId}",
+        "condition_keys": [
+          "aws:ResourceTag/${TagKey}"
+        ],
+        "resource": "AttributeGroup"
+      },
       {
         "arn": "arn:${Partition}:catalog:${Region}:${Account}:portfolio/${PortfolioId}",
         "condition_keys": [
@@ -113909,7 +115320,9 @@
         "resource_types": [
           {
             "condition_keys": [],
-            "dependent_actions": [],
+            "dependent_actions": [
+              "iam:PassRole"
+            ],
             "resource_type": ""
           }
         ]
@@ -113933,7 +115346,9 @@
         "resource_types": [
           {
             "condition_keys": [],
-            "dependent_actions": [],
+            "dependent_actions": [
+              "iam:PassRole"
+            ],
             "resource_type": "topic*"
           }
         ]
@@ -114173,7 +115588,9 @@
         "resource_types": [
           {
             "condition_keys": [],
-            "dependent_actions": [],
+            "dependent_actions": [
+              "iam:PassRole"
+            ],
             "resource_type": ""
           }
         ]
@@ -114209,7 +115626,9 @@
         "resource_types": [
           {
             "condition_keys": [],
-            "dependent_actions": [],
+            "dependent_actions": [
+              "iam:PassRole"
+            ],
             "resource_type": "topic*"
           }
         ]
@@ -123069,6 +124488,42 @@
         ]
       },
       {
+        "access_level": "Read",
+        "description": "Grants permission to view, in the Trusted Advisor console, all of the accounts in an AWS organization that are contained by a root or organizational unit (OU)",
+        "privilege": "ListAccountsForParent",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to view, in the Trusted Advisor console, all of the organizational units (OUs) in a parent organizational unit or root",
+        "privilege": "ListOrganizationalUnitsForParent",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
+        "access_level": "Read",
+        "description": "Grants permission to view, in the Trusted Advisor console, all of the roots that are defined in an AWS organization",
+        "privilege": "ListRoots",
+        "resource_types": [
+          {
+            "condition_keys": [],
+            "dependent_actions": [],
+            "resource_type": ""
+          }
+        ]
+      },
+      {
         "access_level": "Write",
         "description": "Grants permission to refresh an AWS Trusted Advisor check",
         "privilege": "RefreshCheck",
@@ -127505,7 +128960,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Creates an organization, either using an existing directory or creates a new directory on-the-fly. Also creates and enables the complementary mail domain. Optionally creates KMS key",
+        "description": "Creates a new Amazon WorkMail organization.",
         "privilege": "CreateOrganization",
         "resource_types": [
           {
@@ -127649,7 +129104,7 @@
       },
       {
         "access_level": "Write",
-        "description": "Removes an organization from an account, either removing the directory from directory services or leaving it available for re-use",
+        "description": "Deletes an Amazon WorkMail organization and all underlying AWS resources managed by Amazon WorkMail as part of the organization.",
         "privilege": "DeleteOrganization",
         "resource_types": [
           {

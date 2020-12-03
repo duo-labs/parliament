@@ -41,7 +41,7 @@ This example is showing that the action s3:GetObject requires a resource matchin
 The different input types allowed include:
 - --file: Filename
 - --directory: A directory path, for exmaple: `--directory . --include_policy_extension json --exclude_pattern ".*venv.*"`
-- --aws-managed-policies: For use specifically with the repo https://github.com/SummitRoute/aws_managed_policies
+- --aws-managed-policies: For use specifically with the repo https://github.com/z0ph/aws_managed_policies
 - --auth-details-file: For use with the file returned by "aws iam get-account-authorization-details"
 - --string: Provide a string such as '{"Version": "2012-10-17","Statement": {"Effect": "Allow","Action": ["s3:GetObject", "s3:PutBucketPolicy"],"Resource": ["arn:aws:s3:::bucket1", "arn:aws:s3:::bucket2/*"]}}'
 

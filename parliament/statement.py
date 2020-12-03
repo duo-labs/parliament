@@ -641,7 +641,7 @@ class Statement:
         """
         Given a statement, look for problems and extract out the parts.
 
-        If it is maformed, return False
+        If it is malformed, return False
         """
         actions = []
         resources = []
@@ -955,4 +955,4 @@ class Statement:
                 "RESOURCE_STAR", detail=sorted(self.resource_star), location=self.stmt
             )
 
-        return True
+        return not has_malformed_resource

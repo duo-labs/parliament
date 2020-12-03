@@ -32,8 +32,8 @@ def override_config(override_config_path):
     for finding_type, settings in override_config.items():
         if finding_type not in config:
             config[finding_type] = {}
-        for setting, settting_value in settings.items():
-            config[finding_type][setting] = settting_value
+        for setting, setting_value in settings.items():
+            config[finding_type][setting] = setting_value
 
 
 def enhance_finding(finding):

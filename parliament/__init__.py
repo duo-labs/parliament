@@ -129,9 +129,9 @@ def is_arn_match(resource_type, arn_format, resource):
     # For the first 5 parts (ex. arn:aws:SERVICE:REGION:ACCOUNT:), ensure these match appropriately
     # We do this because we don't want "arn:*:s3:::*/*" and "arn:aws:logs:*:*:/aws/cloudfront/*" to return True
     for position in range(0, 5):
-        if arn_parts[position] == "*" or arn_parts[position] == "":
+        if arn_parts[position] == "*" and resource_parts[position] != "":
             continue
-        elif resource_parts[position] == "*" or resource_parts[position] == "":
+        elif resource_parts[position] == "*":
             continue
         elif arn_parts[position] == resource_parts[position]:
             continue

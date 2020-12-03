@@ -87,9 +87,82 @@ class TestResourceFormatting(unittest.TestCase):
             is_arn_match(
                 "cloudfront",
                 "arn:aws:logs:*:*:/aws/cloudfront/*",
-                "arn:aws:logs:us-east-1:000000000000:/aws/cloudfront/test",
+                "arn:aws:logs:us-east-1:000000000000:/aws/cloudfront/test"
             )
         )
+
+    def test_arn_match_cloudtrail_emptysegments(self):
+        assert_false(
+            is_arn_match(
+                "cloudtrail",
+                "arn:*:cloudtrail:*:*:trail/*",
+                "arn:::::trail/my-trail"
+            )
+        )
+
+    def test_arn_match_s3_withregion(self):
+        assert_false(
+            is_arn_match(
+                "object",
+                "arn:*:s3:::*/*",
+                "arn:aws:s3:us-east-1::bucket1/*"
+            )
+        )
+
+    def test_arn_match_s3_withaccount(self):
+        assert_false(
+            is_arn_match(
+                "object",
+                "arn:*:s3:::*/*",
+                "arn:aws:s3::123412341234:bucket1/*"
+            )
+        )
+
+    def test_arn_match_s3_withregion_account(self):
+        assert_false(
+            is_arn_match(
+                "object",
+                "arn:*:s3:::*/*",
+                "arn:aws:s3:us-east-1:123412341234:bucket1/*"
+            )
+        )
+
+    def test_arn_match_iam_emptysegments(self):
+        assert_false(
+            is_arn_match(
+                "role",
+                "arn:*:iam::*:role/*",
+                "arn:aws:iam:::role/my-role"
+            )
+        )
+
+    def test_arn_match_iam_withregion(self):
+        assert_false(
+            is_arn_match(
+                "role",
+                "arn:*:iam::*:role/*",
+                "arn:aws:iam:us-east-1::role/my-role"
+            )
+        )
+
+    def test_arn_match_apigw_emptysegments(self):
+        assert_false(
+            is_arn_match(
+                "apigateway",
+                "arn:*:apigateway:*::*",
+                "arn:aws:apigateway:::/restapis/a123456789/*"
+            )
+        )
+
+    def test_arn_match_apigw_withaccount(self):
+        assert_false(
+            is_arn_match(
+                "apigateway",
+                "arn:*:apigateway:*::*",
+                "arn:aws:apigateway:us-east-1:123412341234:/restapis/a123456789/*"
+            )
+        )
+
 
     def test_is_glob_match(self):
         tests = [

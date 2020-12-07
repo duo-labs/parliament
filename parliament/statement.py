@@ -195,7 +195,7 @@ def is_value_in_correct_format_for_type(type_needed, values):
     Given a documented type needed such as "Arn", return True if all values match.
 
     For example, if you have a condition of:
-    "Condition": {"DateGreaterThan" :{"aws:CurrentTime" : "2019-07-16T12:00:00Z"}} 
+    "Condition": {"DateGreaterThan" :{"aws:CurrentTime" : "2019-07-16T12:00:00Z"}}
 
     Then this function would end up being called with:
     - type_needed: Date
@@ -333,7 +333,7 @@ class Statement:
         ["arn:aws:s3:::bucket", "arn:aws:s3:::bucket/*"]
         and the privilege given is 's3:PutBucketPolicy' this should return ["arn:aws:s3:::bucket"],
         as the other resource is only applicable to object related privileges.
-        
+
         If the privilege given is 's3:ListAllMyBuckets' this should return None, as that privilege does not
         apply to these resources.
         """
@@ -711,11 +711,16 @@ class Statement:
             self.effect_allow = False
 
         # Check Sid
+        sid_allowed_chars = "[0-9A-Za-z]"
         if "Sid" in self.stmt and not re.fullmatch(
-            "[0-9A-Za-z]*", self.stmt["Sid"].value
+            "{}*".format(sid_allowed_chars), self.stmt["Sid"].value
         ):
             # The grammar is defined at https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_grammar.html
-            self.add_finding("INVALID_SID", location={"string": self.stmt["Sid"]})
+            self.add_finding(
+                "INVALID_SID",
+                detail="Allowed characters are {}".format(sid_allowed_chars),
+                location={"string": self.stmt["Sid"]},
+            )
             return False
 
         # Check Action

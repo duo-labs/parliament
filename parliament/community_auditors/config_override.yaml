@@ -24,3 +24,15 @@ SENSITIVE_ACCESS:
   # Resource definitions have to be in the format:
   # - 'service:action': [afn1, arn2]
   resources: []
+
+NOTPRINCIPAL_WITH_ALLOW:
+  title: NotPrincipal used with Allow effect
+  description: NotPrincipal with Allow automatically grants the permission to all principals, except the ones specified.
+  severity: MEDIUM
+  group: CUSTOM
+
+NOTRESOURCE_WITH_ALLOW:
+  title: NotResource used with Allow effect
+  description: NotResource with Allow automatically grants the Principal all services and resources that are not explicitly listed
+  severity: MEDIUM
+  group: CUSTOM

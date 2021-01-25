@@ -11,8 +11,18 @@ This library duplicates (and adds to!) much of the functionality in the web cons
 [demo](https://parliament.summitroute.com/)
 
 # Installation
+
+* Pip
+
 ```
 pip install parliament
+```
+
+* Homebrew
+
+```
+brew tap duo-labs/parliament https://github.com/duo-labs/parliament
+brew install parliament
 ```
 
 # Usage

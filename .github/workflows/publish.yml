@@ -29,3 +29,32 @@ jobs:
       run: |
         python setup.py sdist bdist_wheel
         twine upload dist/*
+
+
+  update-brew:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: '3.x'
+      - name: publish brew
+        run: |
+          echo "Sleeping for 5 minutes to make sure that it is uploaded to PyPi"
+          sleep 5m
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          pip install homebrew-pypi-poet
+          pip install parliament -U
+          git fetch origin
+          git checkout --track origin/main
+          latest_tag=$(git describe --tags `git rev-list --tags --max-count=1`)
+          echo "latest tag: $latest_tag"
+          git pull origin $latest_tag
+          mkdir -p HomebrewFormula
+          poet -f parliament > HomebrewFormula/parliament.rb
+          git add .
+          git commit -m "update brew formula" parliament/__init__.py HomebrewFormula/parliament.rb || echo "No brew changes to commit"
+          git push -u origin main

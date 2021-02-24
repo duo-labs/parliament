@@ -104,6 +104,24 @@ class TestPrincipals(unittest.TestCase):
             policy.finding_ids, set(), "Federated access",
         )
 
+        policy = analyze_policy_string(
+            """{
+  "Version":"2012-10-17",
+  "Statement":[
+    {
+      "Effect":"Allow",
+      "Principal": { "AWS": "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity 00000000000000" },
+      "Action":["s3:GetObject"],
+      "Resource":["arn:aws:s3:::examplebucket/*"]
+    }
+  ]
+}""",
+            ignore_private_auditors=True,
+        )
+        assert_equal(
+            policy.finding_ids, set(), "S3 bucket policy with CloudFront OAI access",
+        )
+
     def test_bad_principals(self):
         # Good principal
         policy = analyze_policy_string(

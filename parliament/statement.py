@@ -434,7 +434,7 @@ class Statement:
                     for aws_principal in make_list(json_object[1]):
                         text = aws_principal.value
                         account_id_regex = re.compile("^\d{12}$")
-                        arn_regex = re.compile("^arn:[-a-z\*]*:iam::(\d{12}|):.*$")
+                        arn_regex = re.compile("^arn:[-a-z\*]*:iam::(\d{12}|cloudfront|):.*$")
 
                         if text == "*":
                             pass

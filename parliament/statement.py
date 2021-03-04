@@ -923,8 +923,8 @@ class Statement:
                             match_found = True
                             continue
                         if is_arn_strictly_valid(resource_type, arn_format, resource.value):
-                                match_found = True
-                                continue
+                            match_found = True
+                            continue
 
                     if not match_found:
                         actions_without_matching_resources.append(

@@ -175,9 +175,12 @@ def is_arn_strictly_valid(resource_type, arn_format, resource):
         resource_id = ":".join(resource_parts[5:])
 
         # Does the resource contain a resource type component
-        arn_id_resource_type = re.match(r"(^[^\*]\w+)[\/\:].+", arn_id)
+        # regex looks for a resource type word like "user" or "cluster-endpoint" followed by a
+        # : or / and then anything else excluding the resource type string starting with a *
+        arn_id_resource_type = re.match(r"(^[^\*][\w-]+)[\/\:].+", arn_id)
 
         if arn_id_resource_type != None and resource_id != "*":
+            
             # https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#genref-aws-service-namesspaces
             # The following is not allowed: arn:aws:iam::123456789012:u*
             if not (resource_id.startswith(arn_id_resource_type[1])):

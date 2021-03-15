@@ -2,7 +2,7 @@ import unittest
 from nose.tools import raises, assert_equal, assert_true, assert_false
 
 # import parliament
-from parliament import analyze_policy_string, is_arn_match, is_glob_match
+from parliament import analyze_policy_string, is_arn_match, is_arn_strictly_valid, is_glob_match
 from parliament.statement import is_valid_region, is_valid_account_id
 
 
@@ -90,6 +90,51 @@ class TestResourceFormatting(unittest.TestCase):
                 "arn:aws:logs:us-east-1:000000000000:/aws/cloudfront/test"
             )
         )
+
+    def test_is_arn_strictly_valid(self):
+        assert_true(
+            is_arn_strictly_valid(
+                "user", "arn:*:iam::*:user/*", "arn:aws:iam::123456789012:user/Development/product_1234/*"
+            )
+        )
+
+        assert_true(
+            is_arn_strictly_valid(
+                "user", "arn:*:iam::*:user/*", "arn:aws:iam::123456789012:*"
+            )
+        )
+
+        assert_true(
+            is_arn_strictly_valid(
+                "ssm", "arn:*:ssm::*:resource-data-sync/*", "arn:aws:ssm::123456789012:resource-data-sync/*"
+            )
+        )
+
+        assert_false(
+            is_arn_strictly_valid(
+                "ssm", "arn:*:ssm::*:resource-data-sync/*", "arn:aws:ssm::123456789012:resource-data-*/*"
+            )
+        )
+
+        assert_false(
+            is_arn_strictly_valid(
+                "user", "arn:*:iam::*:user/*", "arn:aws:iam::123456789012:*/*"
+            )
+        )
+
+        assert_false(
+            is_arn_strictly_valid(
+                "user", "arn:*:iam::*:user/*", "arn:aws:iam::123456789012:u*"
+            )
+        )
+
+        assert_false(
+            is_arn_strictly_valid(
+                "dbuser", "arn:*:redshift:*:*:dbuser:*/*", "arn:aws:redshift:us-west-2:123456789012:db*:the_cluster/the_user"
+            )
+        )
+
+        
 
     def test_arn_match_cloudtrail_emptysegments(self):
         assert_false(

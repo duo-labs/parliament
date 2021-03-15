@@ -4,6 +4,7 @@ import re
 from . import (
     iam_definition,
     is_arn_match,
+    is_arn_strictly_valid,
     expand_action,
     UnknownActionException,
     UnknownPrefixException,
@@ -921,7 +922,7 @@ class Statement:
                             self.resource_star[action_key] += 1
                             match_found = True
                             continue
-                        if is_arn_match(resource_type, arn_format, resource.value):
+                        if is_arn_strictly_valid(resource_type, arn_format, resource.value):
                             match_found = True
                             continue
 

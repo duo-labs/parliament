@@ -147,6 +147,52 @@ def is_arn_match(resource_type, arn_format, resource):
 
     return is_glob_match(arn_id, resource_id)
 
+def is_arn_strictly_valid(resource_type, arn_format, resource):
+    """
+    Strictly validate the arn_format specified in the docs, with the resource
+    given in the IAM policy. These can each be strings with globbing. For example, we
+    want to match the following two strings:
+    - arn:*:s3:::*/*
+    - arn:aws:s3:::*personalize*
+
+    That should return true because you could have "arn:aws:s3:::personalize/" which matches both.
+
+    However when not using *, must include the resource type in the resource arn and wildcards
+    are not valid for the resource type portion (https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#genref-aws-service-namesspaces)
+
+    Input:
+    - resource_type: Example "bucket", this is only used to identify special cases.
+    - arn_format: ARN regex from the docs
+    - resource: ARN regex from IAM policy
+
+    """
+
+    if is_arn_match(resource_type, arn_format, resource):
+        # this would have already raised exception
+        arn_parts = arn_format.split(":")
+        resource_parts = resource.split(":")
+        arn_id = ":".join(arn_parts[5:])
+        resource_id = ":".join(resource_parts[5:])
+
+        # Does the resource contain a resource type component
+        # regex looks for a resource type word like "user" or "cluster-endpoint" followed by a
+        # : or / and then anything else excluding the resource type string starting with a *
+        arn_id_resource_type = re.match(r"(^[^\*][\w-]+)[\/\:].+", arn_id)
+
+        if arn_id_resource_type != None and resource_id != "*":
+            
+            # https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#genref-aws-service-namesspaces
+            # The following is not allowed: arn:aws:iam::123456789012:u*
+            if not (resource_id.startswith(arn_id_resource_type[1])):
+                return False
+
+        # replace aws variable and check for other colons
+        resource_id_no_vars = re.sub(r"\$\{aws.\w+\}", "", resource_id)
+        if ":" in resource_id_no_vars and not ":" in arn_id:
+            return False
+
+        return True
+    return False
 
 def is_glob_match(s1, s2):
     # This comes from https://github.com/duo-labs/parliament/issues/36#issuecomment-574001764

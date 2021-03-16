@@ -274,3 +274,5 @@ The IAM data is obtained from scraping the docs [here](https://docs.aws.amazon.c
 - [tf-parliament](https://github.com/rdkls/tf-parliament): Runs Parliament against terraform files
 - [iam-lint](https://github.com/xen0l/iam-lint): Github action for linting AWS IAM policy documents 
 - [Paco](https://paco-cloud.io): Cloud orchestration tool that integrates Parliament as a library to verify a project's IAM Policies and warns about findings.
+- [ConsoleMe](https://github.com/Netflix/consoleme): Web service that makes administering and using multiple AWS accounts easier, that uses Parliament for linting IAM Policies
+- [iamlive](https://github.com/iann0036/iamlive): Generates IAM Policies from observing AWS calls through client-side monitoring

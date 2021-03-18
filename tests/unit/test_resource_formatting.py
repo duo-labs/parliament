@@ -90,6 +90,11 @@ class TestResourceFormatting(unittest.TestCase):
                 "arn:aws:logs:us-east-1:000000000000:/aws/cloudfront/test"
             )
         )
+        assert_true(
+            is_arn_match(
+                "bucket", "arn:*:s3:::*", "arn:aws:s3:::bucket-for-client-${aws:PrincipalTag/Namespace}-*"
+            )
+        )
 
     def test_is_arn_strictly_valid(self):
         assert_true(

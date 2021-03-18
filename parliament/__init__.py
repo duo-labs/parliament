@@ -115,7 +115,8 @@ def is_arn_match(resource_type, arn_format, resource):
 
     if "bucket" in resource_type:
         # We have to do a special case here for S3 buckets
-        if "/" in resource:
+        # and since resources can use variables which contain / need to replace them
+        if "/" in strip_var_from_arn(resource, "theVar"):
             return False
 
     # The ARN has at least 6 parts, separated by a colon. Ensure these exist.
@@ -144,7 +145,6 @@ def is_arn_match(resource_type, arn_format, resource):
 
     # Some of the arn_id's contain regexes of the form "[key]" so replace those with "*"
     resource_id = re.sub(r"\[.+?\]", "*", resource_id)
-
     return is_glob_match(arn_id, resource_id)
 
 def is_arn_strictly_valid(resource_type, arn_format, resource):
@@ -166,7 +166,6 @@ def is_arn_strictly_valid(resource_type, arn_format, resource):
     - resource: ARN regex from IAM policy
 
     """
-
     if is_arn_match(resource_type, arn_format, resource):
         # this would have already raised exception
         arn_parts = arn_format.split(":")
@@ -187,12 +186,15 @@ def is_arn_strictly_valid(resource_type, arn_format, resource):
                 return False
 
         # replace aws variable and check for other colons
-        resource_id_no_vars = re.sub(r"\$\{aws.\w+\}", "", resource_id)
+        resource_id_no_vars = strip_var_from_arn(resource_id)
         if ":" in resource_id_no_vars and not ":" in arn_id:
             return False
 
         return True
     return False
+
+def strip_var_from_arn(arn, replace_with=""):
+    return re.sub(r"\$\{aws.[\w\/]+\}", replace_with, arn)
 
 def is_glob_match(s1, s2):
     # This comes from https://github.com/duo-labs/parliament/issues/36#issuecomment-574001764

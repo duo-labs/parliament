@@ -14,9 +14,11 @@ def make_list(v):
             location = jsoncfg.node_location(v)
             line = location.line
             column = location.column
-        else:
+        elif jsoncfg.node_exists(v):
             line = v.line
             column = v.column
+        else:
+            return []
 
         a = jsoncfg.config_classes.ConfigJSONArray(line, column)
         a._append(v)

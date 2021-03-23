@@ -138,7 +138,7 @@ def main():
         type=str,
     )
     parser.add_argument('--file',
-                            help="Provide a policy via stdin instead of --file",
+                            help="Provide a policy via stdin (e.g. through piping) or --file",
                             type=argparse.FileType('r'),
                             default=sys.stdin)
     parser.add_argument(

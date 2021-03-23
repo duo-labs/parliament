@@ -322,7 +322,7 @@ def main():
         args.file.close()
         policy = analyze_policy_string(
             contents,
-            args.file,
+            args.file.name,
             private_auditors_custom_path=args.private_auditors,
             include_community_auditors=args.include_community_auditors,
             config=config,

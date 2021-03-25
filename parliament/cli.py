@@ -137,7 +137,10 @@ def main():
         help='Provide a string such as \'{"Version": "2012-10-17","Statement": {"Effect": "Allow","Action": ["s3:GetObject", "s3:PutBucketPolicy"],"Resource": ["arn:aws:s3:::bucket1", "arn:aws:s3:::bucket2/*"]}}\'',
         type=str,
     )
-    parser.add_argument("--file", help="Provide a policy in a file", type=str)
+    parser.add_argument('--file',
+                            help="Provide a policy via stdin (e.g. through piping) or --file",
+                            type=argparse.FileType('r'),
+                            default=sys.stdin)
     parser.add_argument(
         "--directory", help="Provide a path to directory with policy files", type=str
     )
@@ -211,6 +214,10 @@ def main():
 
     if args.minimal and args.json:
         raise Exception("You cannot choose both minimal and json output")
+
+    # If I have some stdin to read it should be my policy, file input should indicate stdin
+    if not sys.stdin.isatty() and args.file.name != "<stdin>":
+        parser.error("You cannot pass a file with --file and use stdin together")
 
     # Change the exit status if there are errors
     exit_status = 0
@@ -311,16 +318,16 @@ def main():
         )
         findings.extend(policy.findings)
     elif args.file:
-        with open(args.file) as f:
-            contents = f.read()
-            policy = analyze_policy_string(
-                contents,
-                args.file,
-                private_auditors_custom_path=args.private_auditors,
-                include_community_auditors=args.include_community_auditors,
-                config=config,
-            )
-            findings.extend(policy.findings)
+        contents = args.file.read()
+        args.file.close()
+        policy = analyze_policy_string(
+            contents,
+            args.file.name,
+            private_auditors_custom_path=args.private_auditors,
+            include_community_auditors=args.include_community_auditors,
+            config=config,
+        )
+        findings.extend(policy.findings)
     elif args.directory:
         file_paths = find_files(
             directory=args.directory,

@@ -4,6 +4,7 @@ import os
 import pkgutil
 import sys
 import jsoncfg
+from glob import glob
 from pathlib import Path
 
 from . import expand_action
@@ -301,22 +302,19 @@ class Policy:
                 sys.path.append(".")
 
             private_auditors = {}
-            for importer, name, _ in pkgutil.iter_modules(
-                [private_auditors_directory_path]
-            ):
-                full_package_name = "parliament.%s.%s" % (
-                    private_auditors_directory,
-                    name,
-                )
 
-                if private_auditors_custom_path is not None:
-                    path_with_dots = private_auditors_directory_path.replace(
-                        "/", "."
-                    ).replace("\\", ".")
-                    full_package_name = path_with_dots + "." + name
+            for path in glob(f'{private_auditors_directory_path}/*.py'):
+                if path.endswith('__init__.py'):
+                    continue
 
-                module = importlib.import_module(full_package_name)
-                private_auditors[name] = module
+                package_name = 'private_auditors'
+                module_name = Path(path).stem
+
+                module_spec = importlib.util.spec_from_file_location(f'{package_name}.{module_name}', path)
+                module = importlib.util.module_from_spec(module_spec)
+                module_spec.loader.exec_module(module)
+
+                private_auditors[module_name] = module
 
             if len(private_auditors) == 0 and private_auditors_custom_path is not None:
                 raise Exception(

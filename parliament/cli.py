@@ -209,9 +209,6 @@ def main():
 
     logging.basicConfig(level=log_level, stream=sys.stderr, format=log_format)
 
-    if args.private_auditors is not None and "." in args.private_auditors:
-        raise Exception("The path to the private_auditors must not have periods")
-
     if args.minimal and args.json:
         raise Exception("You cannot choose both minimal and json output")
 

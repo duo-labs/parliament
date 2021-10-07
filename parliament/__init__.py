@@ -9,16 +9,16 @@ import json
 import jsoncfg
 import re
 
-import pkg_resources
+from importlib import resources
 import yaml
 
 # On initialization, load the IAM data
-iam_definition_path = pkg_resources.resource_filename(__name__, "iam_definition.json")
-iam_definition = json.load(open(iam_definition_path, "r"))
+iam_definition_path = resources.open_text(__name__, "iam_definition.json")
+iam_definition = json.load(iam_definition_path)
 
 # And the config data
-config_path = pkg_resources.resource_filename(__name__, "config.yaml")
-config = yaml.safe_load(open(config_path, "r"))
+config_path = resources.open_text(__name__, "config.yaml")
+config = yaml.safe_load(config_path)
 
 
 def override_config(override_config_path):

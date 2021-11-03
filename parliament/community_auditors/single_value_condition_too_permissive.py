@@ -43,9 +43,11 @@ def audit(policy: Policy) -> None:
     ]
 
     for stmt in policy.statements:
-        conditions = make_list(stmt.stmt["Condition"])
-        
-        for condition in conditions[0]:
+        if "Condition" not in stmt.stmt:
+            return
+
+        conditions = stmt.stmt["Condition"]
+        for condition in conditions:
             # The operator is the first element (ex. `StringLike`) and the condition_block follows it
             operator = condition[0]
             condition_block = condition[1]
@@ -56,4 +58,3 @@ def audit(policy: Policy) -> None:
                         "SINGLE_VALUE_CONDITION_TOO_PERMISSIVE",
                         detail='Checking a single value conditional key against a set of values results in overly permissive policies.',
                     )
-                    print("match")

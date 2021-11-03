@@ -314,7 +314,7 @@ def main():
             config=config,
         )
         findings.extend(policy.findings)
-    elif args.file:
+    elif args.file and not args.directory:
         contents = args.file.read()
         args.file.close()
         policy = analyze_policy_string(

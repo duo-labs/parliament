@@ -82,6 +82,57 @@ class TestPatterns(unittest.TestCase):
             "Resource policy privilege escalation across two statement",
         )
 
+    def test_resource_effectively_star(self):
+        policy = analyze_policy_string(
+            """{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "CloudtrailReadTrail",
+      "Effect": "Allow",
+      "Action": [
+        "cloudtrail:GetEventSelectors",
+        "cloudtrail:PutEventSelectors"
+      ],
+      "Resource": [
+        "arn:*:cloudtrail:*:*:trail/*"
+      ]
+    }
+  ]
+}"""
+        )
+
+        assert_equal(
+            policy.finding_ids,
+            set(["RESOURCE_EFFECTIVELY_STAR"]),
+            "Resource policy spans all Cloudtrails even without an asterisk.",
+        )
+
+        policy = analyze_policy_string(
+            """{
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Sid": "CloudtrailReadTrail",
+          "Effect": "Allow",
+          "Action": [
+            "cloudtrail:GetEventSelectors",
+            "cloudtrail:PutEventSelectors"
+          ],
+          "Resource": [
+            "arn:aws:cloudtrail:us-east-1:000000000000:trail/*"
+          ]
+        }
+      ]
+    }"""
+        )
+
+        assert_equal(
+            policy.finding_ids,
+            set(),
+            "Resource policy is scoped by AWS partition, account and region and is therefore not 'STAR'.",
+        )
+
     def test_resource_policy_privilege_escalation_with_deny(self):
         # This test ensures if we have an allow on a specific resource, but a Deny on *,
         # that it is denied.

@@ -28,6 +28,9 @@ class Policy:
         self.config = config if config else {}
 
     def add_finding(self, finding, detail="", location={}):
+        print(type(location))
+        print(location)
+        print(type({}))
         if type(location) == tuple and "jsoncfg.config_classes" in str(
             type(location[1])
         ):
@@ -42,6 +45,9 @@ class Policy:
             location_data["lineno"] = jsoncfg.node_location(location).line
             location_data["column"] = jsoncfg.node_location(location).column
             location = location_data
+        
+        if type(location) != dict:
+            location = {'filepath': location}
         if "filepath" not in location:
             location["filepath"] = self.filepath
         self._findings.append(Finding(finding, detail, location))

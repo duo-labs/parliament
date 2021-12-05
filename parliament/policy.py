@@ -331,7 +331,7 @@ class Policy:
         if include_community_auditors is True:
             # Import any private auditing modules
             community_auditors_directory = "community_auditors"
-            community_auditors_directory_path = (
+            community_auditors_directory_path = str(
                 Path(os.path.abspath(__file__)).parent / community_auditors_directory
             )
 

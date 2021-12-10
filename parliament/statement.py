@@ -876,76 +876,80 @@ class Statement:
         # https://github.com/SummitRoute/aws_managed_policies/blob/4b71905a9042e66b22bc3d2b9cb1378b1e1d239e/policies/AWSEC2SpotServiceRolePolicy#L21
 
         if not has_malformed_resource and self.effect_allow:
-            actions_without_matching_resources = []
-            # Ensure the required resources for each action exist
-            # Iterate through each action
 
+            def _action_requires_star_resource(resource_types):
+                resource_types_length = len(resource_types)
+                return (resource_types_length == 0) \
+                    or (resource_types_length == 1 and resource_types[0]["resource_type"] == "")
+
+            def _action_arn_formats(resource_types, service_resources):
+                formats = []
+                for typ in resource_types:
+                    resource_type = typ["resource_type"]
+                    if resource_type:
+                        formats.append(
+                            {
+                                "type" : resource_type,
+                                "format" : get_arn_format(resource_type,  service_resources)
+                            }
+                        )
+                return formats
+
+            actions_without_matching_resources = []
             all_possible_resources_for_stmt = []
 
-            for action_struct in expanded_actions:
-                privilege_info = get_privilege_info(
-                    action_struct["service"], action_struct["action"]
-                )
+            # expanded_actions is the list of fully expanded actions from wildcard
+            for action in expanded_actions:
+                privilege_info = get_privilege_info(action["service"], action["action"])
+                has_match = False
 
-                # If the privilege requires a resource of "*", ensure it has it.
-                if len(privilege_info["resource_types"]) == 0 or (
-                    len(privilege_info["resource_types"]) == 1
-                    and privilege_info["resource_types"][0]["resource_type"] == ""
-                ):
+                if _action_requires_star_resource(privilege_info["resource_types"]):
                     all_possible_resources_for_stmt.append("*")
-                    match_found = False
-                    for resource in resources:
-                        if resource.value == "*":
-                            match_found = True
-                    if not match_found:
+
+                    if "*" in [r.value for r in resources]:
+                        # "*" resource matches any action
+                        has_match = True
+                    else:
                         actions_without_matching_resources.append(
                             {
                                 "action": "{}:{}".format(
-                                    action_struct["service"], action_struct["action"]
+                                    action["service"], action["action"]
                                 ),
                                 "required_format": "*",
                             }
                         )
+                    continue
 
-                # Iterate through the resources defined in the action definition
-                for resource_type in privilege_info["resource_types"]:
-                    resource_type = resource_type["resource_type"]
+                arn_formats = _action_arn_formats(
+                    privilege_info["resource_types"],
+                    privilege_info["service_resources"],
+                )
 
-                    # Only check the required resources which have a "*" at the end
-                    if "*" not in resource_type:
-                        continue
+                all_possible_resources_for_stmt += [f["format"]for f in arn_formats]
 
-                    arn_format = get_arn_format(
-                        resource_type, privilege_info["service_resources"]
+                # loop through every resources to find at least one that match the action
+                for resource in resources:
+                    if resource.value == "*":
+                        has_match = True
+                        action_key = "{}:{}".format(action["service"], action["action"])
+                        self.resource_star.setdefault(action_key, 0)
+                        self.resource_star[action_key] += 1
+                        break
+
+                    # loop through each possible arn format for that action to match on resource
+                    for arn_format in arn_formats:
+                        if is_arn_strictly_valid(arn_format["type"], arn_format["format"], resource.value):
+                            has_match = True
+                            break
+
+                if not has_match:
+                    actions_without_matching_resources.append(
+                        {
+                            "action": "{}:{}".format(action["service"], action["action"]),
+                            "required_format": arn_formats,
+                        }
                     )
 
-                    all_possible_resources_for_stmt.append(arn_format)
-
-                    # At least one resource has to match the action's required resources
-                    match_found = False
-                    for resource in resources:
-                        if resource.value == "*":
-                            # expansion leads to duplication actions
-                            action_key = "{}:{}".format(
-                                action_struct["service"], action_struct["action"]
-                            )
-                            self.resource_star.setdefault(action_key, 0)
-                            self.resource_star[action_key] += 1
-                            match_found = True
-                            continue
-                        if is_arn_strictly_valid(resource_type, arn_format, resource.value):
-                            match_found = True
-                            continue
-
-                    if not match_found:
-                        actions_without_matching_resources.append(
-                            {
-                                "action": "{}:{}".format(
-                                    action_struct["service"], action_struct["action"]
-                                ),
-                                "required_format": arn_format,
-                            }
-                        )
             if actions_without_matching_resources:
                 # We have location info for each action via the variable `actions` which is a ConfigJSONArray, but
                 # because we can only list one location, we'll just use the location of the statement

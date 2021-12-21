@@ -36,3 +36,9 @@ NOTRESOURCE_WITH_ALLOW:
   description: NotResource with Allow automatically grants the Principal all services and resources that are not explicitly listed
   severity: MEDIUM
   group: CUSTOM
+
+SINGLE_VALUE_CONDITION_TOO_PERMISSIVE:
+  title: A single value conditional is checked against a set of values
+  description: Checking a single value conditional key against a set of values results in overly permissive policies.
+  severity: MEDIUM
+  group: CUSTOM

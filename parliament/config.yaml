@@ -115,6 +115,12 @@ RESOURCE_STAR:
   severity: LOW
   group: NOT_IDEAL
 
+RESOURCE_EFFECTIVELY_STAR:
+  title: Unnecessary use of Resource * based on wildcards
+  description: "Resource block is functionally equivalent to Resource *"
+  severity: LOW
+  group: MALFORMED
+
 UNKNOWN_OPERATOR:
   title: The condition operator is unknown.
   severity: MEDIUM

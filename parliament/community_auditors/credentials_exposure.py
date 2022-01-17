@@ -26,6 +26,7 @@ CREDENTIALS_EXPOSURE_ACTIONS = [
     "sts:assumerolewithwebidentity",
     "sts:getfederationtoken",
     "sts:getsessiontoken",
+    "cognito-idp:describeuserpoolclient",
 ]
 
 

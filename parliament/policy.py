@@ -337,7 +337,7 @@ class Policy:
 
             community_auditors = {}
             for importer, name, _ in pkgutil.iter_modules(
-                [community_auditors_directory_path]
+                [str(community_auditors_directory_path)]
             ):
                 full_package_name = "parliament.%s.%s" % (
                     community_auditors_directory,

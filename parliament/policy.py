@@ -90,12 +90,12 @@ class Policy:
                 references[resource].append(stmt)
         return references
 
-    def get_allowed_actions(self):
+    def get_allowed_actions(self, raise_exceptions=True):
         actions_referenced = set()
         for stmt in self.statements:
             actions = make_list(stmt.stmt["Action"])
             for action in actions:
-                expanded_actions = expand_action(action.value)
+                expanded_actions = expand_action(action.value, raise_exceptions)
                 for expanded_action in expanded_actions:
                     actions_referenced.add(
                         "{}:{}".format(

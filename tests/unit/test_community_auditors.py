@@ -1,9 +1,7 @@
-import unittest
-from nose.tools import raises, assert_equal, assert_true, assert_false
 from parliament import analyze_policy_string
 
 
-class TestCommunityAuditors(unittest.TestCase):
+class TestCommunityAuditors:
     """Test class for importing/enabling/disabling community auditors properly"""
 
     def test_analyze_policy_string_enable_community(self):
@@ -32,9 +30,9 @@ class TestCommunityAuditors(unittest.TestCase):
         
         We are just not including the full results here because the Permissions management actions might expand as AWS expands their API. We don't want to have to update the unit tests every time that happens.
         """
-        assert_equal(
-            policy.finding_ids,
-            set(
+        assert (
+            policy.finding_ids
+            == set(
                 [
                     "RESOURCE_STAR",
                     "CREDENTIALS_EXPOSURE",
@@ -63,4 +61,4 @@ class TestCommunityAuditors(unittest.TestCase):
             example_policy_with_wildcards, include_community_auditors=False
         )
 
-        assert_equal(policy.finding_ids, set(["RESOURCE_STAR"]))
+        assert policy.finding_ids == set(["RESOURCE_STAR"])

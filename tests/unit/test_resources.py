@@ -1,10 +1,7 @@
-import unittest
-from nose.tools import assert_equal
-
 from parliament import analyze_policy_string
 
 
-class TestResources(unittest.TestCase):
+class TestResources:
     """Test class for principals"""
 
     def test_resource_with_sub(self):
@@ -22,4 +19,4 @@ class TestResources(unittest.TestCase):
   ]
 }"""
         )
-        assert_equal(policy.finding_ids, {"INVALID_ARN"})
+        assert policy.finding_ids == {"INVALID_ARN"}

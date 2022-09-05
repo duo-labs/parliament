@@ -1,12 +1,9 @@
-import unittest
-
-from nose.tools import assert_equal
-
 from parliament import analyze_policy_string
 
 
-class TestSensitiveAccess(unittest.TestCase):
+class TestSensitiveAccess:
     """Test class for single value condition too permissive auditor"""
+
     example_policy_string = """
         {
           "Version": "2012-10-17",

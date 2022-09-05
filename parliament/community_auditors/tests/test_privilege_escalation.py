@@ -1,12 +1,7 @@
-import unittest
-
-from nose.tools import assert_equal
-
-# import parliament
 from parliament import analyze_policy_string
 
 
-class TestPrivilegeEscalation(unittest.TestCase):
+class TestPrivilegeEscalation:
     """Test class for Privilege Escalation auditor"""
 
     def test_privilege_escalation(self):

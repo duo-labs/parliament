@@ -1,11 +1,7 @@
-import unittest
-
-from nose.tools import assert_equal
-
 from parliament import analyze_policy_string
 
 
-class TestSensitiveAccess(unittest.TestCase):
+class TestSensitiveAccess:
     """Test class for Sensitive access auditor"""
 
     def test_sensitive_access(self):

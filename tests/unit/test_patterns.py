@@ -1,10 +1,7 @@
-import unittest
-from nose.tools import raises, assert_equal, assert_true, assert_false
-
 from parliament import analyze_policy_string
 
 
-class TestPatterns(unittest.TestCase):
+class TestPatterns:
     """Test class for bad patterns"""
 
     def test_bad_mfa_condition(self):
@@ -19,11 +16,9 @@ class TestPatterns(unittest.TestCase):
         }}""",
             ignore_private_auditors=True,
         )
-        assert_equal(
-            policy.finding_ids,
-            set(["BAD_PATTERN_FOR_MFA"]),
-            "Policy contains bad MFA check",
-        )
+        assert policy.finding_ids == set(
+            ["BAD_PATTERN_FOR_MFA"]
+        ), "Policy contains bad MFA check"
 
     def test_resource_policy_privilege_escalation(self):
         # This policy is actually granting essentially s3:* due to the ability to put a policy on a bucket
@@ -37,11 +32,9 @@ class TestPatterns(unittest.TestCase):
         }}""",
             ignore_private_auditors=True,
         )
-        assert_equal(
-            policy.finding_ids,
-            set(["RESOURCE_POLICY_PRIVILEGE_ESCALATION", "RESOURCE_STAR"]),
-            "Resource policy privilege escalation",
-        )
+        assert policy.finding_ids == set(
+            ["RESOURCE_POLICY_PRIVILEGE_ESCALATION", "RESOURCE_STAR"]
+        ), "Resource policy privilege escalation"
 
         policy = analyze_policy_string(
             """{
@@ -76,11 +69,9 @@ class TestPatterns(unittest.TestCase):
             ignore_private_auditors=True,
         )
 
-        assert_equal(
-            policy.finding_ids,
-            set(["RESOURCE_POLICY_PRIVILEGE_ESCALATION", "RESOURCE_STAR"]),
-            "Resource policy privilege escalation across two statement",
-        )
+        assert policy.finding_ids == set(
+            ["RESOURCE_POLICY_PRIVILEGE_ESCALATION", "RESOURCE_STAR"]
+        ), "Resource policy privilege escalation across two statement"
 
     def test_resource_effectively_star(self):
         policy = analyze_policy_string(
@@ -102,11 +93,9 @@ class TestPatterns(unittest.TestCase):
 }"""
         )
 
-        assert_equal(
-            policy.finding_ids,
-            set(["RESOURCE_EFFECTIVELY_STAR"]),
-            "Resource policy spans all Cloudtrails even without an asterisk.",
-        )
+        assert policy.finding_ids == set(
+            ["RESOURCE_EFFECTIVELY_STAR"]
+        ), "Resource policy spans all Cloudtrails even without an asterisk."
 
         policy = analyze_policy_string(
             """{
@@ -127,11 +116,9 @@ class TestPatterns(unittest.TestCase):
     }"""
         )
 
-        assert_equal(
-            policy.finding_ids,
-            set(),
-            "Resource policy is scoped by AWS partition, account and region and is therefore not 'STAR'.",
-        )
+        assert (
+            policy.finding_ids == set()
+        ), "Resource policy is scoped by AWS partition, account and region and is therefore not 'STAR'."
 
     def test_resource_policy_privilege_escalation_with_deny(self):
         # This test ensures if we have an allow on a specific resource, but a Deny on *,
@@ -153,11 +140,9 @@ class TestPatterns(unittest.TestCase):
         ]}""",
             ignore_private_auditors=True,
         )
-        assert_equal(
-            policy.finding_ids,
-            set(),
-            "Resource policy privilege escalation does not exist because all our denied",
-        )
+        assert (
+            policy.finding_ids == set()
+        ), "Resource policy privilege escalation does not exist because all our denied"
 
     def test_resource_policy_privilege_escalation_at_bucket_level(self):
         policy = analyze_policy_string(
@@ -170,11 +155,9 @@ class TestPatterns(unittest.TestCase):
         }}""",
             ignore_private_auditors=True,
         )
-        assert_equal(
-            policy.finding_ids,
-            set(["RESOURCE_POLICY_PRIVILEGE_ESCALATION"]),
-            "Resource policy privilege escalation",
-        )
+        assert policy.finding_ids == set(
+            ["RESOURCE_POLICY_PRIVILEGE_ESCALATION"]
+        ), "Resource policy privilege escalation"
 
         policy = analyze_policy_string(
             """{
@@ -192,11 +175,9 @@ class TestPatterns(unittest.TestCase):
             ignore_private_auditors=True,
         )
         # There is one finding for "No resources match for s3:ListAllMyBuckets which requires a resource format of *"
-        assert_equal(
-            policy.finding_ids,
-            set(["RESOURCE_MISMATCH"]),
-            "Buckets do not match so no escalation possible",
-        )
+        assert policy.finding_ids == set(
+            ["RESOURCE_MISMATCH"]
+        ), "Buckets do not match so no escalation possible"
 
 
 # # # The following test for detections of various bad patterns, but unfortunately

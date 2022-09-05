@@ -1,12 +1,7 @@
-import unittest
-
-from nose.tools import assert_equal
-
-# import parliament
 from parliament import analyze_policy_string
 
 
-class TestPermissionsManagement(unittest.TestCase):
+class TestPermissionsManagement:
     """Test class for Permissions Management auditor"""
 
     def test_permissions_management(self):

@@ -1,0 +1,6 @@
+[run]
+source = parliament
+omit = parliament/cli.py
+
+[report]
+fail_under = 65

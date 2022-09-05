@@ -130,7 +130,7 @@ class Policy:
         def __is_allowed(stmts):
             """
             Given statements that are all relevant to the same resource and privilege,
-            (meaning each statement must have an explicit allow or deny on the privilege) 
+            (meaning each statement must have an explicit allow or deny on the privilege)
             determine if it is allowed, which means no Deny effects.
             """
             has_allow = False
@@ -303,14 +303,16 @@ class Policy:
 
             private_auditors = {}
 
-            for path in glob(f'{private_auditors_directory_path}/*.py'):
-                if path.endswith('__init__.py'):
+            for path in glob(f"{private_auditors_directory_path}/*.py"):
+                if path.endswith("__init__.py"):
                     continue
 
-                package_name = 'private_auditors'
+                package_name = "private_auditors"
                 module_name = Path(path).stem
 
-                module_spec = importlib.util.spec_from_file_location(f'{package_name}.{module_name}', path)
+                module_spec = importlib.util.spec_from_file_location(
+                    f"{package_name}.{module_name}", path
+                )
                 module = importlib.util.module_from_spec(module_spec)
                 module_spec.loader.exec_module(module)
 

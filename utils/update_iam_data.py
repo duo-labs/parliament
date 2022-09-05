@@ -29,13 +29,14 @@ def update_html_docs_directory(html_docs_destination):
     (i.e., this repository, or (2) the config directory
     :return:
     """
-    link_url_prefix = "https://docs.aws.amazon.com/service-authorization/latest/reference/"
+    link_url_prefix = (
+        "https://docs.aws.amazon.com/service-authorization/latest/reference/"
+    )
     initial_html_filenames_list = (
         get_links_from_base_actions_resources_conditions_page()
     )
     # Remove the relative path so we can download it
     html_filenames = [sub.replace("./", "") for sub in initial_html_filenames_list]
-    
 
     for page in html_filenames:
         response = requests.get(link_url_prefix + page, allow_redirects=False)
@@ -56,7 +57,7 @@ def update_html_docs_directory(html_docs_destination):
                 link.attrs["href"] = link.attrs["href"].replace(
                     temp, f"https://docs.aws.amazon.com{temp}"
                 )
-        
+
         for script in soup.find_all("script"):
             try:
                 if "src" in script.attrs:
@@ -107,6 +108,7 @@ def header_matches(string, table):
         return False
     return True
 
+
 # Create the docs directory
 Path("docs").mkdir(parents=True, exist_ok=True)
 
@@ -115,7 +117,7 @@ update_html_docs_directory("docs/")
 mypath = "./docs/"
 schema = []
 
-#for filename in ['list_amazons3.html']:
+# for filename in ['list_amazons3.html']:
 for filename in [f for f in listdir(mypath) if isfile(join(mypath, f))]:
     if not filename.startswith("list_"):
         continue
@@ -153,7 +155,9 @@ for filename in [f for f in listdir(mypath) if isfile(join(mypath, f))]:
         for table in tables:
             # There can be 3 tables, the actions table, an ARN table, and a condition key table
             # Example: https://docs.aws.amazon.com/IAM/latest/UserGuide/list_awssecuritytokenservice.html
-            if not header_matches("actions", table) or not header_matches("description", table):
+            if not header_matches("actions", table) or not header_matches(
+                "description", table
+            ):
                 continue
 
             rows = table.find_all("tr")
@@ -170,7 +174,7 @@ for filename in [f for f in listdir(mypath) if isfile(join(mypath, f))]:
                 if len(cells) != 6:
                     # Sometimes the privilege contains Scenarios, and I don't know how to handle this
                     break
-                    #raise Exception("Unexpected format in {}: {}".format(prefix, row))
+                    # raise Exception("Unexpected format in {}: {}".format(prefix, row))
 
                 # See if this cell spans multiple rows
                 rowspan = 1
@@ -244,7 +248,9 @@ for filename in [f for f in listdir(mypath) if isfile(join(mypath, f))]:
 
         # Get resource table
         for table in tables:
-            if not header_matches("resource types", table) or not header_matches("arn", table):
+            if not header_matches("resource types", table) or not header_matches(
+                "arn", table
+            ):
                 continue
 
             rows = table.find_all("tr")
@@ -274,7 +280,10 @@ for filename in [f for f in listdir(mypath) if isfile(join(mypath, f))]:
 
         # Get condition keys table
         for table in tables:
-            if not (header_matches("<th> condition keys </th>", table) and header_matches("<th> type </th>", table)):
+            if not (
+                header_matches("<th> condition keys </th>", table)
+                and header_matches("<th> type </th>", table)
+            ):
                 continue
 
             rows = table.find_all("tr")

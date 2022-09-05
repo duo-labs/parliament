@@ -1,12 +1,7 @@
-import unittest
-
-from nose.tools import assert_equal
-
-# import parliament
 from parliament import analyze_policy_string
 
 
-class TestCredentialsManagement(unittest.TestCase):
+class TestCredentialsManagement:
     """Test class for Credentials Management auditor"""
 
     def test_credentials_management(self):

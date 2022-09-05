@@ -1,13 +1,9 @@
-import unittest
-
-from nose.tools import assert_equal
-
 from parliament import analyze_policy_string
 
 S3_STAR_FINDINGS = {"PERMISSIONS_MANAGEMENT_ACTIONS", "RESOURCE_MISMATCH"}
 
 
-class TestAdvancedPolicyElements(unittest.TestCase):
+class TestAdvancedPolicyElements:
     def test_notresource_allow(self):
         # NotResource is OK with Effect: Deny. This denies access to
         # all S3 buckets except Payroll buckets. This example is taken from

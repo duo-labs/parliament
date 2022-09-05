@@ -1,10 +1,9 @@
-import unittest
 import jsoncfg
 import json
 from parliament import analyze_policy_string
 
 
-class TestAuthDetailsFile(unittest.TestCase):
+class TestAuthDetailsFile:
     def test_auth_details_example(self):
         auth_details_json = {
             "UserDetailList": [
@@ -184,7 +183,8 @@ class TestAuthDetailsFile(unittest.TestCase):
                     continue
                 print(version["Document"])
                 policy = analyze_policy_string(
-                    json.dumps(version["Document"]), policy["Arn"],
+                    json.dumps(version["Document"]),
+                    policy["Arn"],
                 )
                 findings.extend(policy.findings)
 
@@ -215,4 +215,4 @@ class TestAuthDetailsFile(unittest.TestCase):
                 findings.extend(policy.findings)
 
         self.maxDiff = None
-        self.assertTrue("RESOURCE_POLICY_PRIVILEGE_ESCALATION" in str(findings))
+        assert "RESOURCE_POLICY_PRIVILEGE_ESCALATION" in str(findings)

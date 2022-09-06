@@ -9,42 +9,36 @@ class TestActionExpansion:
 
     def test_expand_action_no_expansion(self):
         expanded_actions = expand_action("s3:listallmybuckets")
-        assert (
-            len(expanded_actions),
-            len([{"service": "s3", "action": "ListAllMyBuckets"}]),
+        assert len(expanded_actions) == len(
+            [{"service": "s3", "action": "ListAllMyBuckets"}]
         )
 
     def test_expand_action_with_expansion(self):
         expanded_actions = expand_action("s3:listallmybucke*")
-        assert (
-            len(expanded_actions),
-            len([{"service": "s3", "action": "ListAllMyBuckets"}]),
+        assert len(expanded_actions) == len(
+            [{"service": "s3", "action": "ListAllMyBuckets"}]
         )
 
     def test_expand_action_with_casing(self):
         expanded_actions = expand_action("iAm:li*sTuS*rs")
-        assert (len(expanded_actions), len([{"service": "iam", "action": "ListUsers"}]))
+        assert len(expanded_actions) == len([{"service": "iam", "action": "ListUsers"}])
 
     def test_expand_action_with_expansion_for_prefix_used_multiple_times(self):
         expanded_actions = expand_action("ses:Describe*")
-        assert (
-            len(expanded_actions),
-            len(
-                [
-                    {"service": "ses", "action": "DescribeActiveReceiptRuleSet"},
-                    {"service": "ses", "action": "DescribeConfigurationSet"},
-                    {"service": "ses", "action": "DescribeReceiptRule"},
-                    {"service": "ses", "action": "DescribeReceiptRuleSet"},
-                ]
-            ),
+        assert len(expanded_actions) == len(
+            [
+                {"service": "ses", "action": "DescribeActiveReceiptRuleSet"},
+                {"service": "ses", "action": "DescribeConfigurationSet"},
+                {"service": "ses", "action": "DescribeReceiptRule"},
+                {"service": "ses", "action": "DescribeReceiptRuleSet"},
+            ]
         )
 
     def test_expand_action_with_permission_only_action(self):
         # There are 17 privileges list as "logs.CreateLogDelivery [permission only]"
         expanded_actions = expand_action("logs:GetLogDelivery")
-        assert (
-            len(expanded_actions),
-            len([{"service": "logs", "action": "GetLogDelivery"}]),
+        assert len(expanded_actions) == len(
+            [{"service": "logs", "action": "GetLogDelivery"}]
         )
 
     def test_exception_malformed(self):

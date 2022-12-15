@@ -137,10 +137,12 @@ def main():
         help='Provide a string such as \'{"Version": "2012-10-17","Statement": {"Effect": "Allow","Action": ["s3:GetObject", "s3:PutBucketPolicy"],"Resource": ["arn:aws:s3:::bucket1", "arn:aws:s3:::bucket2/*"]}}\'',
         type=str,
     )
-    parser.add_argument('--file',
-                            help="Provide a policy via stdin (e.g. through piping) or --file",
-                            type=argparse.FileType('r'),
-                            default=sys.stdin)
+    parser.add_argument(
+        "--file",
+        help="Provide a policy via stdin (e.g. through piping) or --file",
+        type=argparse.FileType("r"),
+        default=sys.stdin,
+    )
     parser.add_argument(
         "--directory", help="Provide a path to directory with policy files", type=str
     )
@@ -236,9 +238,7 @@ def main():
             with open(file_path) as f:
                 contents = f.read()
                 policy_file_json = jsoncfg.loads_config(contents)
-                policy_string = json.dumps(
-                    policy_file_json.PolicyVersion.Document()
-                )
+                policy_string = json.dumps(policy_file_json.PolicyVersion.Document())
                 policy = analyze_policy_string(
                     policy_string,
                     file_path,
@@ -271,7 +271,8 @@ def main():
                     if not version.IsDefaultVersion():
                         continue
                     policy = analyze_policy_string(
-                        json.dumps(version.Document()), policy.Arn(),
+                        json.dumps(version.Document()),
+                        policy.Arn(),
                     )
                     findings.extend(policy.findings)
 
@@ -279,7 +280,7 @@ def main():
             for user in auth_details_json.UserDetailList:
                 for policy in user.UserPolicyList([]):
                     policy = analyze_policy_string(
-                        json.dumps(policy['PolicyDocument']),
+                        json.dumps(policy["PolicyDocument"]),
                         user.Arn(),
                         private_auditors_custom_path=args.private_auditors,
                         include_community_auditors=args.include_community_auditors,
@@ -289,7 +290,7 @@ def main():
             for role in auth_details_json.RoleDetailList:
                 for policy in role.RolePolicyList([]):
                     policy = analyze_policy_string(
-                        json.dumps(policy['PolicyDocument']),
+                        json.dumps(policy["PolicyDocument"]),
                         role.Arn(),
                         private_auditors_custom_path=args.private_auditors,
                         include_community_auditors=args.include_community_auditors,
@@ -299,7 +300,7 @@ def main():
             for group in auth_details_json.GroupDetailList:
                 for policy in group.GroupPolicyList([]):
                     policy = analyze_policy_string(
-                        json.dumps(policy['PolicyDocument']),
+                        json.dumps(policy["PolicyDocument"]),
                         group.Arn(),
                         private_auditors_custom_path=args.private_auditors,
                         include_community_auditors=args.include_community_auditors,

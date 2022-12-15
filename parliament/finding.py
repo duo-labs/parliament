@@ -1,5 +1,5 @@
 class Finding:
-    """ Class for storing findings """
+    """Class for storing findings"""
 
     issue = ""
     detail = ""
@@ -15,5 +15,5 @@ class Finding:
         self.location = location
 
     def __repr__(self):
-        """ Return a string for printing """
+        """Return a string for printing"""
         return "{} - {} - {}".format(self.issue, self.detail, self.location)

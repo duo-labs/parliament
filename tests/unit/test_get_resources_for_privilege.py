@@ -1,10 +1,7 @@
-import unittest
-from nose.tools import raises, assert_equal, assert_not_equal, assert_true, assert_false
-
 from parliament import analyze_policy_string
 
 
-class TestGetResourcesForPrivilege(unittest.TestCase):
+class TestGetResourcesForPrivilege:
     """Test class for get_resources_for_privilege"""
 
     def test_policy_simple(self):
@@ -21,15 +18,15 @@ class TestGetResourcesForPrivilege(unittest.TestCase):
     }"""
         )
 
-        assert_equal(
-            set(policy.statements[0].get_resources_for_privilege("s3", "GetObject")),
-            set(["arn:aws:s3:::examplebucket/*"]),
+        assert (
+            set(policy.statements[0].get_resources_for_privilege("s3", "GetObject"))
+            == set(["arn:aws:s3:::examplebucket/*"]),
             "s3:GetObject matches the object resource",
         )
 
-        assert_equal(
-            set(policy.statements[0].get_resources_for_privilege("s3", "PutObject")),
-            set([]),
+        assert (
+            set(policy.statements[0].get_resources_for_privilege("s3", "PutObject"))
+            == set([]),
             "s3:PutObject not in policy",
         )
 
@@ -47,9 +44,9 @@ class TestGetResourcesForPrivilege(unittest.TestCase):
         }"""
         )
 
-        assert_equal(
-            set(policy.statements[0].get_resources_for_privilege("s3", "GetObject")),
-            set(["arn:aws:s3:::examplebucket/*"]),
+        assert (
+            set(policy.statements[0].get_resources_for_privilege("s3", "GetObject"))
+            == set(["arn:aws:s3:::examplebucket/*"]),
             "s3:GetObject matches the object resource",
         )
 
@@ -57,12 +54,12 @@ class TestGetResourcesForPrivilege(unittest.TestCase):
         # "arn:*:s3:::*" so it doesn't care whether or not there is a slash
         # assert_equal(set(policy.statements[0].get_resources_for_privilege("s3", "PutBucketPolicy")), set(["arn:aws:s3:::examplebucket"]), "s3:PutBucketPolicy matches the bucket resource")
 
-        assert_equal(
+        assert (
             set(
                 policy.statements[0].get_resources_for_privilege(
                     "s3", "ListAllMyBuckets"
                 )
-            ),
-            set([]),
+            )
+            == set([]),
             "s3:ListAllMyBuckets matches none of the resources",
         )

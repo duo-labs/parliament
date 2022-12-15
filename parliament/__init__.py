@@ -1,7 +1,7 @@
 """
 This library is a linter for AWS IAM policies.
 """
-__version__ = "1.5.2"
+__version__ = "1.6.1"
 
 import fnmatch
 import functools
@@ -62,7 +62,11 @@ def analyze_policy_string(
         policy_json = jsoncfg.loads_config(policy_str)
     except jsoncfg.parser.JSONConfigParserException as e:
         policy = Policy(None)
-        policy.add_finding("MALFORMED_JSON", detail="json parsing error: {}".format(e), location={'line': e.line, 'column': e.column})
+        policy.add_finding(
+            "MALFORMED_JSON",
+            detail="json parsing error: {}".format(e),
+            location={"line": e.line, "column": e.column},
+        )
         return policy
 
     policy = Policy(policy_json, filepath, config)
@@ -97,7 +101,7 @@ def is_arn_match(resource_type, arn_format, resource):
     - arn_format: ARN regex from the docs
     - resource: ARN regex from IAM policy
 
-    
+
     We can cheat some because after the first sections of the arn match, meaning until the 5th colon (with some
     rules there to allow empty or asterisk sections), we only need to match the ID part.
     So the above is simplified to "*/*" and "*personalize*".
@@ -147,6 +151,7 @@ def is_arn_match(resource_type, arn_format, resource):
     resource_id = re.sub(r"\[.+?\]", "*", resource_id)
     return is_glob_match(arn_id, resource_id)
 
+
 def is_arn_strictly_valid(resource_type, arn_format, resource):
     """
     Strictly validate the arn_format specified in the docs, with the resource
@@ -179,7 +184,7 @@ def is_arn_strictly_valid(resource_type, arn_format, resource):
         arn_id_resource_type = re.match(r"(^[^\*][\w-]+)[\/\:].+", arn_id)
 
         if arn_id_resource_type != None and resource_id != "*":
-            
+
             # https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#genref-aws-service-namesspaces
             # The following is not allowed: arn:aws:iam::123456789012:u*
             if not (resource_id.startswith(arn_id_resource_type[1])):
@@ -193,8 +198,10 @@ def is_arn_strictly_valid(resource_type, arn_format, resource):
         return True
     return False
 
+
 def strip_var_from_arn(arn, replace_with=""):
     return re.sub(r"\$\{aws.[\w\/]+\}", replace_with, arn)
+
 
 def is_glob_match(s1, s2):
     # This comes from https://github.com/duo-labs/parliament/issues/36#issuecomment-574001764
@@ -222,7 +229,7 @@ def is_glob_match(s1, s2):
     return s1[0] == s2[0] and is_glob_match(s1[1:], s2[1:])
 
 
-@functools.lru_cache(maxsize=1024)
+@functools.lru_cache(maxsize=10240)
 def expand_action(action, raise_exceptions=True):
     """
     Converts "iam:*List*" to
@@ -275,20 +282,20 @@ def expand_action(action, raise_exceptions=True):
 
 
 def get_resource_type_matches_from_arn(arn):
-    """ Given an ARN such as "arn:aws:s3:::mybucket", find resource types that match it.
-        This would return:
-        [
-            "resource": {
-                "arn": "arn:${Partition}:s3:::${BucketName}",
-                "condition_keys": [],
-                "resource": "bucket"
-            },
-            "service": {
-                "service_name": "Amazon S3",
-                "privileges": [...]
-                ...
-            }
-        ]
+    """Given an ARN such as "arn:aws:s3:::mybucket", find resource types that match it.
+    This would return:
+    [
+        "resource": {
+            "arn": "arn:${Partition}:s3:::${BucketName}",
+            "condition_keys": [],
+            "resource": "bucket"
+        },
+        "service": {
+            "service_name": "Amazon S3",
+            "privileges": [...]
+            ...
+        }
+    ]
     """
     matches = []
     for service in iam_definition:
@@ -300,8 +307,7 @@ def get_resource_type_matches_from_arn(arn):
 
 
 def get_privilege_matches_for_resource_type(resource_type_matches):
-    """ Given the response from get_resource_type_matches_from_arn(...), this will identify the relevant privileges.
-    """
+    """Given the response from get_resource_type_matches_from_arn(...), this will identify the relevant privileges."""
     privilege_matches = []
     for match in resource_type_matches:
         for privilege in match["service"]["privileges"]:

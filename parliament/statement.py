@@ -1,3 +1,4 @@
+import json
 import jsoncfg
 import re
 
@@ -14,7 +15,7 @@ from .misc import make_list
 
 
 def is_condition_key_match(document_key, str):
-    """ Given a documented condition key and one from a policy, determine if they match
+    """Given a documented condition key and one from a policy, determine if they match
     Examples:
     - s3:prefix and s3:prefix obviously match
     - s3:ExistingObjectTag/<key> and s3:ExistingObjectTag/backup match
@@ -146,12 +147,16 @@ GLOBAL_CONDITION_KEYS = {
     "aws:CalledViaLast": "String",
     "aws:CurrentTime": "Date",
     "aws:EpochTime": "Date",  # This needs to accept Date or Numeric
+    "aws:FederatedProvider": "String",
     "aws:MultiFactorAuthAge": "Numeric",
     "aws:MultiFactorAuthPresent": "Bool",
     "aws:PrincipalAccount": "String",
     "aws:PrincipalOrgID": "String",
     "aws:PrincipalArn": "Arn",
+    "aws:PrincipalIsAWSService": "Bool",
     "aws:PrincipalOrgPaths": "String",
+    "aws:PrincipalServiceName": "String",
+    "aws:PrincipalServiceNamesList": "String",
     "aws:PrincipalTag": "String",
     "aws:PrincipalType": "String",
     "aws:RequestedRegion": "String",
@@ -161,11 +166,16 @@ GLOBAL_CONDITION_KEYS = {
     "aws:PrincipalTag/*": "String",
     "aws:PrincipalType": "String",
     "aws:Referer": "String",
+    "aws:RequestedRegion": "String",
     "aws:RequestTag/*": "String",
+    "aws:ResourceAccount": "String",
+    "aws:ResourceOrgID": "String",
+    "aws:ResourceOrgPaths": "String",
     "aws:ResourceTag/*": "String",
     "aws:SecureTransport": "Bool",
     "aws:SourceAccount": "String",
     "aws:SourceArn": "Arn",
+    "aws:SourceIdentity": "String",
     "aws:SourceIp": "Ip",
     "aws:SourceVpc": "String",
     "aws:SourceVpce": "String",
@@ -201,7 +211,7 @@ def is_value_in_correct_format_for_type(type_needed, values):
     Given a documented type needed such as "Arn", return True if all values match.
 
     For example, if you have a condition of:
-    "Condition": {"DateGreaterThan" :{"aws:CurrentTime" : "2019-07-16T12:00:00Z"}} 
+    "Condition": {"DateGreaterThan" :{"aws:CurrentTime" : "2019-07-16T12:00:00Z"}}
 
     Then this function would end up being called with:
     - type_needed: Date
@@ -339,7 +349,7 @@ class Statement:
         ["arn:aws:s3:::bucket", "arn:aws:s3:::bucket/*"]
         and the privilege given is 's3:PutBucketPolicy' this should return ["arn:aws:s3:::bucket"],
         as the other resource is only applicable to object related privileges.
-        
+
         If the privilege given is 's3:ListAllMyBuckets' this should return None, as that privilege does not
         apply to these resources.
         """
@@ -440,7 +450,9 @@ class Statement:
                     for aws_principal in make_list(json_object[1]):
                         text = aws_principal.value
                         account_id_regex = re.compile("^\d{12}$")
-                        arn_regex = re.compile("^arn:[-a-z\*]*:iam::(\d{12}|cloudfront|):.*$")
+                        arn_regex = re.compile(
+                            "^arn:[-a-z\*]*:iam::(\d{12}|cloudfront|):.*$"
+                        )
 
                         if text == "*":
                             pass
@@ -526,14 +538,20 @@ class Statement:
 
             # Check for known bad pattern
             if operator.lower() == "bool":
-                if key.lower() == "aws:MultiFactorAuthPresent".lower() and "false" in values:
+                if (
+                    key.lower() == "aws:MultiFactorAuthPresent".lower()
+                    and "false" in values
+                ):
                     self.add_finding(
                         "BAD_PATTERN_FOR_MFA",
                         detail='The condition {"Bool": {"aws:MultiFactorAuthPresent":"false"}} is bad because aws:MultiFactorAuthPresent may not exist so it does not enforce MFA. You likely want to use a Deny with BoolIfExists.',
                         location=condition_block,
                     )
             elif operator.lower() == "null":
-                if key.lower == "aws:MultiFactorAuthPresent".lower() and "false" in values:
+                if (
+                    key.lower == "aws:MultiFactorAuthPresent".lower()
+                    and "false" in values
+                ):
                     self.add_finding(
                         "BAD_PATTERN_FOR_MFA",
                         detail='The condition {"Null": {"aws:MultiFactorAuthPresent":"false"}} is bad because aws:MultiFactorAuthPresent it does not enforce MFA, and only checks if the value exists. You likely want to use an Allow with {"Bool": {"aws:MultiFactorAuthPresent":"true"}}.',
@@ -552,9 +570,7 @@ class Statement:
             if condition_type:
                 # This is a global key, like aws:CurrentTime
                 # Check if the values match the type (ex. must all be Date values)
-                if not is_value_in_correct_format_for_type(
-                    condition_type, values
-                ):
+                if not is_value_in_correct_format_for_type(condition_type, values):
                     self.add_finding(
                         "MISMATCHED_TYPE",
                         detail="Type mismatch: {} requires a value of type {} but given {}".format(
@@ -598,9 +614,7 @@ class Statement:
                             )
                         )
 
-                    if not is_value_in_correct_format_for_type(
-                        condition_type, values
-                    ):
+                    if not is_value_in_correct_format_for_type(condition_type, values):
                         self.add_finding(
                             "MISMATCHED_TYPE",
                             detail="Type mismatch: {} requires a value of type {} but given {}".format(
@@ -831,19 +845,25 @@ class Statement:
             if len(parts) < 6:
                 has_malformed_resource = True
                 self.add_finding(
-                    "INVALID_ARN", detail="Does not have 6 parts", location=resource,
+                    "INVALID_ARN",
+                    detail="Does not have 6 parts",
+                    location=resource,
                 )
                 continue
             elif parts[0] != "arn":
                 has_malformed_resource = True
                 self.add_finding(
-                    "INVALID_ARN", detail="Does not start with arn:", location=resource,
+                    "INVALID_ARN",
+                    detail="Does not start with arn:",
+                    location=resource,
                 )
                 continue
             elif parts[1] not in ["aws", "aws-cn", "aws-us-gov", "aws-iso", "*", ""]:
                 has_malformed_resource = True
                 self.add_finding(
-                    "INVALID_ARN", detail="Unexpected partition", location=resource,
+                    "INVALID_ARN",
+                    detail="Unexpected partition",
+                    location=resource,
                 )
                 continue
 
@@ -933,7 +953,9 @@ class Statement:
                             self.resource_star[action_key] += 1
                             match_found = True
                             continue
-                        if is_arn_strictly_valid(resource_type, arn_format, resource.value):
+                        if is_arn_strictly_valid(
+                            resource_type, arn_format, resource.value
+                        ):
                             match_found = True
                             continue
 
@@ -953,7 +975,7 @@ class Statement:
                 self.add_finding(
                     "RESOURCE_MISMATCH",
                     detail=actions_without_matching_resources,
-                    location=self.stmt
+                    location=self.stmt,
                 )
 
             # If the Statement is applied to specific wildcarded Resources,

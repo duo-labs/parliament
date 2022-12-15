@@ -217,13 +217,9 @@ ignore_locations:
 To create unit tests for our new private auditor, create the directory `./parliament/private_auditors/tests/` and create the file `test_sensitive_bucket_access.py` there with the contents:
 
 ```
-import unittest
-from nose.tools import raises, assert_equal
-
-# import parliament
 from parliament import analyze_policy_string
 
-class TestCustom(unittest.TestCase):
+class TestCustom():
     """Test class for custom auditor"""
 
     def test_my_auditor(self):

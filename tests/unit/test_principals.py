@@ -1,10 +1,7 @@
-import unittest
-from nose.tools import raises, assert_equal, assert_true, assert_false
-
 from parliament import analyze_policy_string
 
 
-class TestPrincipals(unittest.TestCase):
+class TestPrincipals:
     """Test class for principals"""
 
     def test_policy_with_principal(self):
@@ -24,9 +21,7 @@ class TestPrincipals(unittest.TestCase):
 }""",
             ignore_private_auditors=True,
         )
-        assert_equal(
-            policy.finding_ids, set(), "Basic S3 bucket policy",
-        )
+        assert policy.finding_ids == set(), "Basic S3 bucket policy"
 
         policy = analyze_policy_string(
             """{
@@ -42,11 +37,9 @@ class TestPrincipals(unittest.TestCase):
 }""",
             ignore_private_auditors=True,
         )
-        assert_equal(
-            policy.finding_ids,
-            set(),
-            "S3 bucket policy with two accounts granted access via account ARN",
-        )
+        assert (
+            policy.finding_ids == set()
+        ), "S3 bucket policy with two accounts granted access via account ARN"
 
         policy = analyze_policy_string(
             """{
@@ -62,11 +55,9 @@ class TestPrincipals(unittest.TestCase):
 }""",
             ignore_private_auditors=True,
         )
-        assert_equal(
-            policy.finding_ids,
-            set(),
-            "S3 bucket policy with one account granted access via ID",
-        )
+        assert (
+            policy.finding_ids == set()
+        ), "S3 bucket policy with one account granted access via ID"
 
         policy = analyze_policy_string(
             """{
@@ -82,9 +73,7 @@ class TestPrincipals(unittest.TestCase):
 }""",
             ignore_private_auditors=True,
         )
-        assert_equal(
-            policy.finding_ids, set(), "S3 bucket policy with ARN of user",
-        )
+        assert policy.finding_ids == set(), "S3 bucket policy with ARN of user"
 
         policy = analyze_policy_string(
             """{
@@ -100,9 +89,7 @@ class TestPrincipals(unittest.TestCase):
 }""",
             ignore_private_auditors=True,
         )
-        assert_equal(
-            policy.finding_ids, set(), "Federated access",
-        )
+        assert policy.finding_ids == set(), "Federated access"
 
         policy = analyze_policy_string(
             """{
@@ -118,9 +105,9 @@ class TestPrincipals(unittest.TestCase):
 }""",
             ignore_private_auditors=True,
         )
-        assert_equal(
-            policy.finding_ids, set(), "S3 bucket policy with CloudFront OAI access",
-        )
+        assert (
+            policy.finding_ids == set()
+        ), "S3 bucket policy with CloudFront OAI access"
 
     def test_bad_principals(self):
         # Good principal
@@ -139,6 +126,4 @@ class TestPrincipals(unittest.TestCase):
 }""",
             ignore_private_auditors=True,
         )
-        assert_equal(
-            policy.finding_ids, set(), "Basic S3 bucket policy",
-        )
+        assert policy.finding_ids == set(), "Basic S3 bucket policy"

@@ -58,7 +58,9 @@ def audit(policy: Policy) -> None:
                     any(re.match(k, key) for k in global_single_valued_condition_keys)
                     for key in keys
                 ):
-                    policy.add_finding(
-                        "SINGLE_VALUE_CONDITION_TOO_PERMISSIVE",
-                        detail="Checking a single value conditional key against a set of values results in overly permissive policies.",
-                    )
+                    return True
+                    # policy.add_finding(
+                    #     "SINGLE_VALUE_CONDITION_TOO_PERMISSIVE",
+                    #     detail="Checking a single value conditional key against a set of values results in overly permissive policies.",
+                    # )
+        return False

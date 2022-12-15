@@ -38,7 +38,9 @@ def audit(policy):
         if action in CREDENTIALS_EXPOSURE_ACTIONS:
             credentials_exposure_actions_in_policy.append(action)
     if len(credentials_exposure_actions_in_policy) > 0:
+        return True
         policy.add_finding(
             "CREDENTIALS_EXPOSURE",
             location={"actions": credentials_exposure_actions_in_policy},
         )
+    return False

@@ -66,7 +66,10 @@ def permissions_on_other_users(policy, expanded_actions):
 
     for key in escalation_methods:
         if set(escalation_methods[key]).issubset(expanded_actions):
-            policy.add_finding(
-                "PRIVILEGE_ESCALATION",
-                location={"type": key, "actions": escalation_methods[key]},
-            )
+            return True
+            # policy.add_finding(
+            #     "PRIVILEGE_ESCALATION",
+            #     location={"type": key, "actions": escalation_methods[key]},
+            # )
+    return False
+

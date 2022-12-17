@@ -59,9 +59,18 @@ def permissions_on_other_users(policy, expanded_actions):
             "iam:passrole",
             "datapipeline:createpipeline",
         ],
+        "PassExistingRoleNewSageMakerJupyterNotebook": [
+            "iam:passrole",
+            "sagemaker:createnotebookinstance",
+            "sagemaker:createpresignednotebookinstanceurl"
+        ],
         # 5. Privilege Escalation Using AWS Services
         "UpdateExistingGlueDevEndpoint": ["glue:updatedevendpoint"],
         "EditExistingLambdaFunctionWithRole": ["lambda:updatefunctioncode"],
+        "CreatingCodeStarProjectTemplate": ["codestar:createprojectfromtemplate"],
+        "CreatingCodeStarProjectAssociatingTeamMember": ["codestar:createproject", "codestar:associateteammember"],
+        "AddingMaliciousLambdaLayerExistingLambdaFunction": ["lambda:updatefunctionconfiguration"],
+        "GainingAccessExistingSageMakerJupyterNotebook": ["sagemaker:createpresignednotebookinstanceurl"],
     }
 
     for key in escalation_methods:

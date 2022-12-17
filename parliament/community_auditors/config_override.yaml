@@ -13,7 +13,7 @@ PRIVILEGE_ESCALATION:
 CREDENTIALS_EXPOSURE:
   title: Credentials exposure
   description: Policy grants access to API calls that can return credentials to the user
-  severity: MEDIUM
+  severity: HIGH
   group: CUSTOM
 
 SENSITIVE_ACCESS:

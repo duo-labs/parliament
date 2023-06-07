@@ -1,0 +1,20 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "checknewrules",
+      "Effect": "Allow",
+      "Action": [
+        "ec2:DescribeInstances",
+        "ec2:RunInstances",
+        "ec2:CreateVpc",
+        "ec2:DescribeVpcs",
+        "ec2:CreateSecurityGroup",
+        "iam:GenerateCredentialReport",
+        "iam:GetCredentialReport"
+      ],
+      "Resource":["*"
+      ]
+    }
+  ]
+}

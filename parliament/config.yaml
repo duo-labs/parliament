@@ -170,3 +170,27 @@ SINGLE_VALUE_CONDITION_TOO_PERMISSIVE:
   description: Checking a single value conditional key against a set of values results in overly permissive policies.
   severity: MEDIUM
   group: CUSTOM
+
+IMDS_REVEAL:
+  title: Allows EC2 instances with IMDSv1 enabled to Describe other EC2 instances.
+  description: On EC2 instances with IMDSv1 enable DescribeInstances call. Lateral movement/persistence.
+  severity: MEDIUM
+  group: CUSTOM
+
+NETWORK_CHANGES:
+  title: Allows network changes to cloud environment
+  description: On compromised Cloud Resources - these permissions could allow changes to the network. Lateral movement/persistence.
+  severity: MEDIUM
+  group: CUSTOM
+
+MINING_BITCOIN:
+  title: Allows instances to be spun up for mining bitcoin.
+  description: From compromised Cloud Resources - these permissions could allow spinning up of expensive EC2 instances.
+  severity: MEDIUM
+  group: CUSTOM
+
+IAM_CREDENTIAL_REPORT:
+  title: Allows IAM Credential Report generation
+  description: From compromised Cloud Resources allows IAM Credential Report generation. Lateral movement/persistence.
+  severity: MEDIUM
+  group: CUSTOM

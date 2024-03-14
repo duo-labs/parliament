@@ -13,3 +13,6 @@ parliament/private_auditors
 tmp/*
 .idea/*
 .vscode
+
+# generated documentation folder
+docs/

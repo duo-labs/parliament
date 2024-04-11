@@ -144,6 +144,11 @@ def main():
         default=sys.stdin,
     )
     parser.add_argument(
+        "--files",
+        help="Provide a comma-separated list of policies",
+        type=str,
+    )
+    parser.add_argument(
         "--directory", help="Provide a path to directory with policy files", type=str
     )
     parser.add_argument(
@@ -217,6 +222,8 @@ def main():
     # If I have some stdin to read it should be my policy, file input should indicate stdin
     if not sys.stdin.isatty() and args.file.name != "<stdin>":
         parser.error("You cannot pass a file with --file and use stdin together")
+    elif args.file.name != "<stdin>" and args.files:
+        parser.error("You cannot pass files with both --file and --files together")
 
     # Change the exit status if there are errors
     exit_status = 0
@@ -315,6 +322,18 @@ def main():
             config=config,
         )
         findings.extend(policy.findings)
+    elif args.files and not args.directory:
+        for file_path in (stripped_path for path in args.files.split(",") if (stripped_path := path.strip())):
+            path = Path(file_path)
+            contents = path.read_text()
+            policy = analyze_policy_string(
+                contents,
+                file_path,
+                private_auditors_custom_path=args.private_auditors,
+                include_community_auditors=args.include_community_auditors,
+                config=config,
+            )
+            findings.extend(policy.findings)
     elif args.file and not args.directory:
         contents = args.file.read()
         args.file.close()

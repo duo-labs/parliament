@@ -120,7 +120,7 @@ def find_files(directory, exclude_pattern=None, policy_extension=""):
     return discovered_files
 
 
-def main():
+def main(argv):
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--aws-managed-policies",
@@ -200,7 +200,7 @@ def main():
         action="version",
         version="%(prog)s {version}".format(version=__version__),
     )
-    args = parser.parse_args()
+    args = parser.parse_args(args=argv[1:])
 
     log_level = logging.ERROR
     log_format = "%(message)s"
@@ -226,7 +226,6 @@ def main():
         parser.error("You cannot pass files with both --file and --files together")
 
     # Change the exit status if there are errors
-    exit_status = 0
     findings = []
 
     if args.include_community_auditors:
@@ -364,7 +363,7 @@ def main():
                 findings.extend(policy.findings)
     else:
         parser.print_help()
-        exit(-1)
+        return -1
 
     filtered_findings = []
     for finding in findings:
@@ -374,14 +373,18 @@ def main():
 
     if len(filtered_findings) == 0:
         # Return with exit code 0 if no findings
-        return
+        return 0
 
     for finding in filtered_findings:
         print_finding(finding, args.minimal, args.json)
 
     # There were findings, so return with a non-zero exit code
-    exit(1)
+    return 1
+
+
+def cli() -> int:
+    sys.exit(main(sys.argv))
 
 
 if __name__ == "__main__":
-    main()
+    cli()

@@ -121,6 +121,8 @@ def find_files(directory, exclude_pattern=None, policy_extension=""):
 
 
 def main(argv):
+    with open("/tmp/parliament.log", "w") as fout:
+        fout.write(f"Argv: {argv}\n")
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--aws-managed-policies",
@@ -201,6 +203,9 @@ def main(argv):
         version="%(prog)s {version}".format(version=__version__),
     )
     args = parser.parse_args(args=argv[1:])
+
+    with open("/tmp/parliament.log", "a") as fout:
+        fout.write(f"Files: {args.files}\n")
 
     log_level = logging.ERROR
     log_format = "%(message)s"
@@ -325,6 +330,8 @@ def main(argv):
         for file_path in (stripped_path for path in args.files.split(",") if (stripped_path := path.strip())):
             path = Path(file_path)
             contents = path.read_text()
+            with open("/tmp/parliament.log", "a") as fout:
+                fout.write(f"Path: {path}\nContents: {contents}\n")
             policy = analyze_policy_string(
                 contents,
                 file_path,

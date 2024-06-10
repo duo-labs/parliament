@@ -265,6 +265,18 @@ bin/parliament
 ## Updating the privilege info
 The IAM data is obtained from scraping the docs [here](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_actions-resources-contextkeys.html) and parsing this information with beautifulsoup using `./utils/update_iam_data.py`.
 
+Use a script like this to generate a new `iam_definition.json`.
+
+```bash
+python3 -m venv ./venv
+source ./venv/bin/activate
+pip install requests beautifulsoup4
+wget "https://raw.githubusercontent.com/duo-labs/parliament/main/utils/update_iam_data.py"
+python ./update_iam_data.py > iam_definition.json
+```
+
+Find the Python environment in which you installed Parliament and overwrite the old `iam_definition.json`.
+
 # Projects that use Parliament
 - [CloudMapper](https://github.com/duo-labs/cloudmapper): Has functionality to audit AWS environments and will audit the IAM policies as part of that.
 - [tf-parliament](https://github.com/rdkls/tf-parliament): Runs Parliament against terraform files

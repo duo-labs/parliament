@@ -238,6 +238,65 @@ That test ensures that for the given policy (which is granting read access to ou
 
 Now when you run `./tests/scripts/unit_tests.sh` there should be one additional test run.
 
+## Using Private auditors in a custom folder
+You can store your private auditors in a folder and use them from there instead of the parliament directory (that contains iam_definition.json).
+1. From the CLI
+
+If you're running the command line you can store your private auditors in another folder and define the parameter --private_auditors. Example:
+```bash
+parliament --file test.json --config config_override.yaml --private_auditors {my_custom_folder} --json
+```
+2. As a library
+
+Consider the following project structure:
+```bash
+test_project
+├── policy_validator.py
+├── private_auditors_folder
+│   ├── config_override.yaml
+│   └── sensitive_bucket_access.py
+└── test.json
+```
+
+In addition to what you did to run parliament as a library, you'll need to pass to analyze_policy_string method:
+- the config override yaml file path
+- private_auditors_custom_path path
+
+Inside policy_validator, I have to read the policy test file as string:
+```python
+def read_file():
+    with open("test.json", "r", encoding="utf-8") as json_test_file:
+        data = json.load(json_test_file)
+    return json.dumps(data)
+
+my_test_file = read_file()
+```
+Define the location of private auditors path:
+```python
+private_auditors_path = (
+    Path(os.path.abspath(__file__)).parent / "private_auditors_folder"
+)
+```
+Define the location of config override path:
+```python
+config_override_path = (
+    Path(os.path.abspath(__file__)).parent
+    / "private_auditors_folder"
+    / "config_override.yaml"
+)
+```
+Call analyze_policy_string with the specified config override and private auditors custom folder:
+```python
+parliament.analyze_policy_string(
+    my_test_file,
+    config=config_override_path, private_auditors_custom_path=private_auditors_path,
+)
+```
+You should be able to read the results using:
+```python
+for f in analyzed_policy.findings:
+  print(f)
+```
 
 ## Community auditors
 

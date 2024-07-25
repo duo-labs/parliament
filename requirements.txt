@@ -7,7 +7,7 @@ chardet==5.0.0
 charset-normalizer==2.1.1
 coverage==6.4.4
 docutils==0.19
-idna==3.3
+idna==3.7
 iniconfig==1.1.1
 jmespath==1.0.1
 json-cfg==0.4.2

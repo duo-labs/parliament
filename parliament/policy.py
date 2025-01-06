@@ -9,7 +9,7 @@ from pathlib import Path
 
 from . import expand_action
 from .finding import Finding
-from .misc import make_list
+from .misc import make_location_list
 from .statement import Statement
 
 
@@ -93,7 +93,7 @@ class Policy:
     def get_allowed_actions(self, raise_exceptions=True):
         actions_referenced = set()
         for stmt in self.statements:
-            actions = make_list(stmt.stmt["Action"])
+            actions = make_location_list(stmt.stmt["Action"])
             for action in actions:
                 expanded_actions = expand_action(action.value, raise_exceptions)
                 for expanded_action in expanded_actions:
@@ -264,7 +264,7 @@ class Policy:
             return False
 
         sids = {}
-        stmts_json = make_list(self.policy_json["Statement"])
+        stmts_json = make_location_list(self.policy_json["Statement"])
         for stmt_json in stmts_json:
             stmt = Statement(stmt_json)
             self.statements.append(stmt)

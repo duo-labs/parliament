@@ -30,7 +30,7 @@ setup(
     long_description=get_description(),
     long_description_content_type="text/markdown",
     url="https://github.com/duo-labs/parliament",
-    entry_points={"console_scripts": "parliament=parliament.cli:main"},
+    entry_points={"console_scripts": "parliament=parliament.cli:cli"},
     test_suite="tests/unit",
     tests_require=TESTS_REQUIRE,
     extras_require={"dev": TESTS_REQUIRE + ["autoflake", "autopep8", "pylint"]},

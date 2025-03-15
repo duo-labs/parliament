@@ -120,7 +120,9 @@ def find_files(directory, exclude_pattern=None, policy_extension=""):
     return discovered_files
 
 
-def main():
+def main(argv):
+    with open("/tmp/parliament.log", "w") as fout:
+        fout.write(f"Argv: {argv}\n")
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--aws-managed-policies",
@@ -142,6 +144,11 @@ def main():
         help="Provide a policy via stdin (e.g. through piping) or --file",
         type=argparse.FileType("r"),
         default=sys.stdin,
+    )
+    parser.add_argument(
+        "--files",
+        help="Provide a comma-separated list of policies",
+        type=str,
     )
     parser.add_argument(
         "--directory", help="Provide a path to directory with policy files", type=str
@@ -195,7 +202,10 @@ def main():
         action="version",
         version="%(prog)s {version}".format(version=__version__),
     )
-    args = parser.parse_args()
+    args = parser.parse_args(args=argv[1:])
+
+    with open("/tmp/parliament.log", "a") as fout:
+        fout.write(f"Files: {args.files}\n")
 
     log_level = logging.ERROR
     log_format = "%(message)s"
@@ -217,9 +227,10 @@ def main():
     # If I have some stdin to read it should be my policy, file input should indicate stdin
     if not sys.stdin.isatty() and args.file.name != "<stdin>":
         parser.error("You cannot pass a file with --file and use stdin together")
+    elif args.file.name != "<stdin>" and args.files:
+        parser.error("You cannot pass files with both --file and --files together")
 
     # Change the exit status if there are errors
-    exit_status = 0
     findings = []
 
     if args.include_community_auditors:
@@ -315,6 +326,20 @@ def main():
             config=config,
         )
         findings.extend(policy.findings)
+    elif args.files and not args.directory:
+        for file_path in (stripped_path for path in args.files.split(",") if (stripped_path := path.strip())):
+            path = Path(file_path)
+            contents = path.read_text()
+            with open("/tmp/parliament.log", "a") as fout:
+                fout.write(f"Path: {path}\nContents: {contents}\n")
+            policy = analyze_policy_string(
+                contents,
+                file_path,
+                private_auditors_custom_path=args.private_auditors,
+                include_community_auditors=args.include_community_auditors,
+                config=config,
+            )
+            findings.extend(policy.findings)
     elif args.file and not args.directory:
         contents = args.file.read()
         args.file.close()
@@ -345,7 +370,7 @@ def main():
                 findings.extend(policy.findings)
     else:
         parser.print_help()
-        exit(-1)
+        return -1
 
     filtered_findings = []
     for finding in findings:
@@ -355,14 +380,18 @@ def main():
 
     if len(filtered_findings) == 0:
         # Return with exit code 0 if no findings
-        return
+        return 0
 
     for finding in filtered_findings:
         print_finding(finding, args.minimal, args.json)
 
     # There were findings, so return with a non-zero exit code
-    exit(1)
+    return 1
+
+
+def cli() -> int:
+    sys.exit(main(sys.argv))
 
 
 if __name__ == "__main__":
-    main()
+    cli()

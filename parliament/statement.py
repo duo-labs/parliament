@@ -11,7 +11,7 @@ from . import (
     UnknownPrefixException,
 )
 from .finding import Finding
-from .misc import make_list
+from .misc import make_location_list
 
 
 def is_condition_key_match(document_key, str):
@@ -312,7 +312,7 @@ class Statement:
         """
 
         if "Action" in self.stmt:
-            for action in make_list(self.stmt["Action"]):
+            for action in make_location_list(self.stmt["Action"]):
                 if action.value == "*" or action.value == "*:*":
                     return True
 
@@ -327,7 +327,7 @@ class Statement:
             return False
 
         # Else, we're dealing with a NotAction
-        for action in make_list(self.stmt["NotAction"]):
+        for action in make_location_list(self.stmt["NotAction"]):
             if action == "*" or action == "*:*":
                 # I don't think it makes sense to have a "NotAction" of "*", but I'm including this check anyway.
                 return False
@@ -378,14 +378,14 @@ class Statement:
             )
 
             # At least one resource has to match the action's required resources
-            for resource in make_list(self.stmt["Resource"]):
+            for resource in make_location_list(self.stmt["Resource"]):
                 if is_arn_match(resource_type, arn_format, resource.value):
                     affected_resources.append(resource.value)
                 elif resource.value == "*":
                     affected_resources.append(resource.value)
 
         # Ensure we match on "*"
-        for resource in make_list(self.stmt["Resource"]):
+        for resource in make_location_list(self.stmt["Resource"]):
             if resource.value == "*":
                 affected_resources.append(resource.value)
 
@@ -435,7 +435,7 @@ class Statement:
         Checks that the Principal (or NotPrincipal) element conforms to expectations
         """
 
-        for principal in make_list(principal_element):
+        for principal in make_location_list(principal_element):
             if jsoncfg.node_is_scalar(principal):
                 if principal.value == "*":
                     continue
@@ -447,7 +447,7 @@ class Statement:
             for json_object in principal:
                 key = json_object[0]
                 if key == "AWS":
-                    for aws_principal in make_list(json_object[1]):
+                    for aws_principal in make_location_list(json_object[1]):
                         text = aws_principal.value
                         account_id_regex = re.compile("^\d{12}$")
                         arn_regex = re.compile(
@@ -465,7 +465,7 @@ class Statement:
                                 "UNKNOWN_PRINCIPAL", location=principal, detail=text
                             )
                 elif key == "Federated":
-                    for federation in make_list(json_object[1]):
+                    for federation in make_location_list(json_object[1]):
                         federation = federation.value
                         saml_regex = re.compile(
                             "^arn:[-a-z\*]*:iam::\d{12}:saml-provider/.*$"
@@ -533,7 +533,7 @@ class Statement:
         for block in condition_block:
             key = block[0]
             values = []
-            for v in make_list(block[1]):
+            for v in make_location_list(block[1]):
                 values.append(v.value)
 
             # Check for known bad pattern
@@ -748,9 +748,9 @@ class Statement:
             return False
 
         if "Action" in self.stmt:
-            actions = make_list(self.stmt["Action"])
+            actions = make_location_list(self.stmt["Action"])
         elif "NotAction" in self.stmt:
-            actions = make_list(self.stmt["NotAction"])
+            actions = make_location_list(self.stmt["NotAction"])
         else:
             self.add_finding(
                 "MALFORMED",
@@ -769,9 +769,9 @@ class Statement:
             return False
 
         if "Resource" in self.stmt:
-            resources = make_list(self.stmt["Resource"])
+            resources = make_location_list(self.stmt["Resource"])
         elif "NotResource" in self.stmt:
-            resources = make_list(self.stmt["NotResource"])
+            resources = make_location_list(self.stmt["NotResource"])
         else:
             self.add_finding(
                 "MALFORMED",
@@ -782,7 +782,7 @@ class Statement:
 
         # Check if a Condition element exists and if so save them for later
         if "Condition" in self.stmt:
-            conditions = make_list(self.stmt["Condition"])
+            conditions = make_location_list(self.stmt["Condition"])
             if len(conditions) > 1:
                 self.add_finding(
                     "MALFORMED",

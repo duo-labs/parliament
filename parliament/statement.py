@@ -257,9 +257,9 @@ def translate_documentation_types(str):
     So return "Number"
     """
 
-    if str in ["Arn", "ARN"]:
+    if str in ["Arn", "ARN", "ArrayOfARN"]:
         return "Arn"
-    elif str in ["Bool", "Boolean"]:
+    elif str in ["Bool", "Boolean", "ArrayOfBool"]:
         return "Bool"
     elif str in ["Date"]:
         return "Date"
@@ -267,7 +267,7 @@ def translate_documentation_types(str):
         return "Number"
     elif str in ["String", "string", "ArrayOfString"]:
         return "String"
-    elif str in ["Ip"]:
+    elif str in ["Ip", "IPAddress"]:
         return "Ip"
     else:
         raise Exception("Unknown data format: {}".format(str))

@@ -5,7 +5,6 @@ https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_single-vs-mu
 """
 import re
 from parliament import Policy
-from parliament.misc import make_list
 
 
 def audit(policy: Policy) -> None:

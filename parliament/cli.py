@@ -17,7 +17,7 @@ from parliament import (
     config,
     __version__,
 )
-from parliament.misc import make_list
+from parliament.misc import make_simple_list
 
 logger = logging.getLogger(__name__)
 
@@ -54,7 +54,7 @@ def is_finding_filtered(finding, minimum_severity="LOW"):
             all_match = True
             for location_type, locations_to_ignore in ignore_location.items():
                 has_array_match = False
-                for location_to_ignore in make_list(locations_to_ignore):
+                for location_to_ignore in make_simple_list(locations_to_ignore):
                     if re.fullmatch(
                         location_to_ignore.lower(),
                         str(finding.location.get(location_type, "")).lower(),

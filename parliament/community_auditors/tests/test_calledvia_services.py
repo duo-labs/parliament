@@ -38,7 +38,7 @@ class TestCalledViaServices:
               "Resource": "*",
               "Condition": {
                 "ForAnyValue:StringEquals": {
-                  "aws:CalledVia": ["s3.amazonaws.com"]
+                  "aws:CalledVia": ["ec2.amazonaws.com"]
                 }
               }
             }
@@ -136,10 +136,13 @@ class TestCalledViaServices:
                   "aws:CalledVia": [
                     "athena.amazonaws.com",
                     "cloudformation.amazonaws.com",
+                    "databrew.amazonaws.com",
                     "dynamodb.amazonaws.com",
                     "kms.amazonaws.com",
+                    "macie.amazonaws.com",
                     "ram.amazonaws.com",
-                    "rolesanywhere.amazonaws.com"
+                    "rolesanywhere.amazonaws.com",
+                    "s3.amazonaws.com"
                   ]
                 }
               }

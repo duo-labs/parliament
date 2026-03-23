@@ -6,21 +6,22 @@ See https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_conditio
 
 Fixes https://github.com/duo-labs/parliament/issues/84
 """
-import re
-
 from parliament import Policy
 from parliament.misc import make_list
 
 
 # Services documented by AWS as supporting CalledVia
-CALLEDVIA_SUPPORTED_SERVICES = [
+CALLEDVIA_SUPPORTED_SERVICES = {
     "athena.amazonaws.com",
     "cloudformation.amazonaws.com",
+    "databrew.amazonaws.com",
     "dynamodb.amazonaws.com",
     "kms.amazonaws.com",
+    "macie.amazonaws.com",
     "ram.amazonaws.com",
     "rolesanywhere.amazonaws.com",
-]
+    "s3.amazonaws.com",
+}
 
 CALLEDVIA_CONDITION_KEYS = [
     "aws:calledvia",
@@ -36,7 +37,6 @@ def audit(policy: Policy) -> None:
 
         conditions = stmt.stmt["Condition"]
         for condition in conditions:
-            operator = condition[0]
             condition_block = condition[1]
 
             for block in condition_block:
@@ -49,7 +49,7 @@ def audit(policy: Policy) -> None:
                     values.append(v.value)
 
                 for value in values:
-                    if value not in CALLEDVIA_SUPPORTED_SERVICES:
+                    if value.lower() not in CALLEDVIA_SUPPORTED_SERVICES:
                         policy.add_finding(
                             "INVALID_CALLEDVIA_SERVICE",
                             detail="Service {} is not in the list of services that support aws:CalledVia. Supported services: {}".format(

@@ -42,3 +42,9 @@ SINGLE_VALUE_CONDITION_TOO_PERMISSIVE:
   description: Checking a single value conditional key against a set of values results in overly permissive policies.
   severity: MEDIUM
   group: CUSTOM
+
+INVALID_CALLEDVIA_SERVICE:
+  title: Invalid service for aws:CalledVia condition key
+  description: The service referenced in aws:CalledVia, aws:CalledViaFirst, or aws:CalledViaLast is not in the documented list of supported services.
+  severity: MEDIUM
+  group: CUSTOM

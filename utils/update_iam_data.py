@@ -17,7 +17,7 @@ def get_links_from_base_actions_resources_conditions_page():
     """Gets the links from the actions, resources, and conditions keys page, and returns their filenames."""
     
     headers = {
-        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36'
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36'
     }
     html = requests.get(BASE_DOCUMENTATION_URL, headers=headers)
     soup = BeautifulSoup(html.content, "html.parser")
@@ -106,6 +106,48 @@ def no_white_space(string):
     return response
 
 
+COLUMN_HEADERS = {
+    "action": "actions",
+    "description": "description",
+    "resource_type": "resource types",
+    "condition_keys": "condition keys",
+    "access_level": "access level",
+    "dependent_actions": "dependent actions",
+}
+
+
+def column_indexes(table):
+    """Resolve each known column to its position using the table's header text.
+
+    AWS has changed both the order and the number of columns in the actions
+    table over time, and no longer publishes a dependent-actions column at all,
+    so a column that is absent resolves to None.
+    """
+    headers = [chomp(th.get_text(" ", strip=True)).lower() for th in table.find_all("th")]
+
+    indexes = {}
+    for key, needle in COLUMN_HEADERS.items():
+        indexes[key] = next(
+            (i for i, header in enumerate(headers) if needle in header), None
+        )
+    return indexes
+
+
+def cell_text(cells, index):
+    if index is None or index >= len(cells):
+        return ""
+    return chomp(cells[index].text)
+
+
+def cell_paragraphs(cells, index):
+    if index is None or index >= len(cells):
+        return []
+    element = cells[index]
+    if element.text == "":
+        return []
+    return [chomp(p.text) for p in element.find_all("p")]
+
+
 def header_matches(string, table):
     headers = [chomp(str(x)).lower() for x in table.find_all("th")]
     match_found = False
@@ -169,6 +211,13 @@ for filename in [f for f in listdir(mypath) if isfile(join(mypath, f))]:
             ):
                 continue
 
+            # Column order and count vary between service pages, so resolve each
+            # column by its header text rather than by a fixed index.
+            columns = column_indexes(table)
+            column_count = len(table.find_all("th"))
+            if columns["action"] is None or columns["resource_type"] is None:
+                continue
+
             rows = table.find_all("tr")
             row_number = 0
             while row_number < len(rows):
@@ -180,67 +229,60 @@ for filename in [f for f in listdir(mypath) if isfile(join(mypath, f))]:
                     row_number += 1
                     continue
 
-                if len(cells) != 6:
+                if len(cells) != column_count:
                     # Sometimes the privilege contains Scenarios, and I don't know how to handle this
                     break
                     # raise Exception("Unexpected format in {}: {}".format(prefix, row))
 
                 # See if this cell spans multiple rows
                 rowspan = 1
-                if "rowspan" in cells[0].attrs:
-                    rowspan = int(cells[0].attrs["rowspan"])
+                if "rowspan" in cells[columns["action"]].attrs:
+                    rowspan = int(cells[columns["action"]].attrs["rowspan"])
 
                 priv = ""
                 # Get the privilege
-                for link in cells[0].find_all("a"):
+                for link in cells[columns["action"]].find_all("a"):
                     if "href" not in link.attrs:
                         # Skip the <a id='...'> tags
                         continue
                     priv = chomp(link.text)
                 if priv == "":
-                    priv = chomp(cells[0].text)
+                    priv = chomp(cells[columns["action"]].text)
 
-                description = chomp(cells[1].text)
-                access_level = chomp(cells[2].text)
+                description = cell_text(cells, columns["description"])
+                access_level = cell_text(cells, columns["access_level"])
 
                 resource_types = []
-                resource_cell = 3
+                # Continuation rows of a rowspan carry only the per-resource
+                # columns, so their offsets start at zero.
+                offsets = {
+                    key: columns[key]
+                    for key in ("resource_type", "condition_keys", "dependent_actions")
+                }
 
                 while rowspan > 0:
-                    if len(cells) == 3 or len(cells) == 6:
-                        # ec2:RunInstances contains a few "scenarios" which start in the
-                        # description field, len(cells) is 5.
-                        # I'm ignoring these as I don't know how to handle them.
-                        # These include things like "EC2-Classic-InstanceStore" and
-                        # "EC2-VPC-InstanceStore-Subnet"
-
-                        resource_type = chomp(cells[resource_cell].text)
-                        condition_keys_element = cells[resource_cell + 1]
-                        condition_keys = []
-                        if condition_keys_element.text != "":
-                            for key_element in condition_keys_element.find_all("p"):
-                                condition_keys.append(chomp(key_element.text))
-
-                        dependent_actions_element = cells[resource_cell + 2]
-                        dependent_actions = []
-                        if dependent_actions_element.text != "":
-                            for action_element in dependent_actions_element.find_all(
-                                "p"
-                            ):
-                                dependent_actions.append(chomp(action_element.text))
-                        resource_types.append(
-                            {
-                                "resource_type": resource_type,
-                                "condition_keys": condition_keys,
-                                "dependent_actions": dependent_actions,
-                            }
-                        )
+                    resource_type = cell_text(cells, offsets["resource_type"])
+                    condition_keys = cell_paragraphs(cells, offsets["condition_keys"])
+                    dependent_actions = cell_paragraphs(
+                        cells, offsets["dependent_actions"]
+                    )
+                    resource_types.append(
+                        {
+                            "resource_type": resource_type,
+                            "condition_keys": condition_keys,
+                            "dependent_actions": dependent_actions,
+                        }
+                    )
                     rowspan -= 1
                     if rowspan > 0:
                         row_number += 1
-                        resource_cell = 0
                         row = rows[row_number]
                         cells = row.find_all("td")
+                        base = columns["resource_type"]
+                        offsets = {
+                            key: None if columns[key] is None else columns[key] - base
+                            for key in offsets
+                        }
 
                 if "[permission only]" in priv:
                     priv = priv.split(" ")[0]

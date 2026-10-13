@@ -92,6 +92,9 @@ def is_valid_region(str):
     region_regex = re.compile("^([a-z]{2}|us-gov)-[a-z]+-[0-9]$")
     if str == "" or str == "*" or region_regex.match(str):
         return True
+    # IAM allows * and ? inside any ARN segment, for example us-west-? or eu-*
+    if ("*" in str or "?" in str) and re.match(r"^[a-z0-9*?-]+$", str):
+        return True
     return False
 
 
@@ -100,6 +103,11 @@ def is_valid_account_id(str):
     # such as 000000000000 and 123456789012
     account_id_regex = re.compile("^[0-9]{12}$")
     if str == "" or str == "*" or account_id_regex.match(str):
+        return True
+    # IAM allows * and ? inside any ARN segment, for example 1234567890??
+    if "*" in str and re.match(r"^[0-9*?]+$", str):
+        return True
+    if "?" in str and re.match(r"^[0-9?]{12}$", str):
         return True
     return False
 

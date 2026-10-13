@@ -39,7 +39,9 @@ class TestResourceFormatting:
         assert is_valid_region(""), "Empty regions are allowed"
         assert is_valid_region("us-east-1"), "This region is allowed"
         assert not is_valid_region("us-east-1f"), "This is an AZ, not a region"
-        assert not is_valid_region("us-east-*"), "No regexes in regions"
+        assert is_valid_region("us-east-*"), "IAM allows wildcards within a segment"
+        assert is_valid_region("us-west-?"), "IAM allows wildcards within a segment"
+        assert not is_valid_region("US-*"), "Wildcard segment must still use region characters"
         assert not is_valid_region("us"), "Not a valid region"
         assert not is_valid_region("us-east-1-f"), "Not a valid region"
         assert is_valid_region("us-gov-east-1"), "This is a valid govcloud region"
@@ -48,9 +50,10 @@ class TestResourceFormatting:
         assert is_valid_account_id(""), "Empty account id is allowed"
         assert is_valid_account_id("000000001234"), "This account id is allowed"
         assert not is_valid_account_id("abc"), "Account id must have 12 digits"
-        assert not is_valid_account_id(
-            "00000000123?"
-        ), "Regex not allowed in account id"
+        assert is_valid_account_id("00000000123?"), "IAM allows ? within a segment"
+        assert is_valid_account_id("0000*"), "IAM allows * within a segment"
+        assert not is_valid_account_id("0000000123?"), "? must still give 12 characters"
+        assert not is_valid_account_id("abc*"), "Wildcard segment must still use digits"
 
     def test_arn_match(self):
         assert is_arn_match("object", "arn:*:s3:::*/*", "arn:*:s3:::*/*")

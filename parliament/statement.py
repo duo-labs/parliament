@@ -549,7 +549,7 @@ class Statement:
                     )
             elif operator.lower() == "null":
                 if (
-                    key.lower == "aws:MultiFactorAuthPresent".lower()
+                    key.lower() == "aws:MultiFactorAuthPresent".lower()
                     and "false" in values
                 ):
                     self.add_finding(

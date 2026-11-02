@@ -1,4 +1,6 @@
-from parliament import analyze_policy_string
+import json
+
+from parliament import analyze_policy_string, enhance_finding
 
 
 class TestPatterns:
@@ -361,3 +363,99 @@ class TestPatterns:
 # #             ]}"""
 # #         )
 # #         assert_false(len(policy.findings) == 0, "Bad MFA policy")
+
+
+def mfa_policy(condition):
+    """Policy whose only variable is the Condition block (Action '*' avoids RESOURCE_STAR)."""
+    return json.dumps(
+        {
+            "Version": "2012-10-17",
+            "Statement": {
+                "Effect": "Allow",
+                "Action": "*",
+                "Resource": "*",
+                "Condition": condition,
+            },
+        }
+    )
+
+
+class TestMfaNullCondition:
+    """`Null` on aws:MultiFactorAuthPresent must report the same bad pattern as `Bool`.
+
+    The `Null` operator only tests whether a key exists; AWS documents that
+    aws:MultiFactorAuthPresent can be present while set to false.
+    """
+
+    def test_null_false_reports_bad_pattern(self):
+        policy = analyze_policy_string(
+            mfa_policy({"Null": {"aws:MultiFactorAuthPresent": "false"}}),
+            ignore_private_auditors=True,
+        )
+        assert policy.finding_ids == set(["BAD_PATTERN_FOR_MFA"])
+        finding = enhance_finding(policy.findings[0])
+        assert finding.issue == "BAD_PATTERN_FOR_MFA"
+        assert finding.severity == "MEDIUM"
+        assert "Null" in finding.detail
+        assert "MultiFactorAuthPresent" in finding.detail
+        assert isinstance(finding.location["line"], int)
+        assert isinstance(finding.location["column"], int)
+
+    def test_null_false_mixed_case_key(self):
+        policy = analyze_policy_string(
+            mfa_policy({"Null": {"aWs:mUlTiFaCtOrAuThPrEsEnT": "false"}}),
+            ignore_private_auditors=True,
+        )
+        assert policy.finding_ids == set(["BAD_PATTERN_FOR_MFA"])
+
+    def test_null_true_has_no_finding(self):
+        policy = analyze_policy_string(
+            mfa_policy({"Null": {"aws:MultiFactorAuthPresent": True}}),
+            ignore_private_auditors=True,
+        )
+        assert policy.finding_ids == set()
+
+    def test_null_false_other_key_has_no_finding(self):
+        policy = analyze_policy_string(
+            mfa_policy({"Null": {"aws:SourceVpc": "false"}}),
+            ignore_private_auditors=True,
+        )
+        assert policy.finding_ids == set()
+
+    def test_bool_false_control_is_unchanged(self):
+        policy = analyze_policy_string(
+            mfa_policy({"Bool": {"aws:MultiFactorAuthPresent": "false"}}),
+            ignore_private_auditors=True,
+        )
+        assert policy.finding_ids == set(["BAD_PATTERN_FOR_MFA"])
+        assert len(policy.findings) == 1
+
+    def test_cli_exit_code_and_severity_threshold(self, monkeypatch, capsys, tmp_path):
+        import parliament.cli as cli
+
+        log_path = tmp_path / "parliament.log"
+        real_open = open
+
+        def fake_open(file, *args, **kwargs):
+            # parliament.cli logs to the hard-coded POSIX path /tmp/parliament.log;
+            # redirect only that path, delegate every other open untouched.
+            if str(file).replace("\\", "/").endswith("/tmp/parliament.log"):
+                return real_open(log_path, *args, **kwargs)
+            return real_open(file, *args, **kwargs)
+
+        monkeypatch.setattr("builtins.open", fake_open)
+
+        class _Stdin:
+            name = "<stdin>"
+
+            def isatty(self):
+                return False
+
+        monkeypatch.setattr("sys.stdin", _Stdin())
+        argv = ["parliament", "--string", mfa_policy({"Null": {"aws:MultiFactorAuthPresent": "false"}})]
+
+        assert cli.main(argv + ["--minimum_severity", "MEDIUM"]) == 1
+        assert "MEDIUM - Bad pattern used for MFA check" in capsys.readouterr().out
+
+        assert cli.main(argv + ["--minimum_severity", "HIGH"]) == 0
+        assert capsys.readouterr().out.strip() == ""

@@ -222,7 +222,7 @@ def main(argv):
     logging.basicConfig(level=log_level, stream=sys.stderr, format=log_format)
 
     if args.minimal and args.json:
-        raise Exception("You cannot choose both minimal and json output")
+        parser.error("You cannot choose both minimal and json output")
 
     # If I have some stdin to read it should be my policy, file input should indicate stdin
     if not sys.stdin.isatty() and args.file.name != "<stdin>":
